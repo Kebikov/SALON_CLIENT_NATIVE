@@ -21,7 +21,7 @@ const JoinGoogle: FC = () => {
 
 const styles = StyleSheet.create({
     main: {
-        width: '90%',
+        width: '100%',
         height: 60,
         borderRadius: 35,
         backgroundColor: 'white',

@@ -1,23 +1,38 @@
-import { View, Text, StyleSheet, Image, Pressable } from 'react-native';
+import { View, Text, StyleSheet, Image, Pressable, Animated } from 'react-native';
 import React, { FC } from 'react';
 import { COLOR_ROOT } from '@/data/colors';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { TypeRootPage } from '@/navigation/navigation.types';
+import { Iscreen } from '@/pages/Auth/Auth';
+
+
+interface IJoinEmail {
+    /**
+     * Функция срабатываюшая после нажатия на кнопку "Регистрация с Email".
+     */
+    setScreen: React.Dispatch<React.SetStateAction<Iscreen>>;
+}
 
 
 /**
- * @component Кнопка, вход че
- * @example 
- * @returns {JSX.Element}
+ * @component Кнопка, вход через Email.
+ * @param setScreen Функция срабатываюшая после нажатия на кнопку "Регистрация с Email".
  */
-const JoinEmail: FC = () => {
+const JoinEmail: FC<IJoinEmail> = ({setScreen}) => {
 
-    const {navigate} = useNavigation<NavigationProp<TypeRootPage>>();
 
     return (
         <Pressable 
             style={styles.main}
-            onPress={() => navigate('Registration')}
+            onPress={() => {
+                console.log('Press');
+                    setScreen({
+                        AuthStart: false,
+                        AuthRegistrationEmail: true,
+                        AuthAuthorization: false
+                    });
+                }
+            }
         >
             <View style={styles.container}>
                 <Image source={require('@/source/img/logo/email.png')} style={styles.img} />
@@ -28,9 +43,10 @@ const JoinEmail: FC = () => {
     );
 };
 
+
 const styles = StyleSheet.create({
     main: {
-        width: '90%',
+        width: '100%',
         height: 60,
         borderRadius: 35,
         backgroundColor: COLOR_ROOT.MAIN_COLOR,
@@ -54,5 +70,6 @@ const styles = StyleSheet.create({
         height:20
     }
 });
+
 
 export default JoinEmail;

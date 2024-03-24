@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, } from 'react-native';
 import React, { FC } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -24,6 +24,7 @@ const Navigatuon: FC = () => {
                     }
                 }}
             >
+                
                 <Stack.Screen name='Auth' component={Auth} key={'Auth'} />
                 <Stack.Screen name='Home' component={Home} key={'Home'} />
                 <Stack.Screen name='Registration' component={Registration} key={'Registration'} options={{animation: 'slide_from_right'}}/>
