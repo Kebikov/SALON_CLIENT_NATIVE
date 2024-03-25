@@ -5,6 +5,8 @@ import  Animated, { useAnimatedStyle, useSharedValue, withTiming, withSpring } f
 import { Iscreen } from '@/pages/Auth/Auth';
 import JoinGoogle from '@/shared/JoinGoogle/JoinGoogle';
 import DoYouHaveAnAccount from '@/shared/DoYouHaveAnAccount/DoYouHaveAnAccount';
+import { useNavigation, NavigationProp } from '@react-navigation/native';
+import { TypeRootPage } from '@/navigation/navigation.types';
 
 
 interface IAuthAuthorization {
@@ -17,6 +19,8 @@ interface IAuthAuthorization {
  * @widgets Авторизация пользователя.
  */
 const AuthAuthorization: FC<IAuthAuthorization> = ({ screen, setScreen}) => {
+
+    const {navigate} = useNavigation<NavigationProp<TypeRootPage>>();
 
     /**
      * Значение трансформации блока.
@@ -47,7 +51,7 @@ const AuthAuthorization: FC<IAuthAuthorization> = ({ screen, setScreen}) => {
                 <TextInput style={regStyles.input} placeholder='Email' />
                 <TextInput style={regStyles.input} placeholder='Password' />
                 <JoinGoogle/>
-                <Pressable style={[regStyles.button]} >
+                <Pressable style={[regStyles.button]} onPress={ () => navigate('Home') } >
                     <Text style={regStyles.buttonText} >войти</Text>
                 </Pressable>
                 <DoYouHaveAnAccount setScreen={setScreen} isAuthUser={false} />

@@ -6,7 +6,7 @@ import { TypeRootPage } from './navigation.types';
 import { COLOR_ROOT } from '@/data/colors';
 import Auth from '@/pages/Auth/Auth';
 import Home from '@/pages/Home/Home';
-import Registration from '@/pages/Registration/Registration';
+import User from '@/pages/User/User';
 
 
 const Stack = createNativeStackNavigator<TypeRootPage>();
@@ -24,10 +24,10 @@ const Navigatuon: FC = () => {
                     }
                 }}
             >
-                
-                <Stack.Screen name='Auth' component={Auth} key={'Auth'} />
                 <Stack.Screen name='Home' component={Home} key={'Home'} />
-                <Stack.Screen name='Registration' component={Registration} key={'Registration'} options={{animation: 'slide_from_right'}}/>
+                <Stack.Screen name="User" component={User} key={'User'} />
+                <Stack.Screen name='Auth' component={Auth} key={'Auth'} />
+                
             </Stack.Navigator>
         </NavigationContainer>
     )
@@ -35,3 +35,5 @@ const Navigatuon: FC = () => {
 
 
 export default Navigatuon;
+
+// options={{animation: 'slide_from_right'}}

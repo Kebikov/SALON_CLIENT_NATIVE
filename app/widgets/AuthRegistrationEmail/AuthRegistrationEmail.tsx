@@ -71,7 +71,7 @@ export const styles = StyleSheet.create({
     },
     text: {
         color: 'white',
-        fontSize: 24
+        fontSize: 22
     },
     input: {
         borderColor: COLOR_ROOT.MAIN_COLOR,
