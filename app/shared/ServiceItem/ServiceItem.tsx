@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
     },
     text: {
         color: COLOR_ROOT.MAIN_COLOR,
-        fontSize: 15,
+        fontSize: 14,
         fontWeight: '400',
         textAlign: 'center'
     }

@@ -1,42 +1,56 @@
 import { View, Text, StyleSheet, FlatList, RefreshControl, Button } from 'react-native';
 import React, { FC, useEffect, useState, useRef } from 'react';
 import ServiceItem from '@/shared/ServiceItem/ServiceItem';
+import NotElements from '@/shared/NotElements/NotElements';
 
-const DATA = [
+
+
+interface IDataListService {
+    id: string;
+    /**
+     * Название услуги.
+     */
+    title: string;
+    /**
+     * Изображение услуги.
+     */
+    img: number;
+}
+
+const DATA: Array<IDataListService> = [
     {
         id: '1',
         title: 'Маникюр',
-        img: require('@/source/img/img-service/1.png')
+        img: require('@/source/img/icon/1.png')
     },
     {
         id: '2',
         title: 'Прическа',
-        img: require('@/source/img/img-service/2.png')
+        img: require('@/source/img/icon/2.png')
     },
     {
         id: '3',
         title: 'Эпиляция',
-        img: require('@/source/img/img-service/3.png')
+        img: require('@/source/img/icon/3.png')
     },
     {
         id: '4',
         title: 'Массаж',
-        img: require('@/source/img/img-service/4.png')
+        img: require('@/source/img/icon/4.png')
     },
     {
         id: '5',
         title: 'Массаж',
-        img: require('@/source/img/img-service/5.png')
+        img: require('@/source/img/icon/5.png')
     }
 ]
-
 
 /** 
  * @widgets Горизонтальный скрол с услугами.
  */
 const ListService: FC = () => {
 
-    const [data, setData] = useState(DATA);
+    const [data, setData] = useState<IDataListService[]>(DATA);
 
 
     return (
@@ -48,7 +62,7 @@ const ListService: FC = () => {
                 keyExtractor={item => item.id}
                 contentContainerStyle={{ justifyContent: 'center', height: 100, flexGrow: 1 }}
                 renderItem={({item}) => <ServiceItem title={item.title} img={item.img}/>}
-                ListEmptyComponent={<View><Text>Нет элементов.</Text></View>}
+                ListEmptyComponent={<NotElements title='Нет услуг.'/>}
             />
         </View>
     );

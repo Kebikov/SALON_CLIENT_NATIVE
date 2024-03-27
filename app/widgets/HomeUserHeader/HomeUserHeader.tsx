@@ -3,7 +3,6 @@ import React, { FC } from 'react';
 import { COLOR_ROOT } from '@/data/colors';
 
 
-
 /**
  * @widgets Блок с пользователем на главной странице в верху.
  */

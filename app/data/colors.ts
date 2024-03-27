@@ -1,13 +1,25 @@
 interface IColors {
     BACKGROUND: string;
     MAIN_COLOR: string;
-    MAIN_COLOR_RGB_30: string;
-    SECOND_COLOR: string;
+    ORANGE: string;
+    PINK: string;
+    LIGHT_BLUE: string;
+    GRAY: string;
+    LIGHT_GRAY: string;
+    SKY_BLUE: string;
+    BLACK: string;
 }
 
 export const COLOR_ROOT: IColors = {
     BACKGROUND: '#131313',
     MAIN_COLOR: '#006678',
-    MAIN_COLOR_RGB_30: 'rgba(0, 102, 120, .2)',
-    SECOND_COLOR: '#ec7e29'
+    ORANGE: '#f98822',
+    PINK: '#eb555b',
+    LIGHT_BLUE: '#e0f5fa',
+    GRAY: '#50555b',
+    LIGHT_GRAY: '#acb3bc',
+    SKY_BLUE: '#3dc6d9',
+    BLACK: '#111111'
 }
+
+// #3dc6d9
