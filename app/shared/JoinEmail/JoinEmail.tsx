@@ -1,42 +1,42 @@
-import { View, Text, StyleSheet, Image, Pressable, Animated } from 'react-native';
+import { View, Text, StyleSheet, Image, Pressable } from 'react-native';
 import React, { FC } from 'react';
 import { COLOR_ROOT } from '@/data/colors';
-import { NavigationProp, useNavigation } from '@react-navigation/native';
-import { TypeRootPage } from '@/navigation/navigation.types';
-import { Iscreen } from '@/pages/Auth/Auth';
+
 
 
 interface IJoinEmail {
     /**
-     * Функция срабатываюшая после нажатия на кнопку "Регистрация с Email".
+     * Функция срабатываюшая после нажатия на кнопку.
      */
-    setScreen: React.Dispatch<React.SetStateAction<Iscreen>>;
+    pushButton: Function;
+    /**
+     * Текст кнопки.
+     */
+    title: string;
+    /**
+     * Отступ с верху.
+     */
+    marginTop?: number;
 }
 
 
 /**
  * @component Кнопка, вход через Email.
- * @param setScreen Функция срабатываюшая после нажатия на кнопку "Регистрация с Email".
+ * @param pushButton Функция срабатываюшая после нажатия на кнопку.
+ * @param title Текст кнопки.
+ * @param marginTop ? Отступ с верху.
  */
-const JoinEmail: FC<IJoinEmail> = ({setScreen}) => {
+const JoinEmail: FC<IJoinEmail> = ({title, pushButton, marginTop}) => {
 
 
     return (
         <Pressable 
-            style={styles.main}
-            onPress={() => {
-                console.log('Press');
-                    setScreen({
-                        AuthStart: false,
-                        AuthRegistrationEmail: true,
-                        AuthAuthorization: false
-                    });
-                }
-            }
+            style={[styles.main, {marginTop}]}
+            onPress={() => pushButton()}
         >
             <View style={styles.container}>
                 <Image source={require('@/source/img/logo/email.png')} style={styles.img} />
-                <Text style={styles.text} >Регистрация с Email</Text>
+                <Text style={styles.text} >{title}</Text>
             </View>
             
         </Pressable>

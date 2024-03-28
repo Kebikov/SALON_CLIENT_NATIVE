@@ -2,15 +2,24 @@ import { View, Text, StyleSheet, Image } from 'react-native';
 import React, { FC } from 'react';
 import { COLOR_ROOT } from '@/data/colors';
 
+
+interface IJoinGoogle {
+    /**
+     * Надо ли border в кнопке.
+     */
+    border?: boolean;
+}
+
 /**
  * @component Кнопка, вход с Google.
- * @example <JoinGoogle/>
+ * @param border Надо ли border в кнопке.
+ * @example <JoinGoogle border={#} />
  * @returns {JSX.Element}
  */
-const JoinGoogle: FC = () => {
+const JoinGoogle: FC<IJoinGoogle> = ({border = false}) => {
 
     return (
-        <View style={styles.main}>
+        <View style={[styles.main, border ? styles.border : null]}>
             <View style={styles.container}>
                 <Image source={require('@/source/img/logo/google.png')} style={styles.img} />
                 <Text style={styles.text} >Регистрация с Google</Text>
@@ -44,6 +53,10 @@ const styles = StyleSheet.create({
         top: -5,
         width: 35,
         height:35
+    },
+    border: {
+        borderWidth: 1,
+        borderColor: COLOR_ROOT.MAIN_COLOR
     }
 });
 

@@ -9,7 +9,7 @@ import BottomMenu from '@/widgets/BottomMenu/BottomMenu';
 const User: FC = () => {
 
     return (
-        <Wrapper>
+        <Wrapper backgroundColor='white' barStyle='light-content' >
             <View style={styles.main} >
                 <View style={styles.box} >
                     <Text>USER</Text>

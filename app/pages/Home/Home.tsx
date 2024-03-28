@@ -3,10 +3,9 @@ import React, { FC } from 'react';
 import { COLOR_ROOT } from '@/data/colors';
 import WrapperScrollMenu from '@/shared/WrapperScrollMenu/WrapperScrollMenu';
 import HomeUserHeader from '@/widgets/HomeUserHeader/HomeUserHeader';
-import ListService from '@/widgets/ListService/ListService';
+import ListDepartment from '@/widgets/ListDepartment/ListDepartment';
 import ListMasters from '@/widgets/ListMasters/ListMasters';
-import ServiceCart from '@/shared/ServiceCart/ServiceCart';
-
+import ListService from '@/widgets/ListService/ListService';
 
 
 
@@ -19,13 +18,11 @@ const Home: FC = () => {
         <WrapperScrollMenu page='Home' >
             <HomeUserHeader/>
             <Text style={[styles.text, {marginTop: 10}]} >Service</Text>
-            <ListService/>
+            <ListDepartment/>
             <Text style={[styles.text, {marginTop: 10}]} >Masters</Text>
             <ListMasters/>
             <Text style={[styles.text, {marginTop: 0}]} >Популярные услуги</Text>
-            <ServiceCart/>
-            <ServiceCart/>
-            <ServiceCart/>
+            <ListService/>
         </WrapperScrollMenu>
     );
 };

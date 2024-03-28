@@ -2,8 +2,10 @@ import { ComponentType } from "react";
 
 export type TypeRootPage = {
     Auth: undefined;
+    AuthCreateAccount: undefined;
+    AuthEnter: undefined;
+    AuthForgot: undefined;
     Home: undefined;
-    Registration: undefined;
     User: undefined;
 };
 

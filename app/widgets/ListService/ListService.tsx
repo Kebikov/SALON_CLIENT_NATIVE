@@ -1,48 +1,42 @@
-import { View, Text, StyleSheet, FlatList, RefreshControl, Button } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import React, { FC, useEffect, useState, useRef } from 'react';
-import ServiceItem from '@/shared/ServiceItem/ServiceItem';
-import NotElements from '@/shared/NotElements/NotElements';
+import { IServiceCart } from '@/shared/ServiceCart/ServiceCart';
+import ServiceCart from '@/shared/ServiceCart/ServiceCart';
 
 
-
-interface IDataListService {
-    id: string;
-    /**
-     * Название услуги.
-     */
-    title: string;
-    /**
-     * Изображение услуги.
-     */
-    img: number;
-}
-
-const DATA: Array<IDataListService> = [
+const DATA: Array<IServiceCart> = [
     {
         id: '1',
-        title: 'Маникюр',
-        img: require('@/source/img/icon/1.png')
+        title: 'Макияж свадебный',
+        department: 'макияж и укладка',
+        time: 40,
+        price: 45,
+        img: require('@/source/img/service-img/3.jpg')
     },
     {
         id: '2',
-        title: 'Прическа',
-        img: require('@/source/img/icon/2.png')
+        title: 'Стрижка женская',
+        department: 'парикмахерские услуги',
+        time: 45,
+        price: 55,
+        img: require('@/source/img/service-img/1.jpg')
     },
     {
         id: '3',
-        title: 'Эпиляция',
-        img: require('@/source/img/icon/3.png')
+        title: 'Эпиляция зоны',
+        department: 'эпиляция',
+        time: 30,
+        price: 35,
+        img: require('@/source/img/service-img/2.jpg')
     },
     {
         id: '4',
-        title: 'Массаж',
-        img: require('@/source/img/icon/4.png')
+        title: 'Окрашивание простое',
+        department: 'парикмахерские услуги',
+        time: 120,
+        price: 85,
+        img: require('@/source/img/service-img/4.jpg')
     },
-    {
-        id: '5',
-        title: 'Массаж',
-        img: require('@/source/img/icon/5.png')
-    }
 ]
 
 /** 
@@ -50,29 +44,23 @@ const DATA: Array<IDataListService> = [
  */
 const ListService: FC = () => {
 
-    const [data, setData] = useState<IDataListService[]>(DATA);
+    const [data, setData] = useState<IServiceCart[]>(DATA);
+
+    const items = data.map(item => <ServiceCart key={item.id} id={item.id} title={item.title} department={item.department} time={item.time} price={item.price} img={item.img} /> );
 
 
     return (
         <View style={styles.main}>
-            <FlatList
-                data={data}
-                horizontal={true}
-                showsHorizontalScrollIndicator={false}
-                keyExtractor={item => item.id}
-                contentContainerStyle={{ justifyContent: 'center', height: 100, flexGrow: 1 }}
-                renderItem={({item}) => <ServiceItem title={item.title} img={item.img}/>}
-                ListEmptyComponent={<NotElements title='Нет услуг.'/>}
-            />
+            {items}
         </View>
     );
 };
 
 const styles = StyleSheet.create({
     main: {
-        marginTop: 10,
+        //marginTop: 10,
         //backgroundColor: 'red',
-        height: 100
+        paddingBottom: 10
     }
 });
 

@@ -3,24 +3,54 @@ import React, { FC } from 'react';
 import { COLOR_ROOT } from '@/data/colors';
 
 
+export interface IServiceCart {
+    id: string;
+    /**
+     * Название услуги.
+     */
+    title: string;
+    /**
+     * Отдел к которому относится услуга
+     */
+    department: string;
+    /**
+     * Время выполнения услуги.
+     */
+    time: number;
+    /**
+     * Стоимость услуги.
+     */
+    price: number;
+    /**
+     * Изображение услуги.
+     */
+    img: number;
+}
+
+
 /**
  * @shared Мини карточка услуги.
+ * @param title Название услуги.
+ * @param department Отдел к которому относится услуга.
+ * @param time Время выполнения услуги.
+ * @param price Стоимость услуги.
+ * @param img Изображение услуги.
  */
-const ServiceCart: FC = () => {
+const ServiceCart: FC<IServiceCart> = ({title, department, time, price, img}) => {
 
     return (
         <View style={styles.main} >
             <View style={styles.box} >
                 <View style={styles.left} >
-                    <Image style={styles.img} source={require('@/source/img/service-img/3.jpg')} />
+                    <Image style={styles.img} source={img} />
                 </View>
                 <View style={styles.right} >
-                    <Text style={styles.title} >Макияж свадебный</Text>
-                    <Text style={styles.subTitle} >макияж и укладка</Text>
-                    <Text style={styles.time} >Время: 40 мин.</Text>
+                    <Text style={styles.title} >{title}</Text>
+                    <Text style={styles.department} >{department}</Text>
+                    <Text style={styles.time} >{'Время: ' + time + 'мин.'}</Text>
                     <View style={styles.boxPrice} >
                         <View style={styles.price}>
-                            <Text style={styles.textTotal}>45</Text>
+                            <Text style={styles.textTotal}>{price}</Text>
                             <Text style={styles.textByn} > byn</Text>
                         </View>
                         <View style={styles.order}>
@@ -84,7 +114,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: '500'
     },
-    subTitle: {
+    department: {
         color: COLOR_ROOT.LIGHT_GRAY,
         fontSize: 15,
         fontWeight: '400'

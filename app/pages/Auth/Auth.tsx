@@ -1,43 +1,42 @@
 import { View, Text, StyleSheet, ImageBackground, StatusBar } from 'react-native';
 import React, { FC, useState } from 'react';
-import AuthStart from '@/widgets/AuthStart/AuthStart';
-import AuthRegistrationEmail from '@/widgets/AuthRegistrationEmail/AuthRegistrationEmail';
-import AuthAuthorization from '@/widgets/AuthAuthorization/AuthAuthorization';
-
-
-export interface Iscreen {
-    AuthStart: boolean;
-    AuthRegistrationEmail: boolean;
-    AuthAuthorization: boolean;
-}
-
-
+import JoinGoogle from '@/shared/JoinGoogle/JoinGoogle';
+import JoinEmail from '@/shared/JoinEmail/JoinEmail';
+import DoYouHaveAnAccount from '@/shared/DoYouHaveAnAccount/DoYouHaveAnAccount';
+import { useNavigation, NavigationProp } from '@react-navigation/native';
+import { TypeRootPage } from '@/navigation/navigation.types';
 
 /**
  * @page Стартовая страница авторизации.
  */
 const Auth: FC = () => {
 
-    /**
-     * @param screen Состояние блоков, скрывать их или нет.
-     */
-    const [screen, setScreen] = useState<Iscreen>(
-        {
-            AuthStart: true, 
-            AuthRegistrationEmail: false,
-            AuthAuthorization: false
-        }
-    );
+    const {navigate} = useNavigation<NavigationProp<TypeRootPage>>();
 
+    const goToPageRegistration = () => {
+        navigate('AuthCreateAccount');
+    }
+
+    const goToPageAuthEnter = () => {
+        navigate('AuthEnter');
+    }
 
     return (
         <>
             <StatusBar backgroundColor={'rgba(0,0,0,0)'} translucent />
             <ImageBackground style={styles.main} source={require('@/source/img/auth/main-crop.jpg')} >
                 <View style={styles.overlay} />
-                <AuthStart screen={screen} setScreen={setScreen} />
-                <AuthRegistrationEmail screen={screen} setScreen={setScreen} />
-                <AuthAuthorization screen={screen} setScreen={setScreen} />
+                <View style={styles.authStart} >
+                    <View style={styles.box}>
+                        <Text style={styles.textTitle} >Давай, присоеденяйся к нам !</Text>
+                        <View style={styles.titleBox} >
+                            <Text style={styles.textSubTitle} >Лучшие Beauty мастера ждут тебя. Маникюр, парикмахерские услуги, лазерная эпиляция и многое еще.</Text>
+                        </View>
+                        <JoinEmail pushButton={goToPageRegistration} title='Регистрация с Email' />
+                        <JoinGoogle/>
+                        <DoYouHaveAnAccount pushButton={goToPageAuthEnter} title='Уже есть аккаунт ?' textButton=' Войти' color='white' />
+                    </View>
+                </View>
             </ImageBackground>
         </>
     );
@@ -52,6 +51,38 @@ const styles = StyleSheet.create({
     overlay: {
         ...StyleSheet.absoluteFillObject,
         backgroundColor: 'rgba(0, 0, 0, 0.4)'
+    },
+    authStart: {
+        position: 'absolute',
+        bottom: 20,
+        width: '100%',
+        height: '100%',
+        justifyContent: 'flex-end',
+        alignItems: 'center',
+    },
+    box: {
+        justifyContent: 'flex-end',
+        alignItems: 'center',
+        width: '90%',
+    },
+    titleBox: {
+        width: '100%'
+    },
+    textTitle: {
+        color: 'white',
+        fontSize: 21,
+        fontWeight: '600',
+        textAlign: 'center'
+    },
+    textSubTitle: {
+        color: 'white',
+        fontSize: 16,
+        fontWeight: '400',
+        opacity: .85,
+        marginTop: 20,
+        marginBottom: 40,
+        textAlign: 'center',
+        lineHeight: 21
     }
 });
 

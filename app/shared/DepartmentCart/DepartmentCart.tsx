@@ -2,16 +2,24 @@ import { View, Text, StyleSheet, Image } from 'react-native';
 import React, { FC } from 'react';
 import { COLOR_ROOT } from '@/data/colors';
 
-interface IServiceItem {
+export interface IDepartmentCart {
+    id: string;
+    /**
+     * Название отдела.
+     */
     title: string;
+    /**
+     * Изображение отдела.
+     */
     img: number;
 }
 
 /**
- * @shared Карточка-иконка сервиса.
+ * @shared Карточка-иконка отдела.
+ * @param title Название отдела.
+ * @param img Изображение отдела.
  */
-const ServiceItem: FC<IServiceItem> = ({title, img}) => {
-    console.log(img);
+const DepartmentCart: FC<IDepartmentCart> = ({id, title, img}) => {
     
 
     return (
@@ -57,4 +65,4 @@ const styles = StyleSheet.create({
 });
 
 
-export default ServiceItem;
+export default DepartmentCart;
