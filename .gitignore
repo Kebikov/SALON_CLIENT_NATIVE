@@ -8,7 +8,7 @@ node_modules/
 dist/
 web-build/
 
-OAuth2
+.OAuth2
 
 # Native
 *.orig.*
