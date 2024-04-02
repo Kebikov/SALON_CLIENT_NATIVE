@@ -8,7 +8,9 @@ node_modules/
 dist/
 web-build/
 
+/OAuth2.md
 OAuth2.md
+
 
 # Native
 *.orig.*
@@ -32,7 +34,7 @@ yarn-error.*
 
 # local env files
 .env*.local
-
+.env
 # typescript
 *.tsbuildinfo
 

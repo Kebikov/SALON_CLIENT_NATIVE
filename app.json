@@ -6,6 +6,7 @@
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "dark",
+    "scheme": "com.kebikov.salonbeauty",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
@@ -16,14 +17,19 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.kebikov.salon"
+      "bundleIdentifier": "com.kebikov.salonbeauty",
+      "infoPlist": {
+        "CFBundleURLSchemes": [
+            "com.googleusercontent.apps.449895255065-bjfe6nr5sooi282je118nu5jb1djru2a"
+        ]
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.kebikov.salon_client_native"
+      "package": "com.kebikov.salonbeauty"
     },
     "web": {
       "favicon": "./assets/favicon.png"

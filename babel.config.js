@@ -9,9 +9,17 @@ module.exports = function (api) {
                 {
                     rootPathSuffix: 'app/',
                     rootPathPrefix: '@/'
-                },
-                'react-native-reanimated/plugin'
-            ]
+                }
+            ],
+            [
+                'module:react-native-dotenv', 
+                {
+                    moduleName: '@env',
+                    verbose: false,
+                    allowUndefined: false
+                }
+            ],
+            'react-native-reanimated/plugin'
         ]
     };
 };
