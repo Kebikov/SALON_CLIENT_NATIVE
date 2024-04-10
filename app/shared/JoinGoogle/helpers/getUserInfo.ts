@@ -1,6 +1,6 @@
 import { formatToInterfaceIUserGoogle, IUserGoogle } from '@/shared/JoinGoogle/helpers/formatToInterfaceIUser';
 import { ToastAndroid } from 'react-native';
-import { IDataRegistration, IResRegistration, IErrors } from '@/axios/types/registration';
+import { IDataRegistration, IResRegistration, IErrors } from '@/axios/types/registration.types';
 import { httpRegistration } from '@/axios/paths';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 

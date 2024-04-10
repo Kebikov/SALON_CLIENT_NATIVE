@@ -8,7 +8,7 @@ import { getUserInfo } from './helpers/getUserInfo';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { TypeRootPage } from '@/navigation/navigation.types';
 import { httpRegistration } from '@/axios/paths';
-import axios from 'axios';
+import { IDataRegistration } from '@/axios/types/registration.types';
 
 
 WebBrowser.maybeCompleteAuthSession();
@@ -29,7 +29,6 @@ interface IJoinGoogle {
  * @returns {JSX.Element}
  */
 const JoinGoogle: FC<IJoinGoogle> = ({ border = false }) => {
-    console.log('Для теста');
     // async function clear() {
     //     await AsyncStorage.clear();
     // }
@@ -56,6 +55,7 @@ const JoinGoogle: FC<IJoinGoogle> = ({ border = false }) => {
         } else {
             if(response && response.type === "success" && response.authentication) {
                 const result = await getUserInfo(response.authentication.accessToken);
+                console.log(result);
                 if(result) {
                     navigate('Home');
                 }
@@ -69,16 +69,10 @@ const JoinGoogle: FC<IJoinGoogle> = ({ border = false }) => {
 
     async function testUrl() {
         try{
-            //const {data} = await httpRegistration.post('/', {});
-            // axios.get('http://localhost:3306/api')
-            //     .then(res => console.log(res.data))
-            //     .catch(err => console.log(err));
-            console.log('Fetch !');
-            fetch('http://192.168.0.178:3306/api')
-            .then(res => res.json())
-            .then(res => console.log(res))
-            .catch(err => console.log(err));
-            //console.log(data);
+            const {data} = await httpRegistration.post('/', {});
+            httpRegistration.get('/')
+                .then(res => console.log(res.data))
+                .catch(err => console.log(err));
         } catch(err) {
             console.log(err);
         }
@@ -86,7 +80,7 @@ const JoinGoogle: FC<IJoinGoogle> = ({ border = false }) => {
     }
 
 	return (
-		<Pressable onPress={() => testUrl()} style={[styles.main, border ? styles.border : null]}>
+		<Pressable onPress={() => promptAsync()} style={[styles.main, border ? styles.border : null]}>
 			<View style={styles.container}>
 				<Image source={require('@/source/img/logo/google.png')} style={styles.img} />
 				<Text style={styles.text}>Регистрация с Google</Text>
