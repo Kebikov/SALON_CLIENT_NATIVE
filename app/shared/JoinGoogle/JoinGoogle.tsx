@@ -1,14 +1,10 @@
-import { View, Text, StyleSheet, Image, Pressable, ToastAndroid } from 'react-native';
+import { View, Text, StyleSheet, Image, Pressable } from 'react-native';
 import React, { FC, useEffect, useState } from 'react';
 import { COLOR_ROOT } from '@/data/colors';
 import * as WebBrowser from 'expo-web-browser';
 import * as Google from 'expo-auth-session/providers/google';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { getUserInfo } from './helpers/getUserInfo';
-import { NavigationProp, useNavigation } from '@react-navigation/native';
-import { TypeRootPage } from '@/navigation/navigation.types';
-import { httpRegistration } from '@/axios/paths';
-import { IDataRegistration } from '@/axios/types/registration.types';
+import handleSingInWithGoogle from './helpers/handleSingInWithGoogle';
 
 
 WebBrowser.maybeCompleteAuthSession();
@@ -29,13 +25,6 @@ interface IJoinGoogle {
  * @returns {JSX.Element}
  */
 const JoinGoogle: FC<IJoinGoogle> = ({ border = false }) => {
-    // async function clear() {
-    //     await AsyncStorage.clear();
-    // }
-
-    // clear();
-
-    const {navigate} = useNavigation<NavigationProp<TypeRootPage>>();
 
 	const [request, response, promptAsync] = Google.useAuthRequest({
 		androidClientId: process.env.ANDROID_CLIENT_ID,
@@ -43,41 +32,10 @@ const JoinGoogle: FC<IJoinGoogle> = ({ border = false }) => {
 		webClientId: process.env.WEB_CLIENT_ID,
 	});
 
-    /**
-     * Проверка/Установка User.
-     * - Проверяет, есть ли уже пользователь, если есть перенаправляем на главную.
-     * - Если нет, запускает getUserInfo.
-     */
-    async function handleSingInWithGoogle() {
-        const user = await AsyncStorage.getItem('@user');
-        if(user) {
-            navigate('Home');
-        } else {
-            if(response && response.type === "success" && response.authentication) {
-                const result = await getUserInfo(response.authentication.accessToken);
-                console.log(result);
-                if(result) {
-                    navigate('Home');
-                }
-            }
-        }
-    }
-
 	useEffect(() => {
-        handleSingInWithGoogle();
+        handleSingInWithGoogle(response);
 	}, [response]);
 
-    async function testUrl() {
-        try{
-            const {data} = await httpRegistration.post('/', {});
-            httpRegistration.get('/')
-                .then(res => console.log(res.data))
-                .catch(err => console.log(err));
-        } catch(err) {
-            console.log(err);
-        }
-        
-    }
 
 	return (
 		<Pressable onPress={() => promptAsync()} style={[styles.main, border ? styles.border : null]}>
