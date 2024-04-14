@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Image, Pressable } from 'react-native';
+import { View, Text, StyleSheet, Image, Pressable, Vibration } from 'react-native';
 import React, { FC } from 'react';
 import { COLOR_ROOT } from '@/data/colors';
 
@@ -32,7 +32,11 @@ const JoinEmail: FC<IJoinEmail> = ({title, pushButton, marginTop}) => {
     return (
         <Pressable 
             style={[styles.main, {marginTop}]}
-            onPress={() => pushButton()}
+            onPress={() => {
+                    Vibration.vibrate([7, 8, 10]);
+                    pushButton();
+                }
+            }
         >
             <View style={styles.container}>
                 <Image source={require('@/source/img/logo/email.png')} style={styles.img} />

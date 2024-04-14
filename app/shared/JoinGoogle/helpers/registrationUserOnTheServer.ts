@@ -1,4 +1,4 @@
-import { IDataRegistration, IResRegistration, IErrors } from "@/axios/types/registration.types";
+import { IDataRegistrationGoogle, IResRegistration, IErrors, TtypeAuth } from "@/axios/types/registration.types";
 import { httpRegistration } from "@/axios/paths";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ToastAndroid } from 'react-native';
@@ -9,22 +9,26 @@ interface IData {
     data: IResRegistration | IErrors;
 }
 
+
 /**
  * Регистрация пользователя на сервере.
- * @param {IUserGoogle} user обьект пользователя
- * @returns 
+ * - При ошибке вернет false и выведет toast с ошибкой.
+ * - При регистрации вернет true.
+ * @param {IUserGoogle} user Обьект пользователя.
+ * @returns {boolean}
  */
 export const registrationUserOnTheServer = async (user: IUserGoogle) => {
 
-    const body: IDataRegistration = {
+    const body: IDataRegistrationGoogle = {
         email: user.email,
         password: user.id,
+        name: user.name,
         role: 'client',
         typeAuth: 'Google',
         picture: user.picture
     };
 
-    const {data}: IData = await httpRegistration.post('/', body);
+    const {data}: IData = await httpRegistration.post('/google', body);
 
     if("errors" in data) {
         if(Array.isArray(data.errors) && 'msg' in data.errors[0]) {
@@ -34,7 +38,8 @@ export const registrationUserOnTheServer = async (user: IUserGoogle) => {
         ToastAndroid.show('Ошибка регистрации.Попробуйте еще раз или войдите через Email.', ToastAndroid.LONG);
         return false;
     } 
-    const userData: IResRegistration = data;
-    await AsyncStorage.setItem('@user', JSON.stringify(userData));
+
+    await AsyncStorage.setItem('@user', JSON.stringify(data));
+
     return true;
 }

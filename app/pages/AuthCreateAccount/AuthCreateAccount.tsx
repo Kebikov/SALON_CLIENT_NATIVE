@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, TextInput, Image, NativeSyntheticEvent, TextInputChangeEventData, Pressable } from 'react-native';
+import { View, Text, StyleSheet, TextInput, Image, NativeSyntheticEvent, TextInputChangeEventData, ToastAndroid} from 'react-native';
 import React, { FC, useState } from 'react';
 import WrapperScroll from '@/shared/WrapperScroll/WrapperScroll';
 import { COLOR_ROOT } from '@/data/colors';
@@ -10,8 +10,11 @@ import InputGeneric from '@/shared/InputGeneric/InputGeneric';
 import LinesWithOr from '@/shared/LinesWithOr/LinesWithOr';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { TypeRootPage } from '@/navigation/navigation.types';
+import { checkDataForm } from './helpers/checkDataForm';
 
-interface IStateCreateAccount {
+
+
+export interface IStateCreateAccount {
     name: string;
     email: string;
     phone: string;
@@ -19,6 +22,7 @@ interface IStateCreateAccount {
 }
 
 export type TKeyStateCreateAccount = keyof IStateCreateAccount;
+
 
 /**
  * @page Страница регистрации нового пользователя.
@@ -38,10 +42,15 @@ const AuthCreateAccount: FC = () => {
         navigate('AuthEnter');
     }
 
-    console.log(data);
-
     const onChangeForm = (e: NativeSyntheticEvent<TextInputChangeEventData>, key: string) => {
         setData( state => ({...state, [key]: e.nativeEvent.text}) );
+    }
+
+    const createAccount = () => {
+        const resultCheck = checkDataForm(data);
+        if(!resultCheck) return;
+
+
     }
 
     return (
@@ -52,12 +61,12 @@ const AuthCreateAccount: FC = () => {
                 <InputGeneric keyName={'name'} placeholder='Имя' img={require('@/source/img/icon/user-grey.png')} onChangeForm={onChangeForm} />
                 <InputGeneric keyName={'email'} placeholder='Email'  img={require('@/source/img/icon/email-grey.png')} onChangeForm={onChangeForm} />
                 <View style={styles.boxInput} >
-                    <TextInput style={[styles.input, {paddingLeft: 100}]} placeholder='Телефон' keyboardType="numeric" onChange={text => onChangeForm(text, 'phone')} />
+                    <TextInput style={[styles.input, {paddingLeft: 100}]} placeholder='291234567' keyboardType="numeric" onChange={text => onChangeForm(text, 'phone')} />
                     <Text style={styles.numberStart} >+375 | </Text>
                     <Image style={[styles.icon, {width: 24, height: 16, marginTop: -8}]} source={require('@/source/img/icon/flag.jpg')} />
                 </View>
                 <InputPassword onChangeForm={onChangeForm} />
-                <JoinEmail title='создать акаунт' pushButton={() => {}} />
+                <JoinEmail title='создать акаунт' pushButton={() => createAccount()} />
                 <LinesWithOr/>
                 <JoinGoogle border={true} />
                 <DoYouHaveAnAccount pushButton={goToPageAuthEnter} title='Уже есть аккаунт ?' textButton=' Войти' color={COLOR_ROOT.MIDDLE_GRAY} />

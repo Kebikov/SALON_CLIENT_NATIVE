@@ -4,29 +4,27 @@ export type TtypeAuth = 'Google' | 'Email';
 
 /**
  * Входяший boby на регистрацию нового пользователя.
- * req.body 
+ * @param email Почта.
+ * @param password Пароль.
+ * @param name Имя.
+ * @param role Роль пользователя.
+ * @param typeAuth Тип регистрации пользователя.
+ * @param picture Аватарка пользователя.
  */
 export interface IDataRegistration {
-    /**
-     * Почта пользователя.
-     */
     email: string;
-    /**
-     * Пароль пользователя.
-     */
     password: string;
-    /**
-     * Роль пользователя.
-     */
+    name: string;
     role: TRole;
-    /**
-     * Тип регистрации пользователя.
-     */
     typeAuth: TtypeAuth;
-    /**
-     * Аватарка пользователя.
-     */
-    picture?: string;
+}
+
+export interface IDataRegistrationGoogle extends IDataRegistration {
+    picture: string;
+}
+
+export interface IDataRegistrationEmail extends IDataRegistration {
+    phone: string;
 }
 
 /**

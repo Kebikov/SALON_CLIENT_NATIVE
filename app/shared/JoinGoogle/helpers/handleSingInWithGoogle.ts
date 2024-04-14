@@ -1,10 +1,8 @@
-import { TypeRootPage } from '@/navigation/navigation.types';
-import { NavigationProp, useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getUserInfo } from './getUserInfo';
 import { AuthSessionResult } from 'expo-auth-session';
-
-
+import { registrationUserOnTheServer } from './registrationUserOnTheServer';
+import { IUserGoogle } from './formatToInterfaceIUser';
 
 
 /**
@@ -12,22 +10,27 @@ import { AuthSessionResult } from 'expo-auth-session';
  * - Проверяет, есть ли уже пользователь, если есть перенаправляем на главную.
  * - Если нет, запускает getUserInfo.
  */
-const handleSingInWithGoogle = async (response: AuthSessionResult | null) => {
+const handleSingInWithGoogle = async (response: AuthSessionResult | null, navigate: Function) => {
+    try{
 
-    const {navigate} = useNavigation<NavigationProp<TypeRootPage>>();
+        const user = await AsyncStorage.getItem('@user');
+        console.log(user);
+        if(user) {
+            navigate('Home');
+        } else {
+            if(response && response.type === "success" && response.authentication) {
+                const infoUser: IUserGoogle | null = await getUserInfo(response.authentication.accessToken);
 
-    const user = await AsyncStorage.getItem('@user');
-    
-    if(user) {
-        navigate('Home');
-    } else {
-        if(response && response.type === "success" && response.authentication) {
-            const result = await getUserInfo(response.authentication.accessToken);
-            console.log(result);
-            if(result) {
-                navigate('Home');
+                if(!infoUser) return;
+
+                const resultRegistration = await registrationUserOnTheServer(infoUser);
+                if(resultRegistration) {
+                    navigate('Home');
+                }
             }
         }
+    } catch(error) {
+        console.log(error);
     }
 };
 

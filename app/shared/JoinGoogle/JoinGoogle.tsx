@@ -5,6 +5,8 @@ import * as WebBrowser from 'expo-web-browser';
 import * as Google from 'expo-auth-session/providers/google';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import handleSingInWithGoogle from './helpers/handleSingInWithGoogle';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { TypeRootPage } from '@/navigation/navigation.types';
 
 
 WebBrowser.maybeCompleteAuthSession();
@@ -26,6 +28,8 @@ interface IJoinGoogle {
  */
 const JoinGoogle: FC<IJoinGoogle> = ({ border = false }) => {
 
+    const {navigate} = useNavigation<NavigationProp<TypeRootPage>>();
+
 	const [request, response, promptAsync] = Google.useAuthRequest({
 		androidClientId: process.env.ANDROID_CLIENT_ID,
 		iosClientId: process.env.IOS_CLIENT_ID,
@@ -33,7 +37,9 @@ const JoinGoogle: FC<IJoinGoogle> = ({ border = false }) => {
 	});
 
 	useEffect(() => {
-        handleSingInWithGoogle(response);
+        if(response) {
+            handleSingInWithGoogle(response, navigate);
+        }
 	}, [response]);
 
 

@@ -1,30 +1,26 @@
 import { IUserGoogle } from '@/shared/JoinGoogle/helpers/formatToInterfaceIUser';
 import { ToastAndroid } from 'react-native';
-import { IResRegistration } from '@/axios/types/registration.types';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { responseGoogleInfoUser } from './responseGoogleInfoUser';
-import { registrationUserOnTheServer } from './registrationUserOnTheServer';
 
 
 /**
  * Получение информации о пользователе Google.
  * @param token Токен для авторизации.
  */
-export const getUserInfo = async (token: string): Promise<boolean | undefined> => {
-    if (!token) return false;
+export const getUserInfo = async (token: string): Promise<IUserGoogle | null> => {
+    if (!token) return null;
     try {
-
         const userFormatToInterfaceIUser: IUserGoogle | null = await responseGoogleInfoUser(token);
 
         if(!userFormatToInterfaceIUser) {
             ToastAndroid.show('Не верный формат пользователя. Попробуйте еще раз или войдите через Email.', ToastAndroid.LONG);
-            return false;
+            return null;
         }
 
-        return await registrationUserOnTheServer(userFormatToInterfaceIUser);
+        return userFormatToInterfaceIUser;
 
     } catch (error) {
         ToastAndroid.show('Непредвиденная ошибка регистрации.', ToastAndroid.LONG);
-        console.log(error);
+        return null;
     }
 };
