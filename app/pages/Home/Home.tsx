@@ -1,4 +1,4 @@
-import { Text, StyleSheet } from 'react-native';
+import { Text, StyleSheet, Pressable, ToastAndroid } from 'react-native';
 import React, { FC } from 'react';
 import { COLOR_ROOT } from '@/data/colors';
 import WrapperScrollMenu from '@/shared/WrapperScrollMenu/WrapperScrollMenu';
@@ -6,6 +6,8 @@ import HomeUserHeader from '@/widgets/HomeUserHeader/HomeUserHeader';
 import ListDepartment from '@/widgets/ListDepartment/ListDepartment';
 import ListMasters from '@/widgets/ListMasters/ListMasters';
 import ListService from '@/widgets/ListService/ListService';
+import { checkErrorResponce } from '@/axios/helpers/checkErrorResponce';
+import httpClientService from '@/axios/routes/client/service/http.client.service';
 
 
 
@@ -14,9 +16,22 @@ import ListService from '@/widgets/ListService/ListService';
  */
 const Home: FC = () => {
 
+    const press = async () => {
+        const clientInfo = await httpClientService.GET_getClientInfo(1);
+        if(checkErrorResponce(clientInfo)) return;
+        console.log('clientInfo >>> ', clientInfo);
+    }
+
     return (
         <WrapperScrollMenu page='Home' >
             <HomeUserHeader/>
+
+            <Pressable
+                onPress={() => press()}
+            >
+                <Text style={{fontSize: 20}} >НАЖМИ МЕНЯ</Text>
+            </Pressable>
+
             <Text style={[styles.text, {marginTop: 10}]} >Service</Text>
             <ListDepartment/>
             <Text style={[styles.text, {marginTop: 10}]} >Masters</Text>

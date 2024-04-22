@@ -5,11 +5,15 @@ import JoinEmail from '@/shared/JoinEmail/JoinEmail';
 import DoYouHaveAnAccount from '@/shared/DoYouHaveAnAccount/DoYouHaveAnAccount';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { TypeRootPage } from '@/navigation/navigation.types';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 /**
  * @page Стартовая страница авторизации.
  */
 const Auth: FC = () => {
+
+    //AsyncStorage.clear().then(() => console.log('Данные удалены !'));
 
     const {navigate} = useNavigation<NavigationProp<TypeRootPage>>();
 

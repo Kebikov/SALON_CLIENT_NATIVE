@@ -1,9 +1,9 @@
-import { IStateCreateAccount } from '@/pages/AuthCreateAccount/AuthCreateAccount';
+import { IReqBodyRegistrationEmail } from '@/axios/routes/registration/types/registration.types';
 import { ToastAndroid} from 'react-native';
 import { CheckForm } from '@/helpers/checkForm/checkForm';
 
 
-export const checkDataForm = (data: IStateCreateAccount): boolean => {
+export const checkDataForm = (data: IReqBodyRegistrationEmail): boolean => {
 
     if(!CheckForm.checkName(data.name)) {
         ToastAndroid.show('Имя не может быть короче 3-х букв.', ToastAndroid.SHORT);

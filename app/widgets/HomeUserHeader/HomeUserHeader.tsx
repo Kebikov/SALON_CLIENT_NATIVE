@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, Image, TextInput } from 'react-native';
-import React, { FC } from 'react';
+import React, { FC, useState, useEffect } from 'react';
 import { COLOR_ROOT } from '@/data/colors';
 
 
@@ -7,6 +7,8 @@ import { COLOR_ROOT } from '@/data/colors';
  * @widgets Блок с пользователем на главной странице в верху.
  */
 const HomeUserHeader: FC = () => {
+
+    const [userInfo, setUserInfo] = useState(null);
 
     return (
         <View style={styles.main} >

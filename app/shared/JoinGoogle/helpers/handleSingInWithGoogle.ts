@@ -14,7 +14,7 @@ const handleSingInWithGoogle = async (response: AuthSessionResult | null, naviga
     try{
 
         const user = await AsyncStorage.getItem('@user');
-        console.log(user);
+        
         if(user) {
             navigate('Home');
         } else {

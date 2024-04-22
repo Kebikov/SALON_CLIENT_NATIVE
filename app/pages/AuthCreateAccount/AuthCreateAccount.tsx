@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, TextInput, Image, NativeSyntheticEvent, TextInputChangeEventData, ToastAndroid} from 'react-native';
+import { View, Text, StyleSheet, TextInput, Image, NativeSyntheticEvent, TextInputChangeEventData } from 'react-native';
 import React, { FC, useState } from 'react';
 import WrapperScroll from '@/shared/WrapperScroll/WrapperScroll';
 import { COLOR_ROOT } from '@/data/colors';
@@ -11,17 +11,11 @@ import LinesWithOr from '@/shared/LinesWithOr/LinesWithOr';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { TypeRootPage } from '@/navigation/navigation.types';
 import { checkDataForm } from './helpers/checkDataForm';
+import { IReqBodyRegistrationEmail } from '@/axios/routes/registration/types/registration.types';
+import { requestOnRegistration } from './helpers/requestOnRegistration';
 
 
-
-export interface IStateCreateAccount {
-    name: string;
-    email: string;
-    phone: string;
-    password: string;
-}
-
-export type TKeyStateCreateAccount = keyof IStateCreateAccount;
+export type TKeyStateCreateAccount = keyof IReqBodyRegistrationEmail;
 
 
 /**
@@ -29,7 +23,7 @@ export type TKeyStateCreateAccount = keyof IStateCreateAccount;
  */
 const AuthCreateAccount: FC = () => {
 
-    const [data, setData] = useState<IStateCreateAccount>({
+    const [data, setData] = useState<IReqBodyRegistrationEmail>({
         name: '', 
         email: '',
         phone: '',
@@ -46,11 +40,14 @@ const AuthCreateAccount: FC = () => {
         setData( state => ({...state, [key]: e.nativeEvent.text}) );
     }
 
-    const createAccount = () => {
+    const createAccount = async () => {
         const resultCheck = checkDataForm(data);
         if(!resultCheck) return;
 
-
+        const resultRegistration = await requestOnRegistration(data);
+        if(resultRegistration) {
+            navigate('Home');
+        }
     }
 
     return (
