@@ -21,17 +21,12 @@ const axiosInterceptors = (instance: AxiosInstance) => {
     );
 }
 
-
-export const httpRegistration: AxiosInstance = axios.create({
-    baseURL: `${baseLink}/api/registration`
-});
-
-export const httpClient: AxiosInstance = axios.create({
-    baseURL: `${baseLink}/api/client`
+export const httpAuth: AxiosInstance = axios.create({
+    baseURL: `${baseLink}/api`
 });
 
 
-axiosInterceptors(httpClient);
+axiosInterceptors(httpAuth);
 
 
 

@@ -1,6 +1,11 @@
 import { View, Text, StyleSheet, Image, TextInput } from 'react-native';
 import React, { FC, useState, useEffect } from 'react';
 import { COLOR_ROOT } from '@/data/colors';
+import httpClientService from '@/axios/routes/client/service/http.client.service';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import type { IResRegistration } from '@/axios/routes/registration/types/registration.types';
+import type { IgetInfoBasic } from '@/axios/routes/client/types/client.types';
+import { useHookCheckErrorResponce } from '@/hooks/useHookCheckErrorResponce';
 
 
 /**
@@ -8,18 +13,39 @@ import { COLOR_ROOT } from '@/data/colors';
  */
 const HomeUserHeader: FC = () => {
 
-    const [userInfo, setUserInfo] = useState(null);
+    const {checkResponce} = useHookCheckErrorResponce();
+    const [userInfo, setUserInfo] = useState<IgetInfoBasic | null>(null);
+
+    useEffect(() => {
+        (async function() {
+            const userJSON = await AsyncStorage.getItem('@user');
+            if(!userJSON) return;
+            const user = JSON.parse(userJSON);
+            if('id' in user) {
+                const result = await httpClientService.GET_getClientInfo(user.id);
+                if(checkResponce(result) || !result) return;
+                console.log(userInfo?.picture);
+                setUserInfo(result);
+            }
+            
+        })();
+    }, []);
 
     return (
         <View style={styles.main} >
             <View style={styles.box} >
                 <View style={styles.rightBox} >
                     <View style={styles.boxAvatar} >
-                        <Image style={styles.imgContain} source={require('@/source/img/avatar/1.png')} />
+                        <Image style={styles.imgContain} source={
+                            userInfo?.picture 
+                            ? {uri: userInfo.picture}  
+                            : 
+                            require('@/source/img/avatar/1.png')} 
+                        />
                     </View>
                     <View>
-                        <Text style={styles.textHello} >Привет, красотка !</Text>
-                        <Text style={styles.textEmail} >lola2006@gmail.com</Text>
+                        <Text style={styles.textHello} >Привет, {userInfo?.name} !</Text>
+                        <Text style={styles.textEmail} >{userInfo?.email}</Text>
                     </View>
                 </View>
                 <View style={styles.boxBell} >

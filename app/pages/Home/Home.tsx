@@ -6,8 +6,8 @@ import HomeUserHeader from '@/widgets/HomeUserHeader/HomeUserHeader';
 import ListDepartment from '@/widgets/ListDepartment/ListDepartment';
 import ListMasters from '@/widgets/ListMasters/ListMasters';
 import ListService from '@/widgets/ListService/ListService';
-import { checkErrorResponce } from '@/axios/helpers/checkErrorResponce';
-import httpClientService from '@/axios/routes/client/service/http.client.service';
+import { useAppDispatch } from '@/redux/store/hooks';
+import { setAppModalObject } from '@/redux/slice/modal.slice';
 
 
 
@@ -16,14 +16,19 @@ import httpClientService from '@/axios/routes/client/service/http.client.service
  */
 const Home: FC = () => {
 
+    const dispatch = useAppDispatch();
+
+    /**
+     * Получение информации о пользователе.
+     * @returns 
+     */
     const press = async () => {
-        const clientInfo = await httpClientService.GET_getClientInfo(1);
-        if(checkErrorResponce(clientInfo)) return;
-        console.log('clientInfo >>> ', clientInfo);
+        dispatch(setAppModalObject({message: 'Привет', modalType: 'message', modalVisible: true}))
     }
 
     return (
         <WrapperScrollMenu page='Home' >
+            {/* <ModalMsg message='Тестовое сообщение !' type='error' /> */}
             <HomeUserHeader/>
 
             <Pressable

@@ -1,5 +1,6 @@
+import { checkErrorResponce } from '@/axios/helpers/checkErrorResponce';
+import httpRegistrationService from '@/axios/routes/registration/service/registration.service';
 import { IReqBodyRegistrationGoogle, IResRegistration, IError } from "@/axios/routes/registration/types/registration.types";
-import { httpRegistration } from "@/axios/paths";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ToastAndroid } from 'react-native';
 import { IUserGoogle } from "./formatToInterfaceIUser";
@@ -26,20 +27,13 @@ export const registrationUserOnTheServer = async (user: IUserGoogle) => {
         picture: user.picture
     };
 
-    const {data}: IData = await httpRegistration.post('/google', body);
+    const result = await httpRegistrationService.POST_registrationGoogle(body);
+    if(checkErrorResponce(result)) return;
 
-    if("errors" in data) {
-        if(Array.isArray(data.errors) && 'msg' in data.errors[0]) {
-            ToastAndroid.show(data.errors[0].msg, ToastAndroid.LONG);
-            return false;
-        }
-        ToastAndroid.show('Ошибка регистрации.Попробуйте еще раз или войдите через Email.', ToastAndroid.LONG);
-        return false;
-    } 
     // Расчет времени жизни аксес токена.
-    data.expiresIn = data.expiresIn + new Date().getTime(); 
-    console.log(data);
-    await AsyncStorage.setItem('@user', JSON.stringify(data));
+    result.expiresIn = result.expiresIn + new Date().getTime(); 
+    
+    await AsyncStorage.setItem('@user', JSON.stringify(result));
 
     return true;
 }

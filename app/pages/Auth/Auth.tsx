@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, ImageBackground, StatusBar } from 'react-native';
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import JoinGoogle from '@/shared/JoinGoogle/JoinGoogle';
 import JoinEmail from '@/shared/JoinEmail/JoinEmail';
 import DoYouHaveAnAccount from '@/shared/DoYouHaveAnAccount/DoYouHaveAnAccount';
@@ -13,6 +13,11 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
  */
 const Auth: FC = () => {
 
+    /**
+     * @param showThisComponent Переменная для показа или прерывания отображения компонента.
+     */
+    const [showThisComponent, setShowThisComponent] = useState<boolean>(false);
+
     //AsyncStorage.clear().then(() => console.log('Данные удалены !'));
 
     const {navigate} = useNavigation<NavigationProp<TypeRootPage>>();
@@ -24,6 +29,20 @@ const Auth: FC = () => {
     const goToPageAuthEnter = () => {
         navigate('AuthEnter');
     }
+
+    /**
+     * Переход на домашнюю страницу в случае существования пользователя.
+     */
+    (async function() {
+        const curentUser = await AsyncStorage.getItem('@user');
+        if(curentUser) {
+            navigate('Home');
+        } else {
+            setShowThisComponent(true);
+        }
+    })();
+
+    if(!showThisComponent) return;
 
     return (
         <>

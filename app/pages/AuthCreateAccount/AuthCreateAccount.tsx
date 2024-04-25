@@ -10,9 +10,9 @@ import InputGeneric from '@/shared/InputGeneric/InputGeneric';
 import LinesWithOr from '@/shared/LinesWithOr/LinesWithOr';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { TypeRootPage } from '@/navigation/navigation.types';
-import { checkDataForm } from './helpers/checkDataForm';
 import { IReqBodyRegistrationEmail } from '@/axios/routes/registration/types/registration.types';
 import { requestOnRegistration } from './helpers/requestOnRegistration';
+import { useHookCheckDataForm } from '@/hooks/useHookCheckDataForm';
 
 
 export type TKeyStateCreateAccount = keyof IReqBodyRegistrationEmail;
@@ -31,6 +31,7 @@ const AuthCreateAccount: FC = () => {
     });
 
     const {navigate} = useNavigation<NavigationProp<TypeRootPage>>();
+    const {checkDataForm} = useHookCheckDataForm();
 
     const goToPageAuthEnter = () => {
         navigate('AuthEnter');
@@ -40,9 +41,11 @@ const AuthCreateAccount: FC = () => {
         setData( state => ({...state, [key]: e.nativeEvent.text}) );
     }
 
+    /**
+     * Создание акаунта через Email
+     */
     const createAccount = async () => {
-        const resultCheck = checkDataForm(data);
-        if(!resultCheck) return;
+        if(checkDataForm(data)) return;
 
         const resultRegistration = await requestOnRegistration(data);
         if(resultRegistration) {
