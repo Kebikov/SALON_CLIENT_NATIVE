@@ -37,7 +37,6 @@ interface IInputGeneric {
  * @example <InputGeneric onChangeForm={#} placeholder={#} key={#} img={#} />
  */
 const InputGeneric: FC<IInputGeneric> = ({onChangeForm, placeholder, keyName, img}) => {
-    console.log(keyName);
     return (
         <View style={styles.boxInput} >
             <TextInput style={styles.input} placeholder={placeholder} onChange={text => onChangeForm(text, keyName)} />

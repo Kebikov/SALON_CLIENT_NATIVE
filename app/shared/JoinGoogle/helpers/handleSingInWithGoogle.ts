@@ -30,7 +30,7 @@ const handleSingInWithGoogle = async (response: AuthSessionResult | null, naviga
             }
         }
     } catch(error) {
-        console.log(error);
+        console.error(error);
     }
 };
 

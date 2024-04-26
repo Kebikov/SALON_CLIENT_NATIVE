@@ -5,7 +5,7 @@ import { ToastAndroid } from "react-native";
 import { IError } from "@/axios/routes/registration/types/registration.types";
 
 
-const link = baseLink + '/api/registration';
+const path = baseLink + '/api/registration';
 
 
 class HttpRegistrationService {
@@ -17,11 +17,11 @@ class HttpRegistrationService {
      */
     async POST_registrationEmail(body: IReqBodyRegistrationEmail): Promise<IResRegistration | IError | undefined> {
         try {
-            const {data} = await axios.post(`${link}/email`, body);
+            const {data} = await axios.post(`${path}/email`, body);
             return data as IResRegistration | IError;
         } catch (error) {
             ToastAndroid.show('Неизвестная ошибка сервера...', ToastAndroid.SHORT);
-            console.log('Error in POST_registrationEmail >>> ',error);
+            console.error('Error in POST_registrationEmail >>> ',error);
         }
     }
     /**
@@ -31,11 +31,11 @@ class HttpRegistrationService {
      */
         async POST_registrationGoogle(body: IReqBodyRegistrationGoogle): Promise<IResRegistration | IError | undefined> {
             try {
-                const {data} = await axios.post(`${link}/google`, body);
+                const {data} = await axios.post(`${path}/google`, body);
                 return data as IResRegistration | IError;
             } catch (error) {
                 ToastAndroid.show('Неизвестная ошибка сервера...', ToastAndroid.SHORT);
-                console.log('Error in POST_registrationEmail >>> ',error);
+                console.error('Error in POST_registrationEmail >>> ',error);
             }
         }
 

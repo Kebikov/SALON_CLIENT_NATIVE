@@ -10,6 +10,10 @@ import { COLOR_ROOT } from '@/data/colors';
 import DoYouHaveAnAccount from '@/shared/DoYouHaveAnAccount/DoYouHaveAnAccount';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { TypeRootPage } from '@/navigation/navigation.types';
+import { CheckForm } from '@/helpers/checkForm/checkForm';
+import httpAuthenticationService from '@/axios/routes/authentication/service/http.authentication.service';
+import { useHookCheckErrorResponce } from '@/hooks/useHookCheckErrorResponce';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 interface IAuthEnter {
@@ -22,6 +26,7 @@ interface IAuthEnter {
  */
 const AuthEnter: FC = () => {
 
+    const {isIError, isUndefined, modalMessageError, dispatch, setAppModalObject} = useHookCheckErrorResponce();
     const [data, setData] = useState<IAuthEnter>({
         email: '',
         password: ''
@@ -29,12 +34,32 @@ const AuthEnter: FC = () => {
 
     const {navigate} = useNavigation<NavigationProp<TypeRootPage>>();
 
+    /**
+     * Переход на страницу => "AuthCreateAccount".
+     */
     const goToPageRegistration = () => {
         navigate('AuthCreateAccount');
     }
 
     const onChangeForm = (e: NativeSyntheticEvent<TextInputChangeEventData>, key: string) => {
         setData( state => ({...state, [key]: e.nativeEvent.text}) );
+    }
+
+    const logIn = async () => {
+        //* Проверка валидности email.
+        if(!CheckForm.checkEmail(data.email)) {
+            return modalMessageError('Проверьте введенный Email.');
+        }
+        //* Проверка валидности пароля.
+        if(!CheckForm.checkPassword(data.password)) {
+            return modalMessageError('Пароль не короче 5-ти символов.');
+        }
+        //* Запрос на авторизицию.
+        const result = await httpAuthenticationService.POST_authentication(data);
+        if(isUndefined(result)) return;
+        if(isIError(result)) return;
+        await AsyncStorage.setItem('@user', JSON.stringify(result));
+        navigate('Home');
     }
 
     return (
@@ -56,9 +81,9 @@ const AuthEnter: FC = () => {
                         <Text style={styles.textForgot}>Забыли пароль ?</Text>
                     </Pressable>
                 </View>
-                <JoinEmail pushButton={() => {}} title='Вход'/>
+                <JoinEmail pushButton={() => logIn()} title='Вход'/>
                 <LinesWithOr/>
-                <JoinGoogle border={true} />
+                <JoinGoogle title='Вход через Google' border={true} />
                 <DoYouHaveAnAccount pushButton={goToPageRegistration} title='Нет аккаунта ?' textButton=' Регистрация' color={COLOR_ROOT.MIDDLE_GRAY} />
             </View>
         </WrapperScroll>

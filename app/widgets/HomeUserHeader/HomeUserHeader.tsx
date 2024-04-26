@@ -13,19 +13,21 @@ import { useHookCheckErrorResponce } from '@/hooks/useHookCheckErrorResponce';
  */
 const HomeUserHeader: FC = () => {
 
-    const {checkResponce} = useHookCheckErrorResponce();
+    const {dispatch, setAppModalObject, isIError, isUndefined, modalMessageError} = useHookCheckErrorResponce();
     const [userInfo, setUserInfo] = useState<IgetInfoBasic | null>(null);
 
     useEffect(() => {
         (async function() {
             const userJSON = await AsyncStorage.getItem('@user');
-            if(!userJSON) return;
+            if(!userJSON) return dispatch(setAppModalObject({message: 'Данные небыли сохранены.', modalType: 'error', modalVisible: true}));
             const user = JSON.parse(userJSON);
             if('id' in user) {
                 const result = await httpClientService.GET_getClientInfo(user.id);
-                if(checkResponce(result) || !result) return;
-                console.log(userInfo?.picture);
+                if(isUndefined(result)) return;
+                if(isIError(result)) return;
                 setUserInfo(result);
+                const isActive = await httpClientService.GET_isActiveEmail(user.id);
+                if(!isActive) return modalMessageError('Пожалуйста проверьте свою почту и подтвердите ее переходом по ссылке в письме, проверьте папку спам !');
             }
             
         })();
@@ -44,8 +46,8 @@ const HomeUserHeader: FC = () => {
                         />
                     </View>
                     <View>
-                        <Text style={styles.textHello} >Привет, {userInfo?.name} !</Text>
-                        <Text style={styles.textEmail} >{userInfo?.email}</Text>
+                        <Text style={styles.textHello} >Привет, {userInfo?.name ?? 'клиент'} !</Text>
+                        <Text style={styles.textEmail} >{userInfo?.email ?? 'email@gmail.com'}</Text>
                     </View>
                 </View>
                 <View style={styles.boxBell} >
@@ -99,12 +101,12 @@ const styles = StyleSheet.create({
         height: 27
     },
     textHello: {
-        fontSize: 18,
-        fontWeight: '600',
+        fontSize: 17,
+        fontWeight: '500',
         color: 'white'
     },
     textEmail: {
-        fontSize: 15,
+        fontSize: 14,
         color: 'white',
         opacity: .7
     },

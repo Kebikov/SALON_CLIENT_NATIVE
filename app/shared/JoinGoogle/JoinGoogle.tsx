@@ -17,6 +17,7 @@ interface IJoinGoogle {
 	 * Надо ли border в кнопке.
 	 */
 	border?: boolean;
+    title?: string; 
 }
 
 
@@ -26,7 +27,7 @@ interface IJoinGoogle {
  * @example <JoinGoogle border={#} />
  * @returns {JSX.Element}
  */
-const JoinGoogle: FC<IJoinGoogle> = ({ border = false }) => {
+const JoinGoogle: FC<IJoinGoogle> = ({title = 'Регистрация с Google', border = false }) => {
 
     const {navigate} = useNavigation<NavigationProp<TypeRootPage>>();
 
@@ -47,7 +48,7 @@ const JoinGoogle: FC<IJoinGoogle> = ({ border = false }) => {
 		<Pressable onPress={() => promptAsync()} style={[styles.main, border ? styles.border : null]}>
 			<View style={styles.container}>
 				<Image source={require('@/source/img/logo/google.png')} style={styles.img} />
-				<Text style={styles.text}>Регистрация с Google</Text>
+				<Text style={styles.text}>{title}</Text>
 			</View>
 		</Pressable>
 	);

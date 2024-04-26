@@ -1,51 +1,72 @@
 import type { IError } from "@/axios/routes/registration/types/registration.types";
 import { useAppDispatch } from '@/redux/store/hooks';
 import { setAppModalObject } from '@/redux/slice/modal.slice';
-import { checkErrorResponce } from '@/axios/helpers/checkErrorResponce';
 
 
 /**
- * Проверка ответа сервера на IError | undefined.
- * - В случае если IError | undefined, будет выведено модальное окно с сообщением.
- * @returns 
+ * `Hook для проверки и вывода результата в модальное окно на IError | undefined.`
  */
 export const useHookCheckErrorResponce = () => {
 
     const dispatch = useAppDispatch();
 
-    
     /**
-     * Проверка является ли обьектом ошибки.
+     * `Проверка является ли обьектом ошибки.`
      * - Вывод в модальное окно сообщения.
-     * @example checkResponce(data: unknown);
+     * @example if(isIError) return;
      * @returns
      * - true = если IError
      * - false = не IError
      */
-    const checkResponce = (data: unknown): data is IError => {
-        if(checkErrorResponce(data)) {
-            if(!data) {
-                dispatch(setAppModalObject({
-                    message: 'Неизвестная ошибка сервера, попробуйте позже...',
-                    modalType: 'error',
-                    modalVisible: true
-                }))
-                return false;
-            }
-            if('error' in data) {
-                dispatch(setAppModalObject({
-                    message: data.error,
-                    modalType: 'error',
-                    modalVisible: true
-                }))
-                return true;
-            }
+    const isIError = (data: unknown): data is IError => {
+        if(data && typeof data === 'object' && "error" in data && typeof data.error === 'string') {
+            dispatch(setAppModalObject({
+                message: data.error,
+                modalType: 'error',
+                modalVisible: true
+            }))
+            return true;
+        } else {
+            return false;
         }
-        return false;
     };
+    /**
+     * `Проверка является ли обьектом undefined.`
+     * - Вывод в модальное окно сообщения.
+     * @example if(isUndefined) return;
+     * @returns
+     * - true = если IError
+     * - false = не IError
+     */
+    const isUndefined = (data: unknown): data is undefined => {
+        if(data === undefined) {
+            dispatch(setAppModalObject({
+                message: 'Неизвестная ошибка сервера, попробуйте позже...',
+                modalType: 'error',
+                modalVisible: true
+            }))
+            return true;
+        } else {
+            return false;
+        }
+    }
+    /**
+     * `Вывод в модальное окно текста ошибки.`
+     */
+    const modalMessageError = (message: string) => {
+        dispatch(setAppModalObject({
+            message: message,
+            modalType: 'error',
+            modalVisible: true
+        }));
+    }
 
     return {
-        checkResponce
+        isIError,
+        isUndefined,
+        modalMessageError,
+        dispatch,
+        setAppModalObject
     }
 
 }

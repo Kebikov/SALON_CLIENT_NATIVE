@@ -18,8 +18,6 @@ const Auth: FC = () => {
      */
     const [showThisComponent, setShowThisComponent] = useState<boolean>(false);
 
-    //AsyncStorage.clear().then(() => console.log('Данные удалены !'));
-
     const {navigate} = useNavigation<NavigationProp<TypeRootPage>>();
 
     const goToPageRegistration = () => {
@@ -30,17 +28,23 @@ const Auth: FC = () => {
         navigate('AuthEnter');
     }
 
-    /**
-     * Переход на домашнюю страницу в случае существования пользователя.
-     */
-    (async function() {
-        const curentUser = await AsyncStorage.getItem('@user');
-        if(curentUser) {
-            navigate('Home');
-        } else {
-            setShowThisComponent(true);
-        }
-    })();
+
+
+    useEffect(() => {
+        /**
+         * Переход на домашнюю страницу в случае существования пользователя.
+         */
+        async function check() {
+            const curentUser = await AsyncStorage.getItem('@user');
+            if(curentUser) {
+                setShowThisComponent(true);
+                navigate('Home');
+            } else {
+                setShowThisComponent(true);
+            }
+        };
+        check();
+    }, []);
 
     if(!showThisComponent) return;
 

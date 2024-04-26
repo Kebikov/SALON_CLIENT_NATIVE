@@ -16,7 +16,7 @@ const axiosInterceptors = (instance: AxiosInstance) => {
             return res;
         }, 
         (error) => {
-            console.log(error);
+            console.error(error);
         }
     );
 }
