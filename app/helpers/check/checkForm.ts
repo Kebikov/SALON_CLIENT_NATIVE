@@ -28,7 +28,7 @@ export class CheckForm {
     }
 
     static checkPassword(password: string) {
-        return password.length > 4;
+        return password.length > 3;
     }
 
 }

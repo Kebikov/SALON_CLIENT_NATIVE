@@ -6,6 +6,7 @@ import DoYouHaveAnAccount from '@/shared/DoYouHaveAnAccount/DoYouHaveAnAccount';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { TypeRootPage } from '@/navigation/navigation.types';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useHookSpinner } from '@/hooks/useHookSpinner';
 
 
 /**
@@ -19,6 +20,7 @@ const Auth: FC = () => {
     const [showThisComponent, setShowThisComponent] = useState<boolean>(false);
 
     const {navigate} = useNavigation<NavigationProp<TypeRootPage>>();
+    const {} = useHookSpinner();
 
     const goToPageRegistration = () => {
         navigate('AuthCreateAccount');

@@ -10,10 +10,10 @@ import { COLOR_ROOT } from '@/data/colors';
 import DoYouHaveAnAccount from '@/shared/DoYouHaveAnAccount/DoYouHaveAnAccount';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { TypeRootPage } from '@/navigation/navigation.types';
-import { CheckForm } from '@/helpers/checkForm/checkForm';
+import { CheckForm } from '@/helpers/check/checkForm';
 import httpAuthenticationService from '@/axios/routes/authentication/service/http.authentication.service';
 import { useHookCheckErrorResponce } from '@/hooks/useHookCheckErrorResponce';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { asyncStorageSaveUser } from '@/helpers/save/saveUserInAsyncStorage';
 
 
 interface IAuthEnter {
@@ -42,6 +42,7 @@ const AuthEnter: FC = () => {
     }
 
     const onChangeForm = (e: NativeSyntheticEvent<TextInputChangeEventData>, key: string) => {
+        e.persist();
         setData( state => ({...state, [key]: e.nativeEvent.text}) );
     }
 
@@ -52,13 +53,13 @@ const AuthEnter: FC = () => {
         }
         //* Проверка валидности пароля.
         if(!CheckForm.checkPassword(data.password)) {
-            return modalMessageError('Пароль не короче 5-ти символов.');
+            return modalMessageError('Пароль не короче 4-ти символов.');
         }
         //* Запрос на авторизицию.
         const result = await httpAuthenticationService.POST_authentication(data);
         if(isUndefined(result)) return;
         if(isIError(result)) return;
-        await AsyncStorage.setItem('@user', JSON.stringify(result));
+        await asyncStorageSaveUser(result);
         navigate('Home');
     }
 

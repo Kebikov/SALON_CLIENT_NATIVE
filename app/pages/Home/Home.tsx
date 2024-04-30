@@ -1,4 +1,4 @@
-import { Text, StyleSheet, Pressable, ToastAndroid } from 'react-native';
+import { Text, StyleSheet, Pressable } from 'react-native';
 import React, { FC } from 'react';
 import { COLOR_ROOT } from '@/data/colors';
 import WrapperScrollMenu from '@/shared/WrapperScrollMenu/WrapperScrollMenu';
@@ -6,8 +6,8 @@ import HomeUserHeader from '@/widgets/HomeUserHeader/HomeUserHeader';
 import ListDepartment from '@/widgets/ListDepartment/ListDepartment';
 import ListMasters from '@/widgets/ListMasters/ListMasters';
 import ListService from '@/widgets/ListService/ListService';
-import { useAppDispatch } from '@/redux/store/hooks';
-import { setAppModalObject } from '@/redux/slice/modal.slice';
+import httpAuthenticationService from '@/axios/routes/authentication/service/http.authentication.service';
+import { useHookCheckErrorResponce } from '@/hooks/useHookCheckErrorResponce';
 
 
 
@@ -16,25 +16,24 @@ import { setAppModalObject } from '@/redux/slice/modal.slice';
  */
 const Home: FC = () => {
 
-    const dispatch = useAppDispatch();
+    const {isIError, isUndefined} = useHookCheckErrorResponce();
+
 
     /**
      * Получение информации о пользователе.
      * @returns 
      */
     const press = async () => {
-        dispatch(setAppModalObject({message: 'Привет', modalType: 'message', modalVisible: true}))
     }
 
     return (
         <WrapperScrollMenu page='Home' >
-            {/* <ModalMsg message='Тестовое сообщение !' type='error' /> */}
             <HomeUserHeader/>
 
             <Pressable
                 onPress={() => press()}
             >
-                <Text style={{fontSize: 20}} >НАЖМИ МЕНЯ</Text>
+                <Text style={{fontSize: 20, textAlign: 'center', backgroundColor: 'green', marginTop: 20, color: '#fff', paddingVertical: 5}} >кнопка для теста</Text>
             </Pressable>
 
             <Text style={[styles.text, {marginTop: 10}]} >Service</Text>

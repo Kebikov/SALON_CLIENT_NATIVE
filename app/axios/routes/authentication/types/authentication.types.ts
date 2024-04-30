@@ -10,3 +10,7 @@ export interface IBaseForAuth {
     role: TRole;
     password: string;
 }
+
+export interface IMessage {
+    msg: string;
+}

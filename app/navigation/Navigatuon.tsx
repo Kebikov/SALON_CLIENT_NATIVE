@@ -9,6 +9,7 @@ import User from '@/pages/User/User';
 import AuthCreateAccount from '@/pages/AuthCreateAccount/AuthCreateAccount';
 import AuthEnter from '@/pages/AuthEnter/AuthEnter';
 import AuthForgot from '@/pages/AuthForgot/AuthForgot';
+import ChangePassword from '@/pages/ChangePassword/ChangePassword';
 
 
 const Stack = createNativeStackNavigator<TypeRootPage>();
@@ -32,6 +33,7 @@ const Navigatuon: FC = () => {
                 <Stack.Screen name='AuthCreateAccount' component={AuthCreateAccount} key={'AuthCreateAccount'} />
                 <Stack.Screen name='Home' component={Home} key={'Home'} />
                 <Stack.Screen name="User" component={User} key={'User'} />
+                <Stack.Screen name="ChangePassword" component={ChangePassword} key={'ChangePassword'} />
             </Stack.Navigator>
         </NavigationContainer>
     )

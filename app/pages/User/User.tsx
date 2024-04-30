@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Pressable } from 'react-native';
+import { View, Text, StyleSheet, Pressable, Button } from 'react-native';
 import React, { FC } from 'react';
 import Wrapper from '@/shared/Wrapper/Wrapper';
 import BottomMenu from '@/widgets/BottomMenu/BottomMenu';
@@ -6,6 +6,8 @@ import { useNavigation, NavigationProp } from '@react-navigation/native';
 import type { TypeRootPage } from '@/navigation/navigation.types';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { COLOR_ROOT } from '@/data/colors';
+import MenuItem from '@/shared/MenuItem/MenuItem';
+import WrapperScrollMenu from '@/shared/WrapperScrollMenu/WrapperScrollMenu';
 
 /**
  * @page Страница пользователя.
@@ -19,21 +21,30 @@ const User: FC = () => {
         navigate('Auth');
     }
 
+
     return (
-        <Wrapper backgroundColor='white' barStyle='light-content' >
+        <WrapperScrollMenu page='User' >
             <View style={styles.main} >
                 <View style={styles.box} >
-                    <Text>USER</Text>
-                    <Pressable
-                        onPress={() => exitOut()}
-                        style={styles.exitButton}
-                    >
-                        <Text style={styles.textButton} >Выход из акаунта</Text>
-                    </Pressable>
+                    <View style={styles.boxSettings}>
+                        <Text style={styles.textSettings} >Настройки и действия</Text>
+                    </View>
+                    <MenuItem 
+                        title='Password' 
+                        subTitle='Изминение пароля пользователя' 
+                        img={require('@/source/img/icon-menu/password-1.png')} 
+                        pushFunction={() => navigate('ChangePassword')}
+                    />
+                    <MenuItem 
+                        title='Выход' 
+                        subTitle='Выход из аккауна' 
+                        img={require('@/source/img/icon-menu/exit.png')} 
+                        pushFunction={() => exitOut()}
+                        isShowArrow={false}
+                    />
                 </View>
             </View>
-            <BottomMenu page='User' />
-        </Wrapper>
+        </WrapperScrollMenu>
     );
 };
 
@@ -54,6 +65,17 @@ const styles = StyleSheet.create({
     textButton: {
         color: 'white',
         fontSize: 17
+    },
+    boxSettings: {
+        width: '100%',
+        marginTop: 10,
+        marginBottom: 10
+    },
+    textSettings: {
+        textAlign: 'center',
+        fontSize: 19,
+        fontWeight: '600',
+        color: COLOR_ROOT.BLACK
     }
 });
 

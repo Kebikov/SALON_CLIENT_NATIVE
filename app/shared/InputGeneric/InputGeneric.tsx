@@ -19,27 +19,37 @@ interface IInputGeneric {
     /**
      * Ключ в обьекте состояния формы.
      */
-    keyName: TKeyStateCreateAccount;
+    keyName: string;
     /**
      * Изображение иконки в поле ввода.
      */
     img: number;
+    /**
+     * Значение поля.
+     */
+    value?: string;
 }
 
 
 /**
- * @shared Универсальное поле для ввода текста.
+ * @shared `Универсальное поле для ввода текста.`
  * - Кроме пароля.
  * @param onChangeForm Функция изминения состояния у формы.
  * @param placeholder Плейсхолдер.
  * @param keyName Ключ в обьекте состояния формы.
  * @param img Изображение иконки в поле ввода.
+ * @param value ? Значение поля.
  * @example <InputGeneric onChangeForm={#} placeholder={#} key={#} img={#} />
  */
-const InputGeneric: FC<IInputGeneric> = ({onChangeForm, placeholder, keyName, img}) => {
+const InputGeneric: FC<IInputGeneric> = ({onChangeForm, placeholder, keyName, img, value = undefined}) => {
     return (
         <View style={styles.boxInput} >
-            <TextInput style={styles.input} placeholder={placeholder} onChange={text => onChangeForm(text, keyName)} />
+            <TextInput 
+                style={styles.input} 
+                placeholder={placeholder} 
+                onChange={text => onChangeForm(text, keyName)} 
+                value={value}
+            />
             <Image style={styles.icon} source={img} />
         </View>
     );
@@ -48,7 +58,8 @@ const InputGeneric: FC<IInputGeneric> = ({onChangeForm, placeholder, keyName, im
 const styles = StyleSheet.create({
     boxInput: {
         position: 'relative',
-        marginTop: 15
+        marginTop: 15,
+        width: '100%'
     },
     input: {
         backgroundColor: COLOR_ROOT.BACKGROUND_INPUT,

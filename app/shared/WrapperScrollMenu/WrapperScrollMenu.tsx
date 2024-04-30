@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, StatusBar } from 'react-native';
+import { View, Text, StyleSheet, StatusBar, KeyboardAvoidingView, Platform } from 'react-native';
 import React, { FC } from 'react';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { COLOR_ROOT } from '@/data/colors';
@@ -14,7 +14,7 @@ interface IWrapper {
 
 
 /**
- * @shared Обертка для страниц с : 
+ * @shared `Обертка для страниц с :` 
  * - SafeAreaView 
  * - StatusBar
  * - ScrollView 
@@ -31,8 +31,8 @@ const WrapperScrollMenu: FC<IWrapper> = ({children, page}) => {
         <SafeAreaProvider>
             <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
             <StatusBar animated={true} barStyle={'light-content'} backgroundColor={COLOR_ROOT.MAIN_COLOR} />
-                <ScrollView contentContainerStyle={{flexGrow: 1}} >
-                    {children}
+                <ScrollView contentContainerStyle={{flexGrow: 1}} keyboardShouldPersistTaps={'handled'} >
+                        {children}
                 </ScrollView>
                 <BottomMenu page={page} />
             </SafeAreaView>

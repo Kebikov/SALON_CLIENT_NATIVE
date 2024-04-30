@@ -4,6 +4,7 @@ import { IReqBodyRegistrationGoogle, IResRegistration, IError } from "@/axios/ro
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ToastAndroid } from 'react-native';
 import { IUserGoogle } from "./formatToInterfaceIUser";
+import { asyncStorageSaveUser } from '@/helpers/save/saveUserInAsyncStorage';
 
 
 interface IData {
@@ -29,11 +30,7 @@ export const registrationUserOnTheServer = async (user: IUserGoogle) => {
 
     const result = await httpRegistrationService.POST_registrationGoogle(body);
     if(checkErrorResponce(result)) return;
-
-    // Расчет времени жизни аксес токена.
-    result.expiresIn = result.expiresIn + new Date().getTime(); 
-    
-    await AsyncStorage.setItem('@user', JSON.stringify(result));
+    await asyncStorageSaveUser(result);
 
     return true;
 }

@@ -30,7 +30,7 @@ const WrapperScroll: FC<IWrapperScroll> = ({children, backgroundColor, barStyle}
         <SafeAreaProvider>
             <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
             <StatusBar animated={true} barStyle={barStyle} backgroundColor={backgroundColor} />
-                <ScrollView contentContainerStyle={{flexGrow: 1}} >
+                <ScrollView contentContainerStyle={{flexGrow: 1}} keyboardShouldPersistTaps={'handled'} >
                     {children}
                 </ScrollView>
             </SafeAreaView>

@@ -7,6 +7,7 @@ export type TypeRootPage = {
     AuthForgot: undefined;
     Home: undefined;
     User: undefined;
+    ChangePassword: undefined;
 };
 
 export interface IRoute {

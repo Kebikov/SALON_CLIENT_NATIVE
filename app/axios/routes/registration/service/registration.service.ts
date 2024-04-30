@@ -24,20 +24,33 @@ class HttpRegistrationService {
             console.error('Error in POST_registrationEmail >>> ',error);
         }
     }
+
     /**
      * Авторизация через Google.
      * @example const result = await POST_registrationGoogle(body: IReqBodyRegistrationGoogle);
         if(checkErrorResponce(result)) return;
      */
-        async POST_registrationGoogle(body: IReqBodyRegistrationGoogle): Promise<IResRegistration | IError | undefined> {
-            try {
-                const {data} = await axios.post(`${path}/google`, body);
-                return data as IResRegistration | IError;
-            } catch (error) {
-                ToastAndroid.show('Неизвестная ошибка сервера...', ToastAndroid.SHORT);
-                console.error('Error in POST_registrationEmail >>> ',error);
-            }
+    async POST_registrationGoogle(body: IReqBodyRegistrationGoogle): Promise<IResRegistration | IError | undefined> {
+        try {
+            const {data} = await axios.post(`${path}/google`, body);
+            return data as IResRegistration | IError;
+        } catch (error) {
+            ToastAndroid.show('Неизвестная ошибка сервера...', ToastAndroid.SHORT);
+            console.error('Error in POST_registrationEmail >>> ',error);
         }
+    }
+
+    /**
+     * `Обновление токенов.`
+     */
+    async POST_updateToken(id: number, refreshToken: string) {
+        try {
+            const {data} = await axios.post(`${path}/updateToken`, {id, refreshToken});
+            return data as IResRegistration | IError;
+        } catch (error) {
+            console.error(error);
+        }
+    }
 
 }
 
