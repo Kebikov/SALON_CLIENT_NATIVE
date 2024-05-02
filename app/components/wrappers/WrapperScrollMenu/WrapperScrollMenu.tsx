@@ -4,7 +4,7 @@ import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { COLOR_ROOT } from '@/data/colors';
 import { TypeRootPage } from '@/navigation/navigation.types';
 import { ScrollView } from 'react-native-gesture-handler';
-import BottomMenu from '@/widgets/BottomMenu/BottomMenu';
+import BottomMenu from '@/components/widgets/BottomMenu/BottomMenu';
 
 
 interface IWrapper {
@@ -14,7 +14,7 @@ interface IWrapper {
 
 
 /**
- * @shared `Обертка для страниц с :` 
+ * @wrapper `Обертка для страниц с :` 
  * - SafeAreaView 
  * - StatusBar
  * - ScrollView 

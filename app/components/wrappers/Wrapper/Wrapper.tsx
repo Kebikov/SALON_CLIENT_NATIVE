@@ -1,7 +1,6 @@
-import { View, Text, StyleSheet, StatusBar, StatusBarStyle } from 'react-native';
+import { StatusBar, StatusBarStyle } from 'react-native';
 import React, { FC } from 'react';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
-import { COLOR_ROOT } from '@/data/colors';
 
 
 interface IWrapper {
@@ -18,7 +17,7 @@ interface IWrapper {
 
 
 /**
- * @shared Обертка для страниц с SafeAreaView и StatusBar.
+ * @wrapper Обертка для страниц с SafeAreaView и StatusBar.
  * @param backgroundColor Цвет фона статусной строки.
  * @param barStyle Стиль статусной строки.
  * @example 

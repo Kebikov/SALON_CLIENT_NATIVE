@@ -1,8 +1,6 @@
 import { StatusBar, StatusBarStyle } from 'react-native';
 import React, { FC } from 'react';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
-import { COLOR_ROOT } from '@/data/colors';
-import { TypeRootPage } from '@/navigation/navigation.types';
 import { ScrollView } from 'react-native-gesture-handler';
 
 
@@ -13,7 +11,7 @@ interface IWrapperScroll {
 }
 
 /**
- * @shared Обертка для страниц с : 
+ * @wrapper Обертка для страниц с : 
  * - SafeAreaView 
  * - StatusBar
  * - ScrollView 
