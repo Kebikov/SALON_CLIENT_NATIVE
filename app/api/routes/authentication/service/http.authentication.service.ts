@@ -1,8 +1,8 @@
-import { baseLink } from "@/axios/axios.interceptors";
+import { baseLink } from "@/api/axios.interceptors";
 import axios from "axios";
 import type { IAuthenticationData, IMessage } from "../types/authentication.types";
 import type { IResRegistration, IError } from "../../registration/types/registration.types";
-import { authAxios } from "@/axios/axios.interceptors";
+import { authAxios } from "@/api/axios.interceptors";
 import { errorHandling } from "@/helpers/error/errorHandling";
 
 

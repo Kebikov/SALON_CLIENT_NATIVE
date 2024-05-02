@@ -1,7 +1,7 @@
-import type { IError } from "@/axios/routes/registration/types/registration.types";
+import type { IError } from "@/api/routes/registration/types/registration.types";
 import { useAppDispatch } from '@/redux/store/hooks';
 import { setAppModalObject } from '@/redux/slice/modal.slice';
-import { IMessage } from "@/axios/routes/authentication/types/authentication.types";
+import { IMessage } from "@/api/routes/authentication/types/authentication.types";
 
 
 /**

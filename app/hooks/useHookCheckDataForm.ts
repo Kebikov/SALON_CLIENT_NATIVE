@@ -1,4 +1,4 @@
-import { IReqBodyRegistrationEmail } from '@/axios/routes/registration/types/registration.types';
+import { IReqBodyRegistrationEmail } from '@/api/routes/registration/types/registration.types';
 import { CheckForm } from '@/helpers/check/checkForm';
 import { useAppDispatch } from '@/redux/store/hooks';
 import { setAppModalObject } from '@/redux/slice/modal.slice';

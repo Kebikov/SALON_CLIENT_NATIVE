@@ -1,8 +1,8 @@
-import { IReqBodyRegistrationEmail } from '@/axios/routes/registration/types/registration.types';
+import { IReqBodyRegistrationEmail } from '@/api/routes/registration/types/registration.types';
 import { ToastAndroid } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import httpRegistrationService from '@/axios/routes/registration/service/registration.service';
-import { checkErrorResponce } from '@/axios/helpers/checkErrorResponce';
+import httpRegistrationService from '@/api/routes/registration/service/registration.service';
+import { checkErrorResponce } from '@/api/helpers/checkErrorResponce';
 import { asyncStorageSaveUser } from '@/helpers/save/saveUserInAsyncStorage';
 
 /**

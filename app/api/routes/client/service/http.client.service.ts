@@ -1,4 +1,4 @@
-import { baseLink } from "@/axios/axios.interceptors";
+import { baseLink } from "@/api/axios.interceptors";
 import axios from "axios";
 import { IError } from "../../registration/types/registration.types";
 import { IgetInfoBasic } from "../types/client.types";

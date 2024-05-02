@@ -1,4 +1,4 @@
-import type { IError } from "@/axios/routes/registration/types/registration.types"
+import type { IError } from "@/api/routes/registration/types/registration.types"
 
 
 /**

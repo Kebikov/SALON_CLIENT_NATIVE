@@ -10,7 +10,7 @@ import InputGeneric from '@/shared/InputGeneric/InputGeneric';
 import LinesWithOr from '@/shared/LinesWithOr/LinesWithOr';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { TypeRootPage } from '@/navigation/navigation.types';
-import { IReqBodyRegistrationEmail } from '@/axios/routes/registration/types/registration.types';
+import { IReqBodyRegistrationEmail } from '@/api/routes/registration/types/registration.types';
 import { requestOnRegistration } from './helpers/requestOnRegistration';
 import { useHookCheckDataForm } from '@/hooks/useHookCheckDataForm';
 

@@ -1,4 +1,4 @@
-import { IResRegistration } from "@/axios/routes/registration/types/registration.types"
+import { IResRegistration } from "@/api/routes/registration/types/registration.types"
 
 /**
  * `Type Guards for IResRegistration`

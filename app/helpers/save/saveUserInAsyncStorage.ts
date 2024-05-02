@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import type { IResRegistration } from '@/axios/routes/registration/types/registration.types';
+import type { IResRegistration } from '@/api/routes/registration/types/registration.types';
 
 
 /**

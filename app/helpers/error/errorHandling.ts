@@ -1,4 +1,4 @@
-import { IError } from "@/axios/routes/registration/types/registration.types";
+import { IError } from "@/api/routes/registration/types/registration.types";
 import { TGIError } from "../type-guards/TGIError";
 
 

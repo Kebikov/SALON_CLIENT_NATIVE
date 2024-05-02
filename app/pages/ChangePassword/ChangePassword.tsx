@@ -6,7 +6,7 @@ import WrapperScrollMenu from '@/shared/WrapperScrollMenu/WrapperScrollMenu';
 import JoinEmail from '@/shared/JoinEmail/JoinEmail';
 import { COLOR_ROOT } from '@/data/colors';
 import { useHookCheckErrorResponce } from '@/hooks/useHookCheckErrorResponce';
-import httpAuthenticationService from '@/axios/routes/authentication/service/http.authentication.service';
+import httpAuthenticationService from '@/api/routes/authentication/service/http.authentication.service';
 import { useHookSpinner } from '@/hooks/useHookSpinner';
 
 

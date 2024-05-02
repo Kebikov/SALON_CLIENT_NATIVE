@@ -11,7 +11,7 @@ import DoYouHaveAnAccount from '@/shared/DoYouHaveAnAccount/DoYouHaveAnAccount';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { TypeRootPage } from '@/navigation/navigation.types';
 import { CheckForm } from '@/helpers/check/checkForm';
-import httpAuthenticationService from '@/axios/routes/authentication/service/http.authentication.service';
+import httpAuthenticationService from '@/api/routes/authentication/service/http.authentication.service';
 import { useHookCheckErrorResponce } from '@/hooks/useHookCheckErrorResponce';
 import { asyncStorageSaveUser } from '@/helpers/save/saveUserInAsyncStorage';
 

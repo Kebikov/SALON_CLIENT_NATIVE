@@ -6,7 +6,7 @@ import HomeUserHeader from '@/widgets/HomeUserHeader/HomeUserHeader';
 import ListDepartment from '@/widgets/ListDepartment/ListDepartment';
 import ListMasters from '@/widgets/ListMasters/ListMasters';
 import ListService from '@/widgets/ListService/ListService';
-import httpAuthenticationService from '@/axios/routes/authentication/service/http.authentication.service';
+import httpAuthenticationService from '@/api/routes/authentication/service/http.authentication.service';
 import { useHookCheckErrorResponce } from '@/hooks/useHookCheckErrorResponce';
 
 

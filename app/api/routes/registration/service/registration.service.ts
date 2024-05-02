@@ -1,8 +1,8 @@
-import { baseLink } from "@/axios/axios.interceptors";
+import { baseLink } from "@/api/axios.interceptors";
 import axios from "axios";
-import { IReqBodyRegistrationEmail, IResRegistration, IReqBodyRegistrationGoogle } from '@/axios/routes/registration/types/registration.types';
+import { IReqBodyRegistrationEmail, IResRegistration, IReqBodyRegistrationGoogle } from '@/api/routes/registration/types/registration.types';
 import { ToastAndroid } from "react-native";
-import { IError } from "@/axios/routes/registration/types/registration.types";
+import { IError } from "@/api/routes/registration/types/registration.types";
 
 
 const path = baseLink + '/api/registration';

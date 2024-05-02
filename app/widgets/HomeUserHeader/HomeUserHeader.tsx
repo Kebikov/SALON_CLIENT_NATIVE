@@ -1,11 +1,8 @@
 import { View, Text, StyleSheet, Image, TextInput } from 'react-native';
 import React, { FC, useState, useEffect } from 'react';
 import { COLOR_ROOT } from '@/data/colors';
-import httpClientService from '@/axios/routes/client/service/http.client.service';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import type { IResRegistration } from '@/axios/routes/registration/types/registration.types';
-import type { IgetInfoBasic } from '@/axios/routes/client/types/client.types';
-import { useHookCheckErrorResponce } from '@/hooks/useHookCheckErrorResponce';
+import type { IgetInfoBasic } from '@/api/routes/client/types/client.types';
+import { useHookGetStartDataUser } from '@/hooks/useHookGetStartDataUser';
 
 
 /**
@@ -13,24 +10,11 @@ import { useHookCheckErrorResponce } from '@/hooks/useHookCheckErrorResponce';
  */
 const HomeUserHeader: FC = () => {
 
-    const {dispatch, setAppModalObject, isIError, isUndefined, modalMessageError} = useHookCheckErrorResponce();
     const [userInfo, setUserInfo] = useState<IgetInfoBasic | null>(null);
+    const {getStartDataUser} = useHookGetStartDataUser();
 
     useEffect(() => {
-        (async function() {
-            const userJSON = await AsyncStorage.getItem('@user');
-            if(!userJSON) return dispatch(setAppModalObject({message: 'Данные небыли сохранены.', modalType: 'error', modalVisible: true}));
-            const user = JSON.parse(userJSON);
-            if('id' in user) {
-                const result = await httpClientService.GET_getClientInfo(user.id);
-                if(isUndefined(result)) return;
-                if(isIError(result)) return;
-                setUserInfo(result);
-                const isActive = await httpClientService.GET_isActiveEmail(user.id);
-                if(!isActive) return modalMessageError('Пожалуйста проверьте свою почту и подтвердите ее переходом по ссылке в письме, проверьте папку спам !');
-            }
-            
-        })();
+        getStartDataUser(setUserInfo);
     }, []);
 
     return (

@@ -1,6 +1,6 @@
-import { checkErrorResponce } from '@/axios/helpers/checkErrorResponce';
-import httpRegistrationService from '@/axios/routes/registration/service/registration.service';
-import { IReqBodyRegistrationGoogle, IResRegistration, IError } from "@/axios/routes/registration/types/registration.types";
+import { checkErrorResponce } from '@/api/helpers/checkErrorResponce';
+import httpRegistrationService from '@/api/routes/registration/service/registration.service';
+import { IReqBodyRegistrationGoogle, IResRegistration, IError } from "@/api/routes/registration/types/registration.types";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ToastAndroid } from 'react-native';
 import { IUserGoogle } from "./formatToInterfaceIUser";

@@ -9,10 +9,10 @@ import DoYouHaveAnAccount from '@/shared/DoYouHaveAnAccount/DoYouHaveAnAccount';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { TypeRootPage } from '@/navigation/navigation.types';
 import { useHookSpinner } from '@/hooks/useHookSpinner';
-import httpAuthenticationService from '@/axios/routes/authentication/service/http.authentication.service';
+import httpAuthenticationService from '@/api/routes/authentication/service/http.authentication.service';
 import { useHookCheckDataForm } from '@/hooks/useHookCheckDataForm';
 import { useHookCheckErrorResponce } from '@/hooks/useHookCheckErrorResponce';
-import { checkErrorResponce } from '@/axios/helpers/checkErrorResponce';
+import { checkErrorResponce } from '@/api/helpers/checkErrorResponce';
 
 
 interface IEmail {
