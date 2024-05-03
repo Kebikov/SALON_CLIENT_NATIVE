@@ -3,14 +3,23 @@ import React, { FC, useState } from 'react';
 import { TypeRootPage } from '@/navigation/navigation.types';
 import { COLOR_ROOT } from '@/data/colors';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
+import { useAppSelector } from '@/redux/store/hooks';
+import menu from './listMenu';
 
 
-type TKeyPage =  keyof TypeRootPage;
+export type TKeyPage =  keyof TypeRootPage;
+
 interface IBottomMenu {
     /**
      * Страница на которой находится меню.
      */
     page: TKeyPage;
+}
+
+export interface IbuttonPage {
+    id: number;
+    page: TKeyPage | null; 
+    img: number;
 }
 
 
@@ -19,30 +28,37 @@ interface IBottomMenu {
  */
 const BottomMenu: FC<IBottomMenu> = ({page}) => {
 
+    const userInfo = useAppSelector(state => state.userSlice.user);
     const {navigate} = useNavigation<NavigationProp<TypeRootPage>>();
 
+    /**
+     * Подчеркивание иконки меню текушей страницы.
+     */
     const line = (pageLIne: TKeyPage) => {
         return page === pageLIne ? <View style={styles.boxImgLine}/> : null;
-    }
+    };
 
+    /**
+     * Кнопка в нижнем меню.
+     */
+    const ButtonForMenuPage = (item: IbuttonPage): JSX.Element => {
+        return(
+            <Pressable style={styles.boxImg} onPress={() => item.page ? navigate(item.page) : null} key={item.id} >
+                <Image source={item.img} style={styles.icon} />
+                {item.page ? line(item.page) : null}
+            </Pressable>
+        )
+    };
+
+    const menuItem = menu[userInfo.role];
+    const listMenu = menuItem !== null ? menuItem.map(item => ButtonForMenuPage(item)) : null;
 
     return (
         <View style={styles.main}>
             <View style={styles.box}>
-                <Pressable style={styles.boxImg} onPress={() => navigate('Home')} >
-                    <Image source={require('@/source/img/icon/home.png')} style={styles.icon} />
-                    {line('Home')}
-                </Pressable>
-                <Pressable style={styles.boxImg}>
-                    <Image source={require('@/source/img/icon/bookmark.png')} style={styles.icon} />
-                </Pressable>
-                <Pressable style={styles.boxImg}>
-                    <Image source={require('@/source/img/icon/calendar.png')} style={styles.icon} />
-                </Pressable>
-                <Pressable style={styles.boxImg} onPress={() => navigate('User')} >
-                    <Image source={require('@/source/img/icon/user.png')} style={styles.icon} />
-                    {line('User')}
-                </Pressable>
+                {
+                    listMenu
+                }
             </View>
         </View>
     );

@@ -20,7 +20,7 @@ interface IMenuItem {
  * @param subTitle Текст под title.
  * @param img Изображение иконки в меню.
  * @param pushFunction Функция срабатываюшя при нажатии на пункт меню.
- * @param isShowArrow Показывать ли стрелку в конце пункта меню.
+ * @param isShowArrow (опционально) Показывать ли стрелку в конце пункта меню.
  */
 const MenuItem: FC<IMenuItem> = ({title, subTitle, img, pushFunction, isShowArrow = true}) => {
 

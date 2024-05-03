@@ -1,4 +1,4 @@
-import { IUserGoogle } from '@/shared/JoinGoogle/helpers/formatToInterfaceIUser';
+import { IUserGoogle } from '@/components/shared/JoinGoogle/helpers/formatToInterfaceIUser';
 import { ToastAndroid } from 'react-native';
 import { responseGoogleInfoUser } from './responseGoogleInfoUser';
 

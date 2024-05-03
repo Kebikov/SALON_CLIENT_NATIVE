@@ -1,8 +1,8 @@
 import { View, Text, StyleSheet, ImageBackground, StatusBar } from 'react-native';
 import React, { FC, useEffect, useState } from 'react';
-import JoinGoogle from '@/shared/JoinGoogle/JoinGoogle';
-import JoinEmail from '@/shared/JoinEmail/JoinEmail';
-import DoYouHaveAnAccount from '@/shared/DoYouHaveAnAccount/DoYouHaveAnAccount';
+import JoinGoogle from '@/components/shared/JoinGoogle/JoinGoogle';
+import ButtonWithIcon from '@/components/shared/ButtonWithIcon/ButtonWithIcon';
+import DoYouHaveAnAccount from '@/components/shared/DoYouHaveAnAccount/DoYouHaveAnAccount';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { TypeRootPage } from '@/navigation/navigation.types';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -61,7 +61,7 @@ const Auth: FC = () => {
                         <View style={styles.titleBox} >
                             <Text style={styles.textSubTitle} >Лучшие Beauty мастера ждут тебя. Маникюр, парикмахерские услуги, лазерная эпиляция и многое еще.</Text>
                         </View>
-                        <JoinEmail pushButton={goToPageRegistration} title='Регистрация с Email' />
+                        <ButtonWithIcon pushButton={goToPageRegistration} title='Регистрация с Email' />
                         <JoinGoogle/>
                         <DoYouHaveAnAccount pushButton={goToPageAuthEnter} title='Уже есть аккаунт ?' textButton=' Войти' color='white' />
                     </View>

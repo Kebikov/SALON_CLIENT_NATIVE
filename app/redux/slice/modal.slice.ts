@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import type { TMessage } from '@/shared/ModalMsg/ModalMsg';
+import type { TMessage } from '@/components/shared/ModalMsg/ModalMsg';
 import type { PayloadAction } from '@reduxjs/toolkit';
 
 
@@ -23,7 +23,7 @@ interface IModalSlice {
     modal: IModalObject;
 }
 
-const  initialState: IModalSlice = {
+const initialState: IModalSlice = {
     modal: {
         modalVisible: false,
         message: '',

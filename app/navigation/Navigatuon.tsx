@@ -10,6 +10,9 @@ import AuthCreateAccount from '@/pages/AuthCreateAccount/AuthCreateAccount';
 import AuthEnter from '@/pages/AuthEnter/AuthEnter';
 import AuthForgot from '@/pages/AuthForgot/AuthForgot';
 import ChangePassword from '@/pages/ChangePassword/ChangePassword';
+import AdminAdd from '@/pages/AdminAdd/AdminAdd';
+import AdminAddGroup from '@/pages/AdminAddGroup/AdminAddGroup';
+import AdminAddGroupForm from '@/pages/AdminAddGroupForm/AdminAddGroupForm';
 
 
 const Stack = createNativeStackNavigator<TypeRootPage>();
@@ -34,6 +37,10 @@ const Navigatuon: FC = () => {
                 <Stack.Screen name='Home' component={Home} key={'Home'} />
                 <Stack.Screen name="User" component={User} key={'User'} />
                 <Stack.Screen name="ChangePassword" component={ChangePassword} key={'ChangePassword'} />
+                {/* Admin */}
+                <Stack.Screen name="AdminAdd" component={AdminAdd} key={'AdminAdd'} />
+                <Stack.Screen name="AdminAddGroup" component={AdminAddGroup} key={'AdminAddGroup'} />
+                <Stack.Screen name="AdminAddGroupForm" component={AdminAddGroupForm} key={'AdminAddGroupForm'} />
             </Stack.Navigator>
         </NavigationContainer>
     )

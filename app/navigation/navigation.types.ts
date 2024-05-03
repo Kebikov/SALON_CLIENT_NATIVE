@@ -8,6 +8,10 @@ export type TypeRootPage = {
     Home: undefined;
     User: undefined;
     ChangePassword: undefined;
+    //Admin
+    AdminAdd: undefined;
+    AdminAddGroup: undefined;
+    AdminAddGroupForm: undefined;
 };
 
 export interface IRoute {

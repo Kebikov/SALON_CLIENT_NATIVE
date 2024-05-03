@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet, FlatList, RefreshControl, Button } from 'react-native';
 import React, { FC, useEffect, useState, useRef } from 'react';
-import MasterCart from '@/shared/MasterCart/MasterCart';
-import NotElements from '@/shared/NotElements/NotElements';
+import MasterCart from '@/components/shared/MasterCart/MasterCart';
+import NotElements from '@/components/shared/NotElements/NotElements';
 
 
 interface IDATAitem {

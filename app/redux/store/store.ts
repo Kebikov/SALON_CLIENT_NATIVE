@@ -1,9 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
 import modalSlice from "../slice/modal.slice";
+import userSlice from "../slice/user.slice";
 
 
 const store = configureStore({
-    reducer: {modalSlice},
+    reducer: {modalSlice, userSlice},
     middleware: getDefaultMiddleware => getDefaultMiddleware(),
     devTools: process.env.NODE_ENV !== 'production',
 });

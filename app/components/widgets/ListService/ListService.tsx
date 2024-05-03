@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet } from 'react-native';
 import React, { FC, useEffect, useState, useRef } from 'react';
-import { IServiceCart } from '@/shared/ServiceCart/ServiceCart';
-import ServiceCart from '@/shared/ServiceCart/ServiceCart';
+import { IServiceCart } from '@/components/shared/ServiceCart/ServiceCart';
+import ServiceCart from '@/components/shared/ServiceCart/ServiceCart';
 
 
 const DATA: Array<IServiceCart> = [

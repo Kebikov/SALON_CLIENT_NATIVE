@@ -1,4 +1,4 @@
-import Spinner from "@/shared/Spinner/Spinner";
+import Spinner from "@/components/shared/Spinner/Spinner";
 import { useState } from "react";
 
 /**

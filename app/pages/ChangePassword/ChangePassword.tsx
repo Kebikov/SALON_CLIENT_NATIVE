@@ -1,13 +1,14 @@
 import { View, Text, StyleSheet } from 'react-native';
 import type { NativeSyntheticEvent, TextInputChangeEventData } from 'react-native';
 import React, { FC, useState } from 'react';
-import InputGeneric from '@/shared/InputGeneric/InputGeneric';
-import WrapperScrollMenu from '@/shared/WrapperScrollMenu/WrapperScrollMenu';
-import JoinEmail from '@/shared/JoinEmail/JoinEmail';
+import InputGeneric from '@/components/shared/InputGeneric/InputGeneric';
+import WrapperScrollMenu from '@/components/wrappers/WrapperScrollMenu/WrapperScrollMenu';
+import ButtonWithIcon from '@/components/shared/ButtonWithIcon/ButtonWithIcon';
 import { COLOR_ROOT } from '@/data/colors';
 import { useHookCheckErrorResponce } from '@/hooks/useHookCheckErrorResponce';
 import httpAuthenticationService from '@/api/routes/authentication/service/http.authentication.service';
 import { useHookSpinner } from '@/hooks/useHookSpinner';
+import HeaderTitle from '@/components/widgets/HeaderTitle/HeaderTitle';
 
 
 interface ITwoPassword {
@@ -48,28 +49,31 @@ const ChangePassword: FC = () => {
     }
 
     return (
-        <WrapperScrollMenu page='ChangePassword' >
-            <Spinner visible={isShowSpinner} />
-            <View style={styles.main}>
-                <Text style={styles.title} >Смена пароля</Text>
-                <Text style={styles.text}>Для смены пароля на новый, введите новый пароль и продублируйте его.</Text>
-                <InputGeneric
-                    onChangeForm={onChangeForm}
-                    placeholder='Ваш новый пароль'
-                    keyName='password'
-                    img={require('@/source/img/icon/password-grey.png')}
-                    value={data.password}
-                />
-                <InputGeneric
-                    onChangeForm={onChangeForm}
-                    placeholder='Продублируйте новый пароль'
-                    keyName='passwordTwo'
-                    img={require('@/source/img/icon/password-grey.png')}
-                    value={data.passwordTwo}
-                />
-                <JoinEmail title='смена пароля' marginTop={20} pushButton={() => changePassword()} />
-            </View>
-        </WrapperScrollMenu>
+        <>
+            
+            <WrapperScrollMenu page='ChangePassword' >
+                <HeaderTitle text='Смена пароля' />
+                <Spinner visible={isShowSpinner} />
+                <View style={styles.main}>
+                    <Text style={styles.text}>Для смены пароля на новый, введите новый пароль и продублируйте его.</Text>
+                    <InputGeneric
+                        onChangeForm={onChangeForm}
+                        placeholder='Ваш новый пароль'
+                        keyName='password'
+                        img={require('@/source/img/icon/password-grey.png')}
+                        value={data.password}
+                    />
+                    <InputGeneric
+                        onChangeForm={onChangeForm}
+                        placeholder='Продублируйте новый пароль'
+                        keyName='passwordTwo'
+                        img={require('@/source/img/icon/password-grey.png')}
+                        value={data.passwordTwo}
+                    />
+                    <ButtonWithIcon title='смена пароля' marginTop={20} pushButton={() => changePassword()} />
+                </View>
+            </WrapperScrollMenu>
+        </>
     );
 };
 

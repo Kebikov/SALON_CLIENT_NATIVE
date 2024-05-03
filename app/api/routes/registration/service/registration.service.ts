@@ -1,11 +1,6 @@
-import { baseLink } from "@/api/axios.interceptors";
-import axios from "axios";
+import { axiosInstance } from "@/api/axios/axios.instance/instance";
 import { IReqBodyRegistrationEmail, IResRegistration, IReqBodyRegistrationGoogle } from '@/api/routes/registration/types/registration.types';
-import { ToastAndroid } from "react-native";
 import { IError } from "@/api/routes/registration/types/registration.types";
-
-
-const path = baseLink + '/api/registration';
 
 
 class HttpRegistrationService {
@@ -13,14 +8,12 @@ class HttpRegistrationService {
     /**
      * Авторизация через Email.
      * @example const result = await httpRegistrationService.POST_registrationEmail(body: IReqBodyRegistrationEmail);
-     * if(checkErrorResponce(result)) return;
      */
-    async POST_registrationEmail(body: IReqBodyRegistrationEmail): Promise<IResRegistration | IError | undefined> {
+    async POST_registrationEmail(body: IReqBodyRegistrationEmail): Promise<IResRegistration | undefined> {
         try {
-            const {data} = await axios.post(`${path}/email`, body);
-            return data as IResRegistration | IError;
+            const {data} = await axiosInstance.post(`/registration/email`, body);
+            return data as IResRegistration;
         } catch (error) {
-            ToastAndroid.show('Неизвестная ошибка сервера...', ToastAndroid.SHORT);
             console.error('Error in POST_registrationEmail >>> ',error);
         }
     }
@@ -28,14 +21,12 @@ class HttpRegistrationService {
     /**
      * Авторизация через Google.
      * @example const result = await POST_registrationGoogle(body: IReqBodyRegistrationGoogle);
-        if(checkErrorResponce(result)) return;
      */
-    async POST_registrationGoogle(body: IReqBodyRegistrationGoogle): Promise<IResRegistration | IError | undefined> {
+    async POST_registrationGoogle(body: IReqBodyRegistrationGoogle): Promise<IResRegistration | undefined> {
         try {
-            const {data} = await axios.post(`${path}/google`, body);
-            return data as IResRegistration | IError;
+            const {data} = await axiosInstance.post(`/registration/google`, body);
+            return data as IResRegistration;
         } catch (error) {
-            ToastAndroid.show('Неизвестная ошибка сервера...', ToastAndroid.SHORT);
             console.error('Error in POST_registrationEmail >>> ',error);
         }
     }
@@ -43,10 +34,10 @@ class HttpRegistrationService {
     /**
      * `Обновление токенов.`
      */
-    async POST_updateToken(id: number, refreshToken: string) {
+    async POST_updateToken(id: number, refreshToken: string): Promise<IResRegistration | undefined> {
         try {
-            const {data} = await axios.post(`${path}/updateToken`, {id, refreshToken});
-            return data as IResRegistration | IError;
+            const {data} = await axiosInstance.post(`/registration/updateToken`, {id, refreshToken});
+            return data as IResRegistration;
         } catch (error) {
             console.error(error);
         }

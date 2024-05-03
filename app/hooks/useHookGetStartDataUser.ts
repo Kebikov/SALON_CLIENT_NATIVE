@@ -1,29 +1,28 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useHookCheckErrorResponce } from '@/hooks/useHookCheckErrorResponce';
 import httpClientService from '@/api/routes/client/service/http.client.service';
-import React from 'react';
-import type { IgetInfoBasic } from '@/api/routes/client/types/client.types';
+import { useAppDispatch } from '@/redux/store/hooks';
+import { setAppUserInfo } from '@/redux/slice/user.slice';
+import { IResRegistration } from '@/api/routes/registration/types/registration.types';
 
 
 /**
- * Hook для получения базовой информации о пользователе.
- * @param setUserInfo Function useState() для установки информации о пользователе в компоненте.
+ * `Hook для получения базовой информации о пользователе.`
  */
 export const useHookGetStartDataUser = () => {
 
-    const {isIError, isUndefined, modalMessageError} = useHookCheckErrorResponce();
+    const dispatch = useAppDispatch();
+    const {modalMessageError} = useHookCheckErrorResponce();
 
-    async function getStartDataUser(setUserInfo: React.Dispatch<React.SetStateAction<IgetInfoBasic | null>>) {
+    async function getStartDataUser() {
         const userJSON = await AsyncStorage.getItem('@user');
         if(!userJSON) return modalMessageError('Данные небыли сохранены, пройдите авторизацию повторно.');
-        const user = JSON.parse(userJSON);
+        const user = JSON.parse(userJSON) as IResRegistration;
         if('id' in user) {
             const result = await httpClientService.GET_getClientInfo(user.id);
-            if(isUndefined(result)) return;
-            if(isIError(result)) return;
-            setUserInfo(result);
-            const isActive = await httpClientService.GET_isActiveEmail(user.id);
-            if(!isActive) return modalMessageError('Пожалуйста проверьте свою почту и подтвердите ее переходом по ссылке в письме, проверьте папку спам !');
+            if(!result) return;
+            dispatch(setAppUserInfo(result));
+            if(!result.isActivated) return modalMessageError('Пожалуйста проверьте свою почту и подтвердите ее переходом по ссылке в письме, проверьте папку спам !');
         }
     };
 

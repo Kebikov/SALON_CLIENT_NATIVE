@@ -1,13 +1,13 @@
 import { View, Text, StyleSheet, NativeSyntheticEvent, TextInputChangeEventData, Pressable } from 'react-native';
 import React, { FC, useState } from 'react';
-import WrapperScroll from '@/shared/WrapperScroll/WrapperScroll';
-import InputPassword from '@/shared/InputPassword/InputPassword';
-import InputGeneric from '@/shared/InputGeneric/InputGeneric';
-import JoinEmail from '@/shared/JoinEmail/JoinEmail';
-import LinesWithOr from '@/shared/LinesWithOr/LinesWithOr';
-import JoinGoogle from '@/shared/JoinGoogle/JoinGoogle';
+import WrapperScroll from '@/components/wrappers/WrapperScroll/WrapperScroll';
+import InputPassword from '@/components/shared/InputPassword/InputPassword';
+import InputGeneric from '@/components/shared/InputGeneric/InputGeneric';
+import ButtonWithIcon from '@/components/shared/ButtonWithIcon/ButtonWithIcon';
+import LinesWithOr from '@/components/shared/LinesWithOr/LinesWithOr';
+import JoinGoogle from '@/components/shared/JoinGoogle/JoinGoogle';
 import { COLOR_ROOT } from '@/data/colors';
-import DoYouHaveAnAccount from '@/shared/DoYouHaveAnAccount/DoYouHaveAnAccount';
+import DoYouHaveAnAccount from '@/components/shared/DoYouHaveAnAccount/DoYouHaveAnAccount';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { TypeRootPage } from '@/navigation/navigation.types';
 import { CheckForm } from '@/helpers/check/checkForm';
@@ -82,7 +82,7 @@ const AuthEnter: FC = () => {
                         <Text style={styles.textForgot}>Забыли пароль ?</Text>
                     </Pressable>
                 </View>
-                <JoinEmail pushButton={() => logIn()} title='Вход'/>
+                <ButtonWithIcon pushButton={() => logIn()} title='Вход'/>
                 <LinesWithOr/>
                 <JoinGoogle title='Вход через Google' border={true} />
                 <DoYouHaveAnAccount pushButton={goToPageRegistration} title='Нет аккаунта ?' textButton=' Регистрация' color={COLOR_ROOT.MIDDLE_GRAY} />

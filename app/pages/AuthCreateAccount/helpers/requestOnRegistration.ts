@@ -1,9 +1,7 @@
 import { IReqBodyRegistrationEmail } from '@/api/routes/registration/types/registration.types';
-import { ToastAndroid } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import httpRegistrationService from '@/api/routes/registration/service/registration.service';
-import { checkErrorResponce } from '@/api/helpers/checkErrorResponce';
 import { asyncStorageSaveUser } from '@/helpers/save/saveUserInAsyncStorage';
+
 
 /**
  * - Запрос на сервер для регистрации через Email.
@@ -12,7 +10,7 @@ import { asyncStorageSaveUser } from '@/helpers/save/saveUserInAsyncStorage';
  */
 export const requestOnRegistration = async (body: IReqBodyRegistrationEmail) => {
     const result = await httpRegistrationService.POST_registrationEmail(body);
-    if(checkErrorResponce(result)) return;
+    if(!result) return;
     await asyncStorageSaveUser(result);
     return true;
 }

@@ -1,8 +1,8 @@
 import { View, Text, StyleSheet, FlatList, RefreshControl, Button } from 'react-native';
 import React, { FC, useEffect, useState, useRef } from 'react';
-import DepartmentCart from '@/shared/DepartmentCart/DepartmentCart';
-import NotElements from '@/shared/NotElements/NotElements';
-import { IDepartmentCart } from '@/shared/DepartmentCart/DepartmentCart';
+import DepartmentCart from '@/components/shared/DepartmentCart/DepartmentCart';
+import NotElements from '@/components/shared/NotElements/NotElements';
+import { IDepartmentCart } from '@/components/shared/DepartmentCart/DepartmentCart';
 
 
 

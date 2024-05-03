@@ -1,15 +1,7 @@
-import { checkErrorResponce } from '@/api/helpers/checkErrorResponce';
 import httpRegistrationService from '@/api/routes/registration/service/registration.service';
 import { IReqBodyRegistrationGoogle, IResRegistration, IError } from "@/api/routes/registration/types/registration.types";
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { ToastAndroid } from 'react-native';
 import { IUserGoogle } from "./formatToInterfaceIUser";
 import { asyncStorageSaveUser } from '@/helpers/save/saveUserInAsyncStorage';
-
-
-interface IData {
-    data: IResRegistration | IError;
-}
 
 
 /**
@@ -29,7 +21,7 @@ export const registrationUserOnTheServer = async (user: IUserGoogle) => {
     };
 
     const result = await httpRegistrationService.POST_registrationGoogle(body);
-    if(checkErrorResponce(result)) return;
+    if(!result) return;
     await asyncStorageSaveUser(result);
 
     return true;

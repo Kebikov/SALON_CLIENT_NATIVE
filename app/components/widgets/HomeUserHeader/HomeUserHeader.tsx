@@ -3,6 +3,7 @@ import React, { FC, useState, useEffect } from 'react';
 import { COLOR_ROOT } from '@/data/colors';
 import type { IgetInfoBasic } from '@/api/routes/client/types/client.types';
 import { useHookGetStartDataUser } from '@/hooks/useHookGetStartDataUser';
+import { useAppSelector } from '@/redux/store/hooks';
 
 
 /**
@@ -10,11 +11,12 @@ import { useHookGetStartDataUser } from '@/hooks/useHookGetStartDataUser';
  */
 const HomeUserHeader: FC = () => {
 
-    const [userInfo, setUserInfo] = useState<IgetInfoBasic | null>(null);
+    const userInfo = useAppSelector(state => state.userSlice.user);
+
     const {getStartDataUser} = useHookGetStartDataUser();
 
     useEffect(() => {
-        getStartDataUser(setUserInfo);
+        getStartDataUser();
     }, []);
 
     return (
@@ -30,8 +32,8 @@ const HomeUserHeader: FC = () => {
                         />
                     </View>
                     <View>
-                        <Text style={styles.textHello} >Привет, {userInfo?.name ?? 'клиент'} !</Text>
-                        <Text style={styles.textEmail} >{userInfo?.email ?? 'email@gmail.com'}</Text>
+                        <Text style={styles.textHello} >Привет, {userInfo.name} !</Text>
+                        <Text style={styles.textEmail} >{userInfo.email}</Text>
                     </View>
                 </View>
                 <View style={styles.boxBell} >

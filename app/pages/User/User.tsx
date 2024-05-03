@@ -1,13 +1,11 @@
-import { View, Text, StyleSheet, Pressable, Button } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import React, { FC } from 'react';
-import Wrapper from '@/shared/Wrapper/Wrapper';
-import BottomMenu from '@/widgets/BottomMenu/BottomMenu';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import type { TypeRootPage } from '@/navigation/navigation.types';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { COLOR_ROOT } from '@/data/colors';
-import MenuItem from '@/shared/MenuItem/MenuItem';
-import WrapperScrollMenu from '@/shared/WrapperScrollMenu/WrapperScrollMenu';
+import MenuItem from '@/components/shared/MenuItem/MenuItem';
+import WrapperScrollMenu from '@/components/wrappers/WrapperScrollMenu/WrapperScrollMenu';
 
 /**
  * @page Страница пользователя.

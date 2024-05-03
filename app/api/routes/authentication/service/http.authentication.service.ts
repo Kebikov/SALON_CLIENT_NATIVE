@@ -1,12 +1,6 @@
-import { baseLink } from "@/api/axios.interceptors";
-import axios from "axios";
 import type { IAuthenticationData, IMessage } from "../types/authentication.types";
 import type { IResRegistration, IError } from "../../registration/types/registration.types";
-import { authAxios } from "@/api/axios.interceptors";
-import { errorHandling } from "@/helpers/error/errorHandling";
-
-
-const path = baseLink + '/api/authentication';
+import { axiosInstance, axiosInstanceWithAuth } from "@/api/axios/axios.instance/instance"; 
 
 
 class HttpAuthenticationService {
@@ -16,36 +10,36 @@ class HttpAuthenticationService {
      * @param body type IAuthenticationData.
      * @returns Promise< IResRegistration | IError | undefined >
      */
-    async POST_authentication(body: IAuthenticationData): Promise<IResRegistration | IError | undefined> {
+    async POST_authentication(body: IAuthenticationData): Promise<IResRegistration | undefined> {
         try {
-            const {data} = await axios.post(path, body);
-            return data as IResRegistration | IError;
+            const {data} = await axiosInstance.post('/authentication', body);
+            return data as IResRegistration;
         } catch (error) {
-            return errorHandling(error);
+            console.error('Error in POST_authentication >>> ',error);
         }
     }
     
     /**
      * `Востановление пароля, через почту.`
      */
-    async POST_authForgot(email: string): Promise<IMessage | IError | undefined> {
+    async POST_authForgot(email: string): Promise<IMessage | undefined> {
         try {
-            const {data} = await axios.post(`${path}/auth-forgot`, {email});
-            return data as IMessage | IError;
+            const {data} = await axiosInstance.post(`/authentication/auth-forgot`, {email});
+            return data as IMessage;
         } catch (error) {
-            return errorHandling(error);
+            console.error('Error in POST_authForgot >>> ',error);
         }
     }
 
     /**
      * `Изминение пароля пользователя.`
      */
-    async POST_changePassword(password: string): Promise<IError | IMessage | undefined> {
+    async POST_changePassword(password: string): Promise<IMessage | undefined> {
         try {
-            const {data} = await authAxios.post(`${path}/change-password`, {password});
-            return data as IMessage | IError;
+            const {data} = await axiosInstanceWithAuth.post(`/authentication/change-password`, {password});
+            return data as IMessage;
         } catch (error) {
-            return errorHandling(error);
+            console.error('Error in POST_changePassword >>> ',error);
         }
     }
 

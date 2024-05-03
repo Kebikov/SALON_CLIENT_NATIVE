@@ -1,11 +1,11 @@
 import { View, Text, StyleSheet } from 'react-native';
 import type { NativeSyntheticEvent, TextInputChangeEventData } from 'react-native';
 import React, { FC, useState } from 'react';
-import WrapperScroll from '@/shared/WrapperScroll/WrapperScroll';
+import WrapperScroll from '@/components/wrappers/WrapperScroll/WrapperScroll';
 import { COLOR_ROOT } from '@/data/colors';
-import InputGeneric from '@/shared/InputGeneric/InputGeneric';
-import JoinEmail from '@/shared/JoinEmail/JoinEmail';
-import DoYouHaveAnAccount from '@/shared/DoYouHaveAnAccount/DoYouHaveAnAccount';
+import InputGeneric from '@/components/shared/InputGeneric/InputGeneric';
+import ButtonWithIcon from '@/components/shared/ButtonWithIcon/ButtonWithIcon';
+import DoYouHaveAnAccount from '@/components/shared/DoYouHaveAnAccount/DoYouHaveAnAccount';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { TypeRootPage } from '@/navigation/navigation.types';
 import { useHookSpinner } from '@/hooks/useHookSpinner';
@@ -57,7 +57,7 @@ const AuthForgot: FC = () => {
                     keyName='email'
                     img={require('@/source/img/icon/email-grey.png')}
                 />
-                <JoinEmail pushButton={() => recovery()} title='Востановить' marginTop={30}/>
+                <ButtonWithIcon pushButton={() => recovery()} title='Востановить' marginTop={30}/>
                 <DoYouHaveAnAccount pushButton={() => navigate('Auth')} title='Вернуться к началу ?' color={COLOR_ROOT.MIDDLE_GRAY} textButton=' Вернуться' />
             </View>
         </WrapperScroll>

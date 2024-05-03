@@ -1,14 +1,14 @@
 import { Text, StyleSheet, Pressable } from 'react-native';
 import React, { FC } from 'react';
 import { COLOR_ROOT } from '@/data/colors';
-import WrapperScrollMenu from '@/shared/WrapperScrollMenu/WrapperScrollMenu';
-import HomeUserHeader from '@/widgets/HomeUserHeader/HomeUserHeader';
-import ListDepartment from '@/widgets/ListDepartment/ListDepartment';
-import ListMasters from '@/widgets/ListMasters/ListMasters';
-import ListService from '@/widgets/ListService/ListService';
-import httpAuthenticationService from '@/api/routes/authentication/service/http.authentication.service';
+import WrapperScrollMenu from '@/components/wrappers/WrapperScrollMenu/WrapperScrollMenu';
+import HomeUserHeader from '@/components/widgets/HomeUserHeader/HomeUserHeader';
+import ListDepartment from '@/components/widgets/ListDepartment/ListDepartment';
+import ListMasters from '@/components/widgets/ListMasters/ListMasters';
+import ListService from '@/components/widgets/ListService/ListService';
 import { useHookCheckErrorResponce } from '@/hooks/useHookCheckErrorResponce';
-
+import httpClientService from '@/api/routes/client/service/http.client.service';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 /** 
@@ -24,6 +24,8 @@ const Home: FC = () => {
      * @returns 
      */
     const press = async () => {
+        const user = await AsyncStorage.getItem('@user');
+        console.log('#3 - Ошибка ответа !!!', user);
     }
 
     return (

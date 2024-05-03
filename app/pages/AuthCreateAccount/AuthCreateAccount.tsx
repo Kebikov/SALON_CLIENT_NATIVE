@@ -1,13 +1,13 @@
 import { View, Text, StyleSheet, TextInput, Image, NativeSyntheticEvent, TextInputChangeEventData } from 'react-native';
 import React, { FC, useState } from 'react';
-import WrapperScroll from '@/shared/WrapperScroll/WrapperScroll';
+import WrapperScroll from '@/components/wrappers/WrapperScroll/WrapperScroll';
 import { COLOR_ROOT } from '@/data/colors';
-import JoinGoogle from '@/shared/JoinGoogle/JoinGoogle';
-import JoinEmail from '@/shared/JoinEmail/JoinEmail';
-import DoYouHaveAnAccount from '@/shared/DoYouHaveAnAccount/DoYouHaveAnAccount';
-import InputPassword from '@/shared/InputPassword/InputPassword';
-import InputGeneric from '@/shared/InputGeneric/InputGeneric';
-import LinesWithOr from '@/shared/LinesWithOr/LinesWithOr';
+import JoinGoogle from '@/components/shared/JoinGoogle/JoinGoogle';
+import ButtonWithIcon from '@/components/shared/ButtonWithIcon/ButtonWithIcon';
+import DoYouHaveAnAccount from '@/components/shared/DoYouHaveAnAccount/DoYouHaveAnAccount';
+import InputPassword from '@/components/shared/InputPassword/InputPassword';
+import InputGeneric from '@/components/shared/InputGeneric/InputGeneric';
+import LinesWithOr from '@/components/shared/LinesWithOr/LinesWithOr';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { TypeRootPage } from '@/navigation/navigation.types';
 import { IReqBodyRegistrationEmail } from '@/api/routes/registration/types/registration.types';
@@ -66,7 +66,7 @@ const AuthCreateAccount: FC = () => {
                     <Image style={[styles.icon, {width: 24, height: 16, marginTop: -8}]} source={require('@/source/img/icon/flag.jpg')} />
                 </View>
                 <InputPassword onChangeForm={onChangeForm} />
-                <JoinEmail title='создать акаунт' pushButton={() => createAccount()} />
+                <ButtonWithIcon title='создать акаунт' pushButton={() => createAccount()} />
                 <LinesWithOr/>
                 <JoinGoogle border={true} />
                 <DoYouHaveAnAccount pushButton={goToPageAuthEnter} title='Уже есть аккаунт ?' textButton=' Войти' color={COLOR_ROOT.MIDDLE_GRAY} />

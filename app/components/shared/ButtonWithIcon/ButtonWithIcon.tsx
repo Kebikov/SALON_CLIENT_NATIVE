@@ -4,7 +4,7 @@ import { COLOR_ROOT } from '@/data/colors';
 
 
 
-interface IJoinEmail {
+interface IButtonWithIcon {
     /**
      * Функция срабатываюшая после нажатия на кнопку.
      */
@@ -17,16 +17,21 @@ interface IJoinEmail {
      * Отступ с верху.
      */
     marginTop?: number;
+    /**
+     * Иконка кнопки(по умолчании конверт почты)
+     */
+    img?: number;
 }
 
 
 /**
- * @component Кнопка, вход через Email.
- * @param pushButton Функция срабатываюшая после нажатия на кнопку.
+ * @component `Кнопка c иконкой.`
  * @param title Текст кнопки.
+ * @param pushButton Функция срабатываюшая после нажатия на кнопку.
  * @param marginTop ? Отступ с верху.
+ * @param img ? Иконка кнопки(по умолчании конверт почты)
  */
-const JoinEmail: FC<IJoinEmail> = ({title, pushButton, marginTop}) => {
+const ButtonWithIcon: FC<IButtonWithIcon> = ({title, pushButton, marginTop, img = require('@/source/img/logo/email.png')}) => {
 
 
     return (
@@ -39,7 +44,7 @@ const JoinEmail: FC<IJoinEmail> = ({title, pushButton, marginTop}) => {
             }
         >
             <View style={styles.container}>
-                <Image source={require('@/source/img/logo/email.png')} style={styles.img} />
+                <Image source={img} style={styles.img} />
                 <Text style={styles.text} >{title}</Text>
             </View>
             
@@ -69,11 +74,11 @@ const styles = StyleSheet.create({
     img:{
         position: 'absolute',
         left: -10,
-        top: 2,
+        top: 3,
         width: 20,
         height:20
     }
 });
 
 
-export default JoinEmail;
+export default ButtonWithIcon;
