@@ -18,9 +18,14 @@ interface IModalObject {
     modalType?: TMessage;
 }
 
+interface ISpiner {
+    isShowSpinner: boolean;
+}
+
 
 interface IModalSlice {
     modal: IModalObject;
+    spiner: ISpiner;
 }
 
 const initialState: IModalSlice = {
@@ -28,6 +33,9 @@ const initialState: IModalSlice = {
         modalVisible: false,
         message: '',
         modalType: 'message'
+    },
+    spiner: {
+        isShowSpinner: false
     }
 }
 
@@ -43,6 +51,9 @@ const modalSlice = createSlice({
          */
         setAppModalObject: (state, action: PayloadAction<IModalObject>) => {
             state.modal = action.payload;
+        },
+        setAppIsShowSpinner: (state, action: PayloadAction<ISpiner>) => {
+            state.spiner = action.payload;
         }
     }
 });
@@ -51,5 +62,6 @@ const modalSlice = createSlice({
 export default modalSlice.reducer;
 
 export const {
-    setAppModalObject
+    setAppModalObject,
+    setAppIsShowSpinner
 } = modalSlice.actions;

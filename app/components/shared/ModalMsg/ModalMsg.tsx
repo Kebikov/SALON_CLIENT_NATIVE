@@ -14,15 +14,12 @@ const imgError = require('@/source/img/modal/error.jpg');
  */
 export type TMessage =  'error' | 'message' ;
 
-export interface IModalMessage {
-    message: string;
-    type: TMessage;
-}
+
 
 /**
  * @shared Модальное окно.
  */
-const ModalMsg: FC<IModalMessage> = () => {
+const ModalMsg: FC = () => {
 
     const {message, modalType, modalVisible} = useAppSelector(state => state.modalSlice.modal);
     const dispatch = useAppDispatch();

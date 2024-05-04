@@ -8,11 +8,9 @@ import ButtonWithIcon from '@/components/shared/ButtonWithIcon/ButtonWithIcon';
 import DoYouHaveAnAccount from '@/components/shared/DoYouHaveAnAccount/DoYouHaveAnAccount';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { TypeRootPage } from '@/navigation/navigation.types';
-import { useHookSpinner } from '@/hooks/useHookSpinner';
 import httpAuthenticationService from '@/api/routes/authentication/service/http.authentication.service';
 import { useHookCheckDataForm } from '@/hooks/useHookCheckDataForm';
 import { useHookCheckErrorResponce } from '@/hooks/useHookCheckErrorResponce';
-import { checkErrorResponce } from '@/api/helpers/checkErrorResponce';
 
 
 interface IEmail {
@@ -26,7 +24,7 @@ interface IEmail {
 const AuthForgot: FC = () => {
 
     const {navigate} = useNavigation<NavigationProp<TypeRootPage>>();
-    const {Spinner, isShowSpinner, setIsShowSpinner} = useHookSpinner();
+
     const  {checkDataForm} = useHookCheckDataForm();
     const {isIError, isMessage, isUndefined} = useHookCheckErrorResponce();
 
@@ -39,15 +37,12 @@ const AuthForgot: FC = () => {
     }
 
     const recovery = async () => {
-        setIsShowSpinner(true);
         if(checkDataForm(data)) return;
         const result = await httpAuthenticationService.POST_authForgot(data.email);
-        if(isUndefined(result) || isIError(result) || isMessage(result)) return setIsShowSpinner(false);
     }
 
     return (
         <WrapperScroll backgroundColor='white' barStyle='dark-content' >
-            <Spinner visible={isShowSpinner} />
             <View style={styles.main}>
                 <Text style={styles.title} >Если забыли пароль,</Text>
                 <Text style={styles.text} >Пожалуйста введите ваш email ниже и мы вышлим вам новый пароль для входа.</Text>

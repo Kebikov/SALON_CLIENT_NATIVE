@@ -24,8 +24,8 @@ const Home: FC = () => {
      * @returns 
      */
     const press = async () => {
-        const user = await AsyncStorage.getItem('@user');
-        console.log('#3 - Ошибка ответа !!!', user);
+        const user = await httpClientService.GET_getClientInfo(1);
+        console.log(user);
     }
 
     return (

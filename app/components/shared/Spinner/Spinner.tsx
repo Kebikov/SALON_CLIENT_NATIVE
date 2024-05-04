@@ -1,23 +1,21 @@
-import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
+import { View, ActivityIndicator } from 'react-native';
 import React, { FC } from 'react';
-
-
-export interface ISpinner {
-    visible: boolean;
-}
+import { useAppSelector } from '@/redux/store/hooks';
 
 
 /**
  * @shared  `Спинер загрузки.`
- * @param visible Видимость элемента.
- * @example <Spinner visible={#} />
+ * - Управление видимостью элемента через redux modalSlice.spiner.
+ * @example <Spinner/>
  */
-const Spinner: FC<ISpinner> = ({visible}) => {
+const Spinner: FC = () => {
+
+    const {isShowSpinner} = useAppSelector(state => state.modalSlice.spiner);
 
     return (
         <>
             {
-                visible
+                isShowSpinner
                 ?
                 <View style={{position: 'absolute', width: '100%', height: '100%', alignItems: 'center', justifyContent: 'center', zIndex: 100}}>
                     <ActivityIndicator size='large' color='#0000ff' />

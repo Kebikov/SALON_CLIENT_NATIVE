@@ -7,6 +7,8 @@ import { TGIResRegistration } from '@/helpers/type-guards/TGIResRegistration';
 import { axiosInstance, axiosInstanceWithAuth } from '@/api/axios/axios.instance/instance';
 import httpRegistrationService from '@/api/routes/registration/service/registration.service';
 import { useHookCheckErrorResponce } from '@/hooks/useHookCheckErrorResponce';
+import { useAppDispatch } from '@/redux/store/hooks';
+import { setAppIsShowSpinner } from '@/redux/slice/modal.slice';
 
 
 interface IApiInterceptors {
@@ -14,19 +16,51 @@ interface IApiInterceptors {
 }
 
 /**
- * @wrapper Оболочка для перехвата запросов к серверу.
- * @example 
+ * @wrapper `Оболочка для перехвата запросов к серверу.`
  * @returns {JSX.Element}
  */
 const ApiInterceptors: FC<IApiInterceptors> = ({children}) => {
     
+    const dispatch = useAppDispatch();
     const {isIError, modalMessageError} = useHookCheckErrorResponce();
 
-    useEffect(() => {
+    /**
+     * Обработка входяшей ошибки.
+     */
+    const processError = (error: AxiosError) => {
+        // Скрываем спинер загрузки.
+        dispatch(setAppIsShowSpinner( {isShowSpinner: false} ));
 
-        //* Перехват запроса с регистрацией.
+        let errorStatus: string | number = 'unknown status';
+        if(error.response && 'status' in error.response) errorStatus = error.response.status;
+
+        if(error.response && 'data' in error.response && isIError(error.response.data)) {
+            return Promise.reject(error);
+        }
+
+        modalMessageError(`Error ${errorStatus}: ошибка сервера, попробуйте позже...`);
+        return Promise.reject(error);
+    }
+
+    useEffect(() => {
+        //* Перехват запроса без регистрации.
+        const interceptorRequest = axiosInstance.interceptors.request.use(
+            async (req) => {
+                // Показываем спинер загрузки.
+                dispatch(setAppIsShowSpinner( {isShowSpinner: true} ));
+                return req;
+            },
+            (error) => {
+                return Promise.reject(error);
+            }
+        );
+
+        //* Перехват запроса с регистрацией для обновления и добавления токенов.
         const interceptorRequestWithAuth = axiosInstanceWithAuth.interceptors.request.use(
             async (req) => {
+                // Показываем спинер загрузки.
+                console.log('Показать спинер 2');
+                dispatch(setAppIsShowSpinner( {isShowSpinner: true} ));
                 const userJson = await AsyncStorage.getItem('@user');
                 if(!userJson) return req;
                 const {id, accessToken, refreshToken, expiresIn}: IResRegistration = JSON.parse(userJson);
@@ -51,31 +85,35 @@ const ApiInterceptors: FC<IApiInterceptors> = ({children}) => {
             }
         );
 
-        //* Перехват ответа любого.
+        //* Перехват ответа без регистрации.
         const interceptorResponse = axiosInstance.interceptors.response.use(
             async (res: AxiosResponse) => {
-                console.log('Run AxiosResponse');
-                console.log(res.data);
+                // Скрываем спинер загрузки.
+                dispatch(setAppIsShowSpinner( {isShowSpinner: false} ));
                 return res;
             },
             (error: AxiosError) => {
-                console.log('#1 - Ошибка ответа !!!');
+                return processError(error);
+            }
+        );
 
-                let errorStatus: string | number = 'unknown status';
-                if(error.response && 'status' in error.response) errorStatus = error.response.status;
-
-                if(error.response && 'data' in error.response && isIError(error.response.data)) {
-                    return Promise.reject(error);
-                }
-
-                modalMessageError(`Error ${errorStatus}: ошибка сервера, попробуйте позже...`);
-                return Promise.reject(error);
+        //* Перехват ответа c регистрацией.
+        const interceptorResponseWithAuth = axiosInstanceWithAuth.interceptors.response.use(
+            async (res: AxiosResponse) => {
+                // Скрываем спинер загрузки.
+                dispatch(setAppIsShowSpinner( {isShowSpinner: false} ));
+                return res;
+            },
+            (error: AxiosError) => {
+                return processError(error);
             }
         )
 
         return () => {
+            axiosInstance.interceptors.request.eject(interceptorRequest);
             axiosInstanceWithAuth.interceptors.request.eject(interceptorRequestWithAuth);
             axiosInstance.interceptors.response.eject(interceptorResponse);
+            axiosInstanceWithAuth.interceptors.response.eject(interceptorResponseWithAuth);
         }
 
     }, []);
@@ -85,3 +123,4 @@ const ApiInterceptors: FC<IApiInterceptors> = ({children}) => {
 
 
 export default ApiInterceptors;
+

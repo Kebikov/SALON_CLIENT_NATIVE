@@ -7,7 +7,6 @@ import ButtonWithIcon from '@/components/shared/ButtonWithIcon/ButtonWithIcon';
 import { COLOR_ROOT } from '@/data/colors';
 import { useHookCheckErrorResponce } from '@/hooks/useHookCheckErrorResponce';
 import httpAuthenticationService from '@/api/routes/authentication/service/http.authentication.service';
-import { useHookSpinner } from '@/hooks/useHookSpinner';
 import HeaderTitle from '@/components/widgets/HeaderTitle/HeaderTitle';
 
 
@@ -23,7 +22,6 @@ interface ITwoPassword {
 const ChangePassword: FC = () => {
 
     const {modalMessageError, isIError, isMessage, isUndefined} = useHookCheckErrorResponce();
-    const {Spinner, setIsShowSpinner, isShowSpinner} = useHookSpinner();
 
     const [data, setData] = useState<ITwoPassword>({
         password: '',
@@ -37,12 +35,10 @@ const ChangePassword: FC = () => {
     const changePassword = async () => {
         if(data.password === '' || data.passwordTwo === '') return modalMessageError('Поле с паролем не может быть пустым.');
         if(data.password !== data.passwordTwo) return modalMessageError('Пароли должны быть одинаковыми.');
-        setIsShowSpinner(true);
         const result = await httpAuthenticationService.POST_changePassword(data.password);
-        if(isUndefined(result)) return setIsShowSpinner(false);
-        if(isIError(result)) return setIsShowSpinner(false);
+        if(isUndefined(result)) return
+        if(isIError(result)) return 
         if(isMessage(result)) {
-            setIsShowSpinner(false);
             setData({password: '', passwordTwo: ''});
             return;
         }
@@ -53,7 +49,6 @@ const ChangePassword: FC = () => {
             
             <WrapperScrollMenu page='ChangePassword' >
                 <HeaderTitle text='Смена пароля' />
-                <Spinner visible={isShowSpinner} />
                 <View style={styles.main}>
                     <Text style={styles.text}>Для смены пароля на новый, введите новый пароль и продублируйте его.</Text>
                     <InputGeneric
