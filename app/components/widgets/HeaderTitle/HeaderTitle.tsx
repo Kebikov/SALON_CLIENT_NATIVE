@@ -40,15 +40,14 @@ const styles = StyleSheet.create({
         backgroundColor: COLOR_ROOT.MAIN_COLOR
     },
     boxImg: {
-        width: 25,
-        height: 25,
+        width: 23,
+        height: 23
     },
     img: {
         resizeMode: 'contain',
         width: '100%',
         height: '100%',
         opacity: .9,
-        
     },
     text: {
         textAlign: 'center',

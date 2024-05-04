@@ -1,0 +1,1 @@
+export type TFolder = 'icon-group' | undefined;

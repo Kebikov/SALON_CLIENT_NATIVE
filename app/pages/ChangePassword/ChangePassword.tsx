@@ -49,6 +49,7 @@ const ChangePassword: FC = () => {
             
             <WrapperScrollMenu page='ChangePassword' >
                 <HeaderTitle text='Смена пароля' />
+
                 <View style={styles.main}>
                     <Text style={styles.text}>Для смены пароля на новый, введите новый пароль и продублируйте его.</Text>
                     <InputGeneric

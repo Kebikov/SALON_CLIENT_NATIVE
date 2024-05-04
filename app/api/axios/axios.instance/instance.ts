@@ -8,5 +8,5 @@ export const axiosInstance: AxiosInstance = axios.create({
 });
 
 export const axiosInstanceWithAuth: AxiosInstance = axios.create({
-        baseURL: `${baseLink}/api`
+    baseURL: `${baseLink}/api`
 });

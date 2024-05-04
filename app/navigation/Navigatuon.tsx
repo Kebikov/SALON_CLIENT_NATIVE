@@ -13,6 +13,7 @@ import ChangePassword from '@/pages/ChangePassword/ChangePassword';
 import AdminAdd from '@/pages/AdminAdd/AdminAdd';
 import AdminAddGroup from '@/pages/AdminAddGroup/AdminAddGroup';
 import AdminAddGroupForm from '@/pages/AdminAddGroupForm/AdminAddGroupForm';
+import SelectIcon from '@/pages/SelectIcon/SelectIcon';
 
 
 const Stack = createNativeStackNavigator<TypeRootPage>();
@@ -41,6 +42,7 @@ const Navigatuon: FC = () => {
                 <Stack.Screen name="AdminAdd" component={AdminAdd} key={'AdminAdd'} />
                 <Stack.Screen name="AdminAddGroup" component={AdminAddGroup} key={'AdminAddGroup'} />
                 <Stack.Screen name="AdminAddGroupForm" component={AdminAddGroupForm} key={'AdminAddGroupForm'} />
+                <Stack.Screen name="SelectIcon" component={SelectIcon} key={'SelectIcon'} />
             </Stack.Navigator>
         </NavigationContainer>
     )

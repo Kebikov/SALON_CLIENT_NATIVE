@@ -3,7 +3,6 @@ import React, { FC } from 'react';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { COLOR_ROOT } from '@/data/colors';
 import { TypeRootPage } from '@/navigation/navigation.types';
-import { ScrollView } from 'react-native-gesture-handler';
 import BottomMenu from '@/components/widgets/BottomMenu/BottomMenu';
 import HeaderTitle from '@/components/widgets/HeaderTitle/HeaderTitle';
 
@@ -16,19 +15,18 @@ interface IWrapper {
 
 
 /**
- * @wrapper `Обертка для страниц с :` 
+ * @wrapper `Обертка для страниц с :`
  * - SafeAreaView 
  * - StatusBar
- * - ScrollView 
  * - BottomMenu
  * @param page Страница на которой был использован компонент.
  * @param titlePage ? Шапка в веху страницы с заголовком.
  * @example 
  * <WrapperScroll page={#}>
-        {JSX.Element}
+        {JSX.Elements}
     </WrapperScroll>
  */
-const WrapperScrollMenu: FC<IWrapper> = ({children, page, titlePage}) => {
+const WrapperMenu: FC<IWrapper> = ({children, page, titlePage}) => {
 
     return (
         <SafeAreaProvider>
@@ -40,9 +38,7 @@ const WrapperScrollMenu: FC<IWrapper> = ({children, page, titlePage}) => {
                     :
                     null
                 }
-                <ScrollView contentContainerStyle={{flexGrow: 1}} keyboardShouldPersistTaps={'handled'} >
-                        {children}
-                </ScrollView>
+                {children}
                 <BottomMenu page={page} />
             </SafeAreaView>
         </SafeAreaProvider>
@@ -50,4 +46,4 @@ const WrapperScrollMenu: FC<IWrapper> = ({children, page, titlePage}) => {
 };
 
 
-export default WrapperScrollMenu;
+export default WrapperMenu;

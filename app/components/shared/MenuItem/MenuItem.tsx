@@ -9,10 +9,9 @@ interface IMenuItem {
     img: number;
     pushFunction: Function;
     isShowArrow?: boolean;
+    marginTop?: number;
 }
 
-//Password Изминение пароля пользователя
-//require('@/source/img/icon-menu/password-1.png')
 
 /**
  * @shared `Пункт меню в настройках.`
@@ -20,14 +19,15 @@ interface IMenuItem {
  * @param subTitle Текст под title.
  * @param img Изображение иконки в меню.
  * @param pushFunction Функция срабатываюшя при нажатии на пункт меню.
- * @param isShowArrow (опционально) Показывать ли стрелку в конце пункта меню.
+ * @param isShowArrow ? Показывать ли стрелку в конце пункта меню.
+ * @param marginTop ? Отступ с верху.
  */
-const MenuItem: FC<IMenuItem> = ({title, subTitle, img, pushFunction, isShowArrow = true}) => {
+const MenuItem: FC<IMenuItem> = ({title, subTitle, img, pushFunction, isShowArrow = true, marginTop = 0}) => {
 
     return (
         <Pressable 
             onPress={() => pushFunction()}
-            style={styles.main} 
+            style={[styles.main,{marginTop}]} 
         >
             <View style={styles.boxImg}>
                 <Image

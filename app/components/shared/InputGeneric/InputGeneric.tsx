@@ -28,6 +28,10 @@ interface IInputGeneric {
      * Значение поля.
      */
     value?: string;
+    /**
+     * Количество линий в input.
+     */
+    lines?: number;
 }
 
 
@@ -39,12 +43,15 @@ interface IInputGeneric {
  * @param keyName Ключ в обьекте состояния формы.
  * @param img Изображение иконки в поле ввода.
  * @param value ? Значение поля.
+ * @param lines ? Количество линий в input.
  * @example <InputGeneric onChangeForm={#} placeholder={#} key={#} img={#} />
  */
-const InputGeneric: FC<IInputGeneric> = ({onChangeForm, placeholder, keyName, img, value = undefined}) => {
+const InputGeneric: FC<IInputGeneric> = ({onChangeForm, placeholder, keyName, img, value = undefined, lines = 1}) => {
     return (
         <View style={styles.boxInput} >
             <TextInput 
+                multiline
+                numberOfLines={lines}
                 style={styles.input} 
                 placeholder={placeholder} 
                 onChange={text => onChangeForm(text, keyName)} 
@@ -63,9 +70,9 @@ const styles = StyleSheet.create({
     },
     input: {
         backgroundColor: COLOR_ROOT.BACKGROUND_INPUT,
-        height: 55,
+        //height: 55,
         borderRadius: 30,
-        paddingVertical: 10,
+        paddingVertical: 13,
         paddingHorizontal: 50,
         fontSize: 17,
         fontWeight: '400',

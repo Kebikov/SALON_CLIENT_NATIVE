@@ -1,4 +1,3 @@
-import { IError } from "../../registration/types/registration.types";
 import { IgetInfoBasic } from "../types/client.types";
 import { axiosInstance, axiosInstanceWithAuth } from "@/api/axios/axios.instance/instance";
 

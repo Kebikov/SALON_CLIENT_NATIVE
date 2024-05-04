@@ -10,7 +10,6 @@ import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { TypeRootPage } from '@/navigation/navigation.types';
 import httpAuthenticationService from '@/api/routes/authentication/service/http.authentication.service';
 import { useHookCheckDataForm } from '@/hooks/useHookCheckDataForm';
-import { useHookCheckErrorResponce } from '@/hooks/useHookCheckErrorResponce';
 
 
 interface IEmail {
@@ -26,7 +25,6 @@ const AuthForgot: FC = () => {
     const {navigate} = useNavigation<NavigationProp<TypeRootPage>>();
 
     const  {checkDataForm} = useHookCheckDataForm();
-    const {isIError, isMessage, isUndefined} = useHookCheckErrorResponce();
 
     const [data, setData] = useState<IEmail>({
         email: ''
