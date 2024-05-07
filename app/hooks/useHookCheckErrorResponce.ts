@@ -2,6 +2,7 @@ import type { IError } from "@/api/routes/registration/types/registration.types"
 import { useAppDispatch } from '@/redux/store/hooks';
 import { setAppModalObject } from '@/redux/slice/modal.slice';
 import { IMessage } from "@/api/routes/authentication/types/authentication.types";
+import { TGIError } from "@/helpers/type-guards/TGIError";
 
 
 /**
@@ -22,9 +23,10 @@ export const useHookCheckErrorResponce = () => {
      * - false = не IError
      */
     const isIError = (data: unknown): data is IError => {
-        if(data && typeof data === 'object' && "error" in data && typeof data.error === 'string') {
+        if(TGIError(data)) {
             dispatch(setAppModalObject({
                 message: data.error,
+                discription: data.discription,
                 modalType: 'error',
                 modalVisible: true
             }))
@@ -38,13 +40,14 @@ export const useHookCheckErrorResponce = () => {
      * - Вывод в модальное окно сообщения.
      * @example if( isUndefined(data) ) return;
      * @returns
-     * - true = если IError
-     * - false = не IError
+     * - true = если undefined
+     * - false = не undefined
      */
     const isUndefined = (data: unknown): data is undefined => {
         if(data === undefined) {
             dispatch(setAppModalObject({
-                message: 'Неизвестная ошибка сервера, попробуйте позже...',
+                message: 'Error 500',
+                discription: 'Неизвестная ошибка сервера, попробуйте позже. [isUndefined]',
                 modalType: 'error',
                 modalVisible: true
             }))
@@ -62,9 +65,10 @@ export const useHookCheckErrorResponce = () => {
      * - false = не  IMessage
      */
         const isMessage = (data: unknown): data is IMessage => {
-            if(data && typeof data === 'object' && "msg" in data && typeof data.msg === 'string') {
+            if(data && typeof data === 'object' && "msg" in data && typeof data.msg === 'string' && "discription" in data && typeof data.discription === 'string') {
                 dispatch(setAppModalObject({
                     message: data.msg,
+                    discription: data.discription,
                     modalType: 'message',
                     modalVisible: true
                 }))
@@ -76,9 +80,10 @@ export const useHookCheckErrorResponce = () => {
     /**
      * `Вывод в модальное окно текста ошибки.`
      */
-    const modalMessageError = (message: string) => {
+    const modalMessageError = (title: string, discription: string) => {
         dispatch(setAppModalObject({
-            message: message,
+            message: title,
+            discription: discription,
             modalType: 'error',
             modalVisible: true
         }));

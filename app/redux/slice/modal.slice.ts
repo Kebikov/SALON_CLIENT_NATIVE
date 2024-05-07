@@ -5,23 +5,26 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 
 interface IModalObject {
     /**
-     * Переменная видимости модального окна, показать или нет.
+     * `Переменная видимости модального окна, показать или нет.`
      */
     modalVisible: boolean;
     /**
-     * Текст в модальном окне.
+     * `Заголовок в модальном окне.`
      */
-    message?: string;
+    message: string;
     /**
-     * Стиль модального окна.
+     * `Описание в модальном окне.`
      */
-    modalType?: TMessage;
+    discription: string;
+    /**
+     * `Стиль модального окна.`
+     */
+    modalType: TMessage;
 }
 
 interface ISpiner {
     isShowSpinner: boolean;
 }
-
 
 interface IModalSlice {
     modal: IModalObject;
@@ -32,7 +35,8 @@ const initialState: IModalSlice = {
     modal: {
         modalVisible: false,
         message: '',
-        modalType: 'message'
+        discription: '',
+        modalType: 'error'
     },
     spiner: {
         isShowSpinner: false
@@ -49,8 +53,12 @@ const modalSlice = createSlice({
          * @param state 
          * @param action 
          */
-        setAppModalObject: (state, action: PayloadAction<IModalObject>) => {
-            state.modal = action.payload;
+        setAppModalObject: (state, action: PayloadAction<IModalObject | 'close'>) => {
+            if(action.payload === 'close') {
+                state.modal = {modalVisible: false, message: '', discription: '', modalType: 'error'};
+            } else {
+                state.modal = action.payload;
+            }
         },
         setAppIsShowSpinner: (state, action: PayloadAction<ISpiner>) => {
             state.spiner = action.payload;

@@ -4,8 +4,8 @@ import { useAppDispatch, useAppSelector } from '@/redux/store/hooks';
 import { setAppModalObject } from '@/redux/slice/modal.slice';
 
 
-const imgMsg = require('@/source/img/modal/ok.jpg');
-const imgError = require('@/source/img/modal/error.jpg');
+const imgMsg = require('@/source/img/icon/ok.png');
+const imgError = require('@/source/img/icon/error.png');
 
 /**
  * Тип для отображения в определенном стиле модальное окно :
@@ -21,11 +21,11 @@ export type TMessage =  'error' | 'message' ;
  */
 const ModalMsg: FC = () => {
 
-    const {message, modalType, modalVisible} = useAppSelector(state => state.modalSlice.modal);
+    const {message, discription, modalType, modalVisible} = useAppSelector(state => state.modalSlice.modal);
     const dispatch = useAppDispatch();
 
     const buttonPushed = () => {
-        dispatch(setAppModalObject({modalVisible: false}));
+        dispatch(setAppModalObject('close'));
     }
 
     /**
@@ -36,75 +36,97 @@ const ModalMsg: FC = () => {
     switch(modalType) {
         case 'message':
             img = imgMsg;
-            colorForButton = '#00bd98';
+            colorForButton = 'rgba(0, 189, 152, 0.5)';
             break;
         case 'error':
             img = imgError;
-            colorForButton = '#f58181'
+            colorForButton = 'rgba(214, 51, 49, 0.5)'
     }
 
     return (
-        <Modal
-            animationType='fade'
-            transparent={true}
-            visible={modalVisible}
-        >
-            <View style={styles.main}>
-                <View style={styles.body}>
-                    <View style={styles.boxImg}>
-                        <Image style={styles.img} source={img ? img : undefined} />
-                    </View>
-                    <Text style={styles.msg} >{message}</Text>
-                    <Pressable
-                        onPress={() => buttonPushed()}
-                        style={[styles.button, {backgroundColor: colorForButton}]}
-                    >
-                        <Text style={styles.text} >OK</Text>
-                    </Pressable>
+            <Modal
+                animationType='fade'
+                transparent={true}
+                visible={modalVisible}
+            >
+                <View style={styles.main}>
+                    <View style={styles.body}>
 
+                        <View style={styles.header}>
+                            <View style={styles.boxImg}>
+                                <Image style={styles.img} source={img ? img : undefined} />
+                            </View>
+                            <Text style={styles.msg} >
+                                {message}
+                            </Text>
+                        </View>
+
+                        <View style={styles.boxDiscription} >
+                            <Text style={styles.textDiscription}>{discription}</Text>
+                        </View>
+                        <Pressable
+                            onPress={() => buttonPushed()}
+                            style={[styles.button, {backgroundColor: colorForButton}]}
+                        >
+                            <Text style={styles.text} >OK</Text>
+                        </Pressable>
+                    </View>
                 </View>
-            </View>
-            
-        </Modal>
+                
+            </Modal>
     );
 };
+
 
 const styles = StyleSheet.create({
     main: {
         flex: 1,
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)'
     },
     body: {
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: 'white',
+        backgroundColor: 'rgba(0, 0, 0, 0.6)',
         borderRadius: 20,
         width: '80%',
-        padding: 20,
-        // тень
-        shadowColor: "#000000",
-        shadowOffset: {
-            width: 0,
-            height: 9,
-        },
-        shadowOpacity:  0.22,
-        shadowRadius: 9.22,
-        elevation: 12
+        overflow: 'hidden',
+        borderWidth: 1,
+        borderColor: 'rgba(255, 255, 255, 0.3)'
+    },
+    header: {
+        width: '100%',
+        paddingTop: 5,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     msg: {
-        marginTop: 10,
+        paddingLeft: 5,
         textAlign: 'center',
-        fontSize: 16
+        fontSize: 17,
+        color: 'white',
     },
     text: {
         textAlign: 'center',
         fontSize: 16,
         color: 'white'
     },
+    boxDiscription: {
+        width: '100%',
+        paddingTop: 5,
+        paddingHorizontal: 10
+    },
+    textDiscription: {
+        textAlign: 'center',
+        fontSize: 13,
+        color: 'white'
+    },
     boxImg: {
-        width: '70%',
-        height: 70
+        width: 30,
+        height: 30,
+        opacity: .7,
     },
     img: {
         width: '100%',
@@ -113,9 +135,8 @@ const styles = StyleSheet.create({
     },
     button: {
         marginTop: 15,
-        borderRadius: 10,
-        padding: 4,
-        width: '40%'
+        width: '100%',
+        paddingVertical: 7
     }
 });
 

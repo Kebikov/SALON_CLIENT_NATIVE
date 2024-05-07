@@ -1,11 +1,12 @@
 import { View, Text, StyleSheet, Image, Pressable, ScrollView } from 'react-native';
 import React, { FC, useEffect, useState } from 'react';
 import WrapperMenu from '@/components/wrappers/WrappersMenu/WrappersMenu';
-import type { TPageChoiсeImg } from '@/navigation/navigation.types';
 import httpImgService from '@/api/routes/img/service/http.img.service';
 import { baseLink } from '@/api/axios/axios.instance/instance';
 import { COLOR_ROOT } from '@/data/colors';
 import ButtonWithIcon from '@/components/shared/ButtonWithIcon/ButtonWithIcon';
+import { useNavigation, NavigationProp } from '@react-navigation/native';
+import { TypeRootPage } from '@/navigation/navigation.types';
 
 
 /**
@@ -13,19 +14,19 @@ import ButtonWithIcon from '@/components/shared/ButtonWithIcon/ButtonWithIcon';
  * @example 
  * @returns {JSX.Element}
  */
-const SelectIcon: FC<TPageChoiсeImg> = ({route}) => {
+const SelectIcon: FC = () => {
 
     const [arrImg, setArrImg] = useState<string[]>([]);
     const [active, setActive] = useState<string>('');
-    console.log('Выбрана :', active);
-    const choice = route.params.choice;
+
+    const {navigate} = useNavigation<NavigationProp<TypeRootPage>>();
 
     const images = arrImg.map((item, i) => {
         let url = '';
         if(active === '') {
-            url = `${baseLink}/api/img/get-img/${item}?type=${choice}&${new Date().getTime()}`;
+            url = `${baseLink}/api/img/get-img/${item}?type=icon-group&${new Date().getTime()}`;
         } else {
-            url = `${baseLink}/api/img/get-img/${item}?type=${choice}`;
+            url = `${baseLink}/api/img/get-img/${item}?type=icon-group`;
         }
         return(
             <Pressable 
@@ -42,9 +43,8 @@ const SelectIcon: FC<TPageChoiсeImg> = ({route}) => {
 
 
     useEffect(() => {
-        if(!choice) return;
-        console.log('Effect');
-        httpImgService.GET_files(choice)
+
+        httpImgService.GET_files('icon-group')
             .then(result => {
                 if(result && result.length > 0) {
                     setArrImg(result);
@@ -54,14 +54,12 @@ const SelectIcon: FC<TPageChoiсeImg> = ({route}) => {
     },[]);
 
 
-    console.log('Render');
+
     return (
         <WrapperMenu page='SelectIcon' titlePage='Выбор иконки' >
             <ScrollView contentContainerStyle={{flexGrow: 1}} keyboardShouldPersistTaps={'handled'} >
                 <View style={styles.main} >
                     <View style={styles.box} >  
-                        {images}
-                        {images}
                         {images}
                     </View>
                 </View>
@@ -69,7 +67,7 @@ const SelectIcon: FC<TPageChoiсeImg> = ({route}) => {
             <View style={styles.boxButton}>
                 <ButtonWithIcon
                     title='выбрать'
-                    pushButton={() => {}}
+                    pushButton={() => navigate('AdminAddDepartmentForm', {choice: active})}
                     img={require('@/source/img/icon/plus-white.png')}
                 />
             </View>

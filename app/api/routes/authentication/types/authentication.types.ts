@@ -11,6 +11,8 @@ export interface IBaseForAuth {
     password: string;
 }
 
+
 export interface IMessage {
     msg: string;
+    discription: string;
 }

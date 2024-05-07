@@ -33,11 +33,11 @@ const ChangePassword: FC = () => {
     }
 
     const changePassword = async () => {
-        if(data.password === '' || data.passwordTwo === '') return modalMessageError('Поле с паролем не может быть пустым.');
-        if(data.password !== data.passwordTwo) return modalMessageError('Пароли должны быть одинаковыми.');
+        if(data.password === '' || data.passwordTwo === '') return modalMessageError('Заполните пароль', 'Поле с паролем не может быть пустым.');
+        if(data.password !== data.passwordTwo) return modalMessageError('Разные пароли' ,'Поля с паролями должны быть одинаковыми.');
+        if(data.password.length < 4 || data.passwordTwo.length < 4) return modalMessageError('Короткий пароль' ,'Длинна пароля должна быть больше 3-х символов.');
         const result = await httpAuthenticationService.POST_changePassword(data.password);
-        if(isUndefined(result)) return
-        if(isIError(result)) return 
+        if(!result) return;
         if(isMessage(result)) {
             setData({password: '', passwordTwo: ''});
             return;

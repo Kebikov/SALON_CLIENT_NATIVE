@@ -49,16 +49,15 @@ const AuthEnter: FC = () => {
     const logIn = async () => {
         //* Проверка валидности email.
         if(!CheckForm.checkEmail(data.email)) {
-            return modalMessageError('Проверьте введенный Email.');
+            return modalMessageError('Проверьте Email', 'Проверьте введенный Email который вы ввели, в нем есть ошибки.');
         }
         //* Проверка валидности пароля.
         if(!CheckForm.checkPassword(data.password)) {
-            return modalMessageError('Пароль не короче 4-ти символов.');
+            return modalMessageError('Проверьте пароль', 'Проверьте введенный пароль, он должен быть не короче 4-ти символов.');
         }
         //* Запрос на авторизицию.
         const result = await httpAuthenticationService.POST_authentication(data);
-        if(isUndefined(result)) return;
-        if(isIError(result)) return;
+        if(!result) return;
         await asyncStorageSaveUser(result);
         navigate('Home');
     }

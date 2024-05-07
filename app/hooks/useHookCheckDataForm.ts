@@ -22,7 +22,8 @@ export const useHookCheckDataForm = () => {
         //* Проверка имени.
         if(data.name !== undefined && !CheckForm.checkName(data.name)) {
             dispatch(setAppModalObject({
-                message: 'Имя не может быть короче 3-х букв.',
+                message: 'Проверьте имя',
+                discription: 'Имя не может быть короче 3-х букв.',
                 modalType: 'error',
                 modalVisible: true
             }));
@@ -31,7 +32,8 @@ export const useHookCheckDataForm = () => {
         //* Проверка Email.
         if(data.email !== undefined && !CheckForm.checkEmail(data.email)) {
             dispatch(setAppModalObject({
-                message: 'Проверьте введенный Email.',
+                message: 'Проверьте Email',
+                discription: 'Проверьте введенный Email на наличие ошибок.',
                 modalType: 'error',
                 modalVisible: true
             }));
@@ -40,7 +42,8 @@ export const useHookCheckDataForm = () => {
         //* Проверка телефона.
         if(data.phone !== undefined && !CheckForm.checkPhone(data.phone)) {
             dispatch(setAppModalObject({
-                message: 'Проверьте введенный номер телефона.',
+                message: 'Проверьте телефон',
+                discription: 'Проверьте введенный номер телефона на наличие ошибок.',
                 modalType: 'error',
                 modalVisible: true
             }));
@@ -49,7 +52,8 @@ export const useHookCheckDataForm = () => {
         //* Проверка пароля.
         if(data.password !== undefined && !CheckForm.checkPassword(data.password)) {
             dispatch(setAppModalObject({
-                message: 'Пароль не короче 5-ти символов.',
+                message: 'Проверьте пароль',
+                discription: 'Пароль должен быть не короче 5-ти символов.',
                 modalType: 'error',
                 modalVisible: true
             }));

@@ -12,18 +12,18 @@ import { TypeRootPage } from '@/navigation/navigation.types';
 /**
  * @page Страница добавление групп услуг.
  */
-const AdminAddGroup: FC = () => {
+const AdminAddDepartment: FC = () => {
 
     const {navigate} = useNavigation<NavigationProp<TypeRootPage>>();
 
     return (
-        <WrapperScrollMenu page='AdminAddGroup' >
+        <WrapperScrollMenu page='AdminAddDepartment' >
             <HeaderTitle text='Группы услуг' />
             <View style={styles.main} >
                 <Discription text='Работа с группами услуг. Для обьединения услуг в определенные группы.' marginTop={5}/>
-                <ButtonWithIcon title='добавить группу' pushButton={() => navigate('AdminAddGroupForm', {choice: 'not'})} img={require('@/source/img/icon/plus-white.png')} marginTop={10} />
+                <ButtonWithIcon title='добавить группу' pushButton={() => navigate('AdminAddDepartmentForm', {choice: ''})} img={require('@/source/img/icon/plus-white.png')} marginTop={10} />
             </View>
-        </WrapperScrollMenu>
+        </WrapperScrollMenu> 
     );
 };
 
@@ -35,4 +35,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default AdminAddGroup;
+export default AdminAddDepartment;

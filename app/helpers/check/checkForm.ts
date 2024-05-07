@@ -18,7 +18,7 @@ export class CheckForm {
     }
 
     static checkPhone(phone: string): boolean {
-        if(phone.length < 9) {
+        if(phone.length !== 9) {
             return false
         } 
         if(!/^[0-9]+$/.test(phone)) {

@@ -11,8 +11,8 @@ import AuthEnter from '@/pages/AuthEnter/AuthEnter';
 import AuthForgot from '@/pages/AuthForgot/AuthForgot';
 import ChangePassword from '@/pages/ChangePassword/ChangePassword';
 import AdminAdd from '@/pages/AdminAdd/AdminAdd';
-import AdminAddGroup from '@/pages/AdminAddGroup/AdminAddGroup';
-import AdminAddGroupForm from '@/pages/AdminAddGroupForm/AdminAddGroupForm';
+import AdminAddDepartment from '@/pages/AdminAddDepartment/AdminAddDepartment';
+import AdminAddDepartmentForm from '@/pages/AdminAddGroupDepartment/AdminAddGroupDepartment';
 import SelectIcon from '@/pages/SelectIcon/SelectIcon';
 
 
@@ -40,8 +40,8 @@ const Navigatuon: FC = () => {
                 <Stack.Screen name="ChangePassword" component={ChangePassword} key={'ChangePassword'} />
                 {/* Admin */}
                 <Stack.Screen name="AdminAdd" component={AdminAdd} key={'AdminAdd'} />
-                <Stack.Screen name="AdminAddGroup" component={AdminAddGroup} key={'AdminAddGroup'} />
-                <Stack.Screen name="AdminAddGroupForm" component={AdminAddGroupForm} key={'AdminAddGroupForm'} />
+                <Stack.Screen name="AdminAddDepartment" component={AdminAddDepartment} key={'AdminAddDepartment'} />
+                <Stack.Screen name="AdminAddDepartmentForm" component={AdminAddDepartmentForm} key={'AdminAddDepartmentForm'} />
                 <Stack.Screen name="SelectIcon" component={SelectIcon} key={'SelectIcon'} />
             </Stack.Navigator>
         </NavigationContainer>

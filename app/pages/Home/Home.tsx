@@ -6,17 +6,13 @@ import HomeUserHeader from '@/components/widgets/HomeUserHeader/HomeUserHeader';
 import ListDepartment from '@/components/widgets/ListDepartment/ListDepartment';
 import ListMasters from '@/components/widgets/ListMasters/ListMasters';
 import ListService from '@/components/widgets/ListService/ListService';
-import { useHookCheckErrorResponce } from '@/hooks/useHookCheckErrorResponce';
 import httpClientService from '@/api/routes/client/service/http.client.service';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 /** 
  * @page Главная страница приложения.
  */
 const Home: FC = () => {
-
-    const {isIError, isUndefined} = useHookCheckErrorResponce();
 
 
     /**

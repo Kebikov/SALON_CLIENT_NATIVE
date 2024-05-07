@@ -63,6 +63,7 @@ export interface IResRegistration {
  */
 export interface IError {
     error: string;
+    discription: string;
 }
 
 

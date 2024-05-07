@@ -13,22 +13,21 @@ export type TypeRootPage = {
     ChangePassword: undefined;
     //Admin
     AdminAdd: undefined;
-    AdminAddGroup: undefined;
-    AdminAddGroupForm: {
+    AdminAddDepartment: undefined;
+    AdminAddDepartmentForm: {
+        /**
+         * `Выбранная иконка.` 
+         * - Например: "16.png"
+         */
         choice: string;
     };
-    SelectIcon: {
-        choice: TChoiceImg
-    }
+    SelectIcon: undefined;
 };
 
-export type TPageAdminAddGroupForm = {
-    route: RouteProp<TypeRootPage, 'AdminAddGroupForm'>
+export type TPageAdminAddDepartmentForm = {
+    route: RouteProp<TypeRootPage, 'AdminAddDepartmentForm'>
 }
 
-export type TPageChoiсeImg = {
-    route: RouteProp<TypeRootPage, 'SelectIcon'>
-}
 
 export interface IRoute {
     name: keyof TypeRootPage;

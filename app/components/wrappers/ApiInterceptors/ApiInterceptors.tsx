@@ -38,7 +38,7 @@ const ApiInterceptors: FC<IApiInterceptors> = ({children}) => {
             return Promise.reject(error);
         }
 
-        modalMessageError(`Error ${errorStatus}: ошибка сервера, попробуйте позже...`);
+        modalMessageError(`Error ${errorStatus}`, 'Ошибка сервера, попробуйте позже еще раз.');
         return Promise.reject(error);
     }
 
@@ -59,7 +59,6 @@ const ApiInterceptors: FC<IApiInterceptors> = ({children}) => {
         const interceptorRequestWithAuth = axiosInstanceWithAuth.interceptors.request.use(
             async (req) => {
                 // Показываем спинер загрузки.
-                console.log('Показать спинер 2');
                 dispatch(setAppIsShowSpinner( {isShowSpinner: true} ));
                 const userJson = await AsyncStorage.getItem('@user');
                 if(!userJson) return req;

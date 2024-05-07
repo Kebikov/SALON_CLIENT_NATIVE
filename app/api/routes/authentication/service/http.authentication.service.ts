@@ -1,5 +1,5 @@
 import type { IAuthenticationData, IMessage } from "../types/authentication.types";
-import type { IResRegistration, IError } from "../../registration/types/registration.types";
+import type { IResRegistration } from "../../registration/types/registration.types";
 import { axiosInstance, axiosInstanceWithAuth } from "@/api/axios/axios.instance/instance"; 
 
 
@@ -8,7 +8,7 @@ class HttpAuthenticationService {
     /**
      * `Авторизация пользователя через почта + пароль.`
      * @param body type IAuthenticationData.
-     * @returns Promise< IResRegistration | IError | undefined >
+     * @returns Promise< IResRegistration | undefined >
      */
     async POST_authentication(body: IAuthenticationData): Promise<IResRegistration | undefined> {
         try {
