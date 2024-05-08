@@ -25,7 +25,7 @@ class HttpRegistrationService {
     async POST_registrationGoogle(body: IReqBodyRegistrationGoogle): Promise<IResRegistration | undefined> {
         try {
             const {data} = await axiosInstance.post(`/registration/google`, body);
-            console.log(data);
+        
             return data as IResRegistration;
         } catch (error) {
             console.error('Error in POST_registrationEmail >>> ',error);

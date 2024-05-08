@@ -9,6 +9,8 @@ import { TGIError } from "@/helpers/type-guards/TGIError";
  * `Hook для работы с модальным окном.`
  * - `modalMessageError` - Вывод ошибки в модальное окно.
  * - `isIError` - Проверка на тип IError и вывод в модальное окно входяшиго сообшения.
+ * - `isUndefined` - Проверка является ли обьектом undefined. Вывод в модальное окно сообщения.
+ * - `isMessage` - Проверка является ли обьектом IMessage. Вывод в модальное окно сообщения.
  */
 export const useHookCheckErrorResponce = () => {
 

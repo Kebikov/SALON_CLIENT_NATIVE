@@ -8,7 +8,8 @@ import type { TypeRootPage } from '@/navigation/navigation.types';
 
 
 /**
- * @page Страница добавления сушностей.
+ * @page `Страница добавления:`
+ * - Департамента.
  */
 const AdminAdd: FC = () => {
 
@@ -24,7 +25,7 @@ const AdminAdd: FC = () => {
                     title='Группы услуг'
                     subTitle='добавить, редактировать, удалить'
                     img={require('@/source/img/icon/group.png')}
-                    pushFunction={() => navigate('AdminAddGroup')}
+                    pushFunction={() => navigate('AdminAddDepartment')}
                 />
                 <MenuItem
                     title='Услуги'

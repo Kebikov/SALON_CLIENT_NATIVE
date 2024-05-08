@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
         paddingTop: 7
     },
     masterUnit: {
-        color: COLOR_ROOT.LIGHT_GRAY,
+        color: COLOR_ROOT.LIGHT_ICON,
         fontSize: 13,
         fontWeight: '400',
         lineHeight: 15,

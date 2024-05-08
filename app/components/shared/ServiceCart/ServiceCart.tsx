@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         flexDirection: 'row',
         justifyContent: 'flex-start',
-        // borderColor: COLOR_ROOT.LIGHT_GRAY,
+        // borderColor: COLOR_ROOT.LIGHT_ICON,
         //borderWidth: 1,
         borderRadius: 25,
         //shadows
@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
         fontWeight: '500'
     },
     department: {
-        color: COLOR_ROOT.LIGHT_GRAY,
+        color: COLOR_ROOT.LIGHT_ICON,
         fontSize: 15,
         fontWeight: '400'
     },

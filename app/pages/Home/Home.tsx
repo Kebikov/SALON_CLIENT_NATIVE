@@ -21,7 +21,7 @@ const Home: FC = () => {
      */
     const press = async () => {
         const user = await httpClientService.GET_getClientInfo(1);
-        console.log(user);
+
     }
 
     return (

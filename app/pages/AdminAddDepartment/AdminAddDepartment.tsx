@@ -10,7 +10,8 @@ import { TypeRootPage } from '@/navigation/navigation.types';
 
 
 /**
- * @page Страница добавление групп услуг.
+ * @page `Страница с кнопкой добавления департамента.`
+ * - С уже добавленными департаментами также.
  */
 const AdminAddDepartment: FC = () => {
 
@@ -20,7 +21,7 @@ const AdminAddDepartment: FC = () => {
         <WrapperScrollMenu page='AdminAddDepartment' >
             <HeaderTitle text='Группы услуг' />
             <View style={styles.main} >
-                <Discription text='Работа с группами услуг. Для обьединения услуг в определенные группы.' marginTop={5}/>
+                <Discription text='Работа с группами услуг. Для обьединения услуг в определенные группы.' marginTop={10}/>
                 <ButtonWithIcon title='добавить группу' pushButton={() => navigate('AdminAddDepartmentForm', {choice: ''})} img={require('@/source/img/icon/plus-white.png')} marginTop={10} />
             </View>
         </WrapperScrollMenu> 

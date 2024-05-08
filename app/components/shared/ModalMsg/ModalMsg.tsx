@@ -6,13 +6,14 @@ import { setAppModalObject } from '@/redux/slice/modal.slice';
 
 const imgMsg = require('@/source/img/icon/ok.png');
 const imgError = require('@/source/img/icon/error.png');
+const imgQuestion = require('@/source/img/icon/question.png');
 
 /**
  * Тип для отображения в определенном стиле модальное окно :
  * - 'error' => стиль ошибки
  * - 'msg' => стиль сообщения
  */
-export type TMessage =  'error' | 'message' ;
+export type TMessage =  'error' | 'message' | 'question';
 
 
 
@@ -26,7 +27,7 @@ const ModalMsg: FC = () => {
 
     const buttonPushed = () => {
         dispatch(setAppModalObject('close'));
-    }
+    };
 
     /**
      * Изображение и цвет кнопки в зависимости от нужного типа.
@@ -40,7 +41,12 @@ const ModalMsg: FC = () => {
             break;
         case 'error':
             img = imgError;
-            colorForButton = 'rgba(214, 51, 49, 0.5)'
+            colorForButton = 'rgba(214, 51, 49, 0.5)';
+            break;
+        case 'question':
+            img = imgQuestion;
+            colorForButton = 'rgba(172, 179, 188, .4)';
+            break;
     }
 
     return (
@@ -141,3 +147,5 @@ const styles = StyleSheet.create({
 });
 
 export default ModalMsg;
+
+
