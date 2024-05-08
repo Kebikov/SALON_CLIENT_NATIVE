@@ -4,6 +4,7 @@ import { TKeyStateCreateAccount } from '@/pages/AuthCreateAccount/AuthCreateAcco
 import { COLOR_ROOT } from '@/data/colors';
 
 
+
 interface IInputGeneric {
     /**
      * Функция изминения состояния у формы.
@@ -48,29 +49,50 @@ interface IInputGeneric {
  */
 const InputGeneric: FC<IInputGeneric> = ({onChangeForm, placeholder, keyName, img, value = undefined, lines = 1}) => {
     return (
-        <View style={styles.boxInput} >
+        <View style={[stylesGeneric.boxInput, stylesGeneric.shadowTop]} >
             <TextInput 
                 multiline
                 numberOfLines={lines}
-                style={styles.input} 
+                style={[stylesGeneric.input]} 
                 placeholder={placeholder} 
                 onChange={text => onChangeForm(text, keyName)} 
                 value={value}
             />
-            <Image style={styles.icon} source={img} />
+            <Image style={stylesGeneric.icon} source={img} />
         </View>
     );
 };
 
-const styles = StyleSheet.create({
+
+export const stylesGeneric = StyleSheet.create({
+    shadowTop: {
+        shadowOffset: {
+            width: -6,
+            height: -6
+        },
+        shadowOpacity: 1,
+        shadowRadius: 6,
+        shadowColor: '#000',
+        elevation: 3
+    },
+    shadowBottom: {
+        shadowOffset: {
+            width: 8,
+            height: 8
+        },
+        shadowOpacity: 1,
+        shadowRadius: 6,
+        shadowColor: '#CCC',
+        elevation: 3
+    },
     boxInput: {
         position: 'relative',
         marginTop: 15,
-        width: '100%'
+        width: '100%',
+        borderRadius: 30
     },
     input: {
         backgroundColor: COLOR_ROOT.BACKGROUND_INPUT,
-        //height: 55,
         borderRadius: 30,
         paddingVertical: 13,
         paddingHorizontal: 50,
@@ -80,6 +102,7 @@ const styles = StyleSheet.create({
     },
     icon: {
         position: 'absolute',
+        zIndex: 1,
         top: '50%',
         left: 15,
         width: 20,

@@ -2,6 +2,7 @@ import { View, Text, StyleSheet, TextInput, Image, Pressable, NativeSyntheticEve
 import React, { FC, useState } from 'react';
 import { COLOR_ROOT } from '@/data/colors';
 import { TKeyStateCreateAccount } from '@/pages/AuthCreateAccount/AuthCreateAccount';
+import { stylesGeneric } from '../InputGeneric/InputGeneric';
 
 
 interface IInputPassword {
@@ -21,54 +22,34 @@ const InputPassword: FC<IInputPassword> = ({onChangeForm, marginBottom = 40}) =>
     const [isSecureText, setIsSecureText] = useState<boolean>(true);
 
     return (
-        <View style={[styles.boxInput, {marginBottom}]} >
-            <TextInput 
-                style={styles.input}
-                placeholder='Пароль' 
-                onChange={text => onChangeForm(text, 'password')} 
-                secureTextEntry={isSecureText} 
-            />
-            <Image style={styles.icon} source={require('@/source/img/icon/password-grey.png')} />
-            <Pressable style={styles.eye} onPress={() => setIsSecureText(state => !state)} >
-                <Image 
-                    style={styles.eyeImg} 
-                    source={
-                        isSecureText 
-                        ? 
-                        require('@/source/img/icon/eye-close.png') 
-                        : 
-                        require('@/source/img/icon/eye.png')
-                    } 
+        <View style={[stylesGeneric.boxInput, stylesGeneric.shadowTop, {marginBottom}]} >
+            <View style={stylesGeneric.shadowBottom}>
+                <TextInput 
+                    style={[stylesGeneric.input]}
+                    placeholder='Пароль' 
+                    onChange={text => onChangeForm(text, 'password')} 
+                    secureTextEntry={isSecureText} 
                 />
-            </Pressable>
+                <Image style={stylesGeneric.icon} source={require('@/source/img/icon/password-grey.png')} />
+                <Pressable style={styles.eye} onPress={() => setIsSecureText(state => !state)} >
+                    <Image 
+                        style={styles.eyeImg} 
+                        source={
+                            isSecureText 
+                            ? 
+                            require('@/source/img/icon/eye-close.png') 
+                            : 
+                            require('@/source/img/icon/eye.png')
+                        } 
+                    />
+                </Pressable>
+            </View>
         </View>
     );
 };
 
 
 const styles = StyleSheet.create({
-    boxInput: {
-        position: 'relative',
-        marginTop: 15
-    },
-    input: {
-        backgroundColor: COLOR_ROOT.BACKGROUND_INPUT,
-        height: 55,
-        borderRadius: 30,
-        paddingVertical: 10,
-        paddingHorizontal: 50,
-        fontSize: 17,
-        fontWeight: '400',
-        color: COLOR_ROOT.GRAY
-    },
-    icon: {
-        position: 'absolute',
-        top: '50%',
-        left: 15,
-        width: 20,
-        height: 20,
-        marginTop: -10
-    },
     eye: {
         position: 'absolute',
         top: '50%',

@@ -7,20 +7,22 @@ interface ITitle {
     text: string;
     marginTop?: number;
     location?: 'center' | 'left';
+    fontSize?: number;
 }
 
 
 /**
- * @shared `Текст загаловка.`
- * @param text Текст загаловка.
- * @param marginTop ? Отступ с верху.
- * @param location ? Расположение текста, слева или по центру(по умолчанию центр).
- * @example <Title text={#} marginTop={?#} />
+ * @shared `Title.`
+ * @param text Text title.
+ * @param marginTop ? Margin top.
+ * @param location ? Text location, 'left' or 'center' (default center).
+ * @param fontSize ? Header size (default 18)
+ * @example <Title text={#} marginTop={?#} location={?#} fontSize={?#} />
  */
-const Title: FC<ITitle> = ({text, marginTop = 0, location = 'center'}) => {
+const Title: FC<ITitle> = ({text, marginTop = 0, location = 'center', fontSize = 18}) => {
 
     return( 
-        <Text style={[styles.text, {marginTop, textAlign: location}]} >
+        <Text style={[styles.text, {marginTop, fontSize, textAlign: location}]} >
                 {text}
         </Text>
     )
@@ -28,7 +30,6 @@ const Title: FC<ITitle> = ({text, marginTop = 0, location = 'center'}) => {
 
 const styles = StyleSheet.create({
     text: {
-        fontSize: 18,
         fontWeight: '600',
         color: COLOR_ROOT.BLACK
     }

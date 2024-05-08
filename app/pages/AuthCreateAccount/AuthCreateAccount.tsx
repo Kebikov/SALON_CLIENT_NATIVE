@@ -13,6 +13,9 @@ import { TypeRootPage } from '@/navigation/navigation.types';
 import { IReqBodyRegistrationEmail } from '@/api/routes/registration/types/registration.types';
 import { requestOnRegistration } from './helpers/requestOnRegistration';
 import { useHookCheckDataForm } from '@/hooks/useHookCheckDataForm';
+import { stylesGeneric } from '@/components/shared/InputGeneric/InputGeneric';
+import Discription from '@/components/shared/Discription/Discription';
+import Title from '@/components/shared/Title/Title';
 
 
 export type TKeyStateCreateAccount = keyof IReqBodyRegistrationEmail;
@@ -56,14 +59,14 @@ const AuthCreateAccount: FC = () => {
     return (
         <WrapperScroll backgroundColor='white' barStyle='dark-content' >
             <View style={styles.main}>
-                <Text style={styles.title} >Создание вашего акаунта,</Text>
-                <Text style={styles.text} >Пожалуйста заполните информацию о себе ниже и мы создадим для вас акаунт.</Text>
+                <Title text='Создание вашего акаунта' location='left' fontSize={19} />
+                <Discription text='Пожалуйста заполните информацию о себе ниже и мы создадим для вас акаунт.' marginTop={5}/>
                 <InputGeneric keyName={'name'} placeholder='Имя' img={require('@/source/img/icon/user-grey.png')} onChangeForm={onChangeForm} />
                 <InputGeneric keyName={'email'} placeholder='Email'  img={require('@/source/img/icon/email-grey.png')} onChangeForm={onChangeForm} />
-                <View style={styles.boxInput} >
-                    <TextInput style={[styles.input, {paddingLeft: 100}]} placeholder='291234567' keyboardType="numeric" onChange={text => onChangeForm(text, 'phone')} />
+                <View style={[stylesGeneric.boxInput, stylesGeneric.shadowTop]} >
+                    <TextInput style={[stylesGeneric.input, {paddingLeft: 100}]} placeholder='291234567' keyboardType="numeric" onChange={text => onChangeForm(text, 'phone')} />
                     <Text style={styles.numberStart} >+375 | </Text>
-                    <Image style={[styles.icon, {width: 24, height: 16, marginTop: -8}]} source={require('@/source/img/icon/flag.jpg')} />
+                    <Image style={[stylesGeneric.icon, {width: 24, height: 16, marginTop: -8}]} source={require('@/source/img/icon/flag.jpg')} />
                 </View>
                 <InputPassword onChangeForm={onChangeForm} />
                 <ButtonWithIcon title='создать акаунт' pushButton={() => createAccount()} />
@@ -81,30 +84,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         paddingHorizontal: 15
     },
-    title: {
-        fontSize: 20,
-        fontWeight: '600',
-        color: COLOR_ROOT.BLACK
-    },
-    text: {
-        marginTop: 5,
-        marginBottom: 20,
-        fontSize: 16,
-        fontWeight: '400',
-        color: COLOR_ROOT.MIDDLE_GRAY
-    },
-    boxInput: {
-        position: 'relative',
-        marginTop: 15
-    },
-    icon: {
-        position: 'absolute',
-        top: '50%',
-        left: 15,
-        width: 20,
-        height: 20,
-        marginTop: -10
-    },
     numberStart: {
         position: 'absolute',
         top: '50%',
@@ -113,16 +92,6 @@ const styles = StyleSheet.create({
         color: '#8d9299',
         fontWeight: '400',
         fontSize: 16
-    },
-    input: {
-        backgroundColor: COLOR_ROOT.BACKGROUND_INPUT,
-        height: 55,
-        borderRadius: 30,
-        paddingVertical: 10,
-        paddingHorizontal: 50,
-        fontSize: 17,
-        fontWeight: '400',
-        color: COLOR_ROOT.GRAY
     }
 });
 
