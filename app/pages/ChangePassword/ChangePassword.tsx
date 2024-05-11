@@ -8,6 +8,8 @@ import { COLOR_ROOT } from '@/data/colors';
 import { useHookCheckErrorResponce } from '@/hooks/useHookCheckErrorResponce';
 import httpAuthenticationService from '@/api/routes/authentication/service/http.authentication.service';
 import HeaderTitle from '@/components/widgets/HeaderTitle/HeaderTitle';
+import Discription from '@/components/shared/Discription/Discription';
+import Title from '@/components/shared/Title/Title';
 
 
 interface ITwoPassword {
@@ -51,7 +53,8 @@ const ChangePassword: FC = () => {
                 <HeaderTitle text='Смена пароля' />
 
                 <View style={styles.main}>
-                    <Text style={styles.text}>Для смены пароля на новый, введите новый пароль и продублируйте его.</Text>
+                    <Title text='Хотите сменить пароль ?' location='left' />
+                    <Discription text='Для смены пароля на новый, введите новый пароль и продублируйте его.' marginTop={5} />
                     <InputGeneric
                         onChangeForm={onChangeForm}
                         placeholder='Ваш новый пароль'
@@ -77,19 +80,7 @@ const styles = StyleSheet.create({
     main: {
         flex: 1,
         justifyContent: 'center',
-        alignItems: 'center',
         padding: 20
-    },
-    title: {
-        textAlign: 'center',
-        fontSize: 19,
-        fontWeight: '600',
-        color: COLOR_ROOT.BLACK
-    },
-    text: {
-        fontSize: 16, 
-        fontWeight: '400',
-        color: COLOR_ROOT.MIDDLE_GRAY
     }
 });
 

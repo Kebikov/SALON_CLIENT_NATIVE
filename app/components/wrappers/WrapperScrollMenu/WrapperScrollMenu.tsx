@@ -40,7 +40,10 @@ const WrapperScrollMenu: FC<IWrapper> = ({children, page, titlePage}) => {
                     :
                     null
                 }
-                <ScrollView contentContainerStyle={{flexGrow: 1}} keyboardShouldPersistTaps={'handled'} >
+                <ScrollView 
+                    contentContainerStyle={{flexGrow: 1}} 
+                    keyboardShouldPersistTaps={'handled'} 
+                >
                         {children}
                 </ScrollView>
                 <BottomMenu page={page} />

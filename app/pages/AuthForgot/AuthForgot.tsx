@@ -10,6 +10,8 @@ import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { TypeRootPage } from '@/navigation/navigation.types';
 import httpAuthenticationService from '@/api/routes/authentication/service/http.authentication.service';
 import { useHookCheckDataForm } from '@/hooks/useHookCheckDataForm';
+import Discription from '@/components/shared/Discription/Discription';
+import Title from '@/components/shared/Title/Title';
 
 
 interface IEmail {
@@ -42,8 +44,8 @@ const AuthForgot: FC = () => {
     return (
         <WrapperScroll backgroundColor='white' barStyle='dark-content' >
             <View style={styles.main}>
-                <Text style={styles.title} >Если забыли пароль,</Text>
-                <Text style={styles.text} >Пожалуйста введите ваш email ниже и мы вышлим вам новый пароль для входа.</Text>
+                <Title text='Если забыли пароль,' location='left' fontSize={19} />
+                <Discription text='пожалуйста введите ваш email ниже и мы вышлим вам новый пароль для входа.' marginTop={5}/>
                 <InputGeneric 
                     onChangeForm={onChangeForm}
                     placeholder='Email'
@@ -62,19 +64,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         paddingHorizontal: 15
-    },
-    title: {
-        fontSize: 20,
-        fontWeight: '600',
-        color: COLOR_ROOT.BLACK
-    },
-    text: {
-        marginTop: 5,
-        marginBottom: 20,
-        fontSize: 16,
-        fontWeight: '400',
-        color: COLOR_ROOT.MIDDLE_GRAY
-    },
+    }
 });
 
 export default AuthForgot;

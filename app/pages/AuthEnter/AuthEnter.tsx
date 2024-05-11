@@ -14,6 +14,8 @@ import { CheckForm } from '@/helpers/check/checkForm';
 import httpAuthenticationService from '@/api/routes/authentication/service/http.authentication.service';
 import { useHookCheckErrorResponce } from '@/hooks/useHookCheckErrorResponce';
 import { asyncStorageSaveUser } from '@/helpers/save/saveUserInAsyncStorage';
+import Discription from '@/components/shared/Discription/Discription';
+import Title from '@/components/shared/Title/Title';
 
 
 interface IAuthEnter {
@@ -65,8 +67,8 @@ const AuthEnter: FC = () => {
     return (
         <WrapperScroll backgroundColor='white' barStyle='dark-content' >
             <View style={styles.main}>
-                <Text style={styles.title} >Добро пожаловать,</Text>
-                <Text style={styles.text} >Рады снова Вас видеть, пожалуйста введите свой email и пароль, для входа.</Text>
+                <Title text='Добро пожаловать' location='left' fontSize={19}/>
+                <Discription text='Рады снова Вас видеть, пожалуйста введите свой email и пароль, для входа.' marginTop={5}/>
                 <InputGeneric 
                     keyName={'email'} 
                     onChangeForm={onChangeForm}  
@@ -107,19 +109,7 @@ const styles = StyleSheet.create({
         fontSize: 15,
         fontWeight: '400',
         color: COLOR_ROOT.MAIN_COLOR
-    },
-    title: {
-        fontSize: 20,
-        fontWeight: '600',
-        color: COLOR_ROOT.BLACK
-    },
-    text: {
-        marginTop: 5,
-        marginBottom: 20,
-        fontSize: 16,
-        fontWeight: '400',
-        color: COLOR_ROOT.MIDDLE_GRAY
-    },
+    }
 });
 
 export default AuthEnter;

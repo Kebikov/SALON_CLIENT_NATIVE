@@ -6,6 +6,7 @@ import DoYouHaveAnAccount from '@/components/shared/DoYouHaveAnAccount/DoYouHave
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { TypeRootPage } from '@/navigation/navigation.types';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { BlurView } from 'expo-blur';
 
 
 /**
@@ -56,10 +57,12 @@ const Auth: FC = () => {
                 <View style={styles.overlay} />
                 <View style={styles.authStart} >
                     <View style={styles.box}>
+                        {/* <BlurView intensity={24} style={styles.blurContainer} experimentalBlurMethod='dimezisBlurView' /> */}
                         <Text style={styles.textTitle} >Давай, присоеденяйся к нам !</Text>
                         <View style={styles.titleBox} >
                             <Text style={styles.textSubTitle} >Лучшие Beauty мастера ждут тебя. Маникюр, парикмахерские услуги, лазерная эпиляция и многое еще.</Text>
                         </View>
+                        
                         <ButtonWithIcon pushButton={goToPageRegistration} title='Регистрация с Email' />
                         <JoinGoogle/>
                         <DoYouHaveAnAccount pushButton={goToPageAuthEnter} title='Уже есть аккаунт ?' textButton=' Войти' color='white' />
@@ -72,6 +75,17 @@ const Auth: FC = () => {
 
 
 const styles = StyleSheet.create({
+    blurContainer: {
+        backgroundColor: 'rgba(0,0,0, 0.3)',
+        width: '100%',
+        height: 300,
+        padding: 20,
+        overflow: 'hidden',
+        borderRadius: 20,
+        position: 'relative',
+        zIndex: 1,
+        top: 50
+    },
     main: {
         flex: 1,
         position: 'relative'
@@ -97,10 +111,12 @@ const styles = StyleSheet.create({
         width: '100%'
     },
     textTitle: {
+        position: 'relative',
+        zIndex: 10,
         color: 'white',
         fontSize: 21,
         fontWeight: '600',
-        textAlign: 'center'
+        textAlign: 'center',
     },
     textSubTitle: {
         color: 'white',

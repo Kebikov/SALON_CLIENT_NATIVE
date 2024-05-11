@@ -5,6 +5,8 @@ import MenuItem from '@/components/shared/MenuItem/MenuItem';
 import { COLOR_ROOT } from '@/data/colors';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import type { TypeRootPage } from '@/navigation/navigation.types';
+import Discription from '@/components/shared/Discription/Discription';
+import Title from '@/components/shared/Title/Title';
 
 
 /**
@@ -18,9 +20,7 @@ const AdminAdd: FC = () => {
     return (
         <WrapperScrollMenu page='AdminAdd' >
             <View style={styles.main} >
-                <View style={styles.boxSettings}>
-                    <Text style={styles.textSettings} >Основные настройки</Text>
-                </View>
+                <Title text='Основные настройки' marginTop={10}/>
                 <MenuItem
                     title='Группы услуг'
                     subTitle='добавить, редактировать, удалить'
@@ -47,17 +47,6 @@ const AdminAdd: FC = () => {
 const styles = StyleSheet.create({
     main: {
         flex: 1
-    },
-    boxSettings: {
-        width: '100%',
-        marginTop: 10,
-        marginBottom: 10
-    },
-    textSettings: {
-        textAlign: 'center',
-        fontSize: 19,
-        fontWeight: '600',
-        color: COLOR_ROOT.BLACK
     }
 });
 

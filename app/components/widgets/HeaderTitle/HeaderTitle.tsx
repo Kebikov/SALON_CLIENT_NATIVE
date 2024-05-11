@@ -50,9 +50,8 @@ const styles = StyleSheet.create({
         opacity: .9,
     },
     text: {
-        textAlign: 'center',
-        fontSize: 19,
-        fontWeight: '600',
+        fontSize: 18,
+        fontWeight: '500',
         color: 'white',
         marginLeft: 30
     }
