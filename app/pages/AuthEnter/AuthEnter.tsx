@@ -28,7 +28,7 @@ interface IAuthEnter {
  */
 const AuthEnter: FC = () => {
 
-    const {isIError, isUndefined, modalMessageError, dispatch, setAppModalObject} = useHookCheckErrorResponce();
+    const { modalMessageError } = useHookCheckErrorResponce();
     const [data, setData] = useState<IAuthEnter>({
         email: '',
         password: ''
@@ -59,6 +59,7 @@ const AuthEnter: FC = () => {
         }
         //* Запрос на авторизицию.
         const result = await httpAuthenticationService.POST_authentication(data);
+        console.log(result);
         if(!result) return;
         await asyncStorageSaveUser(result);
         navigate('Home');

@@ -28,7 +28,7 @@ interface IJoinGoogle {
  * @returns {JSX.Element}
  */
 const JoinGoogle: FC<IJoinGoogle> = ({title = 'Регистрация с Google', border = false }) => {
-
+    //console.log(process.env.ANDROID_CLIENT_ID);
     const {navigate} = useNavigation<NavigationProp<TypeRootPage>>();
 
 	const [request, response, promptAsync] = Google.useAuthRequest({

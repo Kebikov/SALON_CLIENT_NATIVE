@@ -1,22 +1,18 @@
 {
-    "cli": {
-        "version": ">= 7.6.2"
+  "cli": {
+    "version": ">= 7.6.2"
+  },
+  "build": {
+    "development": {
+      "developmentClient": true,
+      "distribution": "internal"
     },
-    "build": {
-        "development": {
-            "developmentClient": true,
-            "distribution": "internal",
-            "ios": {
-                "resourceClass": "default",
-                "simulator": true
-            }
-        },
-        "preview": {
-            "distribution": "internal"
-        },
-        "production": {}
+    "preview": {
+      "distribution": "internal"
     },
-    "submit": {
-        "production": {}
-    }
+    "production": {}
+  },
+  "submit": {
+    "production": {}
+  }
 }

@@ -2,7 +2,7 @@ import axios , { AxiosInstance } from 'axios';
 
 
 export const baseLink = `${process.env.START_URL}${process.env.PORT}`;
-
+console.log(baseLink);
 export const axiosInstance: AxiosInstance = axios.create({
     baseURL: `${baseLink}/api`
 });

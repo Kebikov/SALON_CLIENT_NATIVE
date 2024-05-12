@@ -20,7 +20,7 @@ interface IApiInterceptors {
  * @returns {JSX.Element}
  */
 const ApiInterceptors: FC<IApiInterceptors> = ({children}) => {
-    
+
     const dispatch = useAppDispatch();
     const {isIError, modalMessageError} = useHookCheckErrorResponce();
 
@@ -43,9 +43,11 @@ const ApiInterceptors: FC<IApiInterceptors> = ({children}) => {
     }
 
     useEffect(() => {
+        
         //* Перехват запроса без регистрации.
         const interceptorRequest = axiosInstance.interceptors.request.use(
             async (req) => {
+                console.log(req);
                 // Показываем спинер загрузки.
                 dispatch(setAppIsShowSpinner( {isShowSpinner: true} ));
                 return req;
@@ -61,15 +63,18 @@ const ApiInterceptors: FC<IApiInterceptors> = ({children}) => {
                 // Показываем спинер загрузки.
                 dispatch(setAppIsShowSpinner( {isShowSpinner: true} ));
                 const userJson = await AsyncStorage.getItem('@user');
+                console.log('userJson >>> ', userJson);
                 if(!userJson) return req;
                 const {id, accessToken, refreshToken, expiresIn}: IResRegistration = JSON.parse(userJson);
                 //* Токен живой.
                 if(new Date().getTime() < expiresIn && accessToken && id) {
+                    console.log('Token valid');
                     req.headers = {...req.headers, 'Authorization': `Bearer ${accessToken} ${id}`} as AxiosRequestHeaders;
                     return req;
                 }
                 //* Токен просрочен.
                 if(expiresIn && id && new Date().getTime() > expiresIn) {
+                    console.log('Token not valid');
                     const data = await httpRegistrationService.POST_updateToken(id, refreshToken);
                     if(TGIResRegistration(data)) {
                         await asyncStorageSaveUser(data);
