@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Platform } from 'react-native';
 import React, { FC } from 'react';
 import { COLOR_ROOT } from '@/data/colors';
 
@@ -22,7 +22,7 @@ interface ITitle {
 const Title: FC<ITitle> = ({text, marginTop = 0, location = 'center', fontSize = 18}) => {
 
     return( 
-        <Text style={[styles.text, {marginTop, fontSize, textAlign: location}]} >
+        <Text style={[styles.text, {marginTop, fontSize: Platform.OS === 'ios' ? fontSize + 2 : fontSize, textAlign: location}]} >
                 {text}
         </Text>
     )

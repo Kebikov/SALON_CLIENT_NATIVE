@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, ImageBackground, Image } from 'react-native';
+import { View, Text, StyleSheet, ImageBackground, Image, Platform } from 'react-native';
 import React, { FC } from 'react';
 import { COLOR_ROOT } from '@/data/colors';
 
@@ -55,7 +55,6 @@ const MasterCart: FC<IMasterCart> = ({masterName, masterUnit, img, grade}) => {
 
 const styles = StyleSheet.create({
     main: {
-        overflow: 'hidden',
         width: 145,
         height: 182,
         borderRadius: 16,
@@ -109,7 +108,7 @@ const styles = StyleSheet.create({
     },
     masterName: {
         color: COLOR_ROOT.BLACK,
-        fontSize: 15,
+        fontSize: Platform.OS === 'ios' ? 16 : 14,
         fontWeight: '500',
         lineHeight: 17,
         paddingLeft: 5,
@@ -117,9 +116,9 @@ const styles = StyleSheet.create({
     },
     masterUnit: {
         color: COLOR_ROOT.LIGHT_ICON,
-        fontSize: 13,
+        fontSize: Platform.OS === 'ios' ? 14 : 13,
         fontWeight: '400',
-        lineHeight: 15,
+        lineHeight: Platform.OS === 'ios' ? 17 : 15,
         paddingLeft: 5,
     }
 });

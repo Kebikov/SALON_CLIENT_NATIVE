@@ -1,8 +1,8 @@
 import { View, Text, StyleSheet, TextInput, Image, Pressable, NativeSyntheticEvent, TextInputChangeEventData } from 'react-native';
 import React, { FC, useState } from 'react';
-import { COLOR_ROOT } from '@/data/colors';
 import { TKeyStateCreateAccount } from '@/pages/AuthCreateAccount/AuthCreateAccount';
 import { stylesGeneric } from '../InputGeneric/InputGeneric';
+import { COLOR_ROOT } from '@/data/colors';
 
 
 interface IInputPassword {
@@ -27,6 +27,7 @@ const InputPassword: FC<IInputPassword> = ({onChangeForm, marginBottom = 40}) =>
                 <TextInput 
                     style={[stylesGeneric.input]}
                     placeholder='Пароль' 
+                    placeholderTextColor={COLOR_ROOT.LIGHT_ICON}
                     onChange={text => onChangeForm(text, 'password')} 
                     secureTextEntry={isSecureText} 
                 />

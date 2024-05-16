@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Platform } from 'react-native';
 import React, { FC } from 'react';
 import { COLOR_ROOT } from '@/data/colors';
 
@@ -22,7 +22,7 @@ const Discription: FC<IDiscription> = ({text,marginTop = 0}) => {
 
 const styles = StyleSheet.create({
     text: {
-        fontSize: 14,
+        fontSize: Platform.OS === 'ios' ? 16 : 14,
         color: COLOR_ROOT.MIDDLE_GRAY,
         fontWeight: '400'
     }

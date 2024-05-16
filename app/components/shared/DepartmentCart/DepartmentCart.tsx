@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Image } from 'react-native';
+import { View, Text, StyleSheet, Image, Platform } from 'react-native';
 import React, { FC } from 'react';
 import { COLOR_ROOT } from '@/data/colors';
 
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
     },
     text: {
         color: COLOR_ROOT.MAIN_COLOR,
-        fontSize: 14,
+        fontSize: Platform.OS === 'ios' ? 15 : 14,
         fontWeight: '400',
         textAlign: 'center'
     }

@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Image } from 'react-native';
+import { View, Text, StyleSheet, Image, Platform } from 'react-native';
 import React, { FC } from 'react';
 import { baseLink } from '@/api/axios/axios.instance/instance';
 import { COLOR_ROOT } from '@/data/colors';
@@ -42,8 +42,8 @@ const styles = StyleSheet.create({
         borderRadius: 45,
         backgroundColor: 'white',
 
-        shadowOffset: { width: 7, height: 7 },
-        shadowOpacity: 1,
+        shadowOffset: { width: 0, height: 3 },
+        shadowOpacity: .3,
         shadowColor: '#000',
         shadowRadius: 4,
         elevation: 3

@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Image } from 'react-native';
+import { View, Text, StyleSheet, Image, Platform } from 'react-native';
 import React, { FC } from 'react';
 import { COLOR_ROOT } from '@/data/colors';
 
@@ -67,7 +67,6 @@ const ServiceCart: FC<IServiceCart> = ({title, department, time, price, img}) =>
 const styles = StyleSheet.create({
     main: {
         width: '100%',
-        //height: 150,
         flexDirection: 'row',
         justifyContent:'center',
         marginTop: 10,
@@ -79,8 +78,6 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         flexDirection: 'row',
         justifyContent: 'flex-start',
-        // borderColor: COLOR_ROOT.LIGHT_ICON,
-        //borderWidth: 1,
         borderRadius: 25,
         //shadows
         shadowColor: "#000000",
@@ -111,12 +108,12 @@ const styles = StyleSheet.create({
     },
     title: {
         color: COLOR_ROOT.BLACK,
-        fontSize: 16,
+        fontSize: Platform.OS === 'ios' ? 18 : 16,
         fontWeight: '500'
     },
     department: {
         color: COLOR_ROOT.LIGHT_ICON,
-        fontSize: 15,
+        fontSize: Platform.OS === 'ios' ? 16 : 15,
         fontWeight: '400'
     },
     boxPrice: {
@@ -129,7 +126,7 @@ const styles = StyleSheet.create({
     },
     time: {
         color: COLOR_ROOT.MAIN_COLOR,
-        fontSize: 15,
+        fontSize: Platform.OS === 'ios' ? 16 : 15,
         fontWeight: '500'
     },
     textTotal: {
@@ -139,20 +136,19 @@ const styles = StyleSheet.create({
     },
     textByn: {
         color: COLOR_ROOT.MAIN_COLOR,
-        fontSize: 14,
+        fontSize: Platform.OS === 'ios' ? 16 : 14,
         fontWeight: '500',
         textTransform: 'uppercase'
     },
     order: {
-
+        backgroundColor: COLOR_ROOT.PINK,
+        paddingHorizontal: 12,
+        paddingVertical: Platform.OS === 'ios' ? 5 : 3,
+        borderRadius: 15,
     },
     textOrder: {
-        backgroundColor: COLOR_ROOT.PINK,
         color: 'white',
-        fontSize: 13,
-        paddingHorizontal: 12,
-        paddingVertical: 3,
-        borderRadius: 15,
+        fontSize: Platform.OS === 'ios' ? 14 : 13,
         fontWeight: '500',
         textTransform: 'uppercase'
     }

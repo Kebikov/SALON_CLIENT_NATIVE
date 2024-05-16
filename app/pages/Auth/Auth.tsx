@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, ImageBackground, StatusBar } from 'react-native';
+import { View, Text, StyleSheet, ImageBackground, StatusBar, Platform } from 'react-native';
 import React, { FC, useEffect, useState } from 'react';
 import JoinGoogle from '@/components/shared/JoinGoogle/JoinGoogle';
 import ButtonWithIcon from '@/components/shared/ButtonWithIcon/ButtonWithIcon';
@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
     },
     authStart: {
         position: 'absolute',
-        bottom: 20,
+        bottom: 40,
         width: '100%',
         height: '100%',
         justifyContent: 'flex-end',
@@ -114,13 +114,13 @@ const styles = StyleSheet.create({
         position: 'relative',
         zIndex: 10,
         color: 'white',
-        fontSize: 21,
+        fontSize: Platform.OS === 'ios' ? 23 : 21,
         fontWeight: '600',
         textAlign: 'center',
     },
     textSubTitle: {
         color: 'white',
-        fontSize: 16,
+        fontSize: Platform.OS === 'ios' ? 17 : 16,
         fontWeight: '400',
         opacity: .85,
         marginTop: 20,

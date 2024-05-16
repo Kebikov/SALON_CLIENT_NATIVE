@@ -43,7 +43,7 @@ const BottomMenu: FC<IBottomMenu> = ({page}) => {
      */
     const ButtonForMenuPage = (item: IbuttonPage): JSX.Element => {
         return(
-            <Pressable style={styles.boxImg} onPress={() => item.page ? navigate(item.page) : null} key={item.id} >
+            <Pressable style={styles.boxImg} onPress={() => item && item.page !== null ? navigate(item.page) : null} key={item.id} >
                 <Image source={item.img} style={styles.icon} />
                 {item.page ? line(item.page) : null}
             </Pressable>

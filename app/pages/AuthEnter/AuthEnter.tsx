@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
         width: '100%',
         flexDirection: 'row',
         justifyContent: 'flex-end',
-        marginTop: 5,
+        marginTop: 10,
         marginBottom: 30
     },
     textForgot: {

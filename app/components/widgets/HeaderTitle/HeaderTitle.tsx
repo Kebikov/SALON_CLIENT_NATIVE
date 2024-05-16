@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Image, Pressable } from 'react-native';
+import { View, Text, StyleSheet, Image, Pressable, Platform } from 'react-native';
 import React, { FC } from 'react';
 import { COLOR_ROOT } from '@/data/colors';
 import { useNavigation } from '@react-navigation/native';
@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
         opacity: .9,
     },
     text: {
-        fontSize: 18,
+        fontSize: Platform.OS === 'ios' ? 19 : 18,
         fontWeight: '500',
         color: 'white',
         marginLeft: 30

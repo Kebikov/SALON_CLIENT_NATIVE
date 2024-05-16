@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, TextInput, Image, NativeSyntheticEvent, TextInputChangeEventData } from 'react-native';
+import { View, Text, StyleSheet, TextInput, Image, NativeSyntheticEvent, TextInputChangeEventData, Platform } from 'react-native';
 import React, { FC, useState } from 'react';
 import WrapperScroll from '@/components/wrappers/WrapperScroll/WrapperScroll';
 import { COLOR_ROOT } from '@/data/colors';
@@ -64,7 +64,13 @@ const AuthCreateAccount: FC = () => {
                 <InputGeneric keyName={'name'} placeholder='Имя' img={require('@/source/img/icon/user-grey.png')} onChangeForm={onChangeForm} />
                 <InputGeneric keyName={'email'} placeholder='Email'  img={require('@/source/img/icon/email-grey.png')} onChangeForm={onChangeForm} />
                 <View style={[stylesGeneric.boxInput, stylesGeneric.shadowTop]} >
-                    <TextInput style={[stylesGeneric.input, {paddingLeft: 100}]} placeholder='291234567' keyboardType="numeric" onChange={text => onChangeForm(text, 'phone')} />
+                    <TextInput 
+                        style={[stylesGeneric.input, {paddingLeft: 100}]} 
+                        placeholder='291234567' 
+                        placeholderTextColor={COLOR_ROOT.LIGHT_ICON}
+                        keyboardType="numeric" 
+                        onChange={text => onChangeForm(text, 'phone')} 
+                    />
                     <Text style={styles.numberStart} >+375 | </Text>
                     <Image style={[stylesGeneric.icon, {width: 24, height: 16, marginTop: -8}]} source={require('@/source/img/icon/flag.jpg')} />
                 </View>
@@ -88,7 +94,7 @@ const styles = StyleSheet.create({
         position: 'absolute',
         top: '50%',
         left: 45,
-        marginTop: -12,
+        marginTop: Platform.OS === 'ios' ? -9 : -12,
         color: '#8d9299',
         fontWeight: '400',
         fontSize: 16

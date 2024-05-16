@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, TextInput, Image, NativeSyntheticEvent, TextInputChangeEventData } from 'react-native';
+import { View, Text, StyleSheet, TextInput, Image, NativeSyntheticEvent, TextInputChangeEventData, Platform } from 'react-native';
 import React, { FC } from 'react';
 import { TKeyStateCreateAccount } from '@/pages/AuthCreateAccount/AuthCreateAccount';
 import { COLOR_ROOT } from '@/data/colors';
@@ -55,6 +55,7 @@ const InputGeneric: FC<IInputGeneric> = ({onChangeForm, placeholder, keyName, im
                 numberOfLines={lines}
                 style={[stylesGeneric.input]} 
                 placeholder={placeholder} 
+                placeholderTextColor={COLOR_ROOT.LIGHT_ICON}
                 onChange={text => onChangeForm(text, keyName)} 
                 value={value}
             />
@@ -67,21 +68,21 @@ const InputGeneric: FC<IInputGeneric> = ({onChangeForm, placeholder, keyName, im
 export const stylesGeneric = StyleSheet.create({
     shadowTop: {
         shadowOffset: {
-            width: -6,
-            height: -6
+            width: 0,
+            height: 2
         },
-        shadowOpacity: 1,
-        shadowRadius: 6,
+        shadowOpacity: .3,
+        shadowRadius: 2,
         shadowColor: '#000',
         elevation: 3
     },
     shadowBottom: {
         shadowOffset: {
-            width: 8,
-            height: 8
+            width: 0,
+            height: -2
         },
-        shadowOpacity: 1,
-        shadowRadius: 6,
+        shadowOpacity: .2,
+        shadowRadius: 2,
         shadowColor: '#CCC',
         elevation: 3
     },
@@ -94,9 +95,9 @@ export const stylesGeneric = StyleSheet.create({
     input: {
         backgroundColor: COLOR_ROOT.BACKGROUND_INPUT,
         borderRadius: 30,
-        paddingVertical: 13,
+        paddingVertical: Platform.OS === 'ios' ? 13 : 10,
         paddingHorizontal: 50,
-        fontSize: 17,
+        fontSize: Platform.OS === 'ios' ? 17 : 15,
         fontWeight: '400',
         color: COLOR_ROOT.GRAY
     },

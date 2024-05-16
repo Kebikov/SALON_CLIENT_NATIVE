@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Image, TextInput } from 'react-native';
+import { View, Text, StyleSheet, Image, TextInput, Platform } from 'react-native';
 import React, { FC, useState, useEffect } from 'react';
 import { COLOR_ROOT } from '@/data/colors';
 import type { IgetInfoBasic } from '@/api/routes/client/types/client.types';

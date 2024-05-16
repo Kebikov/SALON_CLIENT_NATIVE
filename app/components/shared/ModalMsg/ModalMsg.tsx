@@ -1,7 +1,8 @@
-import { View, Text, StyleSheet, Modal, Pressable, Image } from 'react-native';
+import { View, Text, StyleSheet, Modal, Pressable, Image, Platform } from 'react-native';
 import React, { FC } from 'react';
 import { useAppDispatch, useAppSelector } from '@/redux/store/hooks';
 import { setAppModalObject } from '@/redux/slice/modal.slice';
+import { BlurView } from 'expo-blur';
 
 
 const imgMsg = require('@/source/img/icon/ok.png');
@@ -55,7 +56,7 @@ const ModalMsg: FC = () => {
                 transparent={true}
                 visible={modalVisible}
             >
-                <View style={styles.main}>
+                <BlurView intensity={30} tint='dark' style={styles.main}>
                     <View style={styles.body}>
 
                         <View style={styles.header}>
@@ -77,7 +78,7 @@ const ModalMsg: FC = () => {
                             <Text style={styles.text} >OK</Text>
                         </Pressable>
                     </View>
-                </View>
+                </BlurView>
                 
             </Modal>
     );
@@ -89,7 +90,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: 'rgba(0, 0, 0, 0.5)'
+        backgroundColor: Platform.OS === 'ios' ? 'rgba(0, 0, 0, 0.2)' : 'rgba(0, 0, 0, 0.6)'
     },
     body: {
         justifyContent: 'center',
@@ -111,12 +112,12 @@ const styles = StyleSheet.create({
     msg: {
         paddingLeft: 5,
         textAlign: 'center',
-        fontSize: 17,
+        fontSize: Platform.OS === 'ios' ? 18 : 16,
         color: 'white',
     },
     text: {
         textAlign: 'center',
-        fontSize: 16,
+        fontSize: Platform.OS === 'ios' ? 19 : 16,
         color: 'white'
     },
     boxDiscription: {
@@ -126,7 +127,7 @@ const styles = StyleSheet.create({
     },
     textDiscription: {
         textAlign: 'center',
-        fontSize: 13,
+        fontSize: Platform.OS === 'ios' ? 15 : 13,
         color: 'white'
     },
     boxImg: {
