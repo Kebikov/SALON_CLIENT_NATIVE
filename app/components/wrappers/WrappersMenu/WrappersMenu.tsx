@@ -1,4 +1,4 @@
-import { StatusBar } from 'react-native';
+import { StatusBar, View, Platform } from 'react-native';
 import React, { FC } from 'react';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { COLOR_ROOT } from '@/data/colors';
@@ -29,19 +29,23 @@ interface IWrapper {
 const WrapperMenu: FC<IWrapper> = ({children, page, titlePage}) => {
 
     return (
-        <SafeAreaProvider>
-            <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
+        <>
+            <View style={{backgroundColor: COLOR_ROOT.MAIN_COLOR, height: Platform.OS === 'ios' ? 47 : StatusBar.currentHeight}} >
                 <StatusBar animated={true} barStyle={'light-content'} backgroundColor={COLOR_ROOT.MAIN_COLOR} />
-                {
-                    titlePage ?
-                    <HeaderTitle text={titlePage} />
-                    :
-                    null
-                }
-                {children}
-                <BottomMenu page={page} />
-            </SafeAreaView>
-        </SafeAreaProvider>
+            </View>
+            <SafeAreaProvider>
+                <SafeAreaView style={{ flex: 1, backgroundColor: COLOR_ROOT.BACKGROUND }} >
+                    {
+                        titlePage ?
+                        <HeaderTitle text={titlePage} />
+                        :
+                        null
+                    }
+                    {children}
+                    <BottomMenu page={page} />
+                </SafeAreaView>
+            </SafeAreaProvider>
+        </>
     );
 };
 

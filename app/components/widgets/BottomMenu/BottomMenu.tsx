@@ -4,22 +4,14 @@ import { TypeRootPage } from '@/navigation/navigation.types';
 import { COLOR_ROOT } from '@/data/colors';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { useAppSelector } from '@/redux/store/hooks';
-import menu from './listMenu';
+import menu, {TKeyPage, IButtonPage} from './listMenu';
 
-
-export type TKeyPage =  keyof TypeRootPage;
 
 interface IBottomMenu {
     /**
      * Страница на которой находится меню.
      */
     page: TKeyPage;
-}
-
-export interface IbuttonPage {
-    id: number;
-    page: TKeyPage | null; 
-    img: number;
 }
 
 
@@ -41,9 +33,13 @@ const BottomMenu: FC<IBottomMenu> = ({page}) => {
     /**
      * Кнопка в нижнем меню.
      */
-    const ButtonForMenuPage = (item: IbuttonPage): JSX.Element => {
+    const ButtonForMenuPage = (item: IButtonPage): JSX.Element => {
         return(
-            <Pressable style={styles.boxImg} onPress={() => item && item.page !== null ? navigate(item.page) : null} key={item.id} >
+            <Pressable 
+                style={styles.boxImg} 
+                onPress={() => item && item.page !== null ? navigate(item.page as any) : null} 
+                key={item.id} 
+            >
                 <Image source={item.img} style={styles.icon} />
                 {item.page ? line(item.page) : null}
             </Pressable>

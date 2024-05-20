@@ -10,9 +10,7 @@ import { TypeRootPage } from '@/navigation/navigation.types';
 
 
 /**
- * @component
- * @example 
- * @returns {JSX.Element}
+ * @page Страница с выбором иконки для группы.
  */
 const SelectIcon: FC = () => {
 

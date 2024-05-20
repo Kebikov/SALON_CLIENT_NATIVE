@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Image, Platform } from 'react-native';
+import { View, Text, StyleSheet, Image, Platform, Pressable } from 'react-native';
 import React, { FC } from 'react';
 import { baseLink } from '@/api/axios/axios.instance/instance';
 import { COLOR_ROOT } from '@/data/colors';
@@ -7,26 +7,45 @@ import Title from '../Title/Title';
 import Discription from '../Discription/Discription';
 
 
+interface IDepartmentCartAdmin {
+    handlePressFunction: Function;
+    title: string;
+    discription: string;
+    icon: string;
+}
+
 /**
  * @shared `Карточка департамента с полным описанием у админа.`
- * @example <DepartmentCartAdmin/>
- * @returns {JSX.Element}
+ * @param title Заглавие карточки.
+ * @param discription Описание карточки.
+ * @param icon Иконка для карточки.
+ * @param handlePressFunction Функция сработаюшая при нажатии.
+ * @example 
+ * <DepartmentCartAdmin 
+ *     title={#} 
+ *     discription={#} 
+ *     icon={#} 
+ *     handlePressFunction={#} 
+ * />
  */
-const DepartmentCartAdmin: FC = () => {
+const DepartmentCartAdmin: FC<IDepartmentCartAdmin> = ({title, discription, icon, handlePressFunction}) => {
 
     return (
-        <View style={styles.main} >
+        <Pressable 
+            style={styles.main} 
+            onPress={() => handlePressFunction()}
+        >
             <View style={styles.boxImg} >
-                <Image style={styles.img} source={{uri: `${baseLink}/api/img/get-img/${'23.png'}?type=icon-group`}} />
+                <Image style={styles.img} source={{uri: `${baseLink}/api/img/get-img/${icon}?type=icon-group`}} />
             </View>
             <View style={styles.boxText}>
-                <Title text='Группа' location='left' />
-                <Discription text='Тут описание отдела...' />
+                <Title text={title} location='left' />
+                <Discription text={discription} />
             </View>
             <View style={styles.boxArrow}>
                 <Image style={styles.img} source={require('@/source/img/icon-menu/arrow.png')} />
             </View>
-        </View>
+        </Pressable>
         
     );
 };
@@ -35,11 +54,10 @@ const styles = StyleSheet.create({
     main: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginTop: 10,
         width: '100%',
         padding: 10,
 
-        borderRadius: 45,
+        borderRadius: 15,
         backgroundColor: 'white',
 
         shadowOffset: { width: 0, height: 3 },
@@ -58,7 +76,6 @@ const styles = StyleSheet.create({
     },
     boxText: {
         marginLeft: 10,
-        //backgroundColor: 'red',
         flex: 1
     },
     img: {

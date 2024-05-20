@@ -13,7 +13,7 @@ interface IColors {
 }
 
 export const COLOR_ROOT: IColors = {
-    BACKGROUND: '#131313',
+    BACKGROUND: '#f2f1f7',
 
     BACKGROUND_INPUT: '#f0f3f6',
     

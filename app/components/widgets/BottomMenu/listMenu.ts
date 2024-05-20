@@ -1,11 +1,22 @@
-import type { IbuttonPage } from "./BottomMenu";
 import type { TRole } from '@/api/routes/registration/types/registration.types';
+import { TypeRootPage } from '@/navigation/navigation.types';
+
+export type TKeyPage =  keyof TypeRootPage;
+
+export interface IButtonPage {
+    id: number;
+    page: TKeyPage | null; 
+    params?: TypeRootPage[TKeyPage];
+    img: number;
+}
+
+
 
 type TMenu = {
-    [key in TRole]: IbuttonPage[] | null;
+    [key in TRole]: IButtonPage[] | null;
 };
 
-const listMenuClient: Array<IbuttonPage> = [
+const listMenuClient: Array<IButtonPage> = [
     {
         id: 1,
         page: 'Home',
@@ -28,7 +39,7 @@ const listMenuClient: Array<IbuttonPage> = [
     }
 ];
 
-const listMenuAdmin: Array<IbuttonPage> = [
+const listMenuAdmin: Array<IButtonPage> = [
     {
         id: 1,
         page: 'Home',

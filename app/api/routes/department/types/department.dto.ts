@@ -9,3 +9,7 @@ export interface IDataDepartment {
     discription: string;
     icon: string;
 }
+
+export interface IDataDepartmentAndId extends IDataDepartment {
+    id: number;
+}
