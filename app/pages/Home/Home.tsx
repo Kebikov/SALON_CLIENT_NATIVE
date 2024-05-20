@@ -35,7 +35,6 @@ const Home: FC = () => {
                 <Text style={{fontSize: 20, textAlign: 'center', backgroundColor: 'green', marginTop: 20, color: '#fff', paddingVertical: 5}} >кнопка для теста</Text>
             </Pressable>
 
-            <Animated.View></Animated.View>
             <Text style={[styles.text, {marginTop: 10}]} >Service</Text>
             <ListDepartment/>
             <Text style={[styles.text, {marginTop: 10}]} >Masters</Text>

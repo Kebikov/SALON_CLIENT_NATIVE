@@ -1,6 +1,8 @@
 import { View, Text, StyleSheet, ImageBackground, Image, Platform } from 'react-native';
-import React, { FC } from 'react';
+import React, { FC, useEffect, useCallback } from 'react';
 import { COLOR_ROOT } from '@/data/colors';
+import Animated, {withDelay, withTiming, withRepeat, withSequence, useSharedValue, useAnimatedStyle, Easing} from 'react-native-reanimated';
+import { useFocusEffect } from '@react-navigation/native';
 
 
 interface IMasterCart {
@@ -22,6 +24,7 @@ interface IMasterCart {
     img: number;
 }
 
+const DURATION = 100;
 
 /**
  * @shared Мини-Карточка мастера.
@@ -29,11 +32,56 @@ interface IMasterCart {
  * @param masterUnit Специализация мастера.
  * @param img Фото мастера.
  * @param grade Рейтинг мастера.
+ * @param delay ? Параметр для задержки анимации.
  */
 const MasterCart: FC<IMasterCart> = ({masterName, masterUnit, img, grade}) => {
 
+    const viewRotate = useSharedValue(2);
+
+    const animatedStyle = useAnimatedStyle(() => {
+        return {
+            transform: [
+                {
+                    rotate: `${viewRotate.value}deg`
+                }
+            ]
+        }
+    });
+
+    useFocusEffect(
+        useCallback(() => {
+            viewRotate.value = 
+                withSequence(
+                    withRepeat(
+                        withSequence(
+                            withTiming(-2, {
+                                duration: DURATION,
+                                easing: Easing.inOut(Easing.ease)
+                            }),
+                            withTiming(2, {
+                                duration: DURATION,
+                                easing: Easing.inOut(Easing.ease)
+                            })
+                        ), 2
+                    ),
+                    withTiming(0, {
+                        duration: DURATION,
+                        easing: Easing.inOut(Easing.ease)
+                    })
+                )
+            
+
+            return () => {
+                setTimeout(() => {
+                    viewRotate.value = 2;
+                }, 300);
+            };
+        }, [])
+    );
+
+
     return (
-        <View style={styles.main} >
+        <Animated.View style={[styles.main, animatedStyle]} >
             <View style={styles.box} >
                 <View style={styles.boxBg} >
                     <ImageBackground style={styles.imageBackground} source={img} >
@@ -48,7 +96,7 @@ const MasterCart: FC<IMasterCart> = ({masterName, masterUnit, img, grade}) => {
                 <Text style={styles.masterName} >{masterName}</Text>
                 <Text style={styles.masterUnit} >{masterUnit}</Text>
             </View>
-        </View>
+        </Animated.View>
     );
 };
 
@@ -68,7 +116,7 @@ const styles = StyleSheet.create({
         },
         shadowOpacity:  0.18,
         shadowRadius: 4.59,
-        elevation: 5
+        elevation: 5,
     },
     box: {
         flex: 1

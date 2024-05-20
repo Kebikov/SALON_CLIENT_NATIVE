@@ -4,6 +4,7 @@ import MasterCart from '@/components/shared/MasterCart/MasterCart';
 import NotElements from '@/components/shared/NotElements/NotElements';
 
 
+
 interface IDATAitem {
     id: string;
     masterName: string;
@@ -54,6 +55,7 @@ const sizeHeight = 192;
  */
 const ListMasters: FC = () => {
 
+    let delay = 1;
 
     return (
         <View style={styles.main}>
@@ -63,7 +65,7 @@ const ListMasters: FC = () => {
                 showsHorizontalScrollIndicator={false}
                 keyExtractor={item => item.id}
                 contentContainerStyle={{ justifyContent: 'center', height: sizeHeight, flexGrow: 1, gap: sizeGap, paddingHorizontal: sizeGap}}
-                renderItem={({item}) => <MasterCart masterName={item.masterName} masterUnit={item.masterUnit} img={item.img} grade={item.grade} />}
+                renderItem={({item}) => <MasterCart masterName={item.masterName} masterUnit={item.masterUnit} img={item.img} grade={item.grade} /> }
                 ListEmptyComponent={<NotElements title='Нет мастеров.'/>}
             />
         </View>

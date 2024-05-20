@@ -23,7 +23,7 @@ const DepartmentCart: FC<IDepartmentCart> = ({id, title, img}) => {
     
 
     return (
-        <View style={styles.main} >
+        <View style={[styles.main]} >
             <View style={styles.boxImg}>
                 <Image style={styles.img} source={img} />
             </View>
@@ -65,3 +65,6 @@ const styles = StyleSheet.create({
 
 
 export default DepartmentCart;
+
+
+
