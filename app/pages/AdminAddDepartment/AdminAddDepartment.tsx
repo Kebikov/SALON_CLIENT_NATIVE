@@ -1,6 +1,5 @@
 import { View, Text, StyleSheet, Pressable, Image, Button, ScrollView, FlatList } from 'react-native';
 import React, { FC, useCallback, useMemo, useRef, useState, useEffect } from 'react';
-import WrapperScrollMenu from '@/components/wrappers/WrapperScrollMenu/WrapperScrollMenu';
 import WrapperMenu from '@/components/wrappers/WrappersMenu/WrappersMenu';
 import DepartmentCartAdmin from '@/components/shared/DepartmentCartAdmin/DepartmentCartAdmin';
 import ButtonWithIcon from '@/components/shared/ButtonWithIcon/ButtonWithIcon';
@@ -9,8 +8,9 @@ import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { TypeRootPage } from '@/navigation/navigation.types';
 import BottomSheet, { BottomSheetBackdrop } from '@gorhom/bottom-sheet';
 import httpDepartmentService from '@/api/routes/department/service/http.department.service';
-import { IDataDepartmentAndId } from '@/api/routes/department/types/department.dto';
+import type { IDataDepartmentAndId } from '@/api/routes/department/types/department.dto';
 import NotElements from '@/components/shared/NotElements/NotElements';
+import { useHookGetDataDepartments } from '@/hooks/useHookGetDataDepartments';
 
 
 /**
@@ -19,18 +19,10 @@ import NotElements from '@/components/shared/NotElements/NotElements';
  */
 const AdminAddDepartment: FC = () => {
 
-    const [dataDepartments, setDataDepartments] = useState<IDataDepartmentAndId[]>([]);
+    const {dataDepartments} = useHookGetDataDepartments();
 
     const {navigate} = useNavigation<NavigationProp<TypeRootPage>>();
 
-    useEffect(() => {
-        httpDepartmentService.GET_getDepartment()
-            .then(res => {
-                if(!res) return;
-                setDataDepartments(res);
-            })
-            .catch(error => console.error(error));
-    }, []);
 
     return (
             <WrapperMenu page='AdminAddDepartment' titlePage='Группы услуг' >

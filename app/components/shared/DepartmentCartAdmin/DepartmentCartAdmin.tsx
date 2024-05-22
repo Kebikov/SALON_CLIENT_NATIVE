@@ -39,8 +39,8 @@ const DepartmentCartAdmin: FC<IDepartmentCartAdmin> = ({title, discription, icon
                 <Image style={styles.img} source={{uri: `${baseLink}/api/img/get-img/${icon}?type=icon-group`}} />
             </View>
             <View style={styles.boxText}>
-                <Title text={title} location='left' />
-                <Discription text={discription} />
+                <Title text={title} location='left' fontSize={16} />
+                <Discription text={discription} fontSize={13}/>
             </View>
             <View style={styles.boxArrow}>
                 <Image style={styles.img} source={require('@/source/img/icon-menu/arrow.png')} />
