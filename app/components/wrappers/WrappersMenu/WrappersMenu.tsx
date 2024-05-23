@@ -31,7 +31,7 @@ const WrapperMenu: FC<IWrapper> = ({children, page, titlePage}) => {
     return (
         <>
             <View style={{backgroundColor: COLOR_ROOT.MAIN_COLOR, height: Platform.OS === 'ios' ? 47 : StatusBar.currentHeight}} >
-                <StatusBar animated={true} barStyle={'light-content'} backgroundColor={COLOR_ROOT.MAIN_COLOR} />
+                <StatusBar animated={true} barStyle={'light-content'} backgroundColor={COLOR_ROOT.MAIN_COLOR} hidden={false} />
             </View>
             <SafeAreaProvider>
                 <SafeAreaView style={{ flex: 1, backgroundColor: COLOR_ROOT.BACKGROUND }} >

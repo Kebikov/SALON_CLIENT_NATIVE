@@ -1,6 +1,8 @@
 import React, { FC, useCallback, useMemo, useRef, useState, useEffect } from 'react';
 import httpDepartmentService from '@/api/routes/department/service/http.department.service';
 import type { IDataDepartmentAndId } from '@/api/routes/department/types/department.dto';
+import { useFocusEffect } from '@react-navigation/native';
+
 
 
 /**
@@ -11,16 +13,23 @@ import type { IDataDepartmentAndId } from '@/api/routes/department/types/departm
  */
 export const useHookGetDataDepartments = () => {
 
+
     const [dataDepartments, setDataDepartments] = useState<IDataDepartmentAndId[]>([]);
 
-    useEffect(() => {
-        httpDepartmentService.GET_getDepartment()
+    useFocusEffect(
+        useCallback(() => {
+            console.log('Запрос на сервер');
+            httpDepartmentService.GET_getDepartment()
             .then(res => {
                 if(!res) return;
                 setDataDepartments(res);
             })
             .catch(error => console.error(error));
-    }, []);
+
+            return () => {}
+        }, [])
+    );
+
 
     return {
         dataDepartments

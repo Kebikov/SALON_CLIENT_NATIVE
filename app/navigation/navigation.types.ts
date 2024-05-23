@@ -29,6 +29,7 @@ export type TPageAdminAddDepartmentForm = {
 }
 
 
+
 export interface IRoute {
     name: keyof TypeRootPage;
     component: ComponentType;
