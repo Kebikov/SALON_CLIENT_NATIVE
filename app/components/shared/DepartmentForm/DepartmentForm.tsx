@@ -1,5 +1,5 @@
-import { View, Text, StyleSheet, Image, NativeSyntheticEvent, TextInputChangeEventData } from 'react-native';
-import React, { FC, useState } from 'react';
+import { View, Text, StyleSheet, Image, NativeSyntheticEvent, TextInputChangeEventData, Pressable, ScrollView } from 'react-native';
+import React, { FC, useState, useEffect, useRef, useCallback } from 'react';
 import QuestionHOC from '@/components/wrappers/QuestionHOC/QuestionHOC';
 import Title from '@/components/shared/Title/Title';
 import InputGeneric from '@/components/shared/InputGeneric/InputGeneric';
@@ -10,34 +10,89 @@ import type { TypeRootPage } from '@/navigation/navigation.types';
 import { COLOR_ROOT } from '@/data/colors';
 import ButtonWithIcon from '@/components/shared/ButtonWithIcon/ButtonWithIcon';
 import { baseLink } from '@/api/axios/axios.instance/instance';
+import { useAppDispatch } from '@/redux/store/hooks';
+import { setAppDepartment } from '@/redux/slice/department.slice';
+import DownBottomSheet from '../DownBottomSheet/DownBottomSheet';
+import BottomSheet from '@gorhom/bottom-sheet';
+import httpImgService from '@/api/routes/img/service/http.img.service';
+
 
 
 interface IDepartmentForm {
-    choice: string;
+    handlePressButton: (data: IDataDepartment) => void;
     titleForButton?: string;
-    handlePressButton: (data: Omit<IDataDepartment, 'icon'>) => void;
+    initialData?: IDataDepartment;
 }
 
 
 /**
  * @shared `Форма добавления группы.`
- * @param choice Выбранная иконка для группы.
- * @param titleForButton ? Текст кнопки.
  * @param handlePressButton Функция обрабатываюшяя нажатие на кнопку.
- * @example 
+ * @param titleForButton ? Текст кнопки.
+ * @param initialData ? Начальные данные.
  */
-const DepartmentForm: FC<IDepartmentForm> = ({choice, titleForButton = 'добавить', handlePressButton}) => {
+const DepartmentForm: FC<IDepartmentForm> = ({
+        titleForButton = 'добавить', 
+        handlePressButton, 
+        initialData = {name: '', discription: '', icon: ''}
+    }) => {
 
-    const [data, setData] = useState<Omit<IDataDepartment, 'icon'>>({
-        name: '', 
-        discription: ''
+    /**
+     * @param arrImg Массив изображений.
+     */
+    const [arrImg, setArrImg] = useState<string[]>([]);
+    /**
+     * @param active Выбраное изображение.
+     */
+    const [active, setActive] = useState<string>('');
+    const [data, setData] = useState<IDataDepartment>({ 
+        name: initialData.name, 
+        discription: initialData.discription,
+        icon: initialData.icon
     });
-
     const onChangeForm = (e: NativeSyntheticEvent<TextInputChangeEventData>, key: string) => {
+        e.persist();
         setData( state => ({...state, [key]: e.nativeEvent.text}) );
     }
 
-    const {navigate} = useNavigation<NavigationProp<TypeRootPage>>();
+    const dispatch = useAppDispatch();
+
+    const bottomSheetRef = useRef<BottomSheet>(null);
+    const snapeToIndex = (index: number) => bottomSheetRef.current?.snapToIndex(index);
+    const handleClosePress = () => bottomSheetRef.current?.close();
+
+    const images = arrImg.map((item: string) => {
+        let url = '';
+        if(active === '') {
+            url = `${baseLink}/api/img/get-img/${item}?type=icon-group&${new Date().getTime()}`;
+        } else {
+            url = `${baseLink}/api/img/get-img/${item}?type=icon-group`;
+        }
+        return(
+            <Pressable 
+                style={styles.item} 
+                key={item} 
+                onPress={() => setActive(item)}
+            >
+                <View style={[styles.boxImg, item === active ? {borderColor: 'red'} : {borderColor: COLOR_ROOT.MAIN_COLOR}]} >
+                    <Image source={{uri: url}} style={styles.img} />
+                </View>
+            </Pressable>
+        )
+    });
+
+    useEffect(() => {
+        httpImgService.GET_files('icon-group')
+        .then(result => {
+            if(result && result.length > 0) {
+                setArrImg(result);
+            }
+        })
+        .catch(err => console.error(err));
+        return () => {
+            dispatch(setAppDepartment('clean'));
+        }
+    },[]);
 
     return (
         <>
@@ -53,6 +108,7 @@ const DepartmentForm: FC<IDepartmentForm> = ({choice, titleForButton = 'доба
                     placeholder='Имя группы'
                     img={require('@/source/img/icon/group-gray.png')}
                     onChangeForm={onChangeForm}
+                    value={data.name}
                 />
                 <QuestionHOC
                     title='Описание'
@@ -67,21 +123,22 @@ const DepartmentForm: FC<IDepartmentForm> = ({choice, titleForButton = 'доба
                     img={require('@/source/img/icon/write.png')}
                     onChangeForm={onChangeForm}
                     lines={2}
+                    value={data.discription}
                 />
                 <MenuItem
                     title='Выбор иконки'
                     subTitle='иконка для отображения группы'
                     img={require('@/source/img/icon/choice.png')}
-                    pushFunction={() => navigate('SelectIcon')}
+                    pushFunction={() => snapeToIndex(0)}
                     marginTop={10}
                 />
 
                 {
-                    choice ?
+                    data.icon ?
                     <View style={styles.box} >
                         <View style={styles.item} >
                             <View style={[styles.boxImg, {borderColor: COLOR_ROOT.MAIN_COLOR}]} >
-                                <Image source={{uri: `${baseLink}/api/img/get-img/${choice}?type=icon-group`}} style={styles.img} />
+                                <Image source={{uri: `${baseLink}/api/img/get-img/${data.icon}?type=icon-group`}} style={styles.img} />
                             </View>
                         </View>
                     </View>
@@ -95,12 +152,31 @@ const DepartmentForm: FC<IDepartmentForm> = ({choice, titleForButton = 'доба
                     pushButton={() => handlePressButton(data)}
                     marginTop={10}
                 />
+
+                <DownBottomSheet
+                    bottomSheetRef={bottomSheetRef}
+                    contentInScrollView={images}
+                >
+                    <View style={styles.boxButton}>
+                        <ButtonWithIcon
+                            title={active ? 'выбрать' : 'закрыть'}
+                            pushButton={() => {
+                                setData(state => ({...state, icon: active}));
+                                handleClosePress();
+                            }}
+                            img={require('@/source/img/icon/plus-white.png')}
+                        />
+                    </View>
+                </DownBottomSheet>
         </>
     );
 };
 
 const styles = StyleSheet.create({
-
+    boxButton: {
+        paddingHorizontal: 10,
+        marginBottom: 5
+    },
     item: {
         width: '25%',
         height: '100%',
@@ -109,6 +185,7 @@ const styles = StyleSheet.create({
     },
     box: {
         flexDirection: 'row',
+        flexWrap: 'wrap',
         justifyContent: 'center'
     },
     boxImg: {

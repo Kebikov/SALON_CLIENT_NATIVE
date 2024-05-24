@@ -1,7 +1,7 @@
 import { ComponentType } from "react";
-import { RouteProp } from "@react-navigation/native";
+import { TypeParamsForNextPage } from "./extra.types";
 
-type TChoiceImg = 'icon-group' | null;
+
 
 export type TypeRootPage = {
     Auth: undefined;
@@ -14,20 +14,15 @@ export type TypeRootPage = {
     //Admin
     AdminAdd: undefined;
     AdminAddDepartment: undefined;
-    AdminAddDepartmentForm: {
+    AdminAddGroupDepartment: undefined;
+    AdminEditDepartment: {
         /**
-         * `Выбранная иконка.` 
-         * - Например: "16.png"
+         * Id группы которую редактируем.
          */
-        choice: string;
-    };
+        idDepartment: number;
+    }
     SelectIcon: undefined;
 };
-
-export type TPageAdminAddDepartmentForm = {
-    route: RouteProp<TypeRootPage, 'AdminAddDepartmentForm'>
-}
-
 
 
 export interface IRoute {

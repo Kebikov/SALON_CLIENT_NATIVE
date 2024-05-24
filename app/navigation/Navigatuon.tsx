@@ -12,8 +12,9 @@ import AuthForgot from '@/pages/AuthForgot/AuthForgot';
 import ChangePassword from '@/pages/ChangePassword/ChangePassword';
 import AdminAdd from '@/pages/AdminAdd/AdminAdd';
 import AdminAddDepartment from '@/pages/AdminAddDepartment/AdminAddDepartment';
-import AdminAddDepartmentForm from '@/pages/AdminAddGroupDepartment/AdminAddGroupDepartment';
+import AdminAddGroupDepartment from '@/pages/AdminAddGroupDepartment/AdminAddGroupDepartment';
 import SelectIcon from '@/pages/SelectIcon/SelectIcon';
+import AdminEditDepartment from '@/pages/AdminEditDepartment/AdminEditDepartment';
 
 
 const Stack = createNativeStackNavigator<TypeRootPage>();
@@ -41,8 +42,9 @@ const Navigatuon: FC = () => {
                 {/* Admin */}
                 <Stack.Screen name="AdminAdd" component={AdminAdd} key={'AdminAdd'} />
                 <Stack.Screen name="AdminAddDepartment" component={AdminAddDepartment} key={'AdminAddDepartment'} />
-                <Stack.Screen name="AdminAddDepartmentForm" component={AdminAddDepartmentForm} key={'AdminAddDepartmentForm'} />
+                <Stack.Screen name="AdminAddGroupDepartment" component={AdminAddGroupDepartment} key={'AdminAddGroupDepartment'} />
                 <Stack.Screen name="SelectIcon" component={SelectIcon} key={'SelectIcon'} />
+                <Stack.Screen name="AdminEditDepartment" component={AdminEditDepartment} key={'AdminEditDepartment'} />
             </Stack.Navigator>
         </NavigationContainer>
     )

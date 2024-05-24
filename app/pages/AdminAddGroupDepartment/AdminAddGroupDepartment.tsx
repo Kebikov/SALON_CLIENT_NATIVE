@@ -1,25 +1,17 @@
-import { View, StyleSheet, Image, NativeSyntheticEvent, TextInputChangeEventData } from 'react-native';
-import React, { FC, useState } from 'react';
+import { View, StyleSheet } from 'react-native';
+import React, { FC } from 'react';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import WrapperScrollMenu from '@/components/wrappers/WrapperScrollMenu/WrapperScrollMenu';
 import HeaderTitle from '@/components/widgets/HeaderTitle/HeaderTitle';
-import InputGeneric from '@/components/shared/InputGeneric/InputGeneric';
-import ButtonWithIcon from '@/components/shared/ButtonWithIcon/ButtonWithIcon';
-import MenuItem from '@/components/shared/MenuItem/MenuItem';
-import { COLOR_ROOT } from '@/data/colors';
-import { baseLink } from '@/api/axios/axios.instance/instance';
-import Title from '@/components/shared/Title/Title';
-import QuestionHOC from '@/components/wrappers/QuestionHOC/QuestionHOC';
 import httpDepartmentService from '@/api/routes/department/service/http.department.service';
 import { useHookCheckErrorResponce } from '@/hooks/useHookCheckErrorResponce';
 import type { TypeRootPage } from '@/navigation/navigation.types';
-import type { TPageAdminAddDepartmentForm } from '@/navigation/navigation.types';
+import { useAppDispatch, useAppSelector } from '@/redux/store/hooks';
 import DepartmentForm from '@/components/shared/DepartmentForm/DepartmentForm';
 
 
-
 /** 
- * @table `Department - Таблица с группами.`
+ * @interface `Department - Таблица с группами.`
  * @param name - Имя группы.
  * @param discription - Описание группы.
  * @param icon - Иконка группы, например: "16.png"
@@ -34,20 +26,19 @@ export interface IDataDepartment {
 /**
  * @page `Страница с формой для добавления департамента(группы).`
  */
-const AdminAddDepartmentForm: FC<TPageAdminAddDepartmentForm> = ({route}) => {
+const AdminAddGroupDepartment: FC = () => {
 
     const {navigate} = useNavigation<NavigationProp<TypeRootPage>>();
     const {modalMessageError, isMessage} = useHookCheckErrorResponce();
-    const choice = route.params.choice;
 
-    const onAddDepartment = async (data: Omit<IDataDepartment, 'icon'>) => {
+    const onAddDepartment = async (data: IDataDepartment) => {
         if(!data.name) return modalMessageError('Нет группы', 'Вы не ввели имя создаваемой группы.');
         if(!data.discription) return modalMessageError('Нет описания', 'Вы не ввели описание для создаваемой группы.'); 
-        if(!choice) return modalMessageError('Нет иконки', 'Вы не выбрали иконку для создаваемой группы.');
+        if(!data.icon) return modalMessageError('Нет иконки', 'Вы не выбрали иконку для создаваемой группы.');
         const result = await httpDepartmentService.POST_createDepartment({
             name: data.name,
             discription: data.discription,
-            icon: choice
+            icon: data.icon
         });
         if(!result) return;
         isMessage(result);
@@ -55,10 +46,12 @@ const AdminAddDepartmentForm: FC<TPageAdminAddDepartmentForm> = ({route}) => {
     };
 
     return (
-        <WrapperScrollMenu page='AdminAddDepartmentForm' >
+        <WrapperScrollMenu page='AdminAddGroupDepartment' >
             <HeaderTitle text='Добавление группы' />
             <View style={styles.main} >
-                <DepartmentForm choice={choice} handlePressButton={onAddDepartment} />
+                <DepartmentForm 
+                    handlePressButton={onAddDepartment} 
+                />
             </View>
         </WrapperScrollMenu>
     );
@@ -95,4 +88,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default AdminAddDepartmentForm;
+export default AdminAddGroupDepartment;

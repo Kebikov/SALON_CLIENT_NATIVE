@@ -34,6 +34,16 @@ class HttpDepartmentService {
             }
         }
 
+        async GET_getDepartmentById(id: number): Promise<IDataDepartmentAndId | null | undefined> {
+            try {
+                const {data} = await axiosInstanceWithAuth.get(`/department/get-department/${id}`);
+                if(data === null) return null;
+                return data as IDataDepartmentAndId;
+            } catch (error) {
+                console.error('Error in GET_getDepartment >>> ', error);
+            }
+        }
+
 }
 
 export default new HttpDepartmentService();
