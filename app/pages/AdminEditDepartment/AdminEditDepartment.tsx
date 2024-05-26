@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet } from 'react-native';
 import React, { FC, useEffect, useState } from 'react';
-import type { TPageAdminEditDepartment } from '@/navigation/navigation.types';
+import type { TPageAdminEditDepartment } from '@/navigation/extra.types'; 
 import WrapperMenu from '@/components/wrappers/WrappersMenu/WrappersMenu';
 import DepartmentForm from '@/components/shared/DepartmentForm/DepartmentForm';
 import httpDepartmentService from '@/api/routes/department/service/http.department.service';
@@ -16,8 +16,6 @@ const AdminEditDepartment: FC<TPageAdminEditDepartment> = ({route}) => {
     const idDepartment = route.params.idDepartment;
     const [dataDepartment, setDataDepartment] = useState<IDataDepartmentAndId | null>(null);
 
-    console.log(idDepartment);
-
     useEffect(() => {
         httpDepartmentService
             .GET_getDepartmentById(idDepartment)
@@ -28,19 +26,22 @@ const AdminEditDepartment: FC<TPageAdminEditDepartment> = ({route}) => {
             .catch(error => console.log(error));
     }, []);
 
-    if(!dataDepartment) return;
+    //if(!dataDepartment) return;
 
     return (
         <WrapperMenu page='AdminEditDepartment' titlePage='Редактирование группы'>
             <View style={styles.main} >
                 <Text>{idDepartment}</Text>
-                <DepartmentForm
-                    handlePressButton={() => {}}
-                    titleForButton='изминить данные'
-                    choiceIcon={dataDepartment.icon}
-                    initialData={{name: dataDepartment.name, discription: dataDepartment.discription}}
-                    afterReturnToPage='AdminEditDepartment'
-                />
+                {
+                    dataDepartment 
+                    ?
+                    <DepartmentForm
+                        handlePressButton={() => {}}
+                    />
+                    :
+                    null
+                }
+
             </View>
         </WrapperMenu>
     );

@@ -8,7 +8,7 @@ import { BottomSheetMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
 interface IDownBottomSheet {
     bottomSheetRef: React.RefObject<BottomSheetMethods>
     children: JSX.Element | JSX.Element[];
-    contentInScrollView: JSX.Element | JSX.Element[];
+    contentInScrollView: JSX.Element | JSX.Element[] | null;
 }
 
 

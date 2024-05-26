@@ -30,22 +30,29 @@ const AdminAddDepartment: FC= () => {
             
                 <View style={styles.main} >
                     <Discription text='Работа с группами услуг. Для обьединения услуг в определенные группы.' marginTop={10}/>
-                    <FlatList
-                        contentContainerStyle={{ padding: 10, gap: 10 }}
-                        data={dataDepartments}
-                        renderItem={({item}) => 
-                            <DepartmentCartAdmin 
-                                title={item.name} 
-                                discription={item.discription} 
-                                icon={item.icon} 
-                                handlePressFunction={() => goEditDepartment(item.id)}
-                            />
-                        }
-                        keyExtractor={item => String(item.id)}
-                        extraData={dataDepartments}
-                        ListEmptyComponent={<NotElements title='Нет групп.'/>}
-                        showsVerticalScrollIndicator={false}
-                    />
+                    {
+                        dataDepartments 
+                        ?
+                        <FlatList
+                            contentContainerStyle={{ padding: 10, gap: 10 }}
+                            data={dataDepartments}
+                            renderItem={({item}) => 
+                                <DepartmentCartAdmin 
+                                    title={item.name} 
+                                    discription={item.discription} 
+                                    icon={item.icon} 
+                                    handlePressFunction={() => goEditDepartment(item.id)}
+                                />
+                            }
+                            keyExtractor={item => String(item.id)}
+                            extraData={dataDepartments}
+                            ListEmptyComponent={<NotElements title='Нет групп.'/>}
+                            showsVerticalScrollIndicator={false}
+                        />
+                        :
+                        null
+                    }
+       
                 </View>
                 
                 <View style={styles.boxButton}>

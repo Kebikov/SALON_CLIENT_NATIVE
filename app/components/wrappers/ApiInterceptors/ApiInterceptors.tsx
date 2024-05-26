@@ -92,6 +92,7 @@ const ApiInterceptors: FC<IApiInterceptors> = ({children}) => {
             async (res: AxiosResponse) => {
                 // Скрываем спинер загрузки.
                 dispatch(setAppIsShowSpinner( {isShowSpinner: false} ));
+                
                 return res;
             },
             (error: AxiosError) => {
@@ -104,6 +105,7 @@ const ApiInterceptors: FC<IApiInterceptors> = ({children}) => {
             async (res: AxiosResponse) => {
                 // Скрываем спинер загрузки.
                 dispatch(setAppIsShowSpinner( {isShowSpinner: false} ));
+
                 return res;
             },
             (error: AxiosError) => {
