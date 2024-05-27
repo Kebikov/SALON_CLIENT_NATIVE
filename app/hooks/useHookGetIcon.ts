@@ -3,14 +3,21 @@ import httpImgService from '@/api/routes/img/service/http.img.service';
 
 /**
  * `Hook получения изображений иконок.`
- * @param arrImg Массив изображений.
  * @example const { arrImg } = useHookGetIcon();
+ * @returns `Object :`
+ * @param arrImg Массив изображений.
+ * @param active Выбранное изображение.
+ * @param setActive useState для передачи выбранного изображения.
  */
 export const useHookGetIcon = () => {
     /**
      * @param arrImg Массив изображений.
      */
     const [arrImg, setArrImg] = useState<string[]>([]);
+        /**
+     * @param active Выбраное изображение.
+     */
+    const [active, setActive] = useState<string>('');
 
     useEffect(() => {
         httpImgService.GET_files('icon-group')
@@ -23,6 +30,8 @@ export const useHookGetIcon = () => {
     },[]);
 
     return {
-        arrImg
+        arrImg,
+        active,
+        setActive
     }
 }

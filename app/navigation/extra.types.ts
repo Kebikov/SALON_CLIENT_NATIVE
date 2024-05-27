@@ -14,7 +14,5 @@ export type TPageAdminEditDepartment = {
     route: RouteProp<TypeRootPage, 'AdminEditDepartment'>
 }
 
-export type TPageSelectIcon = {
-    route: RouteProp<TypeRootPage, 'SelectIcon'>
-}
+
 

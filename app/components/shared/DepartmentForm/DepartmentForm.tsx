@@ -9,7 +9,6 @@ import ButtonWithIcon from '@/components/shared/ButtonWithIcon/ButtonWithIcon';
 import { baseLink } from '@/api/axios/axios.instance/instance';
 import DownBottomSheet from '../DownBottomSheet/DownBottomSheet';
 import BottomSheet from '@gorhom/bottom-sheet';
-import httpImgService from '@/api/routes/img/service/http.img.service';
 import ImagesIcon from '@/components/shared/ImagesIcon/ImagesIcon';
 import { useHookGetIcon } from '@/hooks/useHookGetIcon';
 import type { IDataDepartment } from '@/pages/AdminAddGroupDepartment/AdminAddGroupDepartment';
@@ -29,11 +28,8 @@ const DepartmentForm: FC<IDepartmentForm> = ({
         initialData = {name: '', discription: '', icon: ''}
     }) => {
 
-    const {arrImg} = useHookGetIcon();
-    /**
-     * @param active Выбраное изображение.
-     */
-    const [active, setActive] = useState<string>('');
+    const {arrImg, active, setActive} = useHookGetIcon();
+
     const [data, setData] = useState<IDataDepartment>({ 
         name: initialData.name, 
         discription: initialData.discription,

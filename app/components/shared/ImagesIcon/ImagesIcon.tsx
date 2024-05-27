@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Pressable, Image } from 'react-native';
+import { View, StyleSheet, Pressable, Image } from 'react-native';
 import React, { FC, useMemo } from 'react';
 import { baseLink } from '@/api/axios/axios.instance/instance';
 import { COLOR_ROOT } from '@/data/colors';

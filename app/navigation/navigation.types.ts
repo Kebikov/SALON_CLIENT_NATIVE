@@ -21,7 +21,6 @@ export type TypeRootPage = {
          */
         idDepartment: number;
     }
-    SelectIcon: undefined;
 };
 
 
