@@ -8,7 +8,7 @@ import { BottomSheetMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
 interface IDownBottomSheet {
     bottomSheetRef: React.RefObject<BottomSheetMethods>
     children: JSX.Element | JSX.Element[];
-    contentInScrollView: JSX.Element | JSX.Element[] | null;
+    contentInScrollView?: JSX.Element | JSX.Element[] | null;
 }
 
 
@@ -17,7 +17,7 @@ interface IDownBottomSheet {
  * @param bottomSheetRef Ref для BottomSheet.
  * @param contentInScrollView Компоненты внутри скрола. 
  */
-const DownBottomSheet: FC<IDownBottomSheet> = ({children, contentInScrollView, bottomSheetRef}) => {
+const DownBottomSheet: FC<IDownBottomSheet> = ({children, contentInScrollView = null, bottomSheetRef}) => {
 
     const snapPoints = useMemo(() => ['80%'], []);
     const renderBackdrop = useCallback(

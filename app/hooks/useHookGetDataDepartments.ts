@@ -18,7 +18,6 @@ export const useHookGetDataDepartments = () => {
 
     useFocusEffect(
         useCallback(() => {
-            console.log('Запрос на сервер');
             httpDepartmentService.GET_getDepartment()
             .then(res => {
                 if(!res) return;

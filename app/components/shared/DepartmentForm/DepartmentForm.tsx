@@ -1,4 +1,4 @@
-import { View, StyleSheet, Image, NativeSyntheticEvent, TextInputChangeEventData } from 'react-native';
+import { View, StyleSheet, Image, NativeSyntheticEvent, TextInputChangeEventData, Text } from 'react-native';
 import { FC, useState, useRef } from 'react';
 import QuestionHOC from '@/components/wrappers/QuestionHOC/QuestionHOC';
 import Title from '@/components/shared/Title/Title';
@@ -45,7 +45,6 @@ const DepartmentForm: FC<IDepartmentForm> = ({
     const snapeToIndex = (index: number) => bottomSheetRef.current?.snapToIndex(index);
     const handleClosePress = () => bottomSheetRef.current?.close();
 
-    if(!arrImg) return;
 
     return (
         <>
@@ -105,6 +104,7 @@ const DepartmentForm: FC<IDepartmentForm> = ({
                 pushButton={() => handlePressButton(data)}
                 marginTop={10}
             />
+
 
             <DownBottomSheet
                 bottomSheetRef={bottomSheetRef}

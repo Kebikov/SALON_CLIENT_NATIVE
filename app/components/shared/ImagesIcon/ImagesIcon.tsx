@@ -1,7 +1,8 @@
-import { View, StyleSheet, Pressable, Image } from 'react-native';
+import { View, StyleSheet, Pressable } from 'react-native';
 import React, { FC, useMemo } from 'react';
 import { baseLink } from '@/api/axios/axios.instance/instance';
 import { COLOR_ROOT } from '@/data/colors';
+import { Image as ExpoImage } from 'expo-image';
 
 
 interface IImagesIcon {
@@ -20,23 +21,20 @@ interface IImagesIcon {
 const ImagesIcon: FC<IImagesIcon> = ({active, arrImg, setActive}) => {
 
     const images = useMemo(() => arrImg.map((item: string) => {
-        // let url = '';
-        // if(active === '') {
-        //     url = `${baseLink}/api/img/get-img/${item}?type=icon-group&${new Date().getTime()}`;
-        // } else {
-        //     url = `${baseLink}/api/img/get-img/${item}?type=icon-group`;
-        // }
-
-        let url = `${baseLink}/api/img/get-img/${item}?type=icon-group`;
 
         return(
-            <Pressable 
-                style={styles.item} 
+            <Pressable
+                style={styles.item}
                 key={item} 
                 onPress={() => setActive(item)}
             >
                 <View style={[styles.boxImg, item === active ? {borderColor: 'red'} : {borderColor: COLOR_ROOT.MAIN_COLOR}]} >
-                    <Image source={{uri: url}} style={styles.img} />
+                    <ExpoImage 
+                        source={{uri: `${baseLink}/api/img/get-img/${item}?type=icon-group`}} 
+                        style={styles.img} 
+                        placeholder={'img'}
+                        transition={1000}
+                    />
                 </View>
             </Pressable>
         )
