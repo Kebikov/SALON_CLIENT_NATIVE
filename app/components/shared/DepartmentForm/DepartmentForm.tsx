@@ -13,6 +13,7 @@ import ImagesIcon from '@/components/shared/ImagesIcon/ImagesIcon';
 import { useHookGetIcon } from '@/hooks/useHookGetIcon';
 import type { IDataDepartment } from '@/pages/AdminAddGroupDepartment/AdminAddGroupDepartment';
 import type { IDepartmentForm } from './DepartmentForm.dto';
+import BottomList, { BottomListRef } from '@/components/widgets/BottomList/BottomList';
 
 
 
@@ -45,6 +46,9 @@ const DepartmentForm: FC<IDepartmentForm> = ({
     const snapeToIndex = (index: number) => bottomSheetRef.current?.snapToIndex(index);
     const handleClosePress = () => bottomSheetRef.current?.close();
 
+
+    const someRef = useRef<BottomListRef>(null);
+    const openList = () => someRef.current?.open();
 
     return (
         <>
@@ -81,7 +85,8 @@ const DepartmentForm: FC<IDepartmentForm> = ({
                 title='Выбор иконки'
                 subTitle='иконка для отображения группы'
                 img={require('@/source/img/icon/choice.png')}
-                pushFunction={() => snapeToIndex(0)}
+                // pushFunction={() => snapeToIndex(0)}
+                pushFunction={() => openList()}
                 marginTop={10}
             />
 
@@ -105,8 +110,14 @@ const DepartmentForm: FC<IDepartmentForm> = ({
                 marginTop={10}
             />
 
+            
+            <BottomList ref={someRef} heightProcent={70} >
+                <View style={styles.contentContainer}>
+                    <ImagesIcon active={active} setActive={setActive} arrImg={arrImg} />
+                </View>
+            </BottomList>
 
-            <DownBottomSheet
+            {/* <DownBottomSheet
                 bottomSheetRef={bottomSheetRef}
                 contentInScrollView={<ImagesIcon active={active} setActive={setActive} arrImg={arrImg} />}
             >
@@ -120,12 +131,17 @@ const DepartmentForm: FC<IDepartmentForm> = ({
                         img={require('@/source/img/icon/plus-white.png')}
                     />
                 </View>
-            </DownBottomSheet>
+            </DownBottomSheet> */}
         </>
     );
 };
 
 const styles = StyleSheet.create({
+    contentContainer: {
+        padding: 10,
+        flexDirection: 'row',
+        flexWrap: 'wrap'
+    },
     boxButton: {
         paddingHorizontal: 10,
         marginBottom: 5

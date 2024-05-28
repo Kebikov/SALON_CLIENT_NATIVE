@@ -14,6 +14,7 @@ import AdminAdd from '@/pages/AdminAdd/AdminAdd';
 import AdminAddDepartment from '@/pages/AdminAddDepartment/AdminAddDepartment';
 import AdminAddGroupDepartment from '@/pages/AdminAddGroupDepartment/AdminAddGroupDepartment';
 import AdminEditDepartment from '@/pages/AdminEditDepartment/AdminEditDepartment';
+import Test from '@/pages/Test/Test';
 
 
 const Stack = createNativeStackNavigator<TypeRootPage>();
@@ -43,6 +44,8 @@ const Navigatuon: FC = () => {
                 <Stack.Screen name="AdminAddDepartment" component={AdminAddDepartment} key={'AdminAddDepartment'} />
                 <Stack.Screen name="AdminAddGroupDepartment" component={AdminAddGroupDepartment} key={'AdminAddGroupDepartment'} />
                 <Stack.Screen name="AdminEditDepartment" component={AdminEditDepartment} key={'AdminEditDepartment'} />
+                {/* Test */}
+                <Stack.Screen name="Test" component={Test} key={'Test'} />
             </Stack.Navigator>
         </NavigationContainer>
     )

@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
         borderRadius: 35,
         backgroundColor: COLOR_ROOT.MAIN_COLOR,
         justifyContent: 'center',
-        alignItems: 'center',
+        alignItems: 'center'
     },
     container: {
         position: 'relative'

@@ -31,7 +31,7 @@ const AdminAdd: FC = () => {
                     title='Услуги'
                     subTitle='добавить, редактировать, удалить'
                     img={require('@/source/img/icon/hair.png')}
-                    pushFunction={() => {}}
+                    pushFunction={() => navigate('Test')}
                 />
                 <MenuItem
                     title='Команда'

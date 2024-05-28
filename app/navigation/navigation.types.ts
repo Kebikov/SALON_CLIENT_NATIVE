@@ -20,7 +20,8 @@ export type TypeRootPage = {
          * Id группы которую редактируем.
          */
         idDepartment: number;
-    }
+    };
+    Test: undefined;
 };
 
 

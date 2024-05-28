@@ -12,6 +12,7 @@ interface IWrapper {
     children: JSX.Element | JSX.Element[];
     page: keyof TypeRootPage;
     titlePage?: string;
+    scrollEnabled?: boolean;
 }
 
 
@@ -23,12 +24,13 @@ interface IWrapper {
  * - BottomMenu
  * @param page Страница на которой был использован компонент.
  * @param titlePage ? Шапка в веху страницы с заголовком.
+ * @param scrollEnabled ? Разрешена ли прокрутка.
  * @example 
  * <WrapperScroll page={#}>
         {JSX.Element}
     </WrapperScroll>
  */
-const WrapperScrollMenu: FC<IWrapper> = ({children, page, titlePage}) => {
+const WrapperScrollMenu: FC<IWrapper> = ({children, page, titlePage, scrollEnabled = true}) => {
 
     return (
         <>
@@ -46,6 +48,7 @@ const WrapperScrollMenu: FC<IWrapper> = ({children, page, titlePage}) => {
                     <ScrollView 
                         contentContainerStyle={{flexGrow: 1}} 
                         keyboardShouldPersistTaps={'handled'} 
+                        scrollEnabled={scrollEnabled}
                     >
                             {children}
                     </ScrollView>

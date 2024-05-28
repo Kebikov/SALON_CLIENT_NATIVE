@@ -1,5 +1,5 @@
 import { Text, StyleSheet, Pressable, View } from 'react-native';
-import React, { FC } from 'react';
+import React, { FC, useRef, useState } from 'react';
 import { COLOR_ROOT } from '@/data/colors';
 import WrapperScrollMenu from '@/components/wrappers/WrapperScrollMenu/WrapperScrollMenu';
 import HomeUserHeader from '@/components/widgets/HomeUserHeader/HomeUserHeader';
@@ -7,7 +7,8 @@ import ListDepartment from '@/components/widgets/ListDepartment/ListDepartment';
 import ListMasters from '@/components/widgets/ListMasters/ListMasters';
 import ListService from '@/components/widgets/ListService/ListService';
 import httpClientService from '@/api/routes/client/service/http.client.service';
-import Animated from 'react-native-reanimated';
+
+import BottomList, { BottomListRef } from '@/components/widgets/BottomList/BottomList';
 
 
 /** 
@@ -15,14 +16,11 @@ import Animated from 'react-native-reanimated';
  */
 const Home: FC = () => {
 
+    const someRef = useRef<BottomListRef>(null);
 
-    /**
-     * Получение информации о пользователе.
-     * @returns 
-     */
-    const press = async () => {
-        const user = await httpClientService.GET_getClientInfo(1);
-
+    const press = () => {
+        const user = () =>  someRef.current?.open();
+        user();
     }
 
     return (
@@ -32,7 +30,11 @@ const Home: FC = () => {
             <Pressable
                 onPress={() => press()}
             >
-                <Text style={{fontSize: 20, textAlign: 'center', backgroundColor: 'green', marginTop: 20, color: '#fff', paddingVertical: 5}} >кнопка для теста</Text>
+                <Text 
+                    style={{fontSize: 20, textAlign: 'center', backgroundColor: 'green', marginTop: 20, color: '#fff', paddingVertical: 5}} 
+                >
+                    кнопка для теста
+                </Text>
             </Pressable>
 
             <Text style={[styles.text, {marginTop: 10}]} >Service</Text>
@@ -41,6 +43,11 @@ const Home: FC = () => {
             <ListMasters/>
             <Text style={[styles.text, {marginTop: 0}]} >Популярные услуги</Text>
             <ListService/>
+
+            <BottomList ref={someRef} heightProcent={70} >
+                <Text>BottomList</Text>
+            </BottomList>
+
         </WrapperScrollMenu>
     );
 };

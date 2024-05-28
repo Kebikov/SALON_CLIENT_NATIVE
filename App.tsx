@@ -12,15 +12,15 @@ import Spinner from '@/components/shared/Spinner/Spinner';
 const App: FC = () => {
 
 	return (
-        <Provider store={store} >
-            <GestureHandlerRootView style={{flex: 1}}>
+        <GestureHandlerRootView style={{flex: 1}}>
+            <Provider store={store} >
                 <ApiInterceptors>
                     <ModalMsg/>
                     <Spinner/>
                     <Navigatuon/>
                 </ApiInterceptors>
-            </GestureHandlerRootView>
-        </Provider>
+            </Provider>
+        </GestureHandlerRootView>
 	);
 }
 
