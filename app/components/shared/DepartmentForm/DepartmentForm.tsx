@@ -85,7 +85,7 @@ const DepartmentForm: FC<IDepartmentForm> = ({
                 title='Выбор иконки'
                 subTitle='иконка для отображения группы'
                 img={require('@/source/img/icon/choice.png')}
-                // pushFunction={() => snapeToIndex(0)}
+                //pushFunction={() => snapeToIndex(0)}
                 pushFunction={() => openList()}
                 marginTop={10}
             />
@@ -111,7 +111,7 @@ const DepartmentForm: FC<IDepartmentForm> = ({
             />
 
             
-            <BottomList ref={someRef} heightProcent={70} >
+            <BottomList ref={someRef} heightProcent={50} >
                 <View style={styles.contentContainer}>
                     <ImagesIcon active={active} setActive={setActive} arrImg={arrImg} />
                 </View>
