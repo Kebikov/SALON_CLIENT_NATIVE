@@ -1,57 +1,95 @@
-import React, { useState } from 'react';
-import { StyleSheet, TextInput, View, Text } from 'react-native';
+import React, { FC } from 'react';
+import { StyleSheet, Button, View, Text, NativeSyntheticEvent, NativeScrollEvent } from 'react-native';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
-import Animated, { runOnJS, useAnimatedScrollHandler, useAnimatedStyle, useSharedValue, 
-    withDelay, withTiming, clamp, interpolate } from 'react-native-reanimated';
+import Animated, { useAnimatedStyle, useSharedValue, withTiming, useAnimatedRef } from 'react-native-reanimated';
 
 
-const Test = () => {
-    console.log('-------------------------------------------');
-    const mainSv = useSharedValue(0);
-    const previousMainSv = useSharedValue(0);
+const Test: FC = () => {
+    const mainSv = useSharedValue(1000);
     const isScrollActiveSv = useSharedValue<boolean>(false);
-    const stateScrollSv = useSharedValue<'auto' | 'none'>('none');
 
-    const scrollPanGesture = Gesture.Pan()
+    const animatedRef = useAnimatedRef<Animated.ScrollView>();
+
+    const scrollOn = () => {
+        'worklet';
+        isScrollActiveSv.value = true;
+        if(animatedRef.current) animatedRef.current.setNativeProps({screensEnabled: true});
+    }
+
+    const scrollOff = () => {
+        'worklet';
+        isScrollActiveSv.value = false;
+        if(animatedRef.current) animatedRef.current.setNativeProps({screensEnabled: false});
+    }
+
+    const scrollDefault = () => {
+        'worklet';
+        if(animatedRef.current) animatedRef.current.scrollTo({x: 0, y: 0, animated: true});
+    }
+
+    const closeModal = () => {
+        'worklet';
+        scrollOff();
+        scrollDefault();
+        mainSv.value = withTiming(1000, {duration: 800});
+    }
+
+
+    const defaultPositionModal = () => {
+        'worklet';
+        mainSv.value = withTiming(0, {duration: 300});
+    }
+
+    const panGestureScroll = Gesture.Pan()
         .onUpdate(({ translationY }) => {
-            console.log('*');
-            console.log('translationY >>> ', translationY);
-            console.log('stateScrollSv.value >>> ', stateScrollSv.value);
-            console.log('isScrollActiveSv.value >>> ', isScrollActiveSv.value);
-
-            if(translationY > 0 && !isScrollActiveSv.value) {
-                console.log('Двигаем тело !!!');
-                mainSv.value = translationY - previousMainSv.value;
+            if(translationY >= 0 && !isScrollActiveSv.value) {
+                mainSv.value = translationY;
             } 
-
-            if(translationY < 0) {
-                stateScrollSv.value = 'auto';
-                isScrollActiveSv.value = true;
+        })
+        .onEnd(({ translationY }) => {
+            if(translationY > 100 && !isScrollActiveSv.value) {
+                closeModal();
+            } else {
+                defaultPositionModal();
             }
+        });
+    
+    const panGestureSHeader = Gesture.Pan()
+        .onUpdate(({translationY}) => {
+            if(translationY >= 0) mainSv.value = translationY;
         })
-        .onEnd(() => {
-            mainSv.value = withTiming(0, {duration: 300})
-        })
+        .onEnd(({translationY}) => {
+            if(translationY > 100) {
+                closeModal();
+            } else {
+                defaultPositionModal();
+            }
+        });
+    
+    const onScroll = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
+        const contentOffset = e.nativeEvent.contentOffset.y;
+        console.log(contentOffset);
+        if(mainSv.value === 0) {
+            if(contentOffset <= 0) {
+                scrollOff();
+            } else {
+                scrollOn();
+            }
+        }
+    };
 
     const nativeGesture = Gesture.Native();
     const composedGestures = Gesture.Simultaneous(
-        scrollPanGesture,
+        panGestureScroll,
         nativeGesture,
     );
 
-    const onScroll = useAnimatedScrollHandler({
-        onScroll({ contentOffset }) {
-            console.log('contentOffset >>> ', contentOffset.y);
+    const onPress = () => {
+        'worklet';
+        defaultPositionModal();
+        scrollDefault();
+    }
 
-            if(contentOffset.y === 0) {
-                stateScrollSv.value = 'none';
-                isScrollActiveSv.value = false;
-            } else {
-                stateScrollSv.value = 'auto';
-                isScrollActiveSv.value = true;
-            }
-        }
-    });
 
     const mainAnimatedStyle = useAnimatedStyle(() => {
         return {
@@ -62,36 +100,33 @@ const Test = () => {
             ]
         }
     });
-    const scrollAnimatedStyle = useAnimatedStyle(() => {
-        return {
-            pointerEvents: stateScrollSv.value
-        }
-    });
-    const size = 88;
+
+    const textElements = Array(10).fill(null).map((_, i) => (
+        <Text style={{fontSize: 80}} key={i} >{`${i} Lorem`}</Text>
+    ));
 
     return (
         <View style={styles.main}>
-            <Animated.View style={[styles.container, mainAnimatedStyle]}>
+            <View style={styles.button}>
+                <Button title='Открыть модальное окно' color={'blue'} onPress={onPress} />
+            </View>
+            <Animated.View style={[styles.container, mainAnimatedStyle, styles.border]}>
+                <GestureDetector gesture={panGestureSHeader} >
+                    <Header/>
+                </GestureDetector>
                 <GestureDetector gesture={composedGestures}>
                     <Animated.ScrollView
                         onScroll={onScroll}
-                        bounces={false}
+                        ref={animatedRef}
+                        // Это свойство управляет тем, будет ли ScrollView иметь эффект пружины.
+                        bounces={false} 
+                        // Это свойство управляет тем, будет ли ScrollView иметь эффект пружины по вертикали.
+                        alwaysBounceVertical={false}
                         scrollEventThrottle={16}
                         showsVerticalScrollIndicator={false}
-                        style={[styles.scrollView, scrollAnimatedStyle]}
+                        style={[styles.scrollView]}
                     >
-                        <Text style={{fontSize: size}}>1 Lorem</Text>
-                        <Text style={{fontSize: size}}>2 Lorem</Text>
-                        <Text style={{fontSize: size}}>3 Lorem</Text>
-                        <Text style={{fontSize: size}}>4 Lorem</Text>
-                        <Text style={{fontSize: size}}>5 Lorem</Text>
-                        <Text style={{fontSize: size}}>6 Lorem</Text>
-                        <Text style={{fontSize: size}}>7 Lorem</Text>
-                        <Text style={{fontSize: size}}>Lorem</Text>
-                        <Text style={{fontSize: size}}>Lorem</Text>
-                        <Text style={{fontSize: size}}>Lorem</Text>
-                        <Text style={{fontSize: size}}>Lorem</Text>
-                        <Text style={{fontSize: size}}>Lorem</Text>
+                        {textElements}
                     </Animated.ScrollView>
                 </GestureDetector>
             </Animated.View>
@@ -99,15 +134,38 @@ const Test = () => {
     );
 };
 
-export default Test;
+const Header = () => {
+    return(
+        <View style={styles.header}>
+            <View style={styles.line} />
+        </View>
+    )
+}
 
 const styles = StyleSheet.create({
-    main: {
-        flex: 1,
-        flexDirection: 'row',
-        alignItems: 'flex-end'
+    main: { position: 'relative', flex: 1, flexDirection: 'row', alignItems: 'flex-end' },
+    button: { position: 'absolute', top: 50, left: 0, width: '100%', height: 50 },
+    container: { position: 'relative', width: '100%', height: '70%', overflow: 'hidden' },
+    border: { borderTopRightRadius: 25, borderTopLeftRadius: 25,},
+    scrollView: {
+        flex: 1, 
+        backgroundColor: 'green', 
+        padding: 15
     },
-    container: { width: '100%', height: '70%', backgroundColor: 'white' },
-    scrollView: { flex: 1, backgroundColor: 'white', padding: 16 },
-    textInput: { position: 'absolute', marginTop: 16, marginHorizontal: 16 },
+    header: {
+        width: '100%',
+        height: 40,
+        backgroundColor: 'red',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    line: {
+        width: 40,
+        height: 6,
+        borderRadius: 4,
+        backgroundColor: 'blue'
+    }
 });
+
+export default Test;

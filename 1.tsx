@@ -1,128 +1,139 @@
-// import React, { useState } from 'react';
-// import { StyleSheet, TextInput, View, Text } from 'react-native';
-// import { Gesture, GestureDetector } from 'react-native-gesture-handler';
-// import Animated, { runOnJS, useAnimatedScrollHandler, useAnimatedStyle, useSharedValue, 
-//     withDelay, withTiming, clamp, interpolate } from 'react-native-reanimated';
+import React, { FC, useRef } from 'react';
+import { StyleSheet, Button, View, Text, NativeSyntheticEvent, NativeScrollEvent } from 'react-native';
+import { Gesture, GestureDetector } from 'react-native-gesture-handler';
+import Animated, { useAnimatedStyle, useSharedValue, withTiming, useDerivedValue, scrollTo, useAnimatedRef } from 'react-native-reanimated';
+const size: number = 88;
+const initialStateScroll: boolean = false;
 
-// const INITIAL_POS_Y_INPUT = -50;
-// const INITIAL_POS_Y_SCROLL = 0;
-// const DELAY_RESET_POSITION = 500;
+const Test: FC = () => {
+    console.log('-----------------------------------------------');
+    const mainSv = useSharedValue(1000);
+    const isScrollActiveSv = useSharedValue<boolean>(initialStateScroll);
 
+    const animatedRef = useAnimatedRef<Animated.ScrollView>();
+    const scroll = useSharedValue<number>(0);
 
-// const Test = () => {
+    const panGesture = Gesture.Pan()
+        .onUpdate(({ translationY }) => {
+            console.log("translationY >>> ", translationY, isScrollActiveSv.value);
+            if(translationY >= 0 && !isScrollActiveSv.value) {
+                console.log('Двигаем тело...');
+                mainSv.value = translationY;
+            } 
+        })
+        .onEnd(({ translationY }) => {
+            if(translationY > 200 && !isScrollActiveSv.value) {
+                mainSv.value = withTiming(1000, {duration: 800});
+                isScrollActiveSv.value = initialStateScroll;
+            } else {
+                mainSv.value = withTiming(0, {duration: 300});
+            }
+        });
+    
+        //: вынести в отдельную функции возврат скрола в исходноо состояние e.target.setNativeProps({contentOffset: {x: 0, y: 0}});
+    const onScroll = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
+        console.log('contentOffsetScrollSv >>> ', e.nativeEvent.contentOffset.y);
+        const contentOffset = e.nativeEvent.contentOffset.y;
 
-//     const mainSv = useSharedValue(0);
-//     const isScrollActive = useSharedValue(false);
-//     const [isPanEnabled, setIsPanEnabled] = useState(true);
+        if(mainSv.value === 0) {
+            if(contentOffset <= 0) {
+                e.target.setNativeProps({screensEnabled: false});
+                isScrollActiveSv.value = false;
+            } else {
+                e.target.setNativeProps({screensEnabled: true});
+                isScrollActiveSv.value = true;
+            }
+        }
+    };
 
-//     const updatePanState = (offset: number) => {
-//         'worklet';
-//         if (offset > 0) {
-//             runOnJS(setIsPanEnabled)(false);
-//         } else if (offset === 0) {
-//             runOnJS(setIsPanEnabled)(true);
-//         }
-//     };
+    const nativeGesture = Gesture.Native();
+    const composedGestures = Gesture.Simultaneous(
+        panGesture,
+        nativeGesture,
+    );
 
-//     const scrollPanGesture = Gesture.Pan()
-//         .onUpdate(({ translationY }) => {
-            
-//             console.log('translationY >>> ', translationY);
-//             console.log('isScrollActive.value >>> ', isScrollActive.value);
+    const onPress = () => {
+        'worklet';
+        mainSv.value = withTiming(0, {duration: 300})
+    }
 
-//             if(translationY > 0 && isScrollActive.value) {
-//                 mainSv.value = translationY;
-//             } else {
-//                 isScrollActive.value = true;
-//             }
-//         })
-//         .onEnd(() => {
-//             mainSv.value = withTiming(0, {duration: 300})
-//         })
-//         //.enabled(isPanEnabled);
+    const onScrollDefault = () => {
+        'worklet';
+        console.log('onScrollDefault', isScrollActiveSv.value);
+        // scrollTo(animatedRef, 0, 50, true);
+        scroll.value = 0;
+    }
 
-//     const nativeGesture = Gesture.Native();
-//     const composedGestures = Gesture.Simultaneous(
-//         scrollPanGesture,
-//         nativeGesture,
-//     );
+    useDerivedValue(() => {
+        
+        scrollTo(
+          animatedRef,
+          0,
+          scroll.value,
+          true
+        );
+      });
 
-//     const onScroll = useAnimatedScrollHandler({
-//         onBeginDrag({ contentOffset }) {
-//             console.log('onBeginDrag');
-//             updatePanState(contentOffset.y);
-//         },
-//         onScroll({ contentOffset }) {
-//             console.log('contentOffset >>> ', contentOffset.y);
+    const mainAnimatedStyle = useAnimatedStyle(() => {
+        return {
+            transform: [
+                {
+                    translateY: mainSv.value
+                }
+            ]
+        }
+    });
 
-//             if(contentOffset.y === 0) {
-//                 isScrollActive.value = false;
-//             } else {
-//                 isScrollActive.value = true;
-//             }
+    const textElements = Array(10).fill(null).map((_, i) => (
+        <Text style={{fontSize: size}} key={i} >{`${i} Lorem`}</Text>
+    ));
 
-//             updatePanState(contentOffset.y);
-//         },
-//         onEndDrag({ contentOffset }) {
-//             console.log('onEndDrag');
-//             updatePanState(contentOffset.y);
-//         },
-//         onMomentumEnd({ contentOffset }) {
-//             console.log('onMomentumEnd');
-//             updatePanState(contentOffset.y);
-//         },
-//     });
+    return (
+        <View style={styles.main}>
+            <View style={styles.button}>
+                <Button title='Открыть модальное окно' color={'blue'} onPress={onPress} />
+            </View>
+            <View style={[styles.button, styles.buttonScroll]}>
+                <Button title='Скролл в начало' color={'green'} onPress={onScrollDefault} />
+            </View>
+            <Animated.View style={[styles.container, mainAnimatedStyle]}>
+                <GestureDetector gesture={composedGestures}>
+                    <Animated.ScrollView
+                        onScroll={onScroll}
+                        ref={animatedRef}
+                        bounces={false}
+                        scrollEventThrottle={16}
+                        showsVerticalScrollIndicator={false}
+                        style={[styles.scrollView]}
+                    >
+                        {textElements}
+                    </Animated.ScrollView>
+                </GestureDetector>
+            </Animated.View>
+        </View>
+    );
+};
 
-//     const mainAnimatedStyle = useAnimatedStyle(() => {
-//         return {
-//             transform: [
-//                 {
-//                     translateY: mainSv.value
-//                 }
-//             ]
-//         }
-//     });
-//     const size = 88;
+export default Test;
 
-//     return (
-//         <View style={styles.main}>
-//             <Animated.View style={[styles.container, mainAnimatedStyle]}>
-//                 <GestureDetector gesture={composedGestures}>
-//                     <Animated.ScrollView
-//                         onScroll={onScroll}
-//                         bounces={false}
-//                         scrollEventThrottle={16}
-//                         showsVerticalScrollIndicator={false}
-//                         style={[styles.scrollView, {pointerEvents: 'auto'}]}
-//                     >
-//                     <Text style={{fontSize: size}}>1 Lorem</Text>
-//                     <Text style={{fontSize: size}}>2 Lorem</Text>
-//                     <Text style={{fontSize: size}}>3 Lorem</Text>
-//                     <Text style={{fontSize: size}}>4 Lorem</Text>
-//                     <Text style={{fontSize: size}}>5 Lorem</Text>
-//                     <Text style={{fontSize: size}}>6 Lorem</Text>
-//                     <Text style={{fontSize: size}}>7 Lorem</Text>
-//                     <Text style={{fontSize: size}}>Lorem</Text>
-//                     <Text style={{fontSize: size}}>Lorem</Text>
-//                     <Text style={{fontSize: size}}>Lorem</Text>
-//                     <Text style={{fontSize: size}}>Lorem</Text>
-//                     <Text style={{fontSize: size}}>Lorem</Text>
-//                     </Animated.ScrollView>
-//                 </GestureDetector>
-//             </Animated.View>
-//         </View>
-//     );
-// };
-
-// export default Test;
-
-// const styles = StyleSheet.create({
-//     main: {
-//         flex: 1,
-//         flexDirection: 'row',
-//         alignItems: 'flex-end'
-//     },
-//     container: { width: '100%', height: '70%', backgroundColor: 'white' },
-//     scrollView: { flex: 1, backgroundColor: 'white', padding: 16 },
-//     textInput: { position: 'absolute', marginTop: 16, marginHorizontal: 16 },
-// });
+const styles = StyleSheet.create({
+    main: {
+        position: 'relative',
+        flex: 1,
+        flexDirection: 'row',
+        alignItems: 'flex-end'
+    },
+    button: {
+        position: 'absolute',
+        top: 50,
+        left: 0,
+        width: '100%',
+        height: 50
+    },
+    buttonScroll: {
+        top: 100,
+    },
+    container: { width: '100%', height: '70%', backgroundColor: 'white' },
+    scrollView: { flex: 1, backgroundColor: 'white', padding: 16 },
+    textInput: { position: 'absolute', marginTop: 16, marginHorizontal: 16 },
+});
