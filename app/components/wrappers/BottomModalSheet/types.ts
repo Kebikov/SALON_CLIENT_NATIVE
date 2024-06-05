@@ -11,4 +11,5 @@ export interface IBottomModalSheet {
     backgroundColorBody?: string;
     backgroundColorLine?: string;
     buttonForModal?: JSX.Element | JSX.Element[];
+    durationOpenAndClose?: number;
 }

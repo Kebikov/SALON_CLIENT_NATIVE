@@ -7,8 +7,6 @@ import { Gesture, GestureDetector, GestureHandlerRootView } from 'react-native-g
 import Animated, { useAnimatedStyle, useSharedValue, withTiming, useAnimatedRef, runOnJS } from 'react-native-reanimated';
 
 
-const durationOpenAndClose = 500;
-
 /**
  * @wrapper `Модальное окно всплываюшее с низу.`
  * @param ref Реф для получения доступа к функциям.
@@ -16,8 +14,12 @@ const durationOpenAndClose = 500;
  * @param backgroundColorHeader ? Цвет шапки.
  * @param borderRadiusHeader ? Радиус краев шапки.
  * @param backgroundColorLine ? Цвет линии в шапке.
- * @param buttonForModal ? Кнопка внизу модального окна.
+ * @param buttonForModal ? Кнопка внизу модального окна или любой другой компонент.
+ * @param durationOpenAndClose ? Скорость открытия и закрытия модального окна.
  * @example 
+ * <BottomModalSheet ref={#} >
+ *     {children}
+ * </BottomModalSheet>
  */
 const BottomModalSheet = forwardRef<IRefBottomModalSheet, IBottomModalSheet>((
     {
@@ -27,7 +29,8 @@ const BottomModalSheet = forwardRef<IRefBottomModalSheet, IBottomModalSheet>((
         borderRadiusHeader = 15,
         backgroundColorBody = 'white',
         backgroundColorLine = 'grey',
-        buttonForModal = undefined
+        buttonForModal = undefined,
+        durationOpenAndClose = 500
     }, 
     ref) => {
     /**
