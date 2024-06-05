@@ -34,14 +34,19 @@ const HeaderTitle: FC<IHeaderTitle> = ({text}) => {
 
 const styles = StyleSheet.create({
     main: {
+        position: 'relative',
         flexDirection: 'row',
+        justifyContent: 'center',
         alignItems: 'center',
         paddingVertical: 10,
         backgroundColor: COLOR_ROOT.MAIN_COLOR
     },
-    boxImg: {
-        width: 23,
-        height: 23
+    boxImg: {        
+        position: 'absolute',
+        top: '50%',
+        left: 7,
+        width: 22,
+        height: 22,
     },
     img: {
         resizeMode: 'contain',
@@ -52,8 +57,7 @@ const styles = StyleSheet.create({
     text: {
         fontSize: Platform.OS === 'ios' ? 19 : 18,
         fontWeight: '500',
-        color: 'white',
-        marginLeft: 30
+        color: 'white'
     }
 });
 

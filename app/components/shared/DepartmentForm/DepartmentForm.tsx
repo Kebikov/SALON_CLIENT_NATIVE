@@ -1,4 +1,4 @@
-import { View, StyleSheet, Image, NativeSyntheticEvent, TextInputChangeEventData, Text } from 'react-native';
+import { View, StyleSheet, Image, NativeSyntheticEvent, TextInputChangeEventData, Platform } from 'react-native';
 import { FC, useState, useRef } from 'react';
 import QuestionHOC from '@/components/wrappers/QuestionHOC/QuestionHOC';
 import Title from '@/components/shared/Title/Title';
@@ -7,13 +7,12 @@ import MenuItem from '@/components/shared/MenuItem/MenuItem';
 import { COLOR_ROOT } from '@/data/colors';
 import ButtonWithIcon from '@/components/shared/ButtonWithIcon/ButtonWithIcon';
 import { baseLink } from '@/api/axios/axios.instance/instance';
-import DownBottomSheet from '../DownBottomSheet/DownBottomSheet';
-import BottomSheet from '@gorhom/bottom-sheet';
 import ImagesIcon from '@/components/shared/ImagesIcon/ImagesIcon';
 import { useHookGetIcon } from '@/hooks/useHookGetIcon';
 import type { IDataDepartment } from '@/pages/AdminAddGroupDepartment/AdminAddGroupDepartment';
 import type { IDepartmentForm } from './DepartmentForm.dto';
-import BottomList, { BottomListRef } from '@/components/widgets/BottomList/BottomList';
+import BottomModalSheet from '@/components/wrappers/BottomModalSheet/BottomModalSheet';
+import type { IRefBottomModalSheet } from '@/components/wrappers/BottomModalSheet/types';
 
 
 
@@ -42,13 +41,10 @@ const DepartmentForm: FC<IDepartmentForm> = ({
         setData( state => ({...state, [key]: e.nativeEvent.text}) );
     }
 
-    const bottomSheetRef = useRef<BottomSheet>(null);
-    const snapeToIndex = (index: number) => bottomSheetRef.current?.snapToIndex(index);
-    const handleClosePress = () => bottomSheetRef.current?.close();
+    const bottomSheetRef = useRef<IRefBottomModalSheet>(null);
 
-
-    const someRef = useRef<BottomListRef>(null);
-    const openList = () => someRef.current?.open();
+    const openList = () => bottomSheetRef.current?.openModal();
+    const closeList = () => bottomSheetRef.current?.closeModal();
 
     return (
         <>
@@ -110,28 +106,26 @@ const DepartmentForm: FC<IDepartmentForm> = ({
                 marginTop={10}
             />
 
-            
-            <BottomList ref={someRef} heightProcent={50} >
+            <BottomModalSheet 
+                ref={bottomSheetRef} 
+                buttonForModal={
+                    <View style={styles.boxButton}>
+                        <ButtonWithIcon
+                            title={active ? 'выбрать' : 'закрыть'}
+                            pushButton={() => {
+                                setData(state => ({...state, icon: active}));
+                                closeList();
+                            }}
+                            img={require('@/source/img/icon/plus-white.png')}
+                        />
+                </View>
+                }
+            >
                 <View style={styles.contentContainer}>
                     <ImagesIcon active={active} setActive={setActive} arrImg={arrImg} />
                 </View>
-            </BottomList>
+            </BottomModalSheet>
 
-            {/* <DownBottomSheet
-                bottomSheetRef={bottomSheetRef}
-                contentInScrollView={<ImagesIcon active={active} setActive={setActive} arrImg={arrImg} />}
-            >
-                <View style={styles.boxButton}>
-                    <ButtonWithIcon
-                        title={active ? 'выбрать' : 'закрыть'}
-                        pushButton={() => {
-                            setData(state => ({...state, icon: active}));
-                            handleClosePress();
-                        }}
-                        img={require('@/source/img/icon/plus-white.png')}
-                    />
-                </View>
-            </DownBottomSheet> */}
         </>
     );
 };
@@ -144,7 +138,9 @@ const styles = StyleSheet.create({
     },
     boxButton: {
         paddingHorizontal: 10,
-        marginBottom: 5
+        paddingVertical: 10,
+        paddingBottom: Platform.OS === 'ios' ? 20 : 10,
+        backgroundColor: 'white'
     },
     item: {
         width: '25%',

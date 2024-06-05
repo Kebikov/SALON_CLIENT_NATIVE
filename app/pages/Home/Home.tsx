@@ -8,7 +8,9 @@ import ListMasters from '@/components/widgets/ListMasters/ListMasters';
 import ListService from '@/components/widgets/ListService/ListService';
 import httpClientService from '@/api/routes/client/service/http.client.service';
 
-import BottomList, { BottomListRef } from '@/components/widgets/BottomList/BottomList';
+
+import BottomModalSheet from '@/components/wrappers/BottomModalSheet/BottomModalSheet';
+import { IRefBottomModalSheet, IBottomModalSheet } from '@/components/wrappers/BottomModalSheet/types';
 
 
 /** 
@@ -16,12 +18,9 @@ import BottomList, { BottomListRef } from '@/components/widgets/BottomList/Botto
  */
 const Home: FC = () => {
 
-    const someRef = useRef<BottomListRef>(null);
+    const refModal = useRef<IRefBottomModalSheet>(null);
 
-    const press = () => {
-        const user = () =>  someRef.current?.open();
-        user();
-    }
+    const press = () => refModal.current?.openModal();
 
     return (
         <WrapperScrollMenu page='Home' >
@@ -44,9 +43,9 @@ const Home: FC = () => {
             <Text style={[styles.text, {marginTop: 0}]} >Популярные услуги</Text>
             <ListService/>
 
-            <BottomList ref={someRef} heightProcent={70} >
-                <Text>BottomList</Text>
-            </BottomList>
+            <BottomModalSheet ref={refModal}>
+                <Text style={{fontSize: 30}}>Home</Text>
+            </BottomModalSheet>
 
         </WrapperScrollMenu>
     );
