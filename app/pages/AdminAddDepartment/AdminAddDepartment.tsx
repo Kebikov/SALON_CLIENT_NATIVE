@@ -41,7 +41,6 @@ const AdminAddDepartment: FC= () => {
                                     title={item.name} 
                                     discription={item.discription} 
                                     icon={item.icon} 
-                                    handlePressFunction={() => goEditDepartment(item.id)}
                                 />
                             }
                             keyExtractor={item => String(item.id)}
