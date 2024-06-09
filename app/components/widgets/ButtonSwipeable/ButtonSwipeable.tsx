@@ -1,18 +1,24 @@
-import React, { FC, useState } from 'react';
-import { StyleSheet, View, Text, Dimensions, Image, Pressable } from 'react-native';
-import { Gesture, GestureDetector } from 'react-native-gesture-handler';
-import Animated, { useAnimatedStyle, useSharedValue, withTiming, interpolate, runOnJS } from 'react-native-reanimated';
+import { COLOR_ROOT } from '@/data/colors';
+import React, { FC, useState, useMemo } from 'react';
+import { StyleSheet, View, Text, Dimensions, Image, Pressable, NativeSyntheticEvent, NativeScrollEvent } from 'react-native';
+import { Gesture, GestureDetector, NativeGesture } from 'react-native-gesture-handler';
+import Animated, { useAnimatedStyle, useSharedValue, withTiming, interpolate, runOnJS, SharedValue } from 'react-native-reanimated';
 
 interface IButtonSwipeable {
+
     children: JSX.Element | JSX.Element[];
     totalButton: 1 | 2 | 3;
     onPressButton1: Function;
+
     onPressButton2?: Function;
     onPressButton3?: Function;
     iconForButton1?: number;
     iconForButton2?: number;
     iconForButton3?: number;
     paddingForButton?: number;
+    colorButton1?: string;
+    colorButton2?: string;
+    colorButton3?: string;
 }
 
 /**
@@ -27,6 +33,10 @@ interface IButtonSwipeable {
  * @param iconForButton2 ? Иконка кнопки #2.
  * @param iconForButton3 ? Иконка кнопки #3.
  * @param paddingForButton ? Отступ для появляюшихся кнопок.
+ * @param colorButton1 ? Цвет кнопки 1.
+ * @param colorButton2 ? Цвет кнопки 2.
+ * @param colorButton3 ? Цвет кнопки 3.
+ * @param isScrollActiveSv ? SharedValue устанавливаюшее активность внешнего скрола.
  */
 const ButtonSwipeable: FC<IButtonSwipeable> = ({ 
     children, 
@@ -34,10 +44,13 @@ const ButtonSwipeable: FC<IButtonSwipeable> = ({
     onPressButton1, 
     onPressButton2, 
     onPressButton3,
-    iconForButton1,
-    iconForButton2,
-    iconForButton3,
-    paddingForButton = 23
+    iconForButton1 = require('@/source/img/icon/add-btn.png'),
+    iconForButton2 = require('@/source/img/icon/edit-btn.png'),
+    iconForButton3 = require('@/source/img/icon/del-btn.png'),
+    paddingForButton = 23,
+    colorButton1 = COLOR_ROOT.BUTTON_COLOR_GREEN,
+    colorButton2 = COLOR_ROOT.BUTTON_COLOR_YELLOW,
+    colorButton3 = COLOR_ROOT.BUTTON_COLOR_RED,
 }) => {
     /**
      * @param isActiveButton Состояние кнопки, в открытом или закрытом состоянии находится кнопка.
@@ -119,31 +132,35 @@ const ButtonSwipeable: FC<IButtonSwipeable> = ({
         positionDownButton3Sv.value = activeWidthLeft + widthButton * 2;
     }
     /**
-     * Переместить кнопку в позицию закрытого состояния.
+     * `Переместить кнопку в позицию закрытого состояния.`
+     * @param isAnimated С анимацией или без запускать.
      */
-    const closeStateButton = () => {
+    const closeStateButton = (isAnimated: boolean = true) => {
         'worklet';
-        translateButtonSv.value = withTiming(0, {duration: 200}); 
-        positionButtonSv.value = 0;
-
-        translateDownButton1Sv.value = withTiming(0, {duration: 200});
-        positionDownButton1Sv.value = 0;
-
-        translateDownButton2Sv.value = withTiming(0, {duration: 200});
+        if(isAnimated) {
+            translateButtonSv.value = withTiming(0, {duration: 200}); 
+            translateDownButton1Sv.value = withTiming(0, {duration: 200});
+            translateDownButton2Sv.value = withTiming(0, {duration: 200});
+            translateDownButton3Sv.value = withTiming(0, {duration: 200});
+        } else {
+            translateButtonSv.value = 0; 
+            translateDownButton1Sv.value = 0;
+            translateDownButton2Sv.value = 0;
+            translateDownButton3Sv.value = 0;
+        }
         positionDownButton2Sv.value = 0;
-
-        translateDownButton3Sv.value = withTiming(0, {duration: 200});
+        positionDownButton1Sv.value = 0;
+        positionButtonSv.value = 0;
         positionDownButton3Sv.value = 0;
     }
     /**
      * Обработчик жестов.
      */
-    const panGesture = Gesture.Pan()
-        .onUpdate(({translationX}) => {
+    const panGesture = useMemo(() => Gesture.Pan()
+        .onUpdate(({translationX, translationY}) => {
             if(translationX < 0) {
                 update(translationX);
             }
-
             if(positionButtonSv.value === activeWidthLeft && translationX > 0) {
                 update(translationX);
             }
@@ -160,7 +177,7 @@ const ButtonSwipeable: FC<IButtonSwipeable> = ({
                 // Движение с лева на права >>> --- >>>
                 closeStateButton();
             }
-        });
+        }),[]);
     // animated styles
     const animatedStyleButton = useAnimatedStyle(() => {
         return {
@@ -210,9 +227,19 @@ const ButtonSwipeable: FC<IButtonSwipeable> = ({
             openStateButton(250);
         }
     }
+
+    /**
+     * Обьединение работы жестов.
+     */
+    const composedGestures = 
+    Gesture.Simultaneous(
+        panGesture
+    )
+
+
     return (
         <View style={styles.body} >
-            <GestureDetector gesture={panGesture}>
+            <GestureDetector gesture={composedGestures} >
                 <Animated.View style={[styles.button, animatedStyleButton]} >
                     <Pressable 
                         style={styles.button_press}
@@ -223,17 +250,61 @@ const ButtonSwipeable: FC<IButtonSwipeable> = ({
                 </Animated.View>
             </GestureDetector>
             <View style={[styles.down]}>
-                <Animated.View style={[styles.down_Button_1, styles.down_button_common, {width: widthButton, right: -widthButton}, animatedStyleDownButton1]} >
-                    <Pressable style={{flex: 1, padding: paddingForButton}} onPress={onPressButton1 ? () => onPressButton1() : null}>
-                        <Image source={iconForButton1 ? iconForButton1 : require('@/source/img/icon/add-btn.png')} style={styles.img}/>
+                <Animated.View 
+                    style={[
+                        styles.down_button_common, 
+                        animatedStyleDownButton1,
+                        {
+                            width: widthButton, 
+                            right: -widthButton, 
+                            backgroundColor: colorButton1
+                        }
+                    ]} 
+                >
+                    <Pressable 
+                        style={{flex: 1, padding: paddingForButton}}
+                        onPress={
+                            onPressButton1 
+                            ? 
+                            () => { 
+                                onPressButton1(); 
+                                closeStateButton(false);
+                            } 
+                            : 
+                            null
+                        }
+                    >
+                        <Image source={iconForButton1} style={styles.img}/>
                     </Pressable>
                 </Animated.View>
                 {
                     totalButton === 2 || totalButton === 3 
                     ?
-                    <Animated.View style={[styles.down_Button_2, styles.down_button_common, {width: widthButton, right: -widthButton}, animatedStyleDownButton2]} >
-                        <Pressable style={{flex: 1, padding: paddingForButton}} onPress={onPressButton2 ? () => onPressButton2() : null}>
-                            <Image source={require('@/source/img/icon/edit-btn.png')} style={styles.img}/>
+                    <Animated.View 
+                        style={[ 
+                            styles.down_button_common, 
+                            animatedStyleDownButton2,
+                            {
+                                width: widthButton, 
+                                right: -widthButton,
+                                backgroundColor: colorButton2
+                            }
+                        ]} 
+                    >
+                        <Pressable 
+                            style={{flex: 1, padding: paddingForButton}} 
+                            onPress={
+                                onPressButton2 
+                                ? 
+                                () => {
+                                    onPressButton2();
+                                    closeStateButton(false);
+                                } 
+                                : 
+                                null
+                            }
+                        >
+                            <Image source={iconForButton2} style={styles.img}/>
                         </Pressable>
                     </Animated.View>
                     :
@@ -242,9 +313,31 @@ const ButtonSwipeable: FC<IButtonSwipeable> = ({
                 {
                     totalButton === 3 
                     ?
-                    <Animated.View style={[styles.down_Button_3, styles.down_button_common, {width: widthButton, right: -widthButton}, animatedStyleDownButton3]} >
-                        <Pressable style={{flex: 1, padding: paddingForButton}} onPress={onPressButton3 ? () => onPressButton3() : null}>
-                            <Image source={require('@/source/img/icon/del-btn.png')} style={styles.img}/>
+                    <Animated.View 
+                        style={[
+                            styles.down_button_common, 
+                            animatedStyleDownButton3,
+                            {
+                                width: widthButton,
+                                right: -widthButton,
+                                backgroundColor: colorButton3
+                            }
+                        ]} 
+                    >
+                        <Pressable 
+                            style={{flex: 1, padding: paddingForButton}} 
+                            onPress={
+                                onPressButton3 
+                                ? 
+                                () => {
+                                    onPressButton3();
+                                    closeStateButton(false);
+                                }
+                                : 
+                                null
+                            }
+                        >
+                            <Image source={iconForButton3} style={styles.img}/>
                         </Pressable>
                     </Animated.View>
                     : 
@@ -256,25 +349,12 @@ const ButtonSwipeable: FC<IButtonSwipeable> = ({
 };
 
 const styles = StyleSheet.create({
-    body: { position: 'relative',  width: '100%'},
+    body: { position: 'relative',  width: '100%' },
     button: { width: '100%' },
-    down: {
-        position: 'absolute', 
-        top: 0, 
-        right: 0,
-        height: '100%',
-        backgroundColor: 'blue', 
-        flexDirection: 'row', 
-        justifyContent: 'flex-end'
-    },
-
-    down_Button_1: {backgroundColor: 'rgba( 47, 168, 138, 1)'},
-    down_Button_2: {backgroundColor: 'rgba( 243, 205, 68, 1)'},
-    down_Button_3: {backgroundColor: 'rgba( 241, 50, 43, .9)'},
-    down_button_common: {position: 'absolute', top: 0, height: '100%'},
-    button_press: {justifyContent: 'center', alignItems: 'center'},
-
-    img: {objectFit: 'contain', width: '100%', height: '100%'}
+    down: { position: 'absolute', top: 0, right: 0, height: '100%', flexDirection: 'row', justifyContent: 'flex-end' },
+    down_button_common: { position: 'absolute', top: 0, height: '100%' },
+    button_press: { justifyContent: 'center', alignItems: 'center' },
+    img: { objectFit: 'contain', width: '100%', height: '100%' }
 });
 
 export default ButtonSwipeable;

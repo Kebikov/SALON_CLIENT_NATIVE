@@ -1,5 +1,7 @@
-import { View, StyleSheet, FlatList } from 'react-native';
-import React, { FC } from 'react';
+import { COLOR_ROOT } from '@/data/colors';
+import { View, StyleSheet, Platform, NativeSyntheticEvent, NativeScrollEvent } from 'react-native';
+import { FlatList } from 'react-native-gesture-handler';
+import React, { FC, useRef } from 'react';
 import WrapperMenu from '@/components/wrappers/WrappersMenu/WrappersMenu';
 import DepartmentCartAdmin from '@/components/shared/DepartmentCartAdmin/DepartmentCartAdmin';
 import ButtonWithIcon from '@/components/shared/ButtonWithIcon/ButtonWithIcon';
@@ -8,6 +10,10 @@ import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { TypeRootPage } from '@/navigation/navigation.types';
 import NotElements from '@/components/shared/NotElements/NotElements';
 import { useHookGetDataDepartments } from '@/hooks/useHookGetDataDepartments';
+import ButtonSwipeable from '@/components/widgets/ButtonSwipeable/ButtonSwipeable';
+import Animated, { useSharedValue, useAnimatedRef } from 'react-native-reanimated';
+import { Gesture, GestureDetector } from 'react-native-gesture-handler';
+
 
 
 /**
@@ -16,6 +22,7 @@ import { useHookGetDataDepartments } from '@/hooks/useHookGetDataDepartments';
  */
 const AdminAddDepartment: FC= () => {
 
+
     const {dataDepartments} = useHookGetDataDepartments();
 
     const {navigate} = useNavigation<NavigationProp<TypeRootPage>>();
@@ -23,6 +30,12 @@ const AdminAddDepartment: FC= () => {
     const goEditDepartment = (id: number) => {
         navigate('AdminEditDepartment', {idDepartment: id});
     }
+
+    const onScroll = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
+        console.log('e.nativeEvent.contentOffset.y >>> ', e.nativeEvent.contentOffset.y);
+    }
+
+
 
     return (
         <>
@@ -34,14 +47,26 @@ const AdminAddDepartment: FC= () => {
                         dataDepartments 
                         ?
                         <FlatList
-                            contentContainerStyle={{ padding: 10, gap: 10 }}
+                            contentContainerStyle={{gap: 10, margin: Platform.OS === 'ios' ? 0 : 5}}
                             data={dataDepartments}
-                            renderItem={({item}) => 
-                                <DepartmentCartAdmin 
-                                    title={item.name} 
-                                    discription={item.discription} 
-                                    icon={item.icon} 
-                                />
+                            onScroll={onScroll}
+                            renderItem={({item}) =>  
+                                <ButtonSwipeable
+                                    totalButton={2}
+                                    paddingForButton={30}
+                                    onPressButton1={() => goEditDepartment(item.id)}
+                                    colorButton1={COLOR_ROOT.BUTTON_COLOR_YELLOW}
+                                    iconForButton1={require('@/source/img/icon/edit-btn.png')}
+
+                                    colorButton2={COLOR_ROOT.BUTTON_COLOR_RED}
+                                    iconForButton2={require('@/source/img/icon/del-btn.png')}
+                                >
+                                    <DepartmentCartAdmin 
+                                        title={item.name} 
+                                        discription={item.discription} 
+                                        icon={item.icon} 
+                                    />
+                                </ButtonSwipeable>
                             }
                             keyExtractor={item => String(item.id)}
                             extraData={dataDepartments}
@@ -51,7 +76,6 @@ const AdminAddDepartment: FC= () => {
                         :
                         null
                     }
-       
                 </View>
                 
                 <View style={styles.boxButton}>
@@ -72,7 +96,7 @@ const AdminAddDepartment: FC= () => {
 const styles = StyleSheet.create({
     main: {
         flex: 1,
-        paddingHorizontal: 10
+        paddingHorizontal: 15
     },
     boxButton: {
         paddingHorizontal: 10,

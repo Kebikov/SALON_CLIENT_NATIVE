@@ -46,12 +46,11 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         width: '100%',
-        height: 100,
         padding: 10,
         backgroundColor: 'white',
 
         shadowOffset: { width: 0, height: 3 },
-        shadowOpacity: .3,
+        shadowOpacity: Platform.OS === 'ios' ? .2 : .3,
         shadowColor: '#000',
         shadowRadius: 4,
         elevation: 3
@@ -72,12 +71,6 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '100%',
         resizeMode: 'contain'
-    },
-    boxArrow: {
-        width: 30,
-        height: 30,
-        justifyContent: 'center',
-        alignItems: 'center'
     }
 });
 

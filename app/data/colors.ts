@@ -10,6 +10,9 @@ interface IColors {
     BLACK: string;
     BACKGROUND_INPUT: string;
     MIDDLE_GRAY: string;
+    BUTTON_COLOR_RED: string;
+    BUTTON_COLOR_GREEN: string;
+    BUTTON_COLOR_YELLOW: string;
 }
 
 export const COLOR_ROOT: IColors = {
@@ -29,7 +32,12 @@ export const COLOR_ROOT: IColors = {
     GRAY: '#50555b',
     MIDDLE_GRAY: '#7f848a',
     LIGHT_ICON: '#acb3bc',
-    BLACK: '#111111'
+    BLACK: '#111111',
+    
+    BUTTON_COLOR_GREEN: 'rgba( 47, 168, 138, 1)',
+    BUTTON_COLOR_YELLOW: 'rgba( 243, 205, 68, 1)',
+    BUTTON_COLOR_RED: 'rgba( 241, 50, 43, .9)'
+
 }
 
 

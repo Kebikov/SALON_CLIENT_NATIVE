@@ -6,7 +6,6 @@ import HeaderTitle from '@/components/widgets/HeaderTitle/HeaderTitle';
 import httpDepartmentService from '@/api/routes/department/service/http.department.service';
 import { useHookCheckErrorResponce } from '@/hooks/useHookCheckErrorResponce';
 import type { TypeRootPage } from '@/navigation/navigation.types';
-import { useAppDispatch, useAppSelector } from '@/redux/store/hooks';
 import DepartmentForm from '@/components/shared/DepartmentForm/DepartmentForm';
 
 

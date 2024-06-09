@@ -13,7 +13,7 @@ const Test: FC = () => {
         <View style={styles.main}>
             <ButtonSwipeable 
                 totalButton={2}
-                paddingForButton={37}
+                paddingForButton={29}
                 onPressButton1={press}
                 iconForButton1={require('@/source/img/icon/bell-white.png')}
             >

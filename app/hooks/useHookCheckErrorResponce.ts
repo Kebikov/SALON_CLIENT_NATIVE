@@ -13,9 +13,7 @@ import { TGIError } from "@/helpers/type-guards/TGIError";
  * - `isMessage` - Проверка является ли обьектом IMessage. Вывод в модальное окно сообщения.
  */
 export const useHookCheckErrorResponce = () => {
-
     const dispatch = useAppDispatch();
-
     /**
      * `Проверка является ли обьектом IError.`
      * - Вывод в модальное окно сообщения.
