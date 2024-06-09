@@ -1,7 +1,7 @@
 import { COLOR_ROOT } from '@/data/colors';
 import { View, StyleSheet, Platform, NativeSyntheticEvent, NativeScrollEvent } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
-import React, { FC, useRef } from 'react';
+import React, { FC, useState } from 'react';
 import WrapperMenu from '@/components/wrappers/WrappersMenu/WrappersMenu';
 import DepartmentCartAdmin from '@/components/shared/DepartmentCartAdmin/DepartmentCartAdmin';
 import ButtonWithIcon from '@/components/shared/ButtonWithIcon/ButtonWithIcon';
@@ -21,8 +21,10 @@ import { Gesture, GestureDetector } from 'react-native-gesture-handler';
  * - С уже добавленными департаментами также.
  */
 const AdminAddDepartment: FC= () => {
-
-
+    /**
+     * @param isActiveFlatList Активен ли скролл внутри FlatList.
+     */
+    const [isActiveScroll, setIsActiveScroll] = useState<boolean>(true);
     const {dataDepartments} = useHookGetDataDepartments();
 
     const {navigate} = useNavigation<NavigationProp<TypeRootPage>>();

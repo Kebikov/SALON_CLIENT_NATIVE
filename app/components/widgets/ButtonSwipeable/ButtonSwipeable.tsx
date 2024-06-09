@@ -1,8 +1,11 @@
+import { useHookButtonSwipeable } from './hooks/useHookButtonSwipeable';
+import { useHookAnimatedStyle } from './hooks/useHookAnimatedStyle';
 import { COLOR_ROOT } from '@/data/colors';
 import React, { FC, useState, useMemo } from 'react';
 import { StyleSheet, View, Text, Dimensions, Image, Pressable, NativeSyntheticEvent, NativeScrollEvent } from 'react-native';
 import { Gesture, GestureDetector, NativeGesture } from 'react-native-gesture-handler';
 import Animated, { useAnimatedStyle, useSharedValue, withTiming, interpolate, runOnJS, SharedValue } from 'react-native-reanimated';
+
 
 interface IButtonSwipeable {
 
@@ -72,87 +75,23 @@ const ButtonSwipeable: FC<IButtonSwipeable> = ({
      * Отсечка смешения.
      */
     const activeWidthLeft = -activeWidth;
-    /**
-     * Смешение кнопки основной.
-     */
-    const translateButtonSv = useSharedValue<number>(0);
-    /**
-     * Последняя позиция кнопки основной.
-     */
-    const positionButtonSv = useSharedValue<number>(0);
-    /**
-     * Смешение кнопки #1.
-     */
-    const translateDownButton1Sv = useSharedValue<number>(0);
-    /**
-     * Последняя позиция кнопки #1.
-     */
-    const positionDownButton1Sv = useSharedValue<number>(0);
-    /**
-     * Смешение кнопки #2.
-     */
-    const translateDownButton2Sv = useSharedValue<number>(0);
-    /**
-     * Последняя позиция кнопки #2.
-     */
-    const positionDownButton2Sv = useSharedValue<number>(0);
-    /**
-     * Смешение кнопки #3.
-     */
-    const translateDownButton3Sv = useSharedValue<number>(0);
-    /**
-     * Последняя позиция кнопки #3.
-     */
-    const positionDownButton3Sv = useSharedValue<number>(0);
-    /**
-     * Обновление состояния смешения кнопки.
-     * @param translationX Смешение по оси Х.
-     */
-    const update = (translationX: number) => {
-        'worklet';
-        translateButtonSv.value = positionButtonSv.value + translationX;
-        translateDownButton1Sv.value = positionDownButton1Sv.value + translationX;
+    const {
+        update, 
+        openStateButton, 
+        closeStateButton,
+        positionButtonSv,
+        translateButtonSv,
+        translateDownButton1Sv,
+        translateDownButton2Sv,
+        translateDownButton3Sv
+    } = useHookButtonSwipeable(activeWidthLeft, widthButton);
+    const {
+        animatedStyleButton,
+        animatedStyleDownButton1,
+        animatedStyleDownButton2,
+        animatedStyleDownButton3
+    } = useHookAnimatedStyle(translateButtonSv, translateDownButton1Sv, translateDownButton2Sv, translateDownButton3Sv);
 
-        translateDownButton2Sv.value = positionDownButton2Sv.value + interpolate(translationX, [0, -activeWidthLeft], [0, -activeWidthLeft - widthButton]);
-        translateDownButton3Sv.value = positionDownButton3Sv.value + interpolate(translationX, [0, -activeWidthLeft], [0, -activeWidthLeft - widthButton * 2]);
-    }
-    /**
-     * Переместить кнопку в позицию открытого состояния.
-     */
-    const openStateButton = (duration: number) => {
-        'worklet';
-        translateButtonSv.value = withTiming(activeWidthLeft, {duration});
-        translateDownButton1Sv.value = withTiming(activeWidthLeft, {duration});
-        translateDownButton2Sv.value = withTiming(activeWidthLeft + widthButton, {duration});
-        translateDownButton3Sv.value = withTiming(activeWidthLeft + widthButton * 2, {duration});
-
-        positionButtonSv.value = activeWidthLeft;
-        positionDownButton1Sv.value = activeWidthLeft;
-        positionDownButton2Sv.value = activeWidthLeft + widthButton;
-        positionDownButton3Sv.value = activeWidthLeft + widthButton * 2;
-    }
-    /**
-     * `Переместить кнопку в позицию закрытого состояния.`
-     * @param isAnimated С анимацией или без запускать.
-     */
-    const closeStateButton = (isAnimated: boolean = true) => {
-        'worklet';
-        if(isAnimated) {
-            translateButtonSv.value = withTiming(0, {duration: 200}); 
-            translateDownButton1Sv.value = withTiming(0, {duration: 200});
-            translateDownButton2Sv.value = withTiming(0, {duration: 200});
-            translateDownButton3Sv.value = withTiming(0, {duration: 200});
-        } else {
-            translateButtonSv.value = 0; 
-            translateDownButton1Sv.value = 0;
-            translateDownButton2Sv.value = 0;
-            translateDownButton3Sv.value = 0;
-        }
-        positionDownButton2Sv.value = 0;
-        positionDownButton1Sv.value = 0;
-        positionButtonSv.value = 0;
-        positionDownButton3Sv.value = 0;
-    }
     /**
      * Обработчик жестов.
      */
@@ -178,43 +117,6 @@ const ButtonSwipeable: FC<IButtonSwipeable> = ({
                 closeStateButton();
             }
         }),[]);
-    // animated styles
-    const animatedStyleButton = useAnimatedStyle(() => {
-        return {
-            transform: [
-                {
-                    translateX: translateButtonSv.value
-                }
-            ]
-        }
-    });
-    const animatedStyleDownButton1 = useAnimatedStyle(() => {
-        return {
-            transform: [
-                {
-                    translateX: translateDownButton1Sv.value
-                }
-            ]
-        }
-    });
-    const animatedStyleDownButton2 = useAnimatedStyle(() => {
-        return {
-            transform: [
-                {
-                    translateX: translateDownButton2Sv.value
-                }
-            ]
-        }
-    });
-    const animatedStyleDownButton3 = useAnimatedStyle(() => {
-        return {
-            transform: [
-                {
-                    translateX: translateDownButton3Sv.value
-                }
-            ]
-        }
-    });
     /**
      * Обработка нажатия основной кнопки.
      */
@@ -251,9 +153,7 @@ const ButtonSwipeable: FC<IButtonSwipeable> = ({
             </GestureDetector>
             <View style={[styles.down]}>
                 <Animated.View 
-                    style={[
-                        styles.down_button_common, 
-                        animatedStyleDownButton1,
+                    style={[styles.down_button_common, animatedStyleDownButton1,
                         {
                             width: widthButton, 
                             right: -widthButton, 
@@ -281,9 +181,7 @@ const ButtonSwipeable: FC<IButtonSwipeable> = ({
                     totalButton === 2 || totalButton === 3 
                     ?
                     <Animated.View 
-                        style={[ 
-                            styles.down_button_common, 
-                            animatedStyleDownButton2,
+                        style={[styles.down_button_common, animatedStyleDownButton2,
                             {
                                 width: widthButton, 
                                 right: -widthButton,
@@ -314,9 +212,7 @@ const ButtonSwipeable: FC<IButtonSwipeable> = ({
                     totalButton === 3 
                     ?
                     <Animated.View 
-                        style={[
-                            styles.down_button_common, 
-                            animatedStyleDownButton3,
+                        style={[styles.down_button_common, animatedStyleDownButton3,
                             {
                                 width: widthButton,
                                 right: -widthButton,
