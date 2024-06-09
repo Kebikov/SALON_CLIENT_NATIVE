@@ -1,7 +1,7 @@
 import { COLOR_ROOT } from '@/data/colors';
-import { View, StyleSheet, Platform, NativeSyntheticEvent, NativeScrollEvent } from 'react-native';
+import { View, StyleSheet, Platform } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
-import React, { FC, useState } from 'react';
+import React, { FC } from 'react';
 import WrapperMenu from '@/components/wrappers/WrappersMenu/WrappersMenu';
 import DepartmentCartAdmin from '@/components/shared/DepartmentCartAdmin/DepartmentCartAdmin';
 import ButtonWithIcon from '@/components/shared/ButtonWithIcon/ButtonWithIcon';
@@ -11,9 +11,6 @@ import { TypeRootPage } from '@/navigation/navigation.types';
 import NotElements from '@/components/shared/NotElements/NotElements';
 import { useHookGetDataDepartments } from '@/hooks/useHookGetDataDepartments';
 import ButtonSwipeable from '@/components/widgets/ButtonSwipeable/ButtonSwipeable';
-import Animated, { useSharedValue, useAnimatedRef } from 'react-native-reanimated';
-import { Gesture, GestureDetector } from 'react-native-gesture-handler';
-
 
 
 /**
@@ -21,10 +18,6 @@ import { Gesture, GestureDetector } from 'react-native-gesture-handler';
  * - С уже добавленными департаментами также.
  */
 const AdminAddDepartment: FC= () => {
-    /**
-     * @param isActiveFlatList Активен ли скролл внутри FlatList.
-     */
-    const [isActiveScroll, setIsActiveScroll] = useState<boolean>(true);
     const {dataDepartments} = useHookGetDataDepartments();
 
     const {navigate} = useNavigation<NavigationProp<TypeRootPage>>();
@@ -32,12 +25,6 @@ const AdminAddDepartment: FC= () => {
     const goEditDepartment = (id: number) => {
         navigate('AdminEditDepartment', {idDepartment: id});
     }
-
-    const onScroll = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
-        console.log('e.nativeEvent.contentOffset.y >>> ', e.nativeEvent.contentOffset.y);
-    }
-
-
 
     return (
         <>
@@ -51,7 +38,7 @@ const AdminAddDepartment: FC= () => {
                         <FlatList
                             contentContainerStyle={{gap: 10, margin: Platform.OS === 'ios' ? 0 : 5}}
                             data={dataDepartments}
-                            onScroll={onScroll}
+                            scrollEventThrottle={16}
                             renderItem={({item}) =>  
                                 <ButtonSwipeable
                                     totalButton={2}

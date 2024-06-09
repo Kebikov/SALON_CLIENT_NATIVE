@@ -2,13 +2,12 @@ import { useHookButtonSwipeable } from './hooks/useHookButtonSwipeable';
 import { useHookAnimatedStyle } from './hooks/useHookAnimatedStyle';
 import { COLOR_ROOT } from '@/data/colors';
 import React, { FC, useState, useMemo } from 'react';
-import { StyleSheet, View, Text, Dimensions, Image, Pressable, NativeSyntheticEvent, NativeScrollEvent } from 'react-native';
-import { Gesture, GestureDetector, NativeGesture } from 'react-native-gesture-handler';
-import Animated, { useAnimatedStyle, useSharedValue, withTiming, interpolate, runOnJS, SharedValue } from 'react-native-reanimated';
+import { StyleSheet, View, Dimensions, Image, Pressable } from 'react-native';
+import { Gesture, GestureDetector } from 'react-native-gesture-handler';
+import Animated, { runOnJS } from 'react-native-reanimated';
 
 
 interface IButtonSwipeable {
-
     children: JSX.Element | JSX.Element[];
     totalButton: 1 | 2 | 3;
     onPressButton1: Function;
@@ -96,6 +95,7 @@ const ButtonSwipeable: FC<IButtonSwipeable> = ({
      * Обработчик жестов.
      */
     const panGesture = useMemo(() => Gesture.Pan()
+        .activeOffsetX([-10, 10])
         .onUpdate(({translationX, translationY}) => {
             if(translationX < 0) {
                 update(translationX);
@@ -130,18 +130,9 @@ const ButtonSwipeable: FC<IButtonSwipeable> = ({
         }
     }
 
-    /**
-     * Обьединение работы жестов.
-     */
-    const composedGestures = 
-    Gesture.Simultaneous(
-        panGesture
-    )
-
-
     return (
         <View style={styles.body} >
-            <GestureDetector gesture={composedGestures} >
+            <GestureDetector gesture={panGesture} >
                 <Animated.View style={[styles.button, animatedStyleButton]} >
                     <Pressable 
                         style={styles.button_press}
@@ -254,3 +245,4 @@ const styles = StyleSheet.create({
 });
 
 export default ButtonSwipeable;
+
