@@ -1,7 +1,7 @@
 import { useHookButtonSwipeable } from './hooks/useHookButtonSwipeable';
 import { useHookAnimatedStyle } from './hooks/useHookAnimatedStyle';
 import { COLOR_ROOT } from '@/data/colors';
-import React, { FC, useState, useMemo } from 'react';
+import React, { FC, useState, useMemo, useRef, useEffect } from 'react';
 import { StyleSheet, View, Dimensions, Image, Pressable } from 'react-native';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import Animated, { runOnJS } from 'react-native-reanimated';
@@ -83,7 +83,7 @@ const ButtonSwipeable: FC<IButtonSwipeable> = ({
         translateDownButton1Sv,
         translateDownButton2Sv,
         translateDownButton3Sv
-    } = useHookButtonSwipeable(activeWidthLeft, widthButton);
+    } = useHookButtonSwipeable(activeWidthLeft, widthButton, setIsActiveButton);
     const {
         animatedStyleButton,
         animatedStyleDownButton1,
@@ -106,7 +106,7 @@ const ButtonSwipeable: FC<IButtonSwipeable> = ({
         })
         .onEnd(({translationX}) => {
             if(translationX < 0) {
-                // Движение с права на лева <<< --- <<<
+                // Движение с права на лево <<< --- <<<
                 if(translateButtonSv.value > activeWidthLeft / 3) {
                     closeStateButton();
                 } else {
@@ -122,12 +122,11 @@ const ButtonSwipeable: FC<IButtonSwipeable> = ({
      */
     const onHandlePress = () => {
         'worklet';
-        runOnJS(setIsActiveButton)(state => !state);
-        if(isActiveButton) {
-            closeStateButton();
-        } else {
-            openStateButton(250);
-        }
+        setIsActiveButton(state => {
+            console.log('newState >>> ', state);
+            state ? closeStateButton() : openStateButton(250);
+            return !state;
+        });
     }
 
     return (
@@ -159,7 +158,7 @@ const ButtonSwipeable: FC<IButtonSwipeable> = ({
                             ? 
                             () => { 
                                 onPressButton1(); 
-                                closeStateButton(false);
+                                closeStateButton();
                             } 
                             : 
                             null
@@ -187,7 +186,7 @@ const ButtonSwipeable: FC<IButtonSwipeable> = ({
                                 ? 
                                 () => {
                                     onPressButton2();
-                                    closeStateButton(false);
+                                    closeStateButton();
                                 } 
                                 : 
                                 null
@@ -218,7 +217,7 @@ const ButtonSwipeable: FC<IButtonSwipeable> = ({
                                 ? 
                                 () => {
                                     onPressButton3();
-                                    closeStateButton(false);
+                                    closeStateButton();
                                 }
                                 : 
                                 null

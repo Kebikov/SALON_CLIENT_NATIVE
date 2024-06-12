@@ -27,5 +27,8 @@ export const styles = StyleSheet.create({
         height: 5, 
         borderRadius: 4, 
         backgroundColor: 'blue' 
+    },
+    withoutScrollBox: {
+        flex: 1
     }
 });

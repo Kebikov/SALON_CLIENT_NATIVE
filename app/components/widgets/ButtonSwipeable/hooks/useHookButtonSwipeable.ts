@@ -1,4 +1,4 @@
-import { withTiming, useSharedValue, interpolate } from "react-native-reanimated";
+import { withTiming, useSharedValue, interpolate, runOnJS } from "react-native-reanimated";
 
 /**
  * `Hook с основными функциями.`
@@ -6,7 +6,11 @@ import { withTiming, useSharedValue, interpolate } from "react-native-reanimated
  * @param widthButton Ширина одной кнопки.
  * @returns 
  */
-export const useHookButtonSwipeable = (activeWidthLeft: number, widthButton: number) => {
+export const useHookButtonSwipeable = (
+    activeWidthLeft: number, 
+    widthButton: number,
+    setIsActiveButton: React.Dispatch<React.SetStateAction<boolean>>
+) => {
     /**
      * Смешение кнопки основной.
      */
@@ -56,6 +60,7 @@ export const useHookButtonSwipeable = (activeWidthLeft: number, widthButton: num
      */
     const openStateButton = (duration: number) => {
         'worklet';
+        runOnJS(setIsActiveButton)(true);
         translateButtonSv.value = withTiming(activeWidthLeft, {duration});
         translateDownButton1Sv.value = withTiming(activeWidthLeft, {duration});
         translateDownButton2Sv.value = withTiming(activeWidthLeft + widthButton, {duration});
@@ -70,19 +75,13 @@ export const useHookButtonSwipeable = (activeWidthLeft: number, widthButton: num
      * `Переместить кнопку в позицию закрытого состояния.`
      * @param isAnimated С анимацией или без запускать.
      */
-    const closeStateButton = (isAnimated: boolean = true) => {
+    const closeStateButton = () => {
         'worklet';
-        if(isAnimated) {
-            translateButtonSv.value = withTiming(0, {duration: 200}); 
-            translateDownButton1Sv.value = withTiming(0, {duration: 200});
-            translateDownButton2Sv.value = withTiming(0, {duration: 200});
-            translateDownButton3Sv.value = withTiming(0, {duration: 200});
-        } else {
-            translateButtonSv.value = 0; 
-            translateDownButton1Sv.value = 0;
-            translateDownButton2Sv.value = 0;
-            translateDownButton3Sv.value = 0;
-        }
+        runOnJS(setIsActiveButton)(false);
+        translateButtonSv.value = withTiming(0, {duration: 200}); 
+        translateDownButton1Sv.value = withTiming(0, {duration: 200});
+        translateDownButton2Sv.value = withTiming(0, {duration: 200});
+        translateDownButton3Sv.value = withTiming(0, {duration: 200});
         positionDownButton2Sv.value = 0;
         positionDownButton1Sv.value = 0;
         positionButtonSv.value = 0;

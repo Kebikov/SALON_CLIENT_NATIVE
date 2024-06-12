@@ -12,4 +12,5 @@ export interface IBottomModalSheet {
     backgroundColorLine?: string;
     buttonForModal?: JSX.Element | JSX.Element[];
     durationOpenAndClose?: number;
+    isWithScrooll?: boolean;
 }

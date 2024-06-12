@@ -4,7 +4,6 @@ import type { IDataDepartmentAndId } from '@/api/routes/department/types/departm
 import { useFocusEffect } from '@react-navigation/native';
 
 
-
 /**
  * `Hook для получения информации о всех группах.`
  * @example 
@@ -13,11 +12,11 @@ import { useFocusEffect } from '@react-navigation/native';
  */
 export const useHookGetDataDepartments = () => {
 
-
     const [dataDepartments, setDataDepartments] = useState<IDataDepartmentAndId[]>([]);
 
     useFocusEffect(
         useCallback(() => {
+            console.log('Запрос на сервер...');
             httpDepartmentService.GET_getDepartments()
             .then(res => {
                 if(!res) return;
@@ -31,6 +30,7 @@ export const useHookGetDataDepartments = () => {
 
 
     return {
-        dataDepartments
+        dataDepartments,
+        setDataDepartments
     }
 }

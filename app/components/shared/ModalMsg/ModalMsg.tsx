@@ -22,7 +22,6 @@ export type TMessage =  'error' | 'message' | 'question';
  * @shared Модальное окно.
  */
 const ModalMsg: FC = () => {
-
     const {message, discription, modalType, modalVisible} = useAppSelector(state => state.modalSlice.modal);
     const dispatch = useAppDispatch();
 
@@ -49,14 +48,14 @@ const ModalMsg: FC = () => {
             colorForButton = 'rgba(172, 179, 188, .4)';
             break;
     }
-
+    console.log('MODAL >>> ', modalVisible, message);
     return (
             <Modal
                 animationType='fade'
                 transparent={true}
                 visible={modalVisible}
             >
-                <BlurView intensity={30} tint='dark' style={styles.main}>
+                <BlurView intensity={30} tint='dark' style={styles.main} >
                     <View style={styles.body}>
 
                         <View style={styles.header}>

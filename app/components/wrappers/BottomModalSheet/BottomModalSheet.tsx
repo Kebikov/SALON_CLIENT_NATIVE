@@ -16,6 +16,7 @@ import Animated, { useAnimatedStyle, useSharedValue, withTiming, useAnimatedRef,
  * @param backgroundColorLine ? Цвет линии в шапке.
  * @param buttonForModal ? Кнопка внизу модального окна или любой другой компонент.
  * @param durationOpenAndClose ? Скорость открытия и закрытия модального окна.
+ * @param isWithScrooll ? Компонент со скролом или без.
  * @example 
  * <BottomModalSheet ref={#} >
  *     {children}
@@ -30,7 +31,8 @@ const BottomModalSheet = forwardRef<IRefBottomModalSheet, IBottomModalSheet>((
         backgroundColorBody = 'white',
         backgroundColorLine = 'grey',
         buttonForModal = undefined,
-        durationOpenAndClose = 500
+        durationOpenAndClose = 500,
+        isWithScrooll = true
     }, 
     ref) => {
     /**
@@ -205,21 +207,30 @@ const BottomModalSheet = forwardRef<IRefBottomModalSheet, IBottomModalSheet>((
                                     <View style={[styles.line, {backgroundColor: backgroundColorLine}]} />
                                 </View>
                             </GestureDetector>
-                            <GestureDetector gesture={composedGestures}>
-                                <Animated.ScrollView
-                                    // Получение данных о работе скрола.
-                                    onScroll={onScroll}
-                                    // Переодичность в мс. обновления данных о скроле.
-                                    scrollEventThrottle={16}
-                                    ref={animatedRef}
-                                    showsVerticalScrollIndicator={false}
-                                    style={[styles.scrollView, {backgroundColor: backgroundColorBody}]}
-                                >
-                                    <View style={{padding: 10}}>
-                                        {children}
-                                    </View>
-                                </Animated.ScrollView>
-                            </GestureDetector>
+                            {
+                                isWithScrooll
+                                ?
+                                <GestureDetector gesture={composedGestures}>
+                                    <Animated.ScrollView
+                                        // Получение данных о работе скрола.
+                                        onScroll={onScroll}
+                                        // Переодичность в мс. обновления данных о скроле.
+                                        scrollEventThrottle={16}
+                                        ref={animatedRef}
+                                        showsVerticalScrollIndicator={false}
+                                        style={[styles.scrollView, {backgroundColor: backgroundColorBody}]}
+                                    >
+                                        <View style={{padding: 10}}>
+                                            {children}
+                                        </View>
+                                    </Animated.ScrollView>
+                                </GestureDetector>
+                                :
+                                <View style={[styles.withoutScrollBox, {backgroundColor: backgroundColorBody}]}>
+                                    {children}
+                                </View>
+                            }
+                            
                             {buttonForModal ? buttonForModal : null}
                         </Animated.View>
                     </View>

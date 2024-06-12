@@ -33,7 +33,7 @@ class HttpDepartmentService {
             if(data === null) return null;
             return data as IDataDepartmentAndId[];
         } catch (error) {
-            console.error('Error in GET_getDepartment >>> ', error);
+            console.error('Error in GET_getDepartments >>> ', error);
         }
     }
 
@@ -47,7 +47,7 @@ class HttpDepartmentService {
             if(data === null) return null;
             return data as IDataDepartmentAndId;
         } catch (error) {
-            console.error('Error in GET_getDepartment >>> ', error);
+            console.error('Error in getDepartmentById >>> ', error);
         }
     }
 
@@ -61,10 +61,23 @@ class HttpDepartmentService {
 
             return data as IMessage;
         } catch (error) {
-            console.error('Error in GET_getDepartment >>> ', error);
+            console.error('Error in PATCH_patchDepartment >>> ', error);
         }
     }
 
+    /**
+     * `Удаление группы.`
+     * @param id Id удаляемой группы.
+     */
+    async DELETE_deleteDepartment(id: number) {
+        try {
+            const {data} = await axiosInstanceWithAuth.delete(`/department/delete-department/${id}`);
+
+            return data as IMessage;
+        } catch (error) {
+            console.error('Error in DELETE_deleteDepartment >>> ', error);
+        }
+    }
 }
 
 export default new HttpDepartmentService();

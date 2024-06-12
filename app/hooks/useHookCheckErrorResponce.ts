@@ -81,6 +81,7 @@ export const useHookCheckErrorResponce = () => {
      * `Вывод в модальное окно текста ошибки.`
      */
     const modalMessageError = (title: string, discription: string) => {
+
         dispatch(setAppModalObject({
             message: title,
             discription: discription,

@@ -41,6 +41,7 @@ const AuthCreateAccount: FC = () => {
     }
 
     const onChangeForm = (e: NativeSyntheticEvent<TextInputChangeEventData>, key: string) => {
+        e.persist();
         setData( state => ({...state, [key]: e.nativeEvent.text}) );
     }
 
