@@ -50,13 +50,17 @@ const AdminAddDepartment: FC= () => {
     }
 
     const deleteDepartment = async () => {
-        closeModal();
+
         if(!currentDepartment?.id) return;
         const result = await httpDepartmentService.DELETE_deleteDepartment(currentDepartment.id);
         if(!result) return;
-        isMessage(result);
-        const filterData = dataDepartments.filter((item) => item.id !== currentDepartment.id);
-        setDataDepartments(filterData);
+
+        closeModal()
+        ?.then(() => {
+            isMessage(result);
+            const filterData = dataDepartments.filter((item) => item.id !== currentDepartment.id);
+            setDataDepartments(filterData);
+        })
     }
 
     return (
@@ -116,12 +120,7 @@ const AdminAddDepartment: FC= () => {
                             <Pressable style={[styles.allow_button, {backgroundColor: COLOR_ROOT.PINK}]} onPress={() => deleteDepartment()} >
                                 <Text style={styles.allow_button_text} >удалить группу</Text>
                             </Pressable>
-                            <Pressable style={[styles.allow_button, {marginTop: 10}]}  
-                                onPress={() => {
-                                    modalMessageError('sdfsf', 'sdfsdf');
-                                    closeModal();
-                                }} 
-                            >
+                            <Pressable style={[styles.allow_button, {marginTop: 10}]} onPress={() => closeModal()} >
                                 <Text style={styles.allow_button_text} >отмена</Text>
                             </Pressable>
                         </View>

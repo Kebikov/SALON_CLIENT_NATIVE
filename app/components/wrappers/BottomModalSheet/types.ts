@@ -1,6 +1,6 @@
 export interface IRefBottomModalSheet {
     openModal: () => void;
-    closeModal: () => void;
+    closeModal: () => Promise<void>;
 }
 
 export interface IBottomModalSheet {

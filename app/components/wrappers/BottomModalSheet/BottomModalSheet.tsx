@@ -87,13 +87,17 @@ const BottomModalSheet = forwardRef<IRefBottomModalSheet, IBottomModalSheet>((
      */
     const closeModal = () => {
         'worklet';
-        scrollOff();
-        scrollDefault();
-        containerSv.value = withTiming(hi, {duration: durationOpenAndClose}, () => {
-            runOnJS(setVisibleModal)(false);
+        return new Promise<void>((resolve) => {
+            scrollOff();
+            scrollDefault();
+            containerSv.value = withTiming(hi, {duration: durationOpenAndClose}, () => {
+                runOnJS(setVisibleModal)(false);
+                runOnJS(resolve)();
+            });
+            opacityColor.value = withTiming(0, {duration: durationOpenAndClose});
         });
-        opacityColor.value = withTiming(0, {duration: durationOpenAndClose});
     }
+
     /**
      * @function `openModal` - Возврат модального окна в открытое состояние.
      */
