@@ -1,1 +1,1 @@
-export type TFolder = 'icon-group' | undefined;
+export type TFolder = 'icon_icon-group' | 'img_imgService';

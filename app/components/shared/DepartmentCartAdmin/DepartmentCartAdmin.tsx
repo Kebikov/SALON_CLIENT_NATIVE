@@ -30,7 +30,7 @@ const DepartmentCartAdmin: FC<IDepartmentCartAdmin> = ({title, discription, icon
     return (
         <View style={styles.main} >
             <View style={styles.boxImg} >
-                <Image style={styles.img} source={{uri: `${baseLink}/api/img/get-img/${icon}?type=icon-group`}} />
+                <Image style={styles.img} source={{uri: `${baseLink}/api/img/get-img/${icon}?type=icon_icon-group`}} />
             </View>
             <View style={styles.boxText}>
                 <Title text={title} location='left' fontSize={16} />

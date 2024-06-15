@@ -5,7 +5,7 @@ import { baseLink } from '@/api/axios/axios.instance/instance';
 
 
 export interface IServiceCart {
-    id: string;
+    id?: string;
     /**
      * Название услуги.
      */
@@ -25,10 +25,9 @@ export interface IServiceCart {
     /**
      * Изображение услуги.
      */
-    img: number;
+    img: number | string;
 }
 
-// source={{uri: `${baseLink}/api/img/get-img/${icon}?type=icon-group`}}
 
 /**
  * @shared Мини карточка услуги.
@@ -44,8 +43,7 @@ const ServiceCart: FC<IServiceCart> = ({title, department, time, price, img}) =>
         <View style={styles.main} >
             <View style={styles.box} >
                 <View style={styles.left} >
-                    {/* <Image style={styles.img} source={typeof img === 'number' ? img : {uri: `${baseLink}/api/img/get-img/${img}?type=icon-group`}} /> */}
-                    <Image style={styles.img} source={img} />
+                    <Image style={styles.img} source={typeof img === 'number' ? img : {uri: `${baseLink}/api/img/get-img/${img}?type=img_imgService`}} />
                 </View>
                 <View style={styles.right} >
                     <Text style={styles.title} >{title}</Text>

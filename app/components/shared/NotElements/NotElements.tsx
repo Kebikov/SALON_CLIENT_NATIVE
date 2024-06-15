@@ -26,7 +26,9 @@ const NotElements: FC<INotElements> = ({title}) => {
 
 const styles = StyleSheet.create({
     main: {
-
+        width: '100%',
+        alignItems: 'center',
+        marginTop: 20
     },
     text: {
         fontSize: 16,

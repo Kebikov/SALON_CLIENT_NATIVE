@@ -91,7 +91,7 @@ const DepartmentForm: FC<IDepartmentForm> = ({
                 <View style={styles.box} >
                     <View style={styles.item} >
                         <View style={[styles.boxImg, {borderColor: COLOR_ROOT.MAIN_COLOR}]} >
-                            <Image source={{uri: `${baseLink}/api/img/get-img/${data.icon}?type=icon-group`}} style={styles.img} />
+                            <Image source={{uri: `${baseLink}/api/img/get-img/${data.icon}?type=icon_icon-group`}} style={styles.img} />
                         </View>
                     </View>
                 </View>

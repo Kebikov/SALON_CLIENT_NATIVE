@@ -41,7 +41,7 @@ const AdminAddDepartment: FC = () => {
         });
         if(!result) return;
         isMessage(result);
-        navigate('AdminAddDepartment');
+        navigate('AdminDepartment');
     };
 
     return (

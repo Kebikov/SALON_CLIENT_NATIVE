@@ -30,7 +30,7 @@ const ImagesIcon: FC<IImagesIcon> = ({active, arrImg, setActive}) => {
             >
                 <View style={[styles.boxImg, item === active ? {borderColor: 'red'} : {borderColor: COLOR_ROOT.MAIN_COLOR}]} >
                     <ExpoImage 
-                        source={{uri: `${baseLink}/api/img/get-img/${item}?type=icon-group`}} 
+                        source={{uri: `${baseLink}/api/img/get-img/${item}?type=icon_icon-group`}} 
                         style={styles.img} 
                         placeholder={'img'}
                         transition={1000}

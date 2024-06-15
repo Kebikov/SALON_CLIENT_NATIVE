@@ -20,7 +20,7 @@ export const useHookGetIcon = () => {
     const [active, setActive] = useState<string>('');
 
     useEffect(() => {
-        httpImgService.GET_files('icon-group')
+        httpImgService.GET_files('icon_icon-group')
             .then(result => {
                 if(result && result.length > 0) {
                     setArrImg(result);

@@ -54,12 +54,10 @@ const AdminDepartment: FC= () => {
         const result = await httpDepartmentService.DELETE_deleteDepartment(currentDepartment.id);
         if(!result) return;
 
-        closeModal()
-        ?.then(() => {
-            isMessage(result);
-            const filterData = dataDepartments.filter((item) => item.id !== currentDepartment.id);
-            setDataDepartments(filterData);
-        })
+        closeModal();
+        isMessage(result);
+        const filterData = dataDepartments.filter((item) => item.id !== currentDepartment.id);
+        setDataDepartments(filterData);
     }
 
     return (
@@ -71,7 +69,7 @@ const AdminDepartment: FC= () => {
                         dataDepartments 
                         ?
                         <FlatList
-                            contentContainerStyle={{gap: 10, margin: Platform.OS === 'ios' ? 0 : 5}}
+                            contentContainerStyle={{gap: 10, margin: Platform.OS === 'ios' ? 0 : 5, paddingVertical: 5}}
                             data={dataDepartments}
                             scrollEventThrottle={16}
                             renderItem={({item}) =>  
@@ -95,7 +93,7 @@ const AdminDepartment: FC= () => {
                             }
                             keyExtractor={item => String(item.id)}
                             extraData={dataDepartments}
-                            ListEmptyComponent={<NotElements title='Нет групп.'/>}
+                            ListEmptyComponent={<NotElements title='Вы не добавили ни одной группы.'/>}
                             showsVerticalScrollIndicator={false}
                         />
                         :
