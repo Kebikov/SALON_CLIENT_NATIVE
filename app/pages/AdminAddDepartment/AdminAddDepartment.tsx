@@ -1,146 +1,90 @@
-import { COLOR_ROOT } from '@/data/colors';
-import { View, StyleSheet, Platform, Text, Pressable, Modal } from 'react-native';
-import { FlatList } from 'react-native-gesture-handler';
-import React, { FC, useRef, useState, useEffect } from 'react';
-import WrapperMenu from '@/components/wrappers/WrappersMenu/WrappersMenu';
-import DepartmentCartAdmin from '@/components/shared/DepartmentCartAdmin/DepartmentCartAdmin';
-import ButtonWithIcon from '@/components/shared/ButtonWithIcon/ButtonWithIcon';
-import Discription from '@/components/shared/Discription/Discription';
+import { View, StyleSheet } from 'react-native';
+import React, { FC } from 'react';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
-import { TypeRootPage } from '@/navigation/navigation.types';
-import NotElements from '@/components/shared/NotElements/NotElements';
-import { useHookGetDataDepartments } from '@/hooks/useHookGetDataDepartments';
-import ButtonSwipeable from '@/components/widgets/ButtonSwipeable/ButtonSwipeable';
-import BottomModalSheet from '@/components/wrappers/BottomModalSheet/BottomModalSheet';
+import WrapperScrollMenu from '@/components/wrappers/WrapperScrollMenu/WrapperScrollMenu';
+import HeaderTitle from '@/components/widgets/HeaderTitle/HeaderTitle';
 import httpDepartmentService from '@/api/routes/department/service/http.department.service';
-import { IRefBottomModalSheet } from '@/components/wrappers/BottomModalSheet/types';
 import { useHookCheckErrorResponce } from '@/hooks/useHookCheckErrorResponce';
-import ModalMsg from '@/components/shared/ModalMsg/ModalMsg';
+import type { TypeRootPage } from '@/navigation/navigation.types';
+import DepartmentForm from '@/components/shared/DepartmentForm/DepartmentForm';
 
-interface IDelDepartment {
-    id: number;
+
+/** 
+ * @interface `Department - Таблица с группами.`
+ * @param name - Имя группы.
+ * @param discription - Описание группы.
+ * @param icon - Иконка группы, например: "16.png"
+ */
+export interface IDataDepartment {
     name: string;
+    discription: string;
+    icon: string;
 }
 
+
 /**
- * @page `Страница с кнопкой добавления департамента.`
- * - С уже добавленными департаментами также.
+ * @page `Страница с формой для добавления департамента(группы).`
  */
-const AdminAddDepartment: FC= () => {
-    /**
-     * @param currentDepartment Текушяя удаляемая группа.
-     */
-    const [currentDepartment, setCurrentDepartment] = useState<IDelDepartment | null>(null);
-    const {dataDepartments, setDataDepartments} = useHookGetDataDepartments();
+const AdminAddDepartment: FC = () => {
 
     const {navigate} = useNavigation<NavigationProp<TypeRootPage>>();
     const {modalMessageError, isMessage} = useHookCheckErrorResponce();
 
-    const refModalSheet = useRef<IRefBottomModalSheet>(null);
-    const openModal = () => refModalSheet.current?.openModal();
-    const closeModal = () => refModalSheet.current?.closeModal();
-
-    const goEditDepartment = (id: number) => {
-        navigate('AdminEditDepartment', {idDepartment: id});
-    }
-
-    const openModalDeleteDepartment = (id: IDelDepartment) => {
-        setCurrentDepartment(id);
-        openModal();
-    }
-
-    const deleteDepartment = async () => {
-
-        if(!currentDepartment?.id) return;
-        const result = await httpDepartmentService.DELETE_deleteDepartment(currentDepartment.id);
+    const onAddDepartment = async (data: IDataDepartment) => {
+        if(!data.name) return modalMessageError('Нет группы', 'Вы не ввели имя создаваемой группы.');
+        if(!data.discription) return modalMessageError('Нет описания', 'Вы не ввели описание для создаваемой группы.'); 
+        if(!data.icon) return modalMessageError('Нет иконки', 'Вы не выбрали иконку для создаваемой группы.');
+        const result = await httpDepartmentService.POST_createDepartment({
+            name: data.name,
+            discription: data.discription,
+            icon: data.icon
+        });
         if(!result) return;
-
-        closeModal()
-        ?.then(() => {
-            isMessage(result);
-            const filterData = dataDepartments.filter((item) => item.id !== currentDepartment.id);
-            setDataDepartments(filterData);
-        })
-    }
+        isMessage(result);
+        navigate('AdminAddDepartment');
+    };
 
     return (
-        <>
-            <WrapperMenu page='AdminAddDepartment' titlePage='Группы услуг' >
-                <View style={styles.main} >
-                    <Discription text='Работа с группами услуг. Для обьединения услуг в определенные группы.' marginTop={10}/>
-                    {
-                        dataDepartments 
-                        ?
-                        <FlatList
-                            contentContainerStyle={{gap: 10, margin: Platform.OS === 'ios' ? 0 : 5}}
-                            data={dataDepartments}
-                            scrollEventThrottle={16}
-                            renderItem={({item}) =>  
-                                <ButtonSwipeable
-                                    totalButton={2}
-                                    paddingForButton={30}
-                                    onPressButton1={() => goEditDepartment(item.id)}
-                                    colorButton1={COLOR_ROOT.BUTTON_COLOR_YELLOW}
-                                    iconForButton1={require('@/source/img/icon/edit-btn.png')}
-
-                                    onPressButton2={() => openModalDeleteDepartment({id: item.id, name: item.name})}
-                                    colorButton2={COLOR_ROOT.BUTTON_COLOR_RED}
-                                    iconForButton2={require('@/source/img/icon/del-btn.png')}
-                                >
-                                    <DepartmentCartAdmin 
-                                        title={item.name} 
-                                        discription={item.discription} 
-                                        icon={item.icon} 
-                                    />
-                                </ButtonSwipeable>
-                            }
-                            keyExtractor={item => String(item.id)}
-                            extraData={dataDepartments}
-                            ListEmptyComponent={<NotElements title='Нет групп.'/>}
-                            showsVerticalScrollIndicator={false}
-                        />
-                        :
-                        null
-                    }
-                </View>
-                
-                <View style={styles.boxButton}>
-                    <ButtonWithIcon 
-                        title='добавить группу' 
-                        pushButton={() => navigate('AdminAddGroupDepartment')} 
-                        img={require('@/source/img/icon/plus-white.png')} 
-                        marginTop={10} 
-                    />
-                </View>
-                <BottomModalSheet ref={refModalSheet} heightProcent={40} isWithScrooll={false} backgroundColorBody={COLOR_ROOT.MAIN_COLOR} >
-                    <View style={styles.allowBody}>
-                        <Text style={styles.allowTitle}>Вы хотите удалить группу ?</Text>
-                        <Text style={styles.allowSubTitle}>Вы удаляете группу {currentDepartment?.name}, все услуги добавленые в данную группу, а также сотрудники будут без группы.</Text>
-                        <View style={styles.allow_button_group}>
-                            <Pressable style={[styles.allow_button, {backgroundColor: COLOR_ROOT.PINK}]} onPress={() => deleteDepartment()} >
-                                <Text style={styles.allow_button_text} >удалить группу</Text>
-                            </Pressable>
-                            <Pressable style={[styles.allow_button, {marginTop: 10}]} onPress={() => closeModal()} >
-                                <Text style={styles.allow_button_text} >отмена</Text>
-                            </Pressable>
-                        </View>
-                    </View>
-                </BottomModalSheet>
-            </WrapperMenu> 
-        </>
+        <WrapperScrollMenu page='AdminAddDepartment' >
+            <HeaderTitle text='Добавление группы' />
+            <View style={styles.main} >
+                <DepartmentForm 
+                    handlePressButton={onAddDepartment} 
+                />
+            </View>
+        </WrapperScrollMenu>
     );
 };
 
-
 const styles = StyleSheet.create({
-    main: { flex: 1, paddingHorizontal: 15 },
-    boxButton: { paddingHorizontal: 10, marginBottom: 5 },
-    allowBody: { flex: 1, justifyContent: 'center', alignItems: 'center', padding: 10 },
-    allowTitle: { fontSize: 18, fontWeight: '500', color: 'white'},
-    allowSubTitle: { fontSize: 14, fontWeight: '400', color: COLOR_ROOT.BACKGROUND_INPUT, marginTop: 10, textAlign: 'center' },
-    allow_button_group: { alignItems: 'center', marginTop: 20 },
-    allow_button: { paddingHorizontal: 40, paddingVertical: 10, borderRadius: 18 },
-    allow_button_text: {color: 'white', fontSize: 16, fontWeight: '500'}
+    main: {
+        flex: 1,
+        paddingHorizontal: 10
+    },
+    item: {
+        width: '25%',
+        height: '100%',
+        aspectRatio: 1 / 1,
+        padding: 7
+    },
+    box: {
+        flexDirection: 'row',
+        justifyContent: 'center'
+    },
+    boxImg: {
+        flex: 1,
+        padding: 18,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 50,
+        borderWidth: 2
+    },
+    img: {
+        resizeMode: 'contain',
+        width: '100%',
+        height: '100%'
+    },
 });
 
 export default AdminAddDepartment;

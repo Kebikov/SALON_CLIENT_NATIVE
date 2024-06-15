@@ -9,7 +9,7 @@ import ButtonWithIcon from '@/components/shared/ButtonWithIcon/ButtonWithIcon';
 import { baseLink } from '@/api/axios/axios.instance/instance';
 import ImagesIcon from '@/components/shared/ImagesIcon/ImagesIcon';
 import { useHookGetIcon } from '@/hooks/useHookGetIcon';
-import type { IDataDepartment } from '@/pages/AdminAddGroupDepartment/AdminAddGroupDepartment';
+import type { IDataDepartment } from '@/pages/AdminAddDepartment/AdminAddDepartment';
 import type { IDepartmentForm } from './DepartmentForm.dto';
 import BottomModalSheet from '@/components/wrappers/BottomModalSheet/BottomModalSheet';
 import type { IRefBottomModalSheet } from '@/components/wrappers/BottomModalSheet/types';

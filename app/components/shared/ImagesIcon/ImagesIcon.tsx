@@ -34,6 +34,7 @@ const ImagesIcon: FC<IImagesIcon> = ({active, arrImg, setActive}) => {
                         style={styles.img} 
                         placeholder={'img'}
                         transition={1000}
+                        contentFit='contain'
                     />
                 </View>
             </Pressable>
@@ -60,7 +61,6 @@ const styles = StyleSheet.create({
         borderWidth: 2
     },
     img: {
-        resizeMode: 'contain',
         width: '100%',
         height: '100%'
     },

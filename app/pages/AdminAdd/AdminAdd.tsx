@@ -25,13 +25,13 @@ const AdminAdd: FC = () => {
                     title='Группы услуг'
                     subTitle='добавить, редактировать, удалить'
                     img={require('@/source/img/icon/group.png')}
-                    pushFunction={() => navigate('AdminAddDepartment')}
+                    pushFunction={() => navigate('AdminDepartment')}
                 />
                 <MenuItem
                     title='Услуги'
                     subTitle='добавить, редактировать, удалить'
                     img={require('@/source/img/icon/hair.png')}
-                    pushFunction={() => navigate('Test')}
+                    pushFunction={() => navigate('AdminService')}
                 />
                 <MenuItem
                     title='Команда'

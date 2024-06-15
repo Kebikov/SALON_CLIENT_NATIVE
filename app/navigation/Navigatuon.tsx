@@ -11,9 +11,10 @@ import AuthEnter from '@/pages/AuthEnter/AuthEnter';
 import AuthForgot from '@/pages/AuthForgot/AuthForgot';
 import ChangePassword from '@/pages/ChangePassword/ChangePassword';
 import AdminAdd from '@/pages/AdminAdd/AdminAdd';
+import AdminDepartment from '@/pages/AdminDepartment/AdminDepartment';
 import AdminAddDepartment from '@/pages/AdminAddDepartment/AdminAddDepartment';
-import AdminAddGroupDepartment from '@/pages/AdminAddGroupDepartment/AdminAddGroupDepartment';
 import AdminEditDepartment from '@/pages/AdminEditDepartment/AdminEditDepartment';
+import AdminService from '@/pages/AdminService/AdminService';
 import Test from '@/pages/Test/Test';
 
 
@@ -41,9 +42,10 @@ const Navigatuon: FC = () => {
                 <Stack.Screen name="ChangePassword" component={ChangePassword} key={'ChangePassword'} />
                 {/* Admin */}
                 <Stack.Screen name="AdminAdd" component={AdminAdd} key={'AdminAdd'} />
+                <Stack.Screen name="AdminDepartment" component={AdminDepartment} key={'AdminDepartment'} />
                 <Stack.Screen name="AdminAddDepartment" component={AdminAddDepartment} key={'AdminAddDepartment'} />
-                <Stack.Screen name="AdminAddGroupDepartment" component={AdminAddGroupDepartment} key={'AdminAddGroupDepartment'} />
                 <Stack.Screen name="AdminEditDepartment" component={AdminEditDepartment} key={'AdminEditDepartment'} />
+                <Stack.Screen name="AdminService" component={AdminService} key={'AdminService'} />
                 {/* Test */}
                 <Stack.Screen name="Test" component={Test} key={'Test'} />
             </Stack.Navigator>

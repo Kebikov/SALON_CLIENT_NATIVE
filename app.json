@@ -9,7 +9,8 @@
     "scheme": "com.kebikov.salonbeauty",
     "splash": {
       "image": "./assets/splash.png",
-      "resizeMode": "contain",
+      //"resizeMode": "contain",
+      "contentFit": "contain",
       "backgroundColor": "#006678"
     },
     "assetBundlePatterns": [

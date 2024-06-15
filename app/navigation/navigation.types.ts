@@ -13,14 +13,15 @@ export type TypeRootPage = {
     ChangePassword: undefined;
     //Admin
     AdminAdd: undefined;
+    AdminDepartment: undefined;
     AdminAddDepartment: undefined;
-    AdminAddGroupDepartment: undefined;
     AdminEditDepartment: {
         /**
          * Id группы которую редактируем.
          */
         idDepartment: number;
     };
+    AdminService: undefined;
     Test: undefined;
 };
 

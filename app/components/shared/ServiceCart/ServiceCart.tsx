@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet, Image, Platform } from 'react-native';
 import React, { FC } from 'react';
 import { COLOR_ROOT } from '@/data/colors';
+import { baseLink } from '@/api/axios/axios.instance/instance';
 
 
 export interface IServiceCart {
@@ -27,6 +28,7 @@ export interface IServiceCart {
     img: number;
 }
 
+// source={{uri: `${baseLink}/api/img/get-img/${icon}?type=icon-group`}}
 
 /**
  * @shared Мини карточка услуги.
@@ -42,6 +44,7 @@ const ServiceCart: FC<IServiceCart> = ({title, department, time, price, img}) =>
         <View style={styles.main} >
             <View style={styles.box} >
                 <View style={styles.left} >
+                    {/* <Image style={styles.img} source={typeof img === 'number' ? img : {uri: `${baseLink}/api/img/get-img/${img}?type=icon-group`}} /> */}
                     <Image style={styles.img} source={img} />
                 </View>
                 <View style={styles.right} >
