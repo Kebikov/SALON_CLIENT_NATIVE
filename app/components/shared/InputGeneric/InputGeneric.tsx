@@ -1,19 +1,18 @@
 import { View, Text, StyleSheet, TextInput, Image, NativeSyntheticEvent, TextInputChangeEventData, Platform } from 'react-native';
 import React, { FC } from 'react';
-import { TKeyStateCreateAccount } from '@/pages/AuthCreateAccount/AuthCreateAccount';
 import { COLOR_ROOT } from '@/data/colors';
 
 
 
-interface IInputGeneric {
+interface IInputGeneric<T> {
     /**
      * Функция изминения состояния у формы.
      * @param text Передаваемый текст с поля ввода.
      * @param key Ключ в обьекте состояния формы.
      */
-    onChangeForm: (text: NativeSyntheticEvent<TextInputChangeEventData>, keyName: string) => void;
+    onChangeForm: (text: NativeSyntheticEvent<TextInputChangeEventData>, keyName: T) => void;
     placeholder: string;
-    keyName: string;
+    keyName: T;
     img: number;
     value?: string;
     lines?: number;
@@ -33,7 +32,7 @@ interface IInputGeneric {
  * @param keyboardType ? Тип клавиатуры для ввода.
  * @example <InputGeneric onChangeForm={#} placeholder={#} key={#} img={#} />
  */
-const InputGeneric: FC<IInputGeneric> = ({
+const InputGeneric = <T,>({
     onChangeForm, 
     placeholder, 
     keyName, 
@@ -41,7 +40,7 @@ const InputGeneric: FC<IInputGeneric> = ({
     value = undefined, 
     lines = 1,
     keyboardType = 'default'
-}) => {
+}: IInputGeneric<keyof T>) => {
     return (
         <View style={[stylesGeneric.boxInput, stylesGeneric.shadowTop]} >
             <TextInput 
@@ -108,3 +107,24 @@ export const stylesGeneric = StyleSheet.create({
 });
 
 export default InputGeneric;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
