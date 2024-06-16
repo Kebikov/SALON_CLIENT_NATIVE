@@ -10,29 +10,14 @@ interface IInputGeneric {
      * Функция изминения состояния у формы.
      * @param text Передаваемый текст с поля ввода.
      * @param key Ключ в обьекте состояния формы.
-     * @returns void
      */
     onChangeForm: (text: NativeSyntheticEvent<TextInputChangeEventData>, keyName: string) => void;
-    /**
-     * Плейсхолдер.
-     */
     placeholder: string;
-    /**
-     * Ключ в обьекте состояния формы.
-     */
     keyName: string;
-    /**
-     * Изображение иконки в поле ввода.
-     */
     img: number;
-    /**
-     * Значение поля.
-     */
     value?: string;
-    /**
-     * Количество линий в input.
-     */
     lines?: number;
+    keyboardType?: 'default' | 'numeric';
 }
 
 
@@ -45,9 +30,18 @@ interface IInputGeneric {
  * @param img Изображение иконки в поле ввода.
  * @param value ? Значение поля.
  * @param lines ? Количество линий в input.
+ * @param keyboardType ? Тип клавиатуры для ввода.
  * @example <InputGeneric onChangeForm={#} placeholder={#} key={#} img={#} />
  */
-const InputGeneric: FC<IInputGeneric> = ({onChangeForm, placeholder, keyName, img, value = undefined, lines = 1}) => {
+const InputGeneric: FC<IInputGeneric> = ({
+    onChangeForm, 
+    placeholder, 
+    keyName, 
+    img, 
+    value = undefined, 
+    lines = 1,
+    keyboardType = 'default'
+}) => {
     return (
         <View style={[stylesGeneric.boxInput, stylesGeneric.shadowTop]} >
             <TextInput 
@@ -58,6 +52,7 @@ const InputGeneric: FC<IInputGeneric> = ({onChangeForm, placeholder, keyName, im
                 placeholderTextColor={COLOR_ROOT.LIGHT_ICON}
                 onChange={text => onChangeForm(text, keyName)} 
                 value={value}
+                keyboardType={keyboardType}
             />
             <Image style={stylesGeneric.icon} source={img} />
         </View>
@@ -88,7 +83,7 @@ export const stylesGeneric = StyleSheet.create({
     },
     boxInput: {
         position: 'relative',
-        marginTop: 15,
+        marginTop: 10,
         width: '100%',
         borderRadius: 30
     },

@@ -11,7 +11,7 @@ export interface IService {
     title: string;
     description: string;
     price: number;
-    time: string;
+    time: number;
     img: string;
     id_department?: number;
 }
