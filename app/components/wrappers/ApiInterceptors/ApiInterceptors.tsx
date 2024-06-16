@@ -44,9 +44,10 @@ const ApiInterceptors: FC<IApiInterceptors> = ({children}) => {
 
     useEffect(() => {
         
-        //* Перехват запроса без регистрации.
+        //* Request без регистрации.
         const interceptorRequest = axiosInstance.interceptors.request.use(
             async (req) => {
+                console.log('Request without Auth...');
                 // Показываем спинер загрузки.
                 dispatch(setAppIsShowSpinner( {isShowSpinner: true} ));
                 return req;
@@ -56,9 +57,10 @@ const ApiInterceptors: FC<IApiInterceptors> = ({children}) => {
             }
         );
 
-        //* Перехват запроса с регистрацией для обновления и добавления токенов.
+        //* Request с регистрацией для обновления и добавления токенов.
         const interceptorRequestWithAuth = axiosInstanceWithAuth.interceptors.request.use(
             async (req) => {
+                console.log('Request with Auth...');
                 // Показываем спинер загрузки.
                 dispatch(setAppIsShowSpinner( {isShowSpinner: true} ));
                 const userJson = await AsyncStorage.getItem('@user');
@@ -87,9 +89,10 @@ const ApiInterceptors: FC<IApiInterceptors> = ({children}) => {
             }
         );
 
-        //* Перехват ответа без регистрации.
+        //* Response без регистрации.
         const interceptorResponse = axiosInstance.interceptors.response.use(
             async (res: AxiosResponse) => {
+                console.log('Response without Auth................................');
                 // Скрываем спинер загрузки.
                 dispatch(setAppIsShowSpinner( {isShowSpinner: false} ));
                 
@@ -100,9 +103,10 @@ const ApiInterceptors: FC<IApiInterceptors> = ({children}) => {
             }
         );
 
-        //* Перехват ответа c регистрацией.
+        //* Response c регистрацией.
         const interceptorResponseWithAuth = axiosInstanceWithAuth.interceptors.response.use(
             async (res: AxiosResponse) => {
+                console.log('Response with Auth.................................');
                 // Скрываем спинер загрузки.
                 dispatch(setAppIsShowSpinner( {isShowSpinner: false} ));
 

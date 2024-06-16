@@ -45,8 +45,7 @@ const AdminAddDepartment: FC = () => {
     };
 
     return (
-        <WrapperScrollMenu page='AdminAddDepartment' >
-            <HeaderTitle text='Добавление группы' />
+        <WrapperScrollMenu page='AdminAddDepartment' titlePage='Добавление группы'>
             <View style={styles.main} >
                 <DepartmentForm 
                     handlePressButton={onAddDepartment} 
@@ -57,10 +56,7 @@ const AdminAddDepartment: FC = () => {
 };
 
 const styles = StyleSheet.create({
-    main: {
-        flex: 1,
-        paddingHorizontal: 10
-    },
+    main: {flex: 1, paddingHorizontal: 10},
     item: {
         width: '25%',
         height: '100%',

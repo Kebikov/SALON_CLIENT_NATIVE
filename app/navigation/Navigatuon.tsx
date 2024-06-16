@@ -15,6 +15,7 @@ import AdminDepartment from '@/pages/AdminDepartment/AdminDepartment';
 import AdminAddDepartment from '@/pages/AdminAddDepartment/AdminAddDepartment';
 import AdminEditDepartment from '@/pages/AdminEditDepartment/AdminEditDepartment';
 import AdminService from '@/pages/AdminService/AdminService';
+import AdminAddService from '../pages/AdminAddService/AdminAddService';
 import Test from '@/pages/Test/Test';
 
 
@@ -46,6 +47,7 @@ const Navigatuon: FC = () => {
                 <Stack.Screen name="AdminAddDepartment" component={AdminAddDepartment} key={'AdminAddDepartment'} />
                 <Stack.Screen name="AdminEditDepartment" component={AdminEditDepartment} key={'AdminEditDepartment'} />
                 <Stack.Screen name="AdminService" component={AdminService} key={'AdminService'} />
+                <Stack.Screen name="AdminAddService" component={AdminAddService} key={'AdminAddService'} />
                 {/* Test */}
                 <Stack.Screen name="Test" component={Test} key={'Test'} />
             </Stack.Navigator>

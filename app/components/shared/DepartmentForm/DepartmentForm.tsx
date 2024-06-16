@@ -122,7 +122,13 @@ const DepartmentForm: FC<IDepartmentForm> = ({
                 }
             >
                 <View style={styles.contentContainer}>
-                    <ImagesIcon active={active} setActive={setActive} arrImg={arrImg} />
+                    {
+                        arrImg.length > 0
+                        ?
+                        <ImagesIcon active={active} setActive={setActive} arrImg={arrImg} />
+                        : 
+                        null
+                    }
                 </View>
             </BottomModalSheet>
 

@@ -3,6 +3,7 @@ import React, { FC } from 'react';
 import WrapperMenu from '@/components/wrappers/WrappersMenu/WrappersMenu';
 import ServiceCart from '@/components/shared/ServiceCart/ServiceCart';
 import ButtonWithIcon from '../../components/shared/ButtonWithIcon/ButtonWithIcon';
+import useHookNavigate from '../../hooks/useHookNavigate';
 
 /**
  * @page `Страница с услугами и кнопкой добавления услуги.`
@@ -10,6 +11,9 @@ import ButtonWithIcon from '../../components/shared/ButtonWithIcon/ButtonWithIco
  * @returns {JSX.Element}
  */
 const AdminService: FC = () => {
+
+    const {navigate} = useHookNavigate();
+
 
     return (
         <WrapperMenu titlePage='Услуги' page='AdminService' >
@@ -19,7 +23,7 @@ const AdminService: FC = () => {
             <View style={styles.boxButton}>
                 <ButtonWithIcon 
                     title='добавить услугу' 
-                    pushButton={() => {}} 
+                    pushButton={() => navigate('AdminAddService')} 
                     img={require('@/source/img/icon/plus-white.png')} 
                     marginTop={10} 
                 />

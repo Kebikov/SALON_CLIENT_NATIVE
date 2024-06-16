@@ -36,7 +36,7 @@ const initialState: IModalSlice = {
         modalVisible: false,
         message: '',
         discription: '',
-        modalType: 'error'
+        modalType: null
     },
     spiner: {
         isShowSpinner: false
@@ -55,7 +55,7 @@ const modalSlice = createSlice({
          */
         setAppModalObject: (state, action: PayloadAction<IModalObject | 'close'>) => {
             if(action.payload === 'close') {
-                state.modal = {modalVisible: false, message: '', discription: '', modalType: 'error'};
+                state.modal = {modalVisible: false, message: '', discription: '', modalType: null};
             } else {
                 state.modal = action.payload;
             }

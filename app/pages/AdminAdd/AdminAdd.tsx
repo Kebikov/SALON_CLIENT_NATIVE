@@ -1,12 +1,9 @@
-import { View, Text, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import React, { FC } from 'react';
 import WrapperScrollMenu from '@/components/wrappers/WrapperScrollMenu/WrapperScrollMenu';
 import MenuItem from '@/components/shared/MenuItem/MenuItem';
-import { COLOR_ROOT } from '@/data/colors';
-import { useNavigation, NavigationProp } from '@react-navigation/native';
-import type { TypeRootPage } from '@/navigation/navigation.types';
-import Discription from '@/components/shared/Discription/Discription';
 import Title from '@/components/shared/Title/Title';
+import useHookNavigate from '../../hooks/useHookNavigate';
 
 
 /**
@@ -15,7 +12,7 @@ import Title from '@/components/shared/Title/Title';
  */
 const AdminAdd: FC = () => {
 
-    const {navigate} = useNavigation<NavigationProp<TypeRootPage>>();
+    const {navigate} = useHookNavigate();
 
     return (
         <WrapperScrollMenu page='AdminAdd' >

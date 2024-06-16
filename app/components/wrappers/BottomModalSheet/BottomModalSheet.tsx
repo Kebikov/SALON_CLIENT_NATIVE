@@ -90,10 +90,9 @@ const BottomModalSheet = forwardRef<IRefBottomModalSheet, IBottomModalSheet>((
         scrollOff();
         scrollDefault();
         containerSv.value = withTiming(hi, {duration: durationOpenAndClose}, () => {
-            console.log('START Resolve');
             runOnJS(setVisibleModal)(false);
         });
-        opacityColor.value = withTiming(0, {duration: durationOpenAndClose}, () => {console.log('opacity OK')});
+        opacityColor.value = withTiming(0, {duration: durationOpenAndClose}, () => {});
     }
     /**
      * @function `openModal` - Возврат модального окна в открытое состояние.
@@ -129,7 +128,6 @@ const BottomModalSheet = forwardRef<IRefBottomModalSheet, IBottomModalSheet>((
         })
         .onEnd(({translationY}) => {
             if(translationY > 100) {
-                console.log('close 1');
                 closeModal();
             } else {
                 containerSv.value = withTiming(0, {duration: 300});

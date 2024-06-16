@@ -22,6 +22,7 @@ export type TypeRootPage = {
         idDepartment: number;
     };
     AdminService: undefined;
+    AdminAddService: undefined;
     Test: undefined;
 };
 

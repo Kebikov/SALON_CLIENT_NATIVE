@@ -1,5 +1,5 @@
 import { IgetInfoBasic } from "../types/client.types";
-import { axiosInstance, axiosInstanceWithAuth } from "@/api/axios/axios.instance/instance";
+import { axiosInstanceWithAuth } from "@/api/axios/axios.instance/instance";
 
 
 

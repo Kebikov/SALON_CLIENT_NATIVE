@@ -1,5 +1,5 @@
 import { COLOR_ROOT } from '@/data/colors';
-import { View, StyleSheet, Platform, Text, Pressable, Modal } from 'react-native';
+import { View, StyleSheet, Platform, Text, Pressable, ActivityIndicator } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import React, { FC, useRef, useState, useEffect } from 'react';
 import WrapperMenu from '@/components/wrappers/WrappersMenu/WrappersMenu';
@@ -15,12 +15,13 @@ import BottomModalSheet from '@/components/wrappers/BottomModalSheet/BottomModal
 import httpDepartmentService from '@/api/routes/department/service/http.department.service';
 import { IRefBottomModalSheet } from '@/components/wrappers/BottomModalSheet/types';
 import { useHookCheckErrorResponce } from '@/hooks/useHookCheckErrorResponce';
-import ModalMsg from '@/components/shared/ModalMsg/ModalMsg';
+
 
 interface IDelDepartment {
     id: number;
     name: string;
 }
+
 
 /**
  * @page `Страница с группами и кнопкой добавления группы.`
@@ -66,7 +67,7 @@ const AdminDepartment: FC= () => {
                 <View style={styles.main} >
                     <Discription text='Работа с группами услуг. Для обьединения услуг в определенные группы.' marginTop={10}/>
                     {
-                        dataDepartments 
+                        dataDepartments.length > 0
                         ?
                         <FlatList
                             contentContainerStyle={{gap: 10, margin: Platform.OS === 'ios' ? 0 : 5, paddingVertical: 5}}

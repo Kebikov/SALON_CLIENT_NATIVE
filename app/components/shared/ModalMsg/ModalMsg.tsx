@@ -14,7 +14,7 @@ const imgQuestion = require('@/source/img/icon/question.png');
  * - 'error' => стиль ошибки
  * - 'msg' => стиль сообщения
  */
-export type TMessage =  'error' | 'message' | 'question';
+export type TMessage =  'error' | 'message' | 'question' | null;
 
 
 
@@ -47,8 +47,12 @@ const ModalMsg: FC = () => {
             img = imgQuestion;
             colorForButton = 'rgba(172, 179, 188, .4)';
             break;
+        case null: 
+            img = null;
+            colorForButton = '';
+            break;
     }
-    console.log('MODAL >>> ', modalVisible, message);
+    
     return (
             <Modal
                 animationType='fade'
