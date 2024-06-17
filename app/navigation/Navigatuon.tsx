@@ -17,7 +17,9 @@ import AdminEditDepartment from '@/pages/AdminEditDepartment/AdminEditDepartment
 import AdminService from '@/pages/AdminService/AdminService';
 import AdminAddService from '../pages/AdminAddService/AdminAddService';
 import Test from '@/pages/Test/Test';
+import { enableScreens } from 'react-native-screens';
 
+enableScreens();
 
 const Stack = createNativeStackNavigator<TypeRootPage>();
 
