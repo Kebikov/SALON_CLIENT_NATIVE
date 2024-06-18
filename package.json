@@ -5,6 +5,7 @@
   "scripts": {
     "start": "expo start",
     "dev": "npx expo start --dev-client",
+    "dev:c":  "npx expo start --dev-client -c",
     "android": "expo run:android",
     "android:dev": "expo start -c --android",
     "ios": "expo run:ios",

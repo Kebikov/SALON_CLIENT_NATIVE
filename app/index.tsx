@@ -12,60 +12,60 @@ import { BlurView } from 'expo-blur';
 /**
  * @page Стартовая страница авторизации.
  */
-const Auth: FC = () => {
+const Page: FC = () => {
 
-    /**
-     * @param showThisComponent Переменная для показа или прерывания отображения компонента.
-     */
-    const [showThisComponent, setShowThisComponent] = useState<boolean>(false);
+    // /**
+    //  * @param showThisComponent Переменная для показа или прерывания отображения компонента.
+    //  */
+    // const [showThisComponent, setShowThisComponent] = useState<boolean>(false);
 
-    const {navigate} = useNavigation<NavigationProp<TypeRootPage>>();
-
-
-    const goToPageRegistration = () => {
-        navigate('AuthCreateAccount');
-    }
-
-    const goToPageAuthEnter = () => {
-        navigate('AuthEnter');
-    }
+    // const {navigate} = useNavigation<NavigationProp<TypeRootPage>>();
 
 
+    // const goToPageRegistration = () => {
+    //     navigate('AuthCreateAccount');
+    // }
 
-    useEffect(() => {
-        /**
-         * Переход на домашнюю страницу в случае существования пользователя.
-         */
-        async function check() {
-            const curentUser = await AsyncStorage.getItem('@user');
-            if(curentUser) {
-                setShowThisComponent(true);
-                navigate('Home');
-            } else {
-                setShowThisComponent(true);
-            }
-        };
-        check();
-    }, []);
+    // const goToPageAuthEnter = () => {
+    //     navigate('AuthEnter');
+    // }
 
-    if(!showThisComponent) return;
+
+
+    // useEffect(() => {
+    //     /**
+    //      * Переход на домашнюю страницу в случае существования пользователя.
+    //      */
+    //     async function check() {
+    //         const curentUser = await AsyncStorage.getItem('@user');
+    //         if(curentUser) {
+    //             setShowThisComponent(true);
+    //             navigate('Home');
+    //         } else {
+    //             setShowThisComponent(true);
+    //         }
+    //     };
+    //     check();
+    // }, []);
+
+    // if(!showThisComponent) return;
+
+    // @/source/img/auth/main-crop.jpg
 
     return (
         <>
-            <StatusBar backgroundColor={'rgba(0,0,0,0)'} translucent />
             <ImageBackground style={styles.main} source={require('@/source/img/auth/main-crop.jpg')} >
                 <View style={styles.overlay} />
                 <View style={styles.authStart} >
                     <View style={styles.box}>
-                        {/* <BlurView intensity={24} style={styles.blurContainer} experimentalBlurMethod='dimezisBlurView' /> */}
                         <Text style={styles.textTitle} >Давай, присоеденяйся к нам !</Text>
                         <View style={styles.titleBox} >
                             <Text style={styles.textSubTitle} >Лучшие Beauty мастера ждут тебя. Маникюр, парикмахерские услуги, лазерная эпиляция и многое еще.</Text>
                         </View>
                         
-                        <ButtonWithIcon pushButton={goToPageRegistration} title='Регистрация с Email' />
+                        {/* <ButtonWithIcon pushButton={goToPageRegistration} title='Регистрация с Email' />
                         <JoinGoogle/>
-                        <DoYouHaveAnAccount pushButton={goToPageAuthEnter} title='Уже есть аккаунт ?' textButton=' Войти' color='white' />
+                        <DoYouHaveAnAccount pushButton={goToPageAuthEnter} title='Уже есть аккаунт ?' textButton=' Войти' color='white' /> */}
                     </View>
                 </View>
             </ImageBackground>
@@ -131,4 +131,4 @@ const styles = StyleSheet.create({
 });
 
 
-export default Auth;
+export default Page;

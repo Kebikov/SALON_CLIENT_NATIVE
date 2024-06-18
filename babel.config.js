@@ -7,7 +7,7 @@ module.exports = function (api) {
             [
                 'babel-plugin-root-import',
                 {
-                    rootPathSuffix: 'app/',
+                    rootPathSuffix: 'src/',
                     rootPathPrefix: '@/'
                 }
             ],
