@@ -12,6 +12,7 @@ import httpAuthenticationService from '@/api/routes/authentication/service/http.
 import { useHookCheckDataForm } from '@/hooks/useHookCheckDataForm';
 import Discription from '@/components/shared/Discription/Discription';
 import Title from '@/components/shared/Title/Title';
+import { router } from 'expo-router';
 
 
 interface IEmail {
@@ -23,8 +24,6 @@ interface IEmail {
  * @page Страница востановления пароля.
  */
 const AuthForgot: FC = () => {
-
-    const {navigate} = useNavigation<NavigationProp<TypeRootPage>>();
 
     const  {checkDataForm} = useHookCheckDataForm();
 
@@ -53,7 +52,7 @@ const AuthForgot: FC = () => {
                     img={require('@/source/img/icon/email-grey.png')}
                 />
                 <ButtonWithIcon pushButton={() => recovery()} title='Востановить' marginTop={30}/>
-                <DoYouHaveAnAccount pushButton={() => navigate('Auth')} title='Вернуться к началу ?' color={COLOR_ROOT.MIDDLE_GRAY} textButton=' Вернуться' />
+                <DoYouHaveAnAccount pushButton={() => router.navigate('/')} title='Вернуться к началу ?' color={COLOR_ROOT.MIDDLE_GRAY} textButton=' Вернуться' />
             </View>
         </WrapperScroll>
     );

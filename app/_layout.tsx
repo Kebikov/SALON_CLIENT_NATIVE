@@ -16,7 +16,13 @@ const IndexLayout: FC = () => {
                 <ApiInterceptors>
                     <ModalMsg/>
                     <Spinner/>
-                    <Stack></Stack>
+                    <Stack
+                        screenOptions={{
+                            headerShown: false
+                        }}
+                    >
+                        <Stack.Screen name='index' />
+                    </Stack>
                 </ApiInterceptors>
             </Provider>
         </GestureHandlerRootView>

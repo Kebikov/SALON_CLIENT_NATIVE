@@ -1,16 +1,15 @@
-import { Text, StyleSheet, Pressable, View } from 'react-native';
-import React, { FC, useRef, useState } from 'react';
+import { Text, StyleSheet, Pressable } from 'react-native';
+import React, { FC, useRef } from 'react';
 import { COLOR_ROOT } from '@/data/colors';
 import WrapperScrollMenu from '@/components/wrappers/WrapperScrollMenu/WrapperScrollMenu';
 import HomeUserHeader from '@/components/widgets/HomeUserHeader/HomeUserHeader';
 import ListDepartment from '@/components/widgets/ListDepartment/ListDepartment';
 import ListMasters from '@/components/widgets/ListMasters/ListMasters';
 import ListService from '@/components/widgets/ListService/ListService';
-import httpClientService from '@/api/routes/client/service/http.client.service';
 
 
 import BottomModalSheet from '@/components/wrappers/BottomModalSheet/BottomModalSheet';
-import { IRefBottomModalSheet, IBottomModalSheet } from '@/components/wrappers/BottomModalSheet/types';
+import { IRefBottomModalSheet } from '@/components/wrappers/BottomModalSheet/types';
 
 
 /** 

@@ -8,14 +8,13 @@ import LinesWithOr from '@/components/shared/LinesWithOr/LinesWithOr';
 import JoinGoogle from '@/components/shared/JoinGoogle/JoinGoogle';
 import { COLOR_ROOT } from '@/data/colors';
 import DoYouHaveAnAccount from '@/components/shared/DoYouHaveAnAccount/DoYouHaveAnAccount';
-import { useNavigation, NavigationProp } from '@react-navigation/native';
-import { TypeRootPage } from '@/navigation/navigation.types';
 import { CheckForm } from '@/helpers/check/checkForm';
 import httpAuthenticationService from '@/api/routes/authentication/service/http.authentication.service';
 import { useHookCheckErrorResponce } from '@/hooks/useHookCheckErrorResponce';
 import { asyncStorageSaveUser } from '@/helpers/save/saveUserInAsyncStorage';
 import Discription from '@/components/shared/Discription/Discription';
 import Title from '@/components/shared/Title/Title';
+import { router } from 'expo-router';
 
 
 interface IAuthEnter {
@@ -34,13 +33,11 @@ const AuthEnter: FC = () => {
         password: ''
     });
 
-    const {navigate} = useNavigation<NavigationProp<TypeRootPage>>();
-
     /**
      * Переход на страницу => "AuthCreateAccount".
      */
     const goToPageRegistration = () => {
-        navigate('AuthCreateAccount');
+        router.navigate('authCreateAccount');
     }
 
     const onChangeForm = (e: NativeSyntheticEvent<TextInputChangeEventData>, key: string) => {
@@ -62,7 +59,7 @@ const AuthEnter: FC = () => {
         console.log(result);
         if(!result) return;
         await asyncStorageSaveUser(result);
-        navigate('Home');
+        router.navigate('home');
     }
 
     return (
@@ -79,7 +76,7 @@ const AuthEnter: FC = () => {
                 <InputPassword onChangeForm={onChangeForm} marginBottom={0} />
                 <View style={styles.boxForgot}>
                     <Pressable 
-                        onPress={() => navigate('AuthForgot')}
+                        onPress={() => router.navigate('authForgot')}
                     >
                         <Text style={styles.textForgot}>Забыли пароль ?</Text>
                     </Pressable>

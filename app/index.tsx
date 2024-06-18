@@ -7,6 +7,7 @@ import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { TypeRootPage } from '@/navigation/navigation.types';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { BlurView } from 'expo-blur';
+import { router } from 'expo-router';
 
 
 /**
@@ -22,13 +23,13 @@ const Page: FC = () => {
     // const {navigate} = useNavigation<NavigationProp<TypeRootPage>>();
 
 
-    // const goToPageRegistration = () => {
-    //     navigate('AuthCreateAccount');
-    // }
+    const goToPageRegistration = () => {
+        router.navigate('authCreateAccount');
+    }
 
-    // const goToPageAuthEnter = () => {
-    //     navigate('AuthEnter');
-    // }
+    const goToPageAuthEnter = () => {
+        router.navigate('authEnter');
+    }
 
 
 
@@ -63,9 +64,9 @@ const Page: FC = () => {
                             <Text style={styles.textSubTitle} >Лучшие Beauty мастера ждут тебя. Маникюр, парикмахерские услуги, лазерная эпиляция и многое еще.</Text>
                         </View>
                         
-                        {/* <ButtonWithIcon pushButton={goToPageRegistration} title='Регистрация с Email' />
+                        <ButtonWithIcon pushButton={goToPageRegistration} title='Регистрация с Email' />
                         <JoinGoogle/>
-                        <DoYouHaveAnAccount pushButton={goToPageAuthEnter} title='Уже есть аккаунт ?' textButton=' Войти' color='white' /> */}
+                        <DoYouHaveAnAccount pushButton={goToPageAuthEnter} title='Уже есть аккаунт ?' textButton=' Войти' color='white' />
                     </View>
                 </View>
             </ImageBackground>

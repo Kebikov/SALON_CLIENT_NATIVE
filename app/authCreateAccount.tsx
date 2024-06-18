@@ -8,14 +8,13 @@ import DoYouHaveAnAccount from '@/components/shared/DoYouHaveAnAccount/DoYouHave
 import InputPassword from '@/components/shared/InputPassword/InputPassword';
 import InputGeneric from '@/components/shared/InputGeneric/InputGeneric';
 import LinesWithOr from '@/components/shared/LinesWithOr/LinesWithOr';
-import { useNavigation, NavigationProp } from '@react-navigation/native';
-import { TypeRootPage } from '@/navigation/navigation.types';
 import { IReqBodyRegistrationEmail } from '@/api/routes/registration/types/registration.types';
-import { requestOnRegistration } from './helpers/requestOnRegistration';
+import { requestOnRegistration } from '@/helpers/helpersForComponents/AuthCreateAccount/requestOnRegistration';
 import { useHookCheckDataForm } from '@/hooks/useHookCheckDataForm';
 import { stylesGeneric } from '@/components/shared/InputGeneric/InputGeneric';
 import Discription from '@/components/shared/Discription/Discription';
 import Title from '@/components/shared/Title/Title';
+import { router } from 'expo-router';
 
 
 export type TKeyStateCreateAccount = keyof IReqBodyRegistrationEmail;
@@ -33,11 +32,10 @@ const AuthCreateAccount: FC = () => {
         password: ''
     });
 
-    const {navigate} = useNavigation<NavigationProp<TypeRootPage>>();
     const {checkDataForm} = useHookCheckDataForm();
 
     const goToPageAuthEnter = () => {
-        navigate('AuthEnter');
+        router.navigate('authEnter');
     }
 
     const onChangeForm = (e: NativeSyntheticEvent<TextInputChangeEventData>, key: string) => {
@@ -53,7 +51,7 @@ const AuthCreateAccount: FC = () => {
 
         const resultRegistration = await requestOnRegistration(data);
         if(resultRegistration) {
-            navigate('Home');
+            router.navigate('home');
         }
     }
 
