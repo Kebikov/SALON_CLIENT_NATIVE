@@ -5,20 +5,20 @@ import ButtonWithIcon from '@/components/shared/ButtonWithIcon/ButtonWithIcon';
 import DoYouHaveAnAccount from '@/components/shared/DoYouHaveAnAccount/DoYouHaveAnAccount';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { router } from 'expo-router';
+import { useHookGetStartDataUser } from '@/hooks/useHookGetStartDataUser';
 
 
 /**
- * @page Стартовая страница авторизации.
+ * @page Стартовая страница приложения.
  */
 const Index: FC = () => {
-
+    
     /**
      * @param showThisComponent Переменная для показа или прерывания отображения компонента.
      */
     const [showThisComponent, setShowThisComponent] = useState<boolean>(false);
 
-    // const {navigate} = useNavigation<NavigationProp<TypeRootPage>>();
-
+    const {getStartDataUser} = useHookGetStartDataUser();
 
     const goToPageRegistration = () => {
         router.navigate('authCreateAccount');
@@ -29,7 +29,6 @@ const Index: FC = () => {
     }
 
 
-
     useEffect(() => {
         /**
          * Переход на домашнюю страницу в случае существования пользователя.
@@ -37,11 +36,16 @@ const Index: FC = () => {
         async function check() {
             const curentUser = await AsyncStorage.getItem('@user');
             if(curentUser) {
-                setShowThisComponent(true);
-                router.navigate('home');
+                const role = await getStartDataUser();
+                if(!role) return;
+
+                if(role === 'admin') return router.navigate('(admin)');
+                if(role === 'client') return router.navigate('(user)');
+                
             } else {
                 setShowThisComponent(true);
             }
+            
         };
         check();
     }, []);

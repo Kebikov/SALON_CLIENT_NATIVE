@@ -1,52 +1,55 @@
 {
-  "expo": {
-    "name": "salon_client_native",
-    "slug": "salon_client_native",
-    "version": "1.0.0",
-    "orientation": "portrait",
-    "icon": "./assets/icon.png",
-    "plugins": [
-      [
-        "expo-image-picker",
-        {
-          "photosPermission": "The app accesses your photos to let you share them with your friends."
+    "expo": {
+        "name": "salon_client_native",
+        "slug": "salon_client_native",
+        "version": "1.0.0",
+        "orientation": "portrait",
+        "icon": "./assets/icon.png",
+        "plugins": [
+            [
+                "expo-image-picker",
+                {
+                    "photosPermission": "The app accesses your photos to let you share them with your friends."
+                }
+            ],
+            "expo-router"
+        ],
+        "userInterfaceStyle": "dark",
+        "scheme": "com.kebikov.salonbeauty",
+        "splash": {
+            "image": "./assets/splash.png",
+            "contentFit": "contain",
+            "backgroundColor": "#006678"
+        },
+        "assetBundlePatterns": [
+            "**/*"
+        ],
+        "ios": {
+            "supportsTablet": true,
+            "bundleIdentifier": "com.kebikov.salonbeauty",
+            "infoPlist": {
+                "CFBundleURLSchemes": [
+                    "com.googleusercontent.apps.449895255065-bjfe6nr5sooi282je118nu5jb1djru2a"
+                ]
+            }
+        },
+        "android": {
+            "adaptiveIcon": {
+                "foregroundImage": "./assets/adaptive-icon.png",
+                "backgroundColor": "#ffffff"
+            },
+            "package": "com.kebikov.salonbeauty"
+        },
+        "web": {
+            "favicon": "./assets/favicon.png"
+        },
+        "extra": {
+            "eas": {
+                "projectId": "a460b786-517d-4815-9504-630d5a174ee2"
+            }
+        },
+        "experiments": {
+            "typedRoutes": true
         }
-      ],
-      "expo-router"
-    ],
-    "userInterfaceStyle": "dark",
-    "scheme": "com.kebikov.salonbeauty",
-    "splash": {
-      "image": "./assets/splash.png",
-      "contentFit": "contain",
-      "backgroundColor": "#006678"
-    },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
-    "ios": {
-      "supportsTablet": true,
-      "bundleIdentifier": "com.kebikov.salonbeauty",
-      "infoPlist": {
-        "CFBundleURLSchemes": [
-          "com.googleusercontent.apps.449895255065-bjfe6nr5sooi282je118nu5jb1djru2a"
-        ]
-      }
-    },
-    "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      },
-      "package": "com.kebikov.salonbeauty"
-    },
-    "web": {
-      "favicon": "./assets/favicon.png"
-    },
-    "extra": {
-      "eas": {
-        "projectId": "a460b786-517d-4815-9504-630d5a174ee2"
-      }
     }
-  }
 }

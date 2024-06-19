@@ -56,10 +56,9 @@ const AuthEnter: FC = () => {
         }
         //* Запрос на авторизицию.
         const result = await httpAuthenticationService.POST_authentication(data);
-        console.log(result);
         if(!result) return;
         await asyncStorageSaveUser(result);
-        router.navigate('home');
+        router.navigate('(user)/home');
     }
 
     return (

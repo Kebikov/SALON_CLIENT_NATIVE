@@ -12,11 +12,10 @@ import BottomModalSheet from '@/components/wrappers/BottomModalSheet/BottomModal
 import { IRefBottomModalSheet } from '@/components/wrappers/BottomModalSheet/types';
 
 
-
 /** 
- * @page Главная страница приложения после регистрации.
+ * @page Главная страница Admin приложения после регистрации.
  */
-const Home: FC = () => {
+const HomeAdmin: FC = () => {
 
     const refModal = useRef<IRefBottomModalSheet>(null);
 
@@ -55,12 +54,8 @@ const Home: FC = () => {
 
 
 const styles = StyleSheet.create({
-    main: {
-        flex: 1
-    },
-    box: {
-
-    },
+    main: { flex: 1 },
+    box: { },
     text: {
         fontSize: 15,
         color: COLOR_ROOT.ORANGE,
@@ -70,4 +65,4 @@ const styles = StyleSheet.create({
 });
 
 
-export default Home;
+export default HomeAdmin;

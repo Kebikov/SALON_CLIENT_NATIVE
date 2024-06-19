@@ -9,13 +9,12 @@ import { router } from 'expo-router';
 /**
  * @page Страница пользователя.
  */
-const User: FC = () => {
+const AdminSettings: FC = () => {
 
     const exitOut = async () => {
         await AsyncStorage.clear();
         router.navigate('/');
     }
-
 
     return (
         <WrapperScrollMenu page='user' >
@@ -67,4 +66,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default User;
+export default AdminSettings;

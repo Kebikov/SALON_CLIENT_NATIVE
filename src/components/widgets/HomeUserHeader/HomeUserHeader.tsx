@@ -1,8 +1,6 @@
-import { View, Text, StyleSheet, Image, TextInput, Platform } from 'react-native';
-import React, { FC, useState, useEffect } from 'react';
+import { View, Text, StyleSheet, Image, TextInput } from 'react-native';
+import React, { FC } from 'react';
 import { COLOR_ROOT } from '@/data/colors';
-import type { IgetInfoBasic } from '@/api/routes/client/types/client.types';
-import { useHookGetStartDataUser } from '@/hooks/useHookGetStartDataUser';
 import { useAppSelector } from '@/redux/store/hooks';
 
 
@@ -12,12 +10,6 @@ import { useAppSelector } from '@/redux/store/hooks';
 const HomeUserHeader: FC = () => {
 
     const userInfo = useAppSelector(state => state.userSlice.user);
-
-    const {getStartDataUser} = useHookGetStartDataUser();
-
-    useEffect(() => {
-        getStartDataUser();
-    }, []);
 
     return (
         <View style={styles.main} >

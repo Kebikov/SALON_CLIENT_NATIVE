@@ -6,34 +6,44 @@ import ModalMsg from '@/components/shared/ModalMsg/ModalMsg';
 import ApiInterceptors from '@/components/wrappers/ApiInterceptors/ApiInterceptors';
 import Spinner from '@/components/shared/Spinner/Spinner';
 import { Stack, useNavigation } from 'expo-router';
-import { Image } from 'react-native';
 import BottomMenu from '@/components/widgets/BottomMenu/BottomMenu';
 
+interface IMainLayout {
+    children?: JSX.Element | JSX.Element[] | undefined;
+}
 
-
-const IndexLayout: FC = () => {
+export const MainLayout: FC<IMainLayout> = ({children}) => {
 
 	return (
-        <GestureHandlerRootView style={{flex: 1}}>
+        <GestureHandlerRootView style={{flex: 1}} >
             <Provider store={store} >
                 <ApiInterceptors>
                     <ModalMsg/>
                     <Spinner/>
-
-                    {/*//: Stak */}
-                    <Stack
-                        screenOptions={{
-                            headerShown: false
-                        }}
-                    >
-                        <Stack.Screen name='index' />
-                        <Stack.Screen name='modal' options={{presentation: 'modal'}} />
-                    </Stack>
-                    <BottomMenu page={'home'} />
+                    <>
+                        {children}
+                    </>
                 </ApiInterceptors>
             </Provider>
         </GestureHandlerRootView>
 	);
+}
+
+const IndexLayout = () => {
+    return(
+        <MainLayout>
+            <Stack
+                screenOptions={{
+                    headerShown: false
+                }}
+            >
+                <Stack.Screen name='index' />
+                <Stack.Screen name='(auth)/authCreateAccount' />
+                <Stack.Screen name='(auth)/authEnter' />
+                <Stack.Screen name='(auth)/authForgot' />
+            </Stack>
+        </MainLayout>
+    )
 }
 
 export default IndexLayout;
