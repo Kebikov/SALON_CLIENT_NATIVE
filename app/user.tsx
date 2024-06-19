@@ -1,27 +1,24 @@
 import { View, Text, StyleSheet } from 'react-native';
 import React, { FC } from 'react';
-import { useNavigation, NavigationProp } from '@react-navigation/native';
-import type { TypeRootPage } from '@/navigation/navigation.types';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { COLOR_ROOT } from '@/data/colors';
 import MenuItem from '@/components/shared/MenuItem/MenuItem';
 import WrapperScrollMenu from '@/components/wrappers/WrapperScrollMenu/WrapperScrollMenu';
+import { router } from 'expo-router';
 
 /**
  * @page Страница пользователя.
  */
 const User: FC = () => {
 
-    const {navigate} = useNavigation<NavigationProp<TypeRootPage>>()
-
     const exitOut = async () => {
         await AsyncStorage.clear();
-        navigate('Auth');
+        router.navigate('/');
     }
 
 
     return (
-        <WrapperScrollMenu page='User' >
+        <WrapperScrollMenu page='user' >
             <View style={styles.main} >
                 <View style={styles.box} >
                     <View style={styles.boxSettings}>
@@ -31,7 +28,7 @@ const User: FC = () => {
                         title='Password' 
                         subTitle='Изминение пароля пользователя' 
                         img={require('@/source/img/icon-menu/password-1.png')} 
-                        pushFunction={() => navigate('ChangePassword')}
+                        pushFunction={() => router.navigate('changePassword')}
                     />
                     <MenuItem 
                         title='Выход' 
@@ -47,12 +44,8 @@ const User: FC = () => {
 };
 
 const styles = StyleSheet.create({
-    main: {
-        flex: 1
-    },
-    box: {
-
-    },
+    main: { flex: 1 },
+    box: { },
     exitButton: {
         marginTop: 20,
         height: 50,
@@ -60,10 +53,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center'
     },
-    textButton: {
-        color: 'white',
-        fontSize: 17
-    },
+    textButton: { color: 'white', fontSize: 17 },
     boxSettings: {
         width: '100%',
         marginTop: 10,

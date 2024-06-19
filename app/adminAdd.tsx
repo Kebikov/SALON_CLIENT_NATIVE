@@ -3,7 +3,7 @@ import React, { FC } from 'react';
 import WrapperScrollMenu from '@/components/wrappers/WrapperScrollMenu/WrapperScrollMenu';
 import MenuItem from '@/components/shared/MenuItem/MenuItem';
 import Title from '@/components/shared/Title/Title';
-import useHookNavigate from '../../hooks/useHookNavigate';
+import { router } from 'expo-router';
 
 
 /**
@@ -12,23 +12,22 @@ import useHookNavigate from '../../hooks/useHookNavigate';
  */
 const AdminAdd: FC = () => {
 
-    const {navigate} = useHookNavigate();
 
     return (
-        <WrapperScrollMenu page='AdminAdd' >
+        <WrapperScrollMenu page='adminAdd' >
             <View style={styles.main} >
                 <Title text='Основные настройки' marginTop={10}/>
                 <MenuItem
                     title='Группы услуг'
                     subTitle='добавить, редактировать, удалить'
                     img={require('@/source/img/icon/group.png')}
-                    pushFunction={() => navigate('AdminDepartment')}
+                    pushFunction={() => router.navigate('adminDepartment')}
                 />
                 <MenuItem
                     title='Услуги'
                     subTitle='добавить, редактировать, удалить'
                     img={require('@/source/img/icon/hair.png')}
-                    pushFunction={() => navigate('AdminService')}
+                    pushFunction={() => router.navigate('AdminService')}
                 />
                 <MenuItem
                     title='Команда'

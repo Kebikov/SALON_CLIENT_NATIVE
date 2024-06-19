@@ -5,6 +5,7 @@ import { COLOR_ROOT } from '@/data/colors';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { useAppSelector } from '@/redux/store/hooks';
 import menu, {TKeyPage, IButtonPage} from './listMenu';
+import { router } from 'expo-router';
 
 
 interface IBottomMenu {
@@ -21,7 +22,6 @@ interface IBottomMenu {
 const BottomMenu: FC<IBottomMenu> = ({page}) => {
 
     const userInfo = useAppSelector(state => state.userSlice.user);
-    const {navigate} = useNavigation<NavigationProp<TypeRootPage>>();
 
     /**
      * Подчеркивание иконки меню текушей страницы.
@@ -37,7 +37,7 @@ const BottomMenu: FC<IBottomMenu> = ({page}) => {
         return(
             <Pressable 
                 style={styles.boxImg} 
-                onPress={() => item && item.page !== null ? navigate(item.page as any) : null} 
+                onPress={() => item && item.page !== null ? router.navigate(item.page) : null} 
                 key={item.id} 
             >
                 <Image source={item.img} style={styles.icon} />

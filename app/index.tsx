@@ -1,24 +1,21 @@
-import { View, Text, StyleSheet, ImageBackground, StatusBar, Platform } from 'react-native';
+import { View, Text, StyleSheet, ImageBackground, Platform } from 'react-native';
 import React, { FC, useEffect, useState } from 'react';
 import JoinGoogle from '@/components/shared/JoinGoogle/JoinGoogle';
 import ButtonWithIcon from '@/components/shared/ButtonWithIcon/ButtonWithIcon';
 import DoYouHaveAnAccount from '@/components/shared/DoYouHaveAnAccount/DoYouHaveAnAccount';
-import { useNavigation, NavigationProp } from '@react-navigation/native';
-import { TypeRootPage } from '@/navigation/navigation.types';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { BlurView } from 'expo-blur';
 import { router } from 'expo-router';
 
 
 /**
  * @page Стартовая страница авторизации.
  */
-const Page: FC = () => {
+const Index: FC = () => {
 
-    // /**
-    //  * @param showThisComponent Переменная для показа или прерывания отображения компонента.
-    //  */
-    // const [showThisComponent, setShowThisComponent] = useState<boolean>(false);
+    /**
+     * @param showThisComponent Переменная для показа или прерывания отображения компонента.
+     */
+    const [showThisComponent, setShowThisComponent] = useState<boolean>(false);
 
     // const {navigate} = useNavigation<NavigationProp<TypeRootPage>>();
 
@@ -33,25 +30,24 @@ const Page: FC = () => {
 
 
 
-    // useEffect(() => {
-    //     /**
-    //      * Переход на домашнюю страницу в случае существования пользователя.
-    //      */
-    //     async function check() {
-    //         const curentUser = await AsyncStorage.getItem('@user');
-    //         if(curentUser) {
-    //             setShowThisComponent(true);
-    //             navigate('Home');
-    //         } else {
-    //             setShowThisComponent(true);
-    //         }
-    //     };
-    //     check();
-    // }, []);
+    useEffect(() => {
+        /**
+         * Переход на домашнюю страницу в случае существования пользователя.
+         */
+        async function check() {
+            const curentUser = await AsyncStorage.getItem('@user');
+            if(curentUser) {
+                setShowThisComponent(true);
+                router.navigate('home');
+            } else {
+                setShowThisComponent(true);
+            }
+        };
+        check();
+    }, []);
 
-    // if(!showThisComponent) return;
+    if(!showThisComponent) return;
 
-    // @/source/img/auth/main-crop.jpg
 
     return (
         <>
@@ -132,4 +128,4 @@ const styles = StyleSheet.create({
 });
 
 
-export default Page;
+export default Index;

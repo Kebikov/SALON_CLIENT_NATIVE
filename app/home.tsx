@@ -6,23 +6,26 @@ import HomeUserHeader from '@/components/widgets/HomeUserHeader/HomeUserHeader';
 import ListDepartment from '@/components/widgets/ListDepartment/ListDepartment';
 import ListMasters from '@/components/widgets/ListMasters/ListMasters';
 import ListService from '@/components/widgets/ListService/ListService';
-
+import { router } from 'expo-router';
 
 import BottomModalSheet from '@/components/wrappers/BottomModalSheet/BottomModalSheet';
 import { IRefBottomModalSheet } from '@/components/wrappers/BottomModalSheet/types';
 
 
+
 /** 
- * @page Главная страница приложения.
+ * @page Главная страница приложения после регистрации.
  */
 const Home: FC = () => {
 
     const refModal = useRef<IRefBottomModalSheet>(null);
 
-    const press = () => refModal.current?.openModal();
+    const press = () => {
+        refModal.current?.openModal();
+    }
 
     return (
-        <WrapperScrollMenu page='Home' >
+        <WrapperScrollMenu page='home' >
             <HomeUserHeader/>
 
             <Pressable

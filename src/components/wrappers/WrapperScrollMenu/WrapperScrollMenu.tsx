@@ -52,7 +52,7 @@ const WrapperScrollMenu: FC<IWrapper> = ({children, page, titlePage, scrollEnabl
                     >
                             {children}
                     </ScrollView>
-                    <BottomMenu page={page} />
+                    {/* <BottomMenu page={page} /> */}
                 </SafeAreaView>
             </SafeAreaProvider>
         </>
