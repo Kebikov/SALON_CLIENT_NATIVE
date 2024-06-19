@@ -16,7 +16,7 @@ type TMenu = {
 const listMenuClient: Array<IButtonPage> = [
     {
         id: 1,
-        page: '/',
+        page: '(user)',
         img: require('@/source/img/icon/home.png')
     },
     {
@@ -61,6 +61,7 @@ const menu: TMenu = {
 };
 
 export default menu;
+
 
 
 

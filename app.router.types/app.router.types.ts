@@ -15,7 +15,7 @@ export type AppRouterTypes = {
     //: (user)
     '(user)': undefined;
     '(user)/userSettings': undefined;
-
+    '(user)/changePassword': undefined;
 
     changePassword: undefined;
     //Admin

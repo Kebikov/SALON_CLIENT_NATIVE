@@ -15,7 +15,7 @@ import { IRefBottomModalSheet } from '@/components/wrappers/BottomModalSheet/typ
  * @page Главная страница Clien приложения после регистрации.
  */
 const HomeUser: FC = () => {
-
+    console.log('HomeUser');
     const refModal = useRef<IRefBottomModalSheet>(null);
 
     const press = () => {

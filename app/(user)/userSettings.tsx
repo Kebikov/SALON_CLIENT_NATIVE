@@ -13,12 +13,12 @@ const UserSettings: FC = () => {
 
     const exitOut = async () => {
         await AsyncStorage.clear();
-        router.navigate('/');
+        router.replace('/');
     }
 
 
     return (
-        <WrapperScrollMenu page='user' >
+        <WrapperScrollMenu>
             <View style={styles.main} >
                 <View style={styles.box} >
                     <View style={styles.boxSettings}>
@@ -28,7 +28,7 @@ const UserSettings: FC = () => {
                         title='Password' 
                         subTitle='Изминение пароля пользователя' 
                         img={require('@/source/img/icon-menu/password-1.png')} 
-                        pushFunction={() => router.navigate('changePassword')}
+                        pushFunction={() => router.navigate('(user)/changePassword')}
                     />
                     <MenuItem 
                         title='Выход' 

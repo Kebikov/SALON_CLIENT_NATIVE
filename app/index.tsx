@@ -4,7 +4,7 @@ import JoinGoogle from '@/components/shared/JoinGoogle/JoinGoogle';
 import ButtonWithIcon from '@/components/shared/ButtonWithIcon/ButtonWithIcon';
 import DoYouHaveAnAccount from '@/components/shared/DoYouHaveAnAccount/DoYouHaveAnAccount';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { router,  } from 'expo-router';
+import { useRouter } from 'expo-router';
 import { useHookGetStartDataUser } from '@/hooks/useHookGetStartDataUser';
 
 
@@ -12,6 +12,8 @@ import { useHookGetStartDataUser } from '@/hooks/useHookGetStartDataUser';
  * @page Стартовая страница приложения.
  */
 const Index: FC = () => {
+  
+    const router = useRouter();
     
     /**
      * @param showThisComponent Переменная для показа или прерывания отображения компонента.
@@ -38,11 +40,10 @@ const Index: FC = () => {
             const curentUser = await AsyncStorage.getItem('@user');
             if(curentUser) {
                 const role = await getStartDataUser();
-                console.log('role >>> ', role);
                 if(!role) return;
 
-                if(role === 'admin') return router.navigate('(admin)');
-                if(role === 'client') return router.navigate('(user)');
+                if(role === 'admin') return router.replace('(admin)');
+                if(role === 'client') return router.replace('(user)');
                 
             } else {
                 setShowThisComponent(true);
