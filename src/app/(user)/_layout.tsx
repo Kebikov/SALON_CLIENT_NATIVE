@@ -1,9 +1,9 @@
-import { MainLayout } from "app/_layout";
+import { MainLayout } from "@/app/_layout";
 import { Stack } from 'expo-router';
 import BottomMenu from '@/components/widgets/BottomMenu/BottomMenu';
 
 
-const AdminLayout = () => {
+const UserLayout = () => {
     return(
         <MainLayout>
             <Stack
@@ -11,13 +11,12 @@ const AdminLayout = () => {
                     headerShown: false
                 }}
             >
-                <Stack.Screen name="index"/>
-                <Stack.Screen name="adminAdd"/>
-                <Stack.Screen name="adminSettings"/>
+                <Stack.Screen name="index" />
+                <Stack.Screen name="userSettings" />
             </Stack>
-            <BottomMenu role={'admin'} />
+            <BottomMenu role={'client'} />
         </MainLayout>
     )
 }
 
-export default AdminLayout;
+export default UserLayout;

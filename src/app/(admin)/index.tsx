@@ -24,7 +24,7 @@ const HomeAdmin: FC = () => {
     }
 
     return (
-        <WrapperScrollMenu page='home' >
+        <WrapperScrollMenu>
             <HomeUserHeader/>
 
             <Pressable

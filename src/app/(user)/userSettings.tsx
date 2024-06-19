@@ -4,19 +4,18 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { COLOR_ROOT } from '@/data/colors';
 import MenuItem from '@/components/shared/MenuItem/MenuItem';
 import WrapperScrollMenu from '@/components/wrappers/WrapperScrollMenu/WrapperScrollMenu';
-import { useRouter } from 'expo-router';
+import { router } from 'expo-router';
 
 /**
  * @page Страница пользователя.
  */
-const AdminSettings: FC = () => {
-
-    const router = useRouter();
-
+const UserSettings: FC = () => {
+    console.log('UserSettings');
     const exitOut = async () => {
         await AsyncStorage.clear();
         router.replace('/');
     }
+
 
     return (
         <WrapperScrollMenu>
@@ -29,7 +28,7 @@ const AdminSettings: FC = () => {
                         title='Password' 
                         subTitle='Изминение пароля пользователя' 
                         img={require('@/source/img/icon-menu/password-1.png')} 
-                        pushFunction={() => router.navigate('changePassword')}
+                        pushFunction={() => router.navigate('(user)/changePassword')}
                     />
                     <MenuItem 
                         title='Выход' 
@@ -68,4 +67,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default AdminSettings;
+export default UserSettings;
