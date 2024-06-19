@@ -6,15 +6,13 @@ import HomeUserHeader from '@/components/widgets/HomeUserHeader/HomeUserHeader';
 import ListDepartment from '@/components/widgets/ListDepartment/ListDepartment';
 import ListMasters from '@/components/widgets/ListMasters/ListMasters';
 import ListService from '@/components/widgets/ListService/ListService';
-import { router } from 'expo-router';
 
 import BottomModalSheet from '@/components/wrappers/BottomModalSheet/BottomModalSheet';
 import { IRefBottomModalSheet } from '@/components/wrappers/BottomModalSheet/types';
 
 
-
 /** 
- * @page Главная страница приложения после регистрации.
+ * @page Главная страница Clien приложения после регистрации.
  */
 const HomeUser: FC = () => {
 
@@ -25,7 +23,7 @@ const HomeUser: FC = () => {
     }
 
     return (
-        <WrapperScrollMenu page='home' >
+        <WrapperScrollMenu >
             <HomeUserHeader/>
 
             <Pressable

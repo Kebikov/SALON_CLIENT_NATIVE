@@ -1,16 +1,13 @@
 import type { TRole } from '@/api/routes/registration/types/registration.types';
-import { TypeRootPage } from '@/navigation/navigation.types';
+import { AppRouterTypes } from 'app.router.types/app.router.types';
 
-export type TKeyPage =  keyof TypeRootPage;
+export type TKeyPage =  keyof AppRouterTypes;
 
 export interface IButtonPage {
     id: number;
     page: TKeyPage | null; 
-    params?: TypeRootPage[TKeyPage];
     img: number;
 }
-
-
 
 type TMenu = {
     [key in TRole]: IButtonPage[] | null;
@@ -19,7 +16,7 @@ type TMenu = {
 const listMenuClient: Array<IButtonPage> = [
     {
         id: 1,
-        page: 'home',
+        page: '/',
         img: require('@/source/img/icon/home.png')
     },
     {
@@ -34,7 +31,7 @@ const listMenuClient: Array<IButtonPage> = [
     },
     {
         id: 4,
-        page: 'user',
+        page: '(user)/userSettings',
         img: require('@/source/img/icon/user.png')
     }
 ];
@@ -42,17 +39,17 @@ const listMenuClient: Array<IButtonPage> = [
 const listMenuAdmin: Array<IButtonPage> = [
     {
         id: 1,
-        page: 'home',
+        page: '(admin)',
         img: require('@/source/img/icon/home.png')
     },
     {
         id: 2,
-        page: 'adminAdd',
+        page: '(admin)/adminAdd',
         img: require('@/source/img/icon/add.png')
     },
     {
         id: 3,
-        page: 'user',
+        page: '(admin)/adminSettings',
         img: require('@/source/img/icon/user.png')
     }
 ];
@@ -64,3 +61,6 @@ const menu: TMenu = {
 };
 
 export default menu;
+
+
+

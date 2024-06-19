@@ -4,20 +4,22 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { COLOR_ROOT } from '@/data/colors';
 import MenuItem from '@/components/shared/MenuItem/MenuItem';
 import WrapperScrollMenu from '@/components/wrappers/WrapperScrollMenu/WrapperScrollMenu';
-import { router } from 'expo-router';
+import { useRouter } from 'expo-router';
 
 /**
  * @page Страница пользователя.
  */
 const AdminSettings: FC = () => {
 
+    const router = useRouter();
+
     const exitOut = async () => {
         await AsyncStorage.clear();
-        router.navigate('/');
+        router.replace('/');
     }
 
     return (
-        <WrapperScrollMenu page='user' >
+        <WrapperScrollMenu>
             <View style={styles.main} >
                 <View style={styles.box} >
                     <View style={styles.boxSettings}>

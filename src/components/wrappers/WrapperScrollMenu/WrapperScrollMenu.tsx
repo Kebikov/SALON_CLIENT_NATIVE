@@ -1,16 +1,13 @@
 import { StatusBar, View, Platform } from 'react-native';
-import React, { FC, Fragment } from 'react';
+import React, { FC } from 'react';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { COLOR_ROOT } from '@/data/colors';
-import { TypeRootPage } from '@/navigation/navigation.types';
 import { ScrollView } from 'react-native-gesture-handler';
-import BottomMenu from '@/components/widgets/BottomMenu/BottomMenu';
 import HeaderTitle from '@/components/widgets/HeaderTitle/HeaderTitle';
 
 
 interface IWrapper {
     children: JSX.Element | JSX.Element[];
-    page: keyof TypeRootPage;
     titlePage?: string;
     scrollEnabled?: boolean;
 }
@@ -21,8 +18,6 @@ interface IWrapper {
  * - SafeAreaView 
  * - StatusBar
  * - ScrollView 
- * - BottomMenu
- * @param page Страница на которой был использован компонент.
  * @param titlePage ? Шапка в веху страницы с заголовком.
  * @param scrollEnabled ? Разрешена ли прокрутка.
  * @example 
@@ -30,7 +25,7 @@ interface IWrapper {
         {JSX.Element}
     </WrapperScroll>
  */
-const WrapperScrollMenu: FC<IWrapper> = ({children, page, titlePage, scrollEnabled = true}) => {
+const WrapperScrollMenu: FC<IWrapper> = ({children, titlePage, scrollEnabled = true}) => {
 
     return (
         <>
@@ -52,7 +47,6 @@ const WrapperScrollMenu: FC<IWrapper> = ({children, page, titlePage, scrollEnabl
                     >
                             {children}
                     </ScrollView>
-                    {/* <BottomMenu page={page} /> */}
                 </SafeAreaView>
             </SafeAreaProvider>
         </>
