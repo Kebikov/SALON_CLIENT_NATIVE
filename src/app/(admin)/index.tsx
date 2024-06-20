@@ -6,7 +6,6 @@ import HomeUserHeader from '@/components/widgets/HomeUserHeader/HomeUserHeader';
 import ListDepartment from '@/components/widgets/ListDepartment/ListDepartment';
 import ListMasters from '@/components/widgets/ListMasters/ListMasters';
 import ListService from '@/components/widgets/ListService/ListService';
-import { router } from 'expo-router';
 
 import BottomModalSheet from '@/components/wrappers/BottomModalSheet/BottomModalSheet';
 import { IRefBottomModalSheet } from '@/components/wrappers/BottomModalSheet/types';
@@ -20,7 +19,8 @@ const HomeAdmin: FC = () => {
     const refModal = useRef<IRefBottomModalSheet>(null);
 
     const press = () => {
-        refModal.current?.openModal();
+        console.log('press');
+        //refModal.current?.openModal();
     }
 
     return (

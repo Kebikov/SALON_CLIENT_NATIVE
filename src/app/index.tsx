@@ -5,6 +5,8 @@ import ButtonWithIcon from '@/components/shared/ButtonWithIcon/ButtonWithIcon';
 import DoYouHaveAnAccount from '@/components/shared/DoYouHaveAnAccount/DoYouHaveAnAccount';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useRouter } from 'expo-router';
+
+import { useHookRouter } from '@/helpers/router/useHookRouter';
 import { useHookGetStartDataUser } from '@/hooks/useHookGetStartDataUser';
 
 
@@ -13,7 +15,9 @@ import { useHookGetStartDataUser } from '@/hooks/useHookGetStartDataUser';
  */
 const Index: FC = () => {
   
-    const router = useRouter();
+    
+    const {appRouter, router} = useHookRouter();
+    console.log(router.canGoBack());
     
     /**
      * @param showThisComponent Переменная для показа или прерывания отображения компонента.
@@ -30,7 +34,6 @@ const Index: FC = () => {
         router.navigate('authEnter');
     }
 
-    //const routes = getRoutes();
 
     useEffect(() => {
         /**
@@ -42,7 +45,7 @@ const Index: FC = () => {
                 const role = await getStartDataUser();
                 if(!role) return;
 
-                if(role === 'admin') return router.replace('(admin)');
+                if(role === 'admin') return appRouter.replace('(admin)');
                 if(role === 'client') return router.replace('(user)');
                 
             } else {

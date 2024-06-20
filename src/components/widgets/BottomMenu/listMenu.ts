@@ -1,5 +1,5 @@
 import type { TRole } from '@/api/routes/registration/types/registration.types';
-import { AppRouterTypes } from 'app.router.types/app.router.types';
+import { AppRouterTypes } from '@/helpers/router/app.router.types';
 
 export type TKeyPage =  keyof AppRouterTypes;
 
