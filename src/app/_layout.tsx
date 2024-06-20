@@ -5,8 +5,7 @@ import store from '@/redux/store/store';
 import ModalMsg from '@/components/shared/ModalMsg/ModalMsg';
 import ApiInterceptors from '@/components/wrappers/ApiInterceptors/ApiInterceptors';
 import Spinner from '@/components/shared/Spinner/Spinner';
-import { Stack, useNavigation } from 'expo-router';
-import BottomMenu from '@/components/widgets/BottomMenu/BottomMenu';
+import { Stack } from 'expo-router';
 
 interface IMainLayout {
     children?: JSX.Element | JSX.Element[] | undefined;
@@ -30,6 +29,7 @@ export const MainLayout: FC<IMainLayout> = ({children}) => {
 }
 
 const IndexLayout = () => {
+
     return(
         <MainLayout>
             <Stack

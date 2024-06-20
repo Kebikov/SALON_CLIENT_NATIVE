@@ -4,7 +4,7 @@ import { TRole } from "../../registration/types/registration.types";
 export interface IgetInfoBasic {
     id: number;
     email: string;
-    role: TRole;
+    role: TRole | null;
     name: string;
     picture: string | null;
     phone: string | null;

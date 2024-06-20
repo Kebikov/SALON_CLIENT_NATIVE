@@ -6,13 +6,11 @@ import { COLOR_ROOT } from '@/data/colors';
 import InputGeneric from '@/components/shared/InputGeneric/InputGeneric';
 import ButtonWithIcon from '@/components/shared/ButtonWithIcon/ButtonWithIcon';
 import DoYouHaveAnAccount from '@/components/shared/DoYouHaveAnAccount/DoYouHaveAnAccount';
-import { useNavigation, NavigationProp } from '@react-navigation/native';
-import { TypeRootPage } from '@/navigation/navigation.types';
 import httpAuthenticationService from '@/api/routes/authentication/service/http.authentication.service';
 import { useHookCheckDataForm } from '@/hooks/useHookCheckDataForm';
 import Discription from '@/components/shared/Discription/Discription';
 import Title from '@/components/shared/Title/Title';
-import { router } from 'expo-router';
+import { useHookRouter } from '@/helpers/router/useHookRouter';
 
 
 interface IEmail {
@@ -24,6 +22,8 @@ interface IEmail {
  * @page Страница востановления пароля.
  */
 const AuthForgot: FC = () => {
+
+    const {appRouter} = useHookRouter();
 
     const  {checkDataForm} = useHookCheckDataForm();
 
@@ -52,7 +52,7 @@ const AuthForgot: FC = () => {
                     img={require('@/source/img/icon/email-grey.png')}
                 />
                 <ButtonWithIcon pushButton={() => recovery()} title='Востановить' marginTop={30}/>
-                <DoYouHaveAnAccount pushButton={() => router.navigate('/')} title='Вернуться к началу ?' color={COLOR_ROOT.MIDDLE_GRAY} textButton=' Вернуться' />
+                <DoYouHaveAnAccount pushButton={() => appRouter.navigate('/')} title='Вернуться к началу ?' color={COLOR_ROOT.MIDDLE_GRAY} textButton=' Вернуться' />
             </View>
         </WrapperScroll>
     );

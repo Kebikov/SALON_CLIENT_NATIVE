@@ -4,18 +4,22 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { COLOR_ROOT } from '@/data/colors';
 import MenuItem from '@/components/shared/MenuItem/MenuItem';
 import WrapperScrollMenu from '@/components/wrappers/WrapperScrollMenu/WrapperScrollMenu';
-import { useRouter } from 'expo-router';
+import { useHookRouter } from '@/helpers/router/useHookRouter';
+import { useAppDispatch } from '@/redux/store/hooks';
+import { setAppUserInfo } from '@/redux/slice/user.slice';
 
 /**
  * @page Страница пользователя.
  */
 const AdminSettings: FC = () => {
-    console.log('AdminSettings');
-    const router = useRouter();
+
+    const {appRouter} = useHookRouter();
+    const dispatch = useAppDispatch();
 
     const exitOut = async () => {
         await AsyncStorage.clear();
-        router.replace('/');
+        dispatch(setAppUserInfo('clear'));
+        appRouter.navigate('/');
     }
 
     return (
@@ -29,7 +33,7 @@ const AdminSettings: FC = () => {
                         title='Password' 
                         subTitle='Изминение пароля пользователя' 
                         img={require('@/source/img/icon-menu/password-1.png')} 
-                        pushFunction={() => router.navigate('changePassword')}
+                        pushFunction={() => appRouter.navigate('(admin)/changePassword')}
                     />
                     <MenuItem 
                         title='Выход' 

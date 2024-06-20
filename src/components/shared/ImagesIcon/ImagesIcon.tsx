@@ -1,8 +1,7 @@
-import { View, StyleSheet, Pressable } from 'react-native';
+import { View, StyleSheet, Pressable, Image } from 'react-native';
 import React, { FC, useMemo } from 'react';
 import { baseLink } from '@/api/axios/axios.instance/instance';
 import { COLOR_ROOT } from '@/data/colors';
-import { Image as ExpoImage } from 'expo-image';
 
 
 interface IImagesIcon {
@@ -29,12 +28,9 @@ const ImagesIcon: FC<IImagesIcon> = ({active, arrImg, setActive}) => {
                 onPress={() => setActive(item)}
             >
                 <View style={[styles.boxImg, item === active ? {borderColor: 'red'} : {borderColor: COLOR_ROOT.MAIN_COLOR}]} >
-                    <ExpoImage 
+                    <Image 
                         source={{uri: `${baseLink}/api/img/get-img/${item}?type=icon_icon-group`}} 
                         style={styles.img} 
-                        placeholder={'img'}
-                        transition={1000}
-                        contentFit='contain'
                     />
                 </View>
             </Pressable>
@@ -62,7 +58,8 @@ const styles = StyleSheet.create({
     },
     img: {
         width: '100%',
-        height: '100%'
+        height: '100%',
+        resizeMode: 'contain'
     },
 });
 

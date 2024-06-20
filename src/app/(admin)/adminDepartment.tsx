@@ -1,13 +1,11 @@
 import { COLOR_ROOT } from '@/data/colors';
-import { View, StyleSheet, Platform, Text, Pressable, ActivityIndicator } from 'react-native';
+import { View, StyleSheet, Platform, Text, Pressable } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
-import React, { FC, useRef, useState, useEffect } from 'react';
+import React, { FC, useRef, useState } from 'react';
 import WrapperMenu from '@/components/wrappers/WrappersMenu/WrappersMenu';
 import DepartmentCartAdmin from '@/components/shared/DepartmentCartAdmin/DepartmentCartAdmin';
 import ButtonWithIcon from '@/components/shared/ButtonWithIcon/ButtonWithIcon';
 import Discription from '@/components/shared/Discription/Discription';
-import { useNavigation, NavigationProp } from '@react-navigation/native';
-import { TypeRootPage } from '@/navigation/navigation.types';
 import NotElements from '@/components/shared/NotElements/NotElements';
 import { useHookGetDataDepartments } from '@/hooks/useHookGetDataDepartments';
 import ButtonSwipeable from '@/components/widgets/ButtonSwipeable/ButtonSwipeable';
@@ -15,6 +13,8 @@ import BottomModalSheet from '@/components/wrappers/BottomModalSheet/BottomModal
 import httpDepartmentService from '@/api/routes/department/service/http.department.service';
 import { IRefBottomModalSheet } from '@/components/wrappers/BottomModalSheet/types';
 import { useHookCheckErrorResponce } from '@/hooks/useHookCheckErrorResponce';
+import { useHookRouter } from '@/helpers/router/useHookRouter';
+import { router } from 'expo-router';
 
 
 interface IDelDepartment {
@@ -27,21 +27,24 @@ interface IDelDepartment {
  * @page `Страница с группами и кнопкой добавления группы.`
  */
 const AdminDepartment: FC= () => {
+
+    const {appRouter} = useHookRouter();
     /**
      * @param currentDepartment Текушяя удаляемая группа.
      */
     const [currentDepartment, setCurrentDepartment] = useState<IDelDepartment | null>(null);
     const {dataDepartments, setDataDepartments} = useHookGetDataDepartments();
 
-    const {navigate} = useNavigation<NavigationProp<TypeRootPage>>();
-    const {modalMessageError, isMessage} = useHookCheckErrorResponce();
+    
+    const {isMessage} = useHookCheckErrorResponce();
 
     const refModalSheet = useRef<IRefBottomModalSheet>(null);
     const openModal = () => refModalSheet.current?.openModal();
     const closeModal = () => refModalSheet.current?.closeModal();
 
     const goEditDepartment = (id: number) => {
-        navigate('AdminEditDepartment', {idDepartment: id});
+        
+        router.navigate({pathname: '(admin)/[idEditDepartment]', params: {idEditDepartment: id}});
     }
 
     const openModalDeleteDepartment = (id: IDelDepartment) => {
@@ -63,7 +66,7 @@ const AdminDepartment: FC= () => {
 
     return (
         <>
-            <WrapperMenu page='AdminAddDepartment' titlePage='Группы услуг' >
+            <WrapperMenu titlePage='Группы услуг' >
                 <View style={styles.main} >
                     <Discription text='Работа с группами услуг. Для обьединения услуг в определенные группы.' marginTop={10}/>
                     {
@@ -105,7 +108,7 @@ const AdminDepartment: FC= () => {
                 <View style={styles.boxButton}>
                     <ButtonWithIcon 
                         title='добавить группу' 
-                        pushButton={() => navigate('AdminAddDepartment')} 
+                        pushButton={() => appRouter.navigate('(admin)/adminAddDepartment')} 
                         img={require('@/source/img/icon/plus-white.png')} 
                         marginTop={10} 
                     />

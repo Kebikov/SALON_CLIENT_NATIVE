@@ -2,11 +2,10 @@ import { View, StyleSheet } from 'react-native';
 import React, { FC } from 'react';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import WrapperScrollMenu from '@/components/wrappers/WrapperScrollMenu/WrapperScrollMenu';
-import HeaderTitle from '@/components/widgets/HeaderTitle/HeaderTitle';
 import httpDepartmentService from '@/api/routes/department/service/http.department.service';
 import { useHookCheckErrorResponce } from '@/hooks/useHookCheckErrorResponce';
-import type { TypeRootPage } from '@/navigation/navigation.types';
 import DepartmentForm from '@/components/shared/DepartmentForm/DepartmentForm';
+import { useHookRouter } from '@/helpers/router/useHookRouter';
 
 
 /** 
@@ -27,7 +26,7 @@ export interface IDataDepartment {
  */
 const AdminAddDepartment: FC = () => {
 
-    const {navigate} = useNavigation<NavigationProp<TypeRootPage>>();
+    const {appRouter} = useHookRouter();
     const {modalMessageError, isMessage} = useHookCheckErrorResponce();
 
     const onAddDepartment = async (data: IDataDepartment) => {
@@ -41,11 +40,11 @@ const AdminAddDepartment: FC = () => {
         });
         if(!result) return;
         isMessage(result);
-        navigate('AdminDepartment');
+        appRouter.navigate('(admin)/adminDepartment');
     };
 
     return (
-        <WrapperScrollMenu page='AdminAddDepartment' titlePage='Добавление группы'>
+        <WrapperScrollMenu titlePage='Добавление группы' >
             <View style={styles.main} >
                 <DepartmentForm 
                     handlePressButton={onAddDepartment} 

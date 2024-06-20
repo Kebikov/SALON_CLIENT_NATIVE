@@ -9,13 +9,15 @@ import type { TRole } from '@/api/routes/registration/types/registration.types';
 
 /**
  * `Hook для получения базовой информации о пользователе.`
+ * @example const { getStartDataUser } = useHookGetStartDataUser();
+ * @return `await getStartDataUser()`
  */
 export const useHookGetStartDataUser = () => {
 
     const dispatch = useAppDispatch();
     const {modalMessageError} = useHookCheckErrorResponce();
 
-    async function getStartDataUser(): Promise<TRole | void> {
+    async function getStartDataUser() {
         const userJSON = await AsyncStorage.getItem('@user');
         if(!userJSON) return modalMessageError('Error','Данные небыли сохранены, пройдите авторизацию повторно.');
         const user = JSON.parse(userJSON) as IResRegistration;
@@ -24,7 +26,7 @@ export const useHookGetStartDataUser = () => {
             if(!result) return;
             dispatch(setAppUserInfo(result));
             if(!result.isActivated) return modalMessageError('Error', 'Пожалуйста проверьте свою почту и подтвердите ее переходом по ссылке в письме, проверьте папку спам !');
-            return result.role;
+            if(result.role) return result.role;
         }
     };
 

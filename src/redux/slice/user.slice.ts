@@ -11,9 +11,9 @@ interface IUserSlice {
 const initialState: IUserSlice = {
     user: {
         id: 0,
-        email: 'email@gmail.com',
-        role: 'client',
-        name: 'клиент',
+        email: '',
+        role: null,
+        name: '',
         picture: null,
         phone: null,
         isActivated: 0
@@ -25,8 +25,12 @@ const userSlice = createSlice({
     name: 'user',
     initialState,
     reducers: {
-        setAppUserInfo: (state, action: PayloadAction<IgetInfoBasic>) => {
-            state.user = action.payload;
+        setAppUserInfo: (state, action: PayloadAction<IgetInfoBasic | 'clear'>) => {
+            if(action.payload === 'clear') {
+                state.user = initialState.user;
+            } else {
+                state.user = action.payload;
+            }
         }
     }
 });

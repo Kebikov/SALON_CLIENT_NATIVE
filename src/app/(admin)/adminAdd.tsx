@@ -14,7 +14,7 @@ const AdminAdd: FC = () => {
 
 
     return (
-        <WrapperScrollMenu page='adminAdd' >
+        <WrapperScrollMenu>
             <View style={styles.main} >
                 <Title text='Основные настройки' marginTop={10}/>
                 <MenuItem

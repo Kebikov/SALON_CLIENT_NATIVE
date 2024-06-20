@@ -4,21 +4,18 @@ import JoinGoogle from '@/components/shared/JoinGoogle/JoinGoogle';
 import ButtonWithIcon from '@/components/shared/ButtonWithIcon/ButtonWithIcon';
 import DoYouHaveAnAccount from '@/components/shared/DoYouHaveAnAccount/DoYouHaveAnAccount';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useRouter } from 'expo-router';
-
 import { useHookRouter } from '@/helpers/router/useHookRouter';
 import { useHookGetStartDataUser } from '@/hooks/useHookGetStartDataUser';
+
 
 
 /**
  * @page Стартовая страница приложения.
  */
 const Index: FC = () => {
-  
-    
-    const {appRouter, router} = useHookRouter();
-    console.log(router.canGoBack());
-    
+
+    const {appRouter} = useHookRouter();
+
     /**
      * @param showThisComponent Переменная для показа или прерывания отображения компонента.
      */
@@ -27,15 +24,16 @@ const Index: FC = () => {
     const {getStartDataUser} = useHookGetStartDataUser();
 
     const goToPageRegistration = () => {
-        router.navigate('authCreateAccount');
+        appRouter.navigate('(auth)/authCreateAccount');
     }
 
     const goToPageAuthEnter = () => {
-        router.navigate('authEnter');
+        appRouter.navigate('(auth)/authEnter');
     }
 
 
     useEffect(() => {
+
         /**
          * Переход на домашнюю страницу в случае существования пользователя.
          */
@@ -46,7 +44,7 @@ const Index: FC = () => {
                 if(!role) return;
 
                 if(role === 'admin') return appRouter.replace('(admin)');
-                if(role === 'client') return router.replace('(user)');
+                if(role === 'client') return appRouter.replace('(user)');
                 
             } else {
                 setShowThisComponent(true);
@@ -65,6 +63,7 @@ const Index: FC = () => {
                 <View style={styles.overlay} />
                 <View style={styles.authStart} >
                     <View style={styles.box}>
+                        {/* <Image source={require('@/source/img/masters/1.jpg')}/> */}
                         <Text style={styles.textTitle} >Давай, присоеденяйся к нам !</Text>
                         <View style={styles.titleBox} >
                             <Text style={styles.textSubTitle} >Лучшие Beauty мастера ждут тебя. Маникюр, парикмахерские услуги, лазерная эпиляция и многое еще.</Text>

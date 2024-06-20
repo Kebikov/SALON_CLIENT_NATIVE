@@ -14,7 +14,8 @@ import { useHookCheckErrorResponce } from '@/hooks/useHookCheckErrorResponce';
 import { asyncStorageSaveUser } from '@/helpers/save/saveUserInAsyncStorage';
 import Discription from '@/components/shared/Discription/Discription';
 import Title from '@/components/shared/Title/Title';
-import { router } from 'expo-router';
+import { useHookRouter } from '@/helpers/router/useHookRouter';
+import { useHookGetStartDataUser } from '@/hooks/useHookGetStartDataUser';
 
 
 interface IAuthEnter {
@@ -27,6 +28,10 @@ interface IAuthEnter {
  */
 const AuthEnter: FC = () => {
 
+    const {appRouter} = useHookRouter();
+
+    const {getStartDataUser} = useHookGetStartDataUser();
+
     const { modalMessageError } = useHookCheckErrorResponce();
     const [data, setData] = useState<IAuthEnter>({
         email: '',
@@ -37,7 +42,7 @@ const AuthEnter: FC = () => {
      * Переход на страницу => "AuthCreateAccount".
      */
     const goToPageRegistration = () => {
-        router.navigate('authCreateAccount');
+        appRouter.navigate('(auth)/authCreateAccount');
     }
 
     const onChangeForm = (e: NativeSyntheticEvent<TextInputChangeEventData>, key: string) => {
@@ -58,7 +63,10 @@ const AuthEnter: FC = () => {
         const result = await httpAuthenticationService.POST_authentication(data);
         if(!result) return;
         await asyncStorageSaveUser(result);
-        router.navigate('(user)/home');
+        const role = await getStartDataUser();
+
+        if(role === 'admin') return appRouter.navigate('(admin)');
+        if(role === 'client') return appRouter.navigate('(user)');
     }
 
     return (
@@ -75,7 +83,7 @@ const AuthEnter: FC = () => {
                 <InputPassword onChangeForm={onChangeForm} marginBottom={0} />
                 <View style={styles.boxForgot}>
                     <Pressable 
-                        onPress={() => router.navigate('authForgot')}
+                        onPress={() => appRouter.navigate('(auth)/authForgot')}
                     >
                         <Text style={styles.textForgot}>Забыли пароль ?</Text>
                     </Pressable>

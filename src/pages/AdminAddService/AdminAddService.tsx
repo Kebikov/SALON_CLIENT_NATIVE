@@ -67,7 +67,7 @@ const AdminAddService: FC = () => {
     
     return (
         <>
-            <WrapperScrollMenu page='AdminAddService' titlePage='Добавление услуги' >
+            <WrapperScrollMenu titlePage='Добавление услуги' >
                 <View style={styles.main} >
                     {/*//* title */}
                     <> 

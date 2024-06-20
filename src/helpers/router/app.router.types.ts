@@ -1,3 +1,4 @@
+// router.navigate({pathname: '(admin)/[idEditDepartment]', params: {idEditDepartment: id}});
 
 export type AppRouterTypes = {
     '/': undefined;
@@ -11,6 +12,11 @@ export type AppRouterTypes = {
     '(admin)': undefined;
     '(admin)/adminAdd': undefined;
     '(admin)/adminSettings': undefined;
+    '(admin)/changePassword': undefined;
+
+    '(admin)/adminAddDepartment': undefined;
+    '(admin)/adminDepartment': undefined;
+    '(admin)/[idEditDepartment]': { idEditDepartment: number };
 
     //: (user)
     '(user)': undefined;

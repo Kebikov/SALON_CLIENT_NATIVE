@@ -1,6 +1,25 @@
 import { useRouter } from "expo-router";
 import type { AppRouterTypes } from "@/helpers/router/app.router.types";
 
+// interface IObjectParams {
+//     pathname: keyof AppRouterTypes;
+//     params: AppRouterTypes
+// }
+
+// type TKeyApp = keyof AppRouterTypes;
+
+// type TPath = AppRouterTypes
+
+// type IObjectParams= {
+//     pathname: [T in TKeyApp]
+//     params: A
+// }
+
+// const foo: IObjectParams = {
+//     pathname: '(admin)/[idEditDepartment]',
+//     params: 
+// }
+
 export const useHookRouter = () => {
     const router = useRouter();
 

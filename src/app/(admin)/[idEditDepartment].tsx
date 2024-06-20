@@ -1,25 +1,23 @@
-import { View, Text, StyleSheet } from 'react-native';
+import { View, StyleSheet, Text } from 'react-native';
 import React, { FC, useEffect, useState } from 'react';
-import type { TPageAdminEditDepartment } from '@/navigation/extra.types'; 
 import WrapperMenu from '@/components/wrappers/WrappersMenu/WrappersMenu';
 import DepartmentForm from '@/components/shared/DepartmentForm/DepartmentForm';
 import httpDepartmentService from '@/api/routes/department/service/http.department.service';
 import type { IDataDepartmentAndId, IDataDepartment } from '@/api/routes/department/types/department.dto';
 import { useHookCheckErrorResponce } from '@/hooks/useHookCheckErrorResponce';
-import { useNavigation, NavigationProp } from '@react-navigation/native';
-import type { TypeRootPage } from '@/navigation/navigation.types';
+import { useLocalSearchParams } from 'expo-router';
+import { useHookRouter } from '@/helpers/router/useHookRouter';
 
 
 /**
  * @page Страница редактирования группы.
  * @example 
  */
-const AdminEditDepartment: FC<TPageAdminEditDepartment> = ({route}) => {
-    
-    const idDepartment = route.params.idDepartment;
-    const {navigate} = useNavigation<NavigationProp<TypeRootPage>>();
-    const [dataDepartment, setDataDepartment] = useState<IDataDepartmentAndId | null>(null);
+const AdminEditDepartment: FC = () => {
 
+    const {appRouter} = useHookRouter();
+    const { idEditDepartment } = useLocalSearchParams<{ idEditDepartment?: string }>();
+    const [dataDepartment, setDataDepartment] = useState<IDataDepartmentAndId | null>(null);
     const {modalMessageError, isMessage} = useHookCheckErrorResponce();
 
     const pressEditDepertment = async (data: IDataDepartment) => {
@@ -30,12 +28,15 @@ const AdminEditDepartment: FC<TPageAdminEditDepartment> = ({route}) => {
         const result = await httpDepartmentService.PATCH_patchDepartment({...data, id: dataDepartment?.id});
         if(!result) return;
         isMessage(result);
-        navigate('AdminAddDepartment');
+
+        appRouter.replace('(admin)/adminAddDepartment');
     }
 
     useEffect(() => {
+        if(!idEditDepartment) return;
+
         httpDepartmentService
-            .GET_getDepartmentById(idDepartment)
+            .GET_getDepartmentById(Number(idEditDepartment))
             .then(res => {
                 if(!res) return;
                 setDataDepartment(res);
@@ -44,7 +45,7 @@ const AdminEditDepartment: FC<TPageAdminEditDepartment> = ({route}) => {
     }, []);
 
     return (
-        <WrapperMenu page='AdminEditDepartment' titlePage='Редактирование группы'>
+        <WrapperMenu titlePage='Редактирование группы'>
             <View style={styles.main} >
                 {
                     dataDepartment 
@@ -61,7 +62,6 @@ const AdminEditDepartment: FC<TPageAdminEditDepartment> = ({route}) => {
                     :
                     null
                 }
-
             </View>
         </WrapperMenu>
     );

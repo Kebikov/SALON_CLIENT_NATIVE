@@ -14,7 +14,7 @@ import { useHookCheckDataForm } from '@/hooks/useHookCheckDataForm';
 import { stylesGeneric } from '@/components/shared/InputGeneric/InputGeneric';
 import Discription from '@/components/shared/Discription/Discription';
 import Title from '@/components/shared/Title/Title';
-import { router } from 'expo-router';
+import { useHookRouter } from '@/helpers/router/useHookRouter';
 
 
 export type TKeyStateCreateAccount = keyof IReqBodyRegistrationEmail;
@@ -24,6 +24,8 @@ export type TKeyStateCreateAccount = keyof IReqBodyRegistrationEmail;
  * @page Страница регистрации нового пользователя.
  */
 const AuthCreateAccount: FC = () => {
+
+    const {appRouter} = useHookRouter();
 
     const [data, setData] = useState<IReqBodyRegistrationEmail>({
         name: '', 
@@ -35,7 +37,7 @@ const AuthCreateAccount: FC = () => {
     const {checkDataForm} = useHookCheckDataForm();
 
     const goToPageAuthEnter = () => {
-        router.navigate('authEnter');
+        appRouter.navigate('(auth)/authEnter');
     }
 
     const onChangeForm = (e: NativeSyntheticEvent<TextInputChangeEventData>, key: string) => {
@@ -51,7 +53,7 @@ const AuthCreateAccount: FC = () => {
 
         const resultRegistration = await requestOnRegistration(data);
         if(resultRegistration) {
-            router.navigate('home');
+            appRouter.replace('(user)');
         }
     }
 

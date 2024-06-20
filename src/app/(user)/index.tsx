@@ -9,13 +9,15 @@ import ListService from '@/components/widgets/ListService/ListService';
 
 import BottomModalSheet from '@/components/wrappers/BottomModalSheet/BottomModalSheet';
 import { IRefBottomModalSheet } from '@/components/wrappers/BottomModalSheet/types';
-
+import { useAppSelector } from '@/redux/store/hooks';
 
 /** 
  * @page Главная страница Clien приложения после регистрации.
  */
 const HomeUser: FC = () => {
-    console.log('HomeUser');
+
+    const dd = useAppSelector(state => state.userSlice.user);
+    console.log('HomeUser', dd);
     const refModal = useRef<IRefBottomModalSheet>(null);
 
     const press = () => {
