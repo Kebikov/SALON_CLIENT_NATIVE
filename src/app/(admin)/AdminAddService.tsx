@@ -4,7 +4,7 @@ import WrapperScrollMenu from '../../components/wrappers/WrapperScrollMenu/Wrapp
 import QuestionHOC from '../../components/wrappers/QuestionHOC/QuestionHOC';
 import Title from '../../components/shared/Title/Title';
 import InputGeneric from '../../components/shared/InputGeneric/InputGeneric';
-import * as ImagePicker from '../../../node_modules/expo-image-picker';
+import * as ImagePicker from 'expo-image-picker';
 import { IService } from '../../api/routes/service/types/service.types';
 import BottomModalSheet from '../../components/wrappers/BottomModalSheet/BottomModalSheet';
 import type { IRefBottomModalSheet } from '../../components/wrappers/BottomModalSheet/types';
