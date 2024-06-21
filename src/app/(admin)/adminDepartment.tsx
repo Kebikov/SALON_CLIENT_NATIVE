@@ -14,7 +14,6 @@ import httpDepartmentService from '@/api/routes/department/service/http.departme
 import { IRefBottomModalSheet } from '@/components/wrappers/BottomModalSheet/types';
 import { useHookCheckErrorResponce } from '@/hooks/useHookCheckErrorResponce';
 import { useHookRouter } from '@/helpers/router/useHookRouter';
-import { router } from 'expo-router';
 
 
 interface IDelDepartment {
@@ -42,8 +41,8 @@ const AdminDepartment: FC= () => {
     const closeModal = () => refModalSheet.current?.closeModal();
 
     const goEditDepartment = (id: number) => {
-        
-        router.navigate({pathname: '(admin)/[idEditDepartment]', params: {idEditDepartment: id}});
+        console.log('pass goEditDepartment');
+        appRouter.navigate({pathname: '(admin)/[idEditDepartment]', params: {idEditDepartment: id}});
     }
 
     const openModalDeleteDepartment = (id: IDelDepartment) => {

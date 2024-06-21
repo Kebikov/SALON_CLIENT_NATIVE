@@ -5,13 +5,6 @@ module.exports = function (api) {
         presets: ['babel-preset-expo'],
         plugins: [
             [
-                'babel-plugin-root-import',
-                {
-                    rootPathSuffix: 'src/',
-                    rootPathPrefix: '@/'
-                }
-            ],
-            [
                 'module:react-native-dotenv', 
                 {
                     moduleName: '@env',

@@ -12,11 +12,13 @@ const AdminLayout = () => {
                     headerShown: false
                 }}
             >
-                <Stack.Screen name="index"/>
+                {/* <Stack.Screen name="index"/>
+                <Stack.Screen name="[idEditDepartment]"/>
                 <Stack.Screen name="adminAdd"/>
                 <Stack.Screen name="adminSettings"/>
                 <Stack.Screen name="changePassword"/>
-                <Stack.Screen name="[idEditDepartment]" getId={ ({ params }) => String(Date.now()) } />
+                <Stack.Screen name="adminService"/>
+                <Stack.Screen name="adminAddService"/> */}
             </Stack>
             <BottomMenu role={'admin'} />
         </MainLayout>

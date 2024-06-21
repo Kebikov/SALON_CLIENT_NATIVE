@@ -14,6 +14,7 @@ import { useHookRouter } from '@/helpers/router/useHookRouter';
  * @example 
  */
 const AdminEditDepartment: FC = () => {
+    console.log('render AdminEditDepartment');
 
     const {appRouter} = useHookRouter();
     const { idEditDepartment } = useLocalSearchParams<{ idEditDepartment?: string }>();

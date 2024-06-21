@@ -1,9 +1,10 @@
-import { View, Text, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import React, { FC } from 'react';
 import WrapperMenu from '@/components/wrappers/WrappersMenu/WrappersMenu';
 import ServiceCart from '@/components/shared/ServiceCart/ServiceCart';
 import ButtonWithIcon from '../../components/shared/ButtonWithIcon/ButtonWithIcon';
-import useHookNavigate from '../../hooks/useHookNavigate';
+import { useHookRouter } from '@/helpers/router/useHookRouter';
+
 
 /**
  * @page `Страница с услугами и кнопкой добавления услуги.`
@@ -12,7 +13,7 @@ import useHookNavigate from '../../hooks/useHookNavigate';
  */
 const AdminService: FC = () => {
 
-    const {navigate} = useHookNavigate();
+    const {appRouter} = useHookRouter();
 
     return (
         <WrapperMenu titlePage='Услуги'>
@@ -21,8 +22,10 @@ const AdminService: FC = () => {
             </View>
             <View style={styles.boxButton}>
                 <ButtonWithIcon 
-                    title='добавить услугу' 
-                    pushButton={() => navigate('AdminAddService')} 
+                    title='добавить услугу'
+                    pushButton={() => {
+                        appRouter.push('(admin)/adminAddService');
+                    }} 
                     img={require('@/source/img/icon/plus-white.png')} 
                     marginTop={10} 
                 />

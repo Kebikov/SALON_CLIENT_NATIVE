@@ -1,15 +1,15 @@
-import { View, Text, StyleSheet, NativeSyntheticEvent, TextInputChangeEventData, Button, Pressable, Platform } from 'react-native';
+import { View, Text, StyleSheet, NativeSyntheticEvent, TextInputChangeEventData, Button, Pressable, Platform, Alert } from 'react-native';
 import React, { FC, useState, useRef } from 'react';
-import WrapperScrollMenu from '../../components/wrappers/WrapperScrollMenu/WrapperScrollMenu';
-import QuestionHOC from '../../components/wrappers/QuestionHOC/QuestionHOC';
-import Title from '../../components/shared/Title/Title';
-import InputGeneric from '../../components/shared/InputGeneric/InputGeneric';
+import WrapperScrollMenu from '@/components/wrappers/WrapperScrollMenu/WrapperScrollMenu';
+import QuestionHOC from '@/components/wrappers/QuestionHOC/QuestionHOC';
+import Title from '@/components/shared/Title/Title';
+import InputGeneric from '@/components/shared/InputGeneric/InputGeneric';
 import * as ImagePicker from 'expo-image-picker';
-import { IService } from '../../api/routes/service/types/service.types';
-import BottomModalSheet from '../../components/wrappers/BottomModalSheet/BottomModalSheet';
-import type { IRefBottomModalSheet } from '../../components/wrappers/BottomModalSheet/types';
-import { useHookGetDataDepartments } from '../../hooks/useHookGetDataDepartments';
-import { COLOR_ROOT } from '../../data/colors';
+import { IService } from '@/api/routes/service/types/service.types';
+import BottomModalSheet from '@/components/wrappers/BottomModalSheet/BottomModalSheet';
+import type { IRefBottomModalSheet } from '@/components/wrappers/BottomModalSheet/types';
+import { useHookGetDataDepartments } from '@/hooks/useHookGetDataDepartments';
+import { COLOR_ROOT } from '@/data/colors';
 
 const sizeTitle = 16;
 
@@ -17,6 +17,7 @@ const sizeTitle = 16;
  * @page `Страница для добавления услуги.`
  */
 const AdminAddService: FC = () => { 
+    console.log('render AdminAddService');
     /**
      * @param selectedImage Выбраное изображение.
      */
@@ -30,7 +31,7 @@ const AdminAddService: FC = () => {
         img: '',
         id_department: 0
     });
-    console.log(data);
+
 
     const {dataDepartments} = useHookGetDataDepartments();
 
@@ -49,11 +50,9 @@ const AdminAddService: FC = () => {
         if (!result.canceled) {
             setSelectedImage(result.assets[0].uri);
         } else {
-            alert('You did not select any image.');
+            Alert.alert('Фото не выбрано.', 'Вы не выбрали ни одного фото');
         }
     };
-
-
 
     const onChangeForm = (e: NativeSyntheticEvent<TextInputChangeEventData>, key: string) => {
         e.persist();
@@ -139,7 +138,7 @@ const AdminAddService: FC = () => {
                             keyboardType='numeric'
                         />
                     </>
-                    
+                    <Button title='ВЫБОР ФОТО' onPress={pickImageAsync} />
                     <Pressable 
                         onPress={openList}
                         style={styles.button}
