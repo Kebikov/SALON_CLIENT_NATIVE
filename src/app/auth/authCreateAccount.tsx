@@ -37,7 +37,7 @@ const AuthCreateAccount: FC = () => {
     const {checkDataForm} = useHookCheckDataForm();
 
     const goToPageAuthEnter = () => {
-        appRouter.navigate('(auth)/authEnter');
+        appRouter.navigate('auth/authEnter');
     }
 
     const onChangeForm = (e: NativeSyntheticEvent<TextInputChangeEventData>, key: string) => {
@@ -53,7 +53,7 @@ const AuthCreateAccount: FC = () => {
 
         const resultRegistration = await requestOnRegistration(data);
         if(resultRegistration) {
-            appRouter.replace('(user)');
+            appRouter.replace('user');
         }
     }
 

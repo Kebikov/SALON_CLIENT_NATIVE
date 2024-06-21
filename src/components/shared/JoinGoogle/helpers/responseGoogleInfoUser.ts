@@ -14,6 +14,6 @@ export const responseGoogleInfoUser = async (token: string): Promise<IUserGoogle
     });
 
     const user = await response.json();
-    const userFormatToInterfaceIUser: IUserGoogle | null = formatToInterfaceIUserGoogle(user);
+    const userFormatToInterfaceIUser: IUserGoogle | null = formatToInterfaceIUserGoogleuser;
     return userFormatToInterfaceIUser;
 }

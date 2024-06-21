@@ -33,7 +33,7 @@ const AdminSettings: FC = () => {
                         title='Password' 
                         subTitle='Изминение пароля пользователя' 
                         img={require('@/source/img/icon-menu/password-1.png')} 
-                        pushFunction={() => appRouter.navigate('(admin)/changePassword')}
+                        pushFunction={() => appRouter.navigate('admin/changePassword')}
                     />
                     <MenuItem 
                         title='Выход' 

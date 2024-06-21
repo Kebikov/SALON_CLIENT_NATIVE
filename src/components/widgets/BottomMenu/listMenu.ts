@@ -16,7 +16,7 @@ type TMenu = {
 const listMenuClient: Array<IButtonPage> = [
     {
         id: 1,
-        page: '(user)',
+        page: 'user',
         img: require('@/source/img/icon/home.png')
     },
     {
@@ -31,7 +31,7 @@ const listMenuClient: Array<IButtonPage> = [
     },
     {
         id: 4,
-        page: '(user)/userSettings',
+        page: 'user/userSettings',
         img: require('@/source/img/icon/user.png')
     }
 ];
@@ -39,17 +39,17 @@ const listMenuClient: Array<IButtonPage> = [
 const listMenuAdmin: Array<IButtonPage> = [
     {
         id: 1,
-        page: '(admin)',
+        page: 'admin',
         img: require('@/source/img/icon/home.png')
     },
     {
         id: 2,
-        page: '(admin)/adminAdd',
+        page: 'admin/adminAdd',
         img: require('@/source/img/icon/add.png')
     },
     {
         id: 3,
-        page: '(admin)/adminSettings',
+        page: 'admin/adminSettings',
         img: require('@/source/img/icon/user.png')
     }
 ];

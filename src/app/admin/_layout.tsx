@@ -9,11 +9,11 @@ const AdminLayout = () => {
         <MainLayout>
             <Stack
                 screenOptions={{
-                    headerShown: false
+                    headerShown: false 
                 }}
             >
-                {/* <Stack.Screen name="index"/>
-                <Stack.Screen name="[idEditDepartment]"/>
+                <Stack.Screen name="index"/>
+                {/* <Stack.Screen name="[idEditDepartment]"/>
                 <Stack.Screen name="adminAdd"/>
                 <Stack.Screen name="adminSettings"/>
                 <Stack.Screen name="changePassword"/>

@@ -38,9 +38,9 @@ const IndexLayout = () => {
                 }}
             >
                 <Stack.Screen name='index' />
-                <Stack.Screen name='(auth)/authCreateAccount' />
-                <Stack.Screen name='(auth)/authEnter' />
-                <Stack.Screen name='(auth)/authForgot' />
+                <Stack.Screen name='auth/authCreateAccount' />
+                <Stack.Screen name='auth/authEnter' />
+                <Stack.Screen name='auth/authForgot' />
             </Stack>
         </MainLayout>
     )

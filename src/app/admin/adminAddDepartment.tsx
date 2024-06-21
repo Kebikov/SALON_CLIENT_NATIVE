@@ -40,7 +40,7 @@ const AdminAddDepartment: FC = () => {
         });
         if(!result) return;
         isMessage(result);
-        appRouter.navigate('(admin)/adminDepartment');
+        appRouter.navigate('admin/adminDepartment');
     };
 
     return (

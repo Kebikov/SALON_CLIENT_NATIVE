@@ -22,13 +22,13 @@ const AdminAdd: FC = () => {
                     title='Группы услуг'
                     subTitle='добавить, редактировать, удалить'
                     img={require('@/source/img/icon/group.png')}
-                    pushFunction={() => appRouter.navigate('(admin)/adminDepartment')}
+                    pushFunction={() => appRouter.navigate('admin/adminDepartment')}
                 />
                 <MenuItem
                     title='Услуги'
                     subTitle='добавить, редактировать, удалить'
                     img={require('@/source/img/icon/hair.png')}
-                    pushFunction={() => appRouter.navigate('(admin)/adminService')}
+                    pushFunction={() => appRouter.navigate('admin/adminService')}
                 />
                 <MenuItem
                     title='Команда'

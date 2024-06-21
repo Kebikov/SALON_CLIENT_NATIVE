@@ -18,13 +18,13 @@ const AdminService: FC = () => {
     return (
         <WrapperMenu titlePage='Услуги'>
             <View style={styles.main} >
-                <ServiceCart title='Маникюр ручной' department='Маникюр' time={34} price={45} img={'1718492942870.jpg'}/>
+                <ServiceCart title='Маникюр ручной' department='Маникюр' time={34} price={45} img={'1718492942870.jpg'} />
             </View>
             <View style={styles.boxButton}>
                 <ButtonWithIcon 
                     title='добавить услугу'
                     pushButton={() => {
-                        appRouter.push('(admin)/adminAddService');
+                        appRouter.navigate('admin/adminAddService');
                     }} 
                     img={require('@/source/img/icon/plus-white.png')} 
                     marginTop={10} 

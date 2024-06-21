@@ -30,7 +30,7 @@ const AdminEditDepartment: FC = () => {
         if(!result) return;
         isMessage(result);
 
-        appRouter.replace('(admin)/adminAddDepartment');
+        appRouter.replace('admin/adminAddDepartment');
     }
 
     useEffect(() => {

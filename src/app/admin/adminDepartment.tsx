@@ -42,7 +42,7 @@ const AdminDepartment: FC= () => {
 
     const goEditDepartment = (id: number) => {
         console.log('pass goEditDepartment');
-        appRouter.navigate({pathname: '(admin)/[idEditDepartment]', params: {idEditDepartment: id}});
+        appRouter.navigate({pathname: 'admin/[idEditDepartment]', params: {idEditDepartment: id}});
     }
 
     const openModalDeleteDepartment = (id: IDelDepartment) => {
@@ -106,7 +106,7 @@ const AdminDepartment: FC= () => {
                 <View style={styles.boxButton}>
                     <ButtonWithIcon 
                         title='добавить группу' 
-                        pushButton={() => appRouter.navigate('(admin)/adminAddDepartment')} 
+                        pushButton={() => appRouter.navigate('admin/adminAddDepartment')} 
                         img={require('@/source/img/icon/plus-white.png')} 
                         marginTop={10} 
                     />

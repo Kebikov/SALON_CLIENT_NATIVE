@@ -17,7 +17,7 @@ const sizeTitle = 16;
  * @page `Страница для добавления услуги.`
  */
 const AdminAddService: FC = () => { 
-    console.log('render AdminAddService');
+    
     /**
      * @param selectedImage Выбраное изображение.
      */

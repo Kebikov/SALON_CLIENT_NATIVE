@@ -24,11 +24,11 @@ const Index: FC = () => {
     const {getStartDataUser} = useHookGetStartDataUser();
 
     const goToPageRegistration = () => {
-        appRouter.navigate('(auth)/authCreateAccount');
+        appRouter.navigate('auth/authCreateAccount');
     }
 
     const goToPageAuthEnter = () => {
-        appRouter.navigate('(auth)/authEnter');
+        appRouter.navigate('auth/authEnter');
     }
 
 
@@ -43,8 +43,8 @@ const Index: FC = () => {
                 const role = await getStartDataUser();
                 if(!role) return;
 
-                if(role === 'admin') return appRouter.replace('(admin)');
-                if(role === 'client') return appRouter.replace('(user)');
+                if(role === 'admin') return appRouter.replace('admin');
+                if(role === 'client') return appRouter.replace('user');
                 
             } else {
                 setShowThisComponent(true);
