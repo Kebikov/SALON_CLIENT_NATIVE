@@ -14,9 +14,8 @@ const AdminService: FC = () => {
 
     const {navigate} = useHookNavigate();
 
-
     return (
-        <WrapperMenu titlePage='Услуги' page='AdminService' >
+        <WrapperMenu titlePage='Услуги'>
             <View style={styles.main} >
                 <ServiceCart title='Маникюр ручной' department='Маникюр' time={34} price={45} img={'1718492942870.jpg'}/>
             </View>

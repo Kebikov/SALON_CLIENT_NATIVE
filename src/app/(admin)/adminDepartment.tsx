@@ -35,7 +35,6 @@ const AdminDepartment: FC= () => {
     const [currentDepartment, setCurrentDepartment] = useState<IDelDepartment | null>(null);
     const {dataDepartments, setDataDepartments} = useHookGetDataDepartments();
 
-    
     const {isMessage} = useHookCheckErrorResponce();
 
     const refModalSheet = useRef<IRefBottomModalSheet>(null);

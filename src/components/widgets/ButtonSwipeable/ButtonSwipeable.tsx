@@ -123,7 +123,6 @@ const ButtonSwipeable: FC<IButtonSwipeable> = ({
     const onHandlePress = () => {
         'worklet';
         setIsActiveButton(state => {
-            console.log('newState >>> ', state);
             state ? closeStateButton() : openStateButton(250);
             return !state;
         });

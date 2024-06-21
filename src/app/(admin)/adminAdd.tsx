@@ -3,7 +3,7 @@ import React, { FC } from 'react';
 import WrapperScrollMenu from '@/components/wrappers/WrapperScrollMenu/WrapperScrollMenu';
 import MenuItem from '@/components/shared/MenuItem/MenuItem';
 import Title from '@/components/shared/Title/Title';
-import { router } from 'expo-router';
+import { useHookRouter } from '@/helpers/router/useHookRouter';
 
 
 /**
@@ -12,6 +12,7 @@ import { router } from 'expo-router';
  */
 const AdminAdd: FC = () => {
 
+    const {appRouter} = useHookRouter();
 
     return (
         <WrapperScrollMenu>
@@ -21,13 +22,13 @@ const AdminAdd: FC = () => {
                     title='Группы услуг'
                     subTitle='добавить, редактировать, удалить'
                     img={require('@/source/img/icon/group.png')}
-                    pushFunction={() => router.navigate('adminDepartment')}
+                    pushFunction={() => appRouter.navigate('(admin)/adminDepartment')}
                 />
                 <MenuItem
                     title='Услуги'
                     subTitle='добавить, редактировать, удалить'
                     img={require('@/source/img/icon/hair.png')}
-                    pushFunction={() => router.navigate('AdminService')}
+                    pushFunction={() => appRouter.navigate('(admin)/adminService')}
                 />
                 <MenuItem
                     title='Команда'

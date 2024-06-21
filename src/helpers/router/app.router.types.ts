@@ -1,4 +1,4 @@
-// router.navigate({pathname: '(admin)/[idEditDepartment]', params: {idEditDepartment: id}});
+
 
 export type AppRouterTypes = {
     '/': undefined;
@@ -18,23 +18,15 @@ export type AppRouterTypes = {
     '(admin)/adminDepartment': undefined;
     '(admin)/[idEditDepartment]': { idEditDepartment: number };
 
+    '(admin)/adminService': undefined;
+    '(admin)/adminAddService': undefined;
+
     //: (user)
     '(user)': undefined;
     '(user)/userSettings': undefined;
     '(user)/changePassword': undefined;
 
-    changePassword: undefined;
     //Admin
-    
-    adminDepartment: undefined;
-    adminAddDepartment: undefined;
-    adminEditDepartment: {
-        /**
-         * Id группы которую редактируем.
-         */
-        idDepartment: number;
-    };
-    adminService: undefined;
-    adminAddService: undefined;
-    test: undefined;
+    'test': undefined;
 };
+

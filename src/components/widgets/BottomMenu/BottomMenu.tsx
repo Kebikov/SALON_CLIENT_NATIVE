@@ -16,7 +16,7 @@ interface IBottomMenu {
  * @param role Для кокой роли меню. ['admin' | 'user' | 'master']
  */
 const BottomMenu: FC<IBottomMenu> = ({role}) => {
-
+    
     const router = useRouter();
     const path = usePathname();
 

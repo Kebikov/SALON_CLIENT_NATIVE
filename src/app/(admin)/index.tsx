@@ -6,6 +6,7 @@ import HomeUserHeader from '@/components/widgets/HomeUserHeader/HomeUserHeader';
 import ListDepartment from '@/components/widgets/ListDepartment/ListDepartment';
 import ListMasters from '@/components/widgets/ListMasters/ListMasters';
 import ListService from '@/components/widgets/ListService/ListService';
+import { useHookRouter } from '@/helpers/router/useHookRouter';
 
 import BottomModalSheet from '@/components/wrappers/BottomModalSheet/BottomModalSheet';
 import { IRefBottomModalSheet } from '@/components/wrappers/BottomModalSheet/types';
@@ -16,10 +17,12 @@ import { IRefBottomModalSheet } from '@/components/wrappers/BottomModalSheet/typ
  */
 const HomeAdmin: FC = () => {
 
+    const {appRouter} = useHookRouter();
     const refModal = useRef<IRefBottomModalSheet>(null);
 
     const press = () => {
         console.log('press');
+        appRouter.navigate('test');
         //refModal.current?.openModal();
     }
 
