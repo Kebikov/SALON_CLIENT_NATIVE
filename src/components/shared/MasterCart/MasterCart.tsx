@@ -1,8 +1,7 @@
 import { View, Text, StyleSheet, ImageBackground, Image, Platform } from 'react-native';
-import React, { FC, useEffect, useCallback } from 'react';
+import React, { FC } from 'react';
 import { COLOR_ROOT } from '@/data/colors';
-import Animated, {withDelay, withTiming, withRepeat, withSequence, useSharedValue, useAnimatedStyle, Easing} from 'react-native-reanimated';
-import { useFocusEffect } from '@react-navigation/native';
+import Animated, {ZoomIn} from 'react-native-reanimated';
 
 
 interface IMasterCart {
@@ -24,7 +23,6 @@ interface IMasterCart {
     img: number;
 }
 
-const DURATION = 100;
 
 /**
  * @shared Мини-Карточка мастера.
@@ -36,52 +34,8 @@ const DURATION = 100;
  */
 const MasterCart: FC<IMasterCart> = ({masterName, masterUnit, img, grade}) => {
 
-    const viewRotate = useSharedValue(2);
-
-    const animatedStyle = useAnimatedStyle(() => {
-        return {
-            transform: [
-                {
-                    rotate: `${viewRotate.value}deg`
-                }
-            ]
-        }
-    });
-
-    useFocusEffect(
-        useCallback(() => {
-            viewRotate.value = 
-                withSequence(
-                    withRepeat(
-                        withSequence(
-                            withTiming(-2, {
-                                duration: DURATION,
-                                easing: Easing.inOut(Easing.ease)
-                            }),
-                            withTiming(2, {
-                                duration: DURATION,
-                                easing: Easing.inOut(Easing.ease)
-                            })
-                        ), 2
-                    ),
-                    withTiming(0, {
-                        duration: DURATION,
-                        easing: Easing.inOut(Easing.ease)
-                    })
-                )
-            
-
-            return () => {
-                setTimeout(() => {
-                    viewRotate.value = 2;
-                }, 300);
-            };
-        }, [])
-    );
-
-
     return (
-        <Animated.View style={[styles.main, animatedStyle]} >
+        <Animated.View style={[styles.main]} entering={ZoomIn.duration(500).delay(300)} >
             <View style={styles.box} >
                 <View style={styles.boxBg} >
                     <ImageBackground style={styles.imageBackground} source={img} >

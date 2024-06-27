@@ -21,6 +21,8 @@ export type AppRouterTypes = {
     'admin/adminService': undefined;
     'admin/adminAddService': undefined;
 
+    'admin/modal': undefined;
+
     //: user
     'user': undefined;
     'user/userSettings': undefined;

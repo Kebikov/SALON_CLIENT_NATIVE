@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, ImageBackground, Platform } from 'react-native';
+import { View, Text, StyleSheet, ImageBackground, Platform, Image } from 'react-native';
 import React, { FC, useEffect, useState } from 'react';
 import JoinGoogle from '@/components/shared/JoinGoogle/JoinGoogle';
 import ButtonWithIcon from '@/components/shared/ButtonWithIcon/ButtonWithIcon';

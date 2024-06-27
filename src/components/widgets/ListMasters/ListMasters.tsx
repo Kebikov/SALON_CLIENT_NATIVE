@@ -76,7 +76,6 @@ const ListMasters: FC = () => {
 const styles = StyleSheet.create({
     main: {
         marginTop: 10,
-        //backgroundColor: 'red',
         height: sizeHeight
     }
 });
