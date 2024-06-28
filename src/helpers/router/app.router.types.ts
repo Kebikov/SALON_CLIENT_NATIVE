@@ -16,7 +16,7 @@ export type AppRouterTypes = {
 
     'admin/adminAddDepartment': undefined;
     'admin/adminDepartment': undefined;
-    'admin/[idEditDepartment]': { idEditDepartment: number };
+    'admin/[idEditDepartment]': { discription: string, icon: string, id: number, name: string };
 
     'admin/adminService': undefined;
     'admin/adminAddService': undefined;

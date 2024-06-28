@@ -7,6 +7,7 @@ interface IDiscription {
     text: string;
     marginTop?: number;
     fontSize?: number;
+    position?: 'left' | 'center';
 }
 
 
@@ -14,16 +15,18 @@ interface IDiscription {
  * @shared `Текст описание под заглавием.`
  * @param text Текст описания.
  * @param marginTop ? Отступ с верху.
+ * @param position ? Позиция текста. [ 'left' | 'center' ]
  * @example <Discription text={#} marginTop={?#} />
  */
-const Discription: FC<IDiscription> = ({text,marginTop = 0, fontSize = 14}) => {
+const Discription: FC<IDiscription> = ({text,marginTop = 0, fontSize = 14, position = 'left'}) => {
 
     return <Text 
                 style={[
                     styles.text, 
                     {
                         marginTop, 
-                        fontSize: Platform.OS === 'ios' ? fontSize + 2 : fontSize
+                        fontSize: Platform.OS === 'ios' ? fontSize + 2 : fontSize,
+                        textAlign: position
                     }
                 ]} 
             >

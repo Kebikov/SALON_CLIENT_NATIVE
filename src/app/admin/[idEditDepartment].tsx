@@ -16,53 +16,36 @@ import { useHookRouter } from '@/helpers/router/useHookRouter';
 const AdminEditDepartment: FC = () => {
     console.log('render AdminEditDepartment');
 
-    const {appRouter} = useHookRouter();
-    const { idEditDepartment } = useLocalSearchParams<{ idEditDepartment?: string }>();
-    const [dataDepartment, setDataDepartment] = useState<IDataDepartmentAndId | null>(null);
+    const {router} = useHookRouter();
+
+    const { id, name, discription, icon } = useLocalSearchParams<{ discription: string, icon: string, id: string, name: string }>();
+
     const {modalMessageError, isMessage} = useHookCheckErrorResponce();
 
     const pressEditDepertment = async (data: IDataDepartment) => {
         if(!data.name) return modalMessageError('Нет группы', 'Вы не ввели имя создаваемой группы.');
         if(!data.discription) return modalMessageError('Нет описания', 'Вы не ввели описание для создаваемой группы.'); 
         if(!data.icon) return modalMessageError('Нет иконки', 'Вы не выбрали иконку для создаваемой группы.');
-        if(!dataDepartment?.id) return;
-        const result = await httpDepartmentService.PATCH_patchDepartment({...data, id: dataDepartment?.id});
+        const result = await httpDepartmentService.PATCH_patchDepartment({...data, id: Number(id)});
         if(!result) return;
         isMessage(result);
 
-        appRouter.replace('admin/adminAddDepartment');
+        router.back();
     }
 
-    useEffect(() => {
-        if(!idEditDepartment) return;
-
-        httpDepartmentService
-            .GET_getDepartmentById(Number(idEditDepartment))
-            .then(res => {
-                if(!res) return;
-                setDataDepartment(res);
-            })
-            .catch(error => console.log(error));
-    }, []);
 
     return (
         <WrapperMenu titlePage='Редактирование группы'>
             <View style={styles.main} >
-                {
-                    dataDepartment 
-                    ?
                     <DepartmentForm
                         initialData={{
-                            name: dataDepartment.name,
-                            discription: dataDepartment.discription,
-                            icon: dataDepartment.icon
+                            name: name,
+                            discription: discription,
+                            icon: icon
                         }}
                         titleForButton='редактировать'
                         handlePressButton={(data: IDataDepartment) => pressEditDepertment(data)}
                     />
-                    :
-                    null
-                }
             </View>
         </WrapperMenu>
     );

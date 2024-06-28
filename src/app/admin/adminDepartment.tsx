@@ -14,6 +14,7 @@ import httpDepartmentService from '@/api/routes/department/service/http.departme
 import { IRefBottomModalSheet } from '@/components/wrappers/BottomModalSheet/types';
 import { useHookCheckErrorResponce } from '@/hooks/useHookCheckErrorResponce';
 import { useHookRouter } from '@/helpers/router/useHookRouter';
+import type { IDataDepartmentAndId } from '@/api/routes/department/types/department.dto';
 
 
 interface IDelDepartment {
@@ -40,9 +41,8 @@ const AdminDepartment: FC= () => {
     const openModal = () => refModalSheet.current?.openModal();
     const closeModal = () => refModalSheet.current?.closeModal();
 
-    const goEditDepartment = (id: number) => {
-        console.log('pass goEditDepartment');
-        appRouter.navigate({pathname: 'admin/[idEditDepartment]', params: {idEditDepartment: id}});
+    const goEditDepartment = (item: IDataDepartmentAndId) => {
+        appRouter.navigate({pathname: 'admin/[idEditDepartment]', params: {id: item.id, name: item.name, discription: item.discription, icon: item.icon}});
     }
 
     const openModalDeleteDepartment = (id: IDelDepartment) => {
@@ -78,7 +78,8 @@ const AdminDepartment: FC= () => {
                                 <ButtonSwipeable
                                     totalButton={2}
                                     paddingForButton={30}
-                                    onPressButton1={() => goEditDepartment(item.id)}
+
+                                    onPressButton1={() => goEditDepartment(item)}
                                     colorButton1={COLOR_ROOT.BUTTON_COLOR_YELLOW}
                                     iconForButton1={require('@/source/img/icon/edit-btn.png')}
 

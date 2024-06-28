@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet, Image, Pressable, Platform } from 'react-native';
 import React, { FC } from 'react';
 import { COLOR_ROOT } from '@/data/colors';
-import { useNavigation } from '@react-navigation/native';
+import { useRouter } from 'expo-router';
 
 
 interface IHeaderTitle {
@@ -17,12 +17,12 @@ interface IHeaderTitle {
  */
 const HeaderTitle: FC<IHeaderTitle> = ({text}) => {
 
-    const {goBack} = useNavigation();
+    const router = useRouter();
 
     return (
         <Pressable 
             style={styles.main}
-            onPress={() => goBack()}
+            onPress={() => router.back()}
         >
             <View style={styles.boxImg} >
                 <Image style={styles.img} source={require('@/source/img/icon-menu/arrow-white.png')} />

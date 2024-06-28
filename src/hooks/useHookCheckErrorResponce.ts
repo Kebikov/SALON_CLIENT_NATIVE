@@ -3,6 +3,7 @@ import { useAppDispatch } from '@/redux/store/hooks';
 import { setAppModalObject } from '@/redux/slice/modal.slice';
 import { IMessage } from "@/api/routes/authentication/types/authentication.types";
 import { TGIError } from "@/helpers/type-guards/TGIError";
+import { Dispatch } from "@reduxjs/toolkit";
 
 
 /**
@@ -13,7 +14,7 @@ import { TGIError } from "@/helpers/type-guards/TGIError";
  * - `isMessage` - Проверка является ли обьектом IMessage. Вывод в модальное окно сообщения.
  */
 export const useHookCheckErrorResponce = () => {
-    const dispatch = useAppDispatch();
+    const dispatch: Dispatch = useAppDispatch();
     /**
      * `Проверка является ли обьектом IError.`
      * - Вывод в модальное окно сообщения.

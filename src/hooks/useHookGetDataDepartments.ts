@@ -1,7 +1,7 @@
 import React, { FC, useCallback, useMemo, useRef, useState, useEffect } from 'react';
 import httpDepartmentService from '@/api/routes/department/service/http.department.service';
 import type { IDataDepartmentAndId } from '@/api/routes/department/types/department.dto';
-import { useFocusEffect } from '@react-navigation/native';
+import { useFocusEffect } from 'expo-router';
 
 
 /**
