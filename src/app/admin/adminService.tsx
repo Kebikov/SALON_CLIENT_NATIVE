@@ -1,9 +1,11 @@
-import { View, StyleSheet } from 'react-native';
-import React, { FC } from 'react';
+import { View, StyleSheet, FlatList, Text } from 'react-native';
+import React, { FC, useEffect, useState } from 'react';
 import WrapperMenu from '@/components/wrappers/WrappersMenu/WrappersMenu';
 import ServiceCart from '@/components/shared/ServiceCart/ServiceCart';
 import ButtonWithIcon from '../../components/shared/ButtonWithIcon/ButtonWithIcon';
 import { useHookRouter } from '@/helpers/router/useHookRouter';
+import httpServiceService from '@/api/routes/service/service/http.service.service';
+import type { ServiceDTOAndDepartmentName } from '@/api/routes/service/types/service.types';
 
 
 /**
@@ -13,12 +15,38 @@ import { useHookRouter } from '@/helpers/router/useHookRouter';
  */
 const AdminService: FC = () => {
 
+    const [services, setServices] = useState<ServiceDTOAndDepartmentName[] | []>([]);
+
     const {appRouter} = useHookRouter();
+
+    useEffect(() => {
+        httpServiceService
+            .GET_getAllServices()
+            .then(res => {
+                if(res) setServices(res);
+            })
+            .catch(error => console.error(`Error in AdminService GET_getAllServices >>> `, error));
+    }, []);
 
     return (
         <WrapperMenu titlePage='Услуги'>
             <View style={styles.main} >
-                <ServiceCart title='Маникюр ручной' department='Маникюр' time={34} price={45} img={'1718492942870.jpg'} />
+                {
+                    services.length > 0
+                    ?
+                    <FlatList
+                        contentContainerStyle={{ gap: 0, paddingBottom: 10 }}
+                        data={services}
+                        renderItem={ ({item}) => <ServiceCart title={item.title} department={item.name ? item.name : 'нет группы'} time={item.time} price={item.price} img={item.img} /> }
+                        keyExtractor={item => String(item.id)}
+                        horizontal={false}
+                        showsHorizontalScrollIndicator={false}
+                        extraData={services}
+                        ListEmptyComponent={<View><Text>Нет элементов.</Text></View>}
+                    />
+                    :
+                    null
+                }
             </View>
             <View style={styles.boxButton}>
                 <ButtonWithIcon 

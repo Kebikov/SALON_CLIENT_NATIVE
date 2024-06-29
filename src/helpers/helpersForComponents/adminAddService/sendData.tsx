@@ -1,18 +1,22 @@
 import * as ImagePicker from 'expo-image-picker';
 import httpServiceService from '@/api/routes/service/service/http.service.service';
+import type { ExpoRouter } from 'expo-router/types/expo-router';
+import type { ServiceDTO } from '@/api/routes/service/types/service.types';
 
-import type { IService } from '@/api/routes/service/types/service.types';
 
+interface IsendData {
+    selectedImage: ImagePicker.ImagePickerAsset | null;
+    data: Omit<ServiceDTO, 'img' | 'id'> | null;
+    modalMessageError: (title: string, discription: string) => void;
+    isMessage: (data: unknown) => void;
+    router: ExpoRouter.Router
+}
 
     
 /**
  * `Отправка данных на сервер.`
  */
-export const sendData = async (
-    selectedImage: ImagePicker.ImagePickerAsset | null, 
-    data: Omit<IService, 'img'> | null, 
-    modalMessageError: (title: string, discription: string) => void
-) => {
+export const sendData = async ({selectedImage, data, modalMessageError, isMessage, router}: IsendData) => {
 
     try{
         if(!data?.title) return modalMessageError('Нет названия.', 'Введите название услуги.');
@@ -32,8 +36,10 @@ export const sendData = async (
         formData.append('price', String(data.price) );
         formData.append('time', String(data.time) );
         if(data.id_department) formData.append('id_department', String(data.id_department) );
-        await httpServiceService.POST_createService(formData);
-    }catch(err) {
+        const result = await httpServiceService.POST_createService(formData);
+        if(result) isMessage(result);
+        router.back();
+    } catch(err) {
         console.log(err);
     }
 }

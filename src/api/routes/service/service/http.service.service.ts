@@ -1,7 +1,7 @@
-import { IService } from "../types/service.types"; 
 import { IMessage } from "../../authentication/types/authentication.types";
 import { axiosInstanceWithAuth } from "@/api/axios/axios.instance/instance";
-
+import { axiosInstance } from "@/api/axios/axios.instance/instance";
+import type { ServiceDTOAndDepartmentName } from "../types/service.types";
 
 
 class HttpClientService {
@@ -24,7 +24,17 @@ class HttpClientService {
         }
     };
     
-
+    /**
+     * `Получение всех услуг.`
+     */
+    async GET_getAllServices() {
+        try{
+            const {data} = await axiosInstance.get('/service/get-all-services');
+            return data as ServiceDTOAndDepartmentName[];
+        }catch(error) {
+            console.error(`Error in GET_getAllServices >>> `, error);
+        }
+    }
 
 } 
 

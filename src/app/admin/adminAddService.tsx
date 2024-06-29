@@ -1,23 +1,21 @@
-import { View, Text, StyleSheet, NativeSyntheticEvent, TextInputChangeEventData, Button, Pressable, Platform, Alert, Image } from 'react-native';
+import { View, Text, StyleSheet, NativeSyntheticEvent, TextInputChangeEventData, Pressable, Platform, Image } from 'react-native';
 import React, { FC, useState, useRef } from 'react';
 import WrapperScrollMenu from '@/components/wrappers/WrapperScrollMenu/WrapperScrollMenu';
-import QuestionHOC from '@/components/wrappers/QuestionHOC/QuestionHOC';
-import Title from '@/components/shared/Title/Title';
-import InputGeneric from '@/components/shared/InputGeneric/InputGeneric';
 import * as ImagePicker from 'expo-image-picker';
 import BottomModalSheet from '@/components/wrappers/BottomModalSheet/BottomModalSheet';
 import { useHookGetDataDepartments } from '@/hooks/useHookGetDataDepartments';
 import { COLOR_ROOT } from '@/data/colors';
 import ButtonWithIcon from '@/components/shared/ButtonWithIcon/ButtonWithIcon';
-import Discription from '@/components/shared/Discription/Discription';
 import { useHookCheckErrorResponce } from '@/hooks/useHookCheckErrorResponce';
-import { pickImageAsync } from '@/helpers/helpersForComponents/adminAddService/pickImageAsync';
 import { sendData } from '@/helpers/helpersForComponents/adminAddService/sendData';
-import InputServiceTitle from '@/components/shared/InputService/InputServiceTitle';
-import InputServiceDescription from '@/components/shared/InputService/InputServiceDescription';
-import InputServicePrice from '@/components/shared/InputService/InputServicePrice';
-import InputServiceTime from '@/components/shared/InputService/InputServiceTime';
-import type { IService } from '@/api/routes/service/types/service.types';
+import InputServiceTitle from '@/components/shared/shared_AdminAddService/InputServiceTitle';
+import InputServiceDescription from '@/components/shared/shared_AdminAddService/InputServiceDescription';
+import InputServicePrice from '@/components/shared/shared_AdminAddService/InputServicePrice';
+import InputServiceTime from '@/components/shared/shared_AdminAddService/InputServiceTime';
+import ButtonSelectImage from '@/components/shared/shared_AdminAddService/ButtonSelectImage';
+import ButtonSelectDepartment from '@/components/shared/shared_AdminAddService/ButtonSelectDepartment';
+import { useRouter } from 'expo-router';
+import type { ServiceDTO } from '@/api/routes/service/types/service.types';
 import type { IRefBottomModalSheet } from '@/components/wrappers/BottomModalSheet/types';
 
 const sizeTitle = 16;
@@ -27,7 +25,8 @@ const sizeTitle = 16;
  */
 const AdminAddService: FC = () => { 
 
-    const {modalMessageError} = useHookCheckErrorResponce();
+    const router = useRouter();
+    const {modalMessageError, isMessage} = useHookCheckErrorResponce();
     
     /**
      * @param selectedImage Выбраное изображение.
@@ -38,7 +37,7 @@ const AdminAddService: FC = () => {
      */
     const [nameSelectedDepatment, setNameSelectedDepatment] = useState<string>('');
 
-    const [data, setData] = useState< Omit<IService, 'img'> >({ 
+    const [data, setData] = useState< Omit<ServiceDTO, 'img' | 'id'> >({ 
         title: '',
         description: '',
         price: 0,
@@ -75,41 +74,14 @@ const AdminAddService: FC = () => {
                     <InputServiceDescription sizeTitle={sizeTitle} data={data} onChangeForm={onChangeForm} />
                     <InputServicePrice sizeTitle={sizeTitle} data={data} onChangeForm={onChangeForm} />
                     <InputServiceTime sizeTitle={sizeTitle} data={data} onChangeForm={onChangeForm} />
-                    {/*//* Выбор фото */}
-                    <Pressable
-                        onPress={() => pickImageAsync(setSelectedImage, modalMessageError)}
-                        style={[styles.button, {marginTop: 20}]}
-                    >
-                        <Text style={[styles.buttonText, {fontSize: Platform.OS === 'ios' ? 15 : 13}]} >Выбор фото</Text>
-                        {
-                        selectedImage
-                        ?
-                        <View style={{width: '100%', marginTop: 5, alignItems: 'center'}} >
-                            <View style={{width: 70, height: 70, overflow: 'hidden', borderRadius: 10}} >
-                                <Image source={{uri: selectedImage.uri}} style={{width: '100%', height: '100%', resizeMode: 'contain'}} />
-                            </View>
-                        </View>
-                        :
-                        null
-                    }
-                    </Pressable>
-                    <Discription text='Размер до 2 MB., формат : jpg / jpeg / png' position='center' marginTop={5} />
-                    {/*//* Выбор группы */}
-                    <Pressable 
-                        onPress={openList}
-                        style={styles.button}
-                    >
-                        <Text style={[styles.buttonText, {fontSize: Platform.OS === 'ios' ? 15 : 13}]} >Выбор группы</Text>
-                        {
-                            nameSelectedDepatment 
-                            ?
-                            <Text style={[styles.buttonText, {fontSize: Platform.OS === 'ios' ? 12 : 11}]} >{nameSelectedDepatment}</Text>
-                            :
-                            null
-                        }
-                    </Pressable>
+                    <ButtonSelectImage selectedImage={selectedImage} setSelectedImage={setSelectedImage} modalMessageError={modalMessageError} />
+                    <ButtonSelectDepartment openList={openList} nameSelectedDepatment={nameSelectedDepatment} />
                     <View style={{flex: 1, justifyContent: 'flex-end', paddingVertical: 10}}>
-                        <ButtonWithIcon title='добавить' pushButton={() => sendData(selectedImage, data, modalMessageError)} img={require('@/source/img/icon/plus-white.png')}/>
+                        <ButtonWithIcon 
+                            title='добавить' 
+                            pushButton={() => sendData({selectedImage, data, modalMessageError, isMessage, router})} 
+                            img={require('@/source/img/icon/plus-white.png')}
+                        />
                     </View>
                 </View>
             </WrapperScrollMenu>
