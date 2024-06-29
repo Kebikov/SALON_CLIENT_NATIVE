@@ -21,15 +21,6 @@ const BottomMenu: FC<IBottomMenu> = ({role}) => {
     const path = usePathname();
 
     /**
-     * Подчеркивание иконки меню текушей страницы.
-     */
-    const line = (pageLIne: TKeyPage) => {
-        const slice = pageLIne.split(')');
-        if(slice[1] === '') slice[1] = '/';
-        return path === slice[1] ? <View style={styles.boxImgLine}/> : null;
-    };
-
-    /**
      * Кнопка в нижнем меню.
      */
     const ButtonForMenuPage = (item: IButtonPage): JSX.Element => {
@@ -40,7 +31,7 @@ const BottomMenu: FC<IBottomMenu> = ({role}) => {
                 key={item.id} 
             >
                 <Image source={item.img} style={styles.icon} />
-                {item.page ? line(item.page) : null}
+                {item.page === path ? <View style={styles.boxImgLine}/> : null}
             </Pressable>
         )
     };

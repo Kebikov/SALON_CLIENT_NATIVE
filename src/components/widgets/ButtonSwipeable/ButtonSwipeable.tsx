@@ -63,9 +63,23 @@ const ButtonSwipeable: FC<IButtonSwipeable> = ({
      */
     const windowsWidth = Dimensions.get('window').width;
     /**
+     * `Ширина в процентах, сколько место будет выделено под кнопки.`
+     */
+    let spaceForButtons = 0;
+    switch(totalButton) {
+        case 1: spaceForButtons = 20;
+            break;
+        case 2: spaceForButtons = 33;
+            break;
+        case 3: spaceForButtons = 50;
+            break;
+        default: spaceForButtons = 50;
+            break;
+    }
+    /**
      * Выделенная ширина под кнопки.
      */
-    const activeWidth = windowsWidth * 50 / 100;
+    const activeWidth = windowsWidth * spaceForButtons / 100;
     /**
      * Ширина одной кнопки.
      */
@@ -222,7 +236,7 @@ const ButtonSwipeable: FC<IButtonSwipeable> = ({
                                 null
                             }
                         >
-                            <Image source={iconForButton3} style={styles.img}/>
+                            <Image source={iconForButton3} style={styles.img} />
                         </Pressable>
                     </Animated.View>
                     : 
@@ -236,7 +250,14 @@ const ButtonSwipeable: FC<IButtonSwipeable> = ({
 const styles = StyleSheet.create({
     body: { position: 'relative',  width: '100%' },
     button: { width: '100%' },
-    down: { position: 'absolute', top: 0, right: 0, height: '100%', flexDirection: 'row', justifyContent: 'flex-end' },
+    down: { 
+        position: 'absolute', 
+        top: 0, 
+        right: 0, 
+        height: '100%', 
+        flexDirection: 'row', 
+        justifyContent: 'flex-end'
+    },
     down_button_common: { position: 'absolute', top: 0, height: '100%' },
     button_press: { justifyContent: 'center', alignItems: 'center' },
     img: { objectFit: 'contain', width: '100%', height: '100%' }

@@ -1,5 +1,5 @@
 import { COLOR_ROOT } from '@/data/colors';
-import { View, StyleSheet, Platform, Text, Pressable } from 'react-native';
+import { View, StyleSheet, Platform, Text, Pressable, Alert } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import React, { FC, useRef, useState } from 'react';
 import WrapperMenu from '@/components/wrappers/WrappersMenu/WrappersMenu';
@@ -51,7 +51,6 @@ const AdminDepartment: FC= () => {
     }
 
     const deleteDepartment = async () => {
-
         if(!currentDepartment?.id) return;
         const result = await httpDepartmentService.DELETE_deleteDepartment(currentDepartment.id);
         if(!result) return;
@@ -77,7 +76,7 @@ const AdminDepartment: FC= () => {
                             renderItem={({item}) =>  
                                 <ButtonSwipeable
                                     totalButton={2}
-                                    paddingForButton={30}
+                                    paddingForButton={25}
 
                                     onPressButton1={() => goEditDepartment(item)}
                                     colorButton1={COLOR_ROOT.BUTTON_COLOR_YELLOW}

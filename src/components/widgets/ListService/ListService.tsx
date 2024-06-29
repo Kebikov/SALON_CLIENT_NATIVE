@@ -60,7 +60,8 @@ const styles = StyleSheet.create({
     main: {
         //marginTop: 10,
         //backgroundColor: 'red',
-        paddingBottom: 10
+        padding: 10,
+        gap: 10
     }
 });
 

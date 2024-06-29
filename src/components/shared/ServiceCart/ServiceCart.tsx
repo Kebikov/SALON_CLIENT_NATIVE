@@ -26,6 +26,7 @@ export interface IServiceCart {
      * Изображение услуги.
      */
     img: number | string;
+    borderRadius?: number;
 }
 
 
@@ -36,12 +37,14 @@ export interface IServiceCart {
  * @param time Время выполнения услуги.
  * @param price Стоимость услуги.
  * @param img Изображение услуги.
+ * @optional
+ * @param borderRadius Радиус закругления
  */
-const ServiceCart: FC<IServiceCart> = ({title, department, time, price, img}) => {
+const ServiceCart: FC<IServiceCart> = ({title, department, time, price, img, borderRadius = 25}) => {
 
     return (
         <View style={styles.main} >
-            <View style={styles.box} >
+            <View style={[styles.box, {borderRadius}]} >
                 <View style={styles.left} >
                     <Image style={styles.img} source={typeof img === 'number' ? img : {uri: `${baseLink}/api/img/get-img/${img}?type=img_imgService`}} />
                 </View>
@@ -69,17 +72,15 @@ const styles = StyleSheet.create({
     main: {
         width: '100%',
         flexDirection: 'row',
-        justifyContent:'center',
-        marginTop: 10,
+        justifyContent:'center'
     },
     box: {
-        width: '95%',
+        width: '100%',
         height: '100%',
         padding: 10,
         backgroundColor: 'white',
         flexDirection: 'row',
         justifyContent: 'flex-start',
-        borderRadius: 25,
         //shadows
         shadowColor: "#000000",
         shadowOffset: {
@@ -93,7 +94,7 @@ const styles = StyleSheet.create({
     left: {
         width: 110,
         height: 110,
-        borderRadius: 15,
+        borderRadius:15,
         overflow: 'hidden',
         marginRight: 10,
         backgroundColor: 'red'
