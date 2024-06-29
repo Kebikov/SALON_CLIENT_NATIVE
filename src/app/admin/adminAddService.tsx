@@ -5,9 +5,7 @@ import QuestionHOC from '@/components/wrappers/QuestionHOC/QuestionHOC';
 import Title from '@/components/shared/Title/Title';
 import InputGeneric from '@/components/shared/InputGeneric/InputGeneric';
 import * as ImagePicker from 'expo-image-picker';
-import { IService } from '@/api/routes/service/types/service.types';
 import BottomModalSheet from '@/components/wrappers/BottomModalSheet/BottomModalSheet';
-import type { IRefBottomModalSheet } from '@/components/wrappers/BottomModalSheet/types';
 import { useHookGetDataDepartments } from '@/hooks/useHookGetDataDepartments';
 import { COLOR_ROOT } from '@/data/colors';
 import ButtonWithIcon from '@/components/shared/ButtonWithIcon/ButtonWithIcon';
@@ -15,6 +13,12 @@ import Discription from '@/components/shared/Discription/Discription';
 import { useHookCheckErrorResponce } from '@/hooks/useHookCheckErrorResponce';
 import { pickImageAsync } from '@/helpers/helpersForComponents/adminAddService/pickImageAsync';
 import { sendData } from '@/helpers/helpersForComponents/adminAddService/sendData';
+import InputServiceTitle from '@/components/shared/InputService/InputServiceTitle';
+import InputServiceDescription from '@/components/shared/InputService/InputServiceDescription';
+import InputServicePrice from '@/components/shared/InputService/InputServicePrice';
+import InputServiceTime from '@/components/shared/InputService/InputServiceTime';
+import type { IService } from '@/api/routes/service/types/service.types';
+import type { IRefBottomModalSheet } from '@/components/wrappers/BottomModalSheet/types';
 
 const sizeTitle = 16;
 
@@ -67,76 +71,10 @@ const AdminAddService: FC = () => {
         <>
             <WrapperScrollMenu titlePage='Добавление услуги' >
                 <View style={styles.main} >
-                    {/*//* title */}
-                    <> 
-                        <QuestionHOC
-                            title='Название'
-                            discription='Введите название услуги, например: маникюр ручной, стрижка женикая, окрашевание волос и т.д.'
-                            marginTop={10}
-                        >
-                            <Title text='Название' location='left' fontSize={sizeTitle} />
-                        </QuestionHOC>
-                        <InputGeneric<IService>
-                            keyName='title'
-                            placeholder='Название услуги'
-                            img={require('@/source/img/icon/group-gray.png')}
-                            onChangeForm={onChangeForm}
-                            value={data.title}
-                        />
-                    </>
-                    {/*//* description */}
-                    <> 
-                        <QuestionHOC
-                            title='Описание'
-                            discription='Введите описание услуги, это быдет видеть клиент, если нажмет подробнее об услуге.'
-                            marginTop={10}
-                        >
-                            <Title text='Описание' location='left' fontSize={sizeTitle} />
-                        </QuestionHOC>
-                        <InputGeneric<IService>
-                            keyName='description'
-                            placeholder='Название услуги'
-                            img={require('@/source/img/icon/group-gray.png')}
-                            onChangeForm={onChangeForm}
-                            value={data.description}
-                        />
-                    </>
-                    {/*//* price */}
-                    <> 
-                        <QuestionHOC
-                            title='Стоимость'
-                            discription='Введите стоимость услуги, например: 45, будет установлено 45 рублей.'
-                            marginTop={10}
-                        >
-                            <Title text='Стоимость' location='left' fontSize={sizeTitle} />
-                        </QuestionHOC>
-                        <InputGeneric<IService>
-                            keyName='price'
-                            placeholder='Стоимость услуги'
-                            img={require('@/source/img/icon/group-gray.png')}
-                            onChangeForm={onChangeForm}
-                            value={ data.price ? String(data.price) : '' }
-                            keyboardType='numeric'
-                        />
-                    </>
-                    {/*//* time */}
-                    <> 
-                        <QuestionHOC
-                            title='Длительность услуги'
-                            discription='Установите длительность услуги в минутах.'
-                            marginTop={10}
-                        >
-                            <Title text='Длительность услуги' location='left' fontSize={sizeTitle} />
-                        </QuestionHOC>
-                        <InputGeneric<IService>
-                            keyName='time'
-                            placeholder='Длительность в минутах'
-                            img={require('@/source/img/icon/group-gray.png')}
-                            onChangeForm={onChangeForm}
-                            value={ data.time ? String(data.time) : '' }
-                            keyboardType='numeric'
-                        />
-                    </>
+                    <InputServiceTitle sizeTitle={sizeTitle} data={data} onChangeForm={onChangeForm} />
+                    <InputServiceDescription sizeTitle={sizeTitle} data={data} onChangeForm={onChangeForm} />
+                    <InputServicePrice sizeTitle={sizeTitle} data={data} onChangeForm={onChangeForm} />
+                    <InputServiceTime sizeTitle={sizeTitle} data={data} onChangeForm={onChangeForm} />
                     {/*//* Выбор фото */}
                     <Pressable
                         onPress={() => pickImageAsync(setSelectedImage, modalMessageError)}
@@ -176,7 +114,7 @@ const AdminAddService: FC = () => {
                 </View>
             </WrapperScrollMenu>
             
-                <BottomModalSheet ref={bottomSheetRef} heightProcent={50} >
+            <BottomModalSheet ref={bottomSheetRef} heightProcent={50} >
                 <>
                     {
                         dataDepartments.length > 0
