@@ -18,12 +18,18 @@ import { useRouter } from 'expo-router';
 import type { ServiceDTO } from '@/api/routes/service/types/service.types';
 import type { IRefBottomModalSheet } from '@/components/wrappers/BottomModalSheet/types';
 
+
+interface IFormService {
+    data: Omit<ServiceDTO, 'img' | 'id'>;
+    setData: React.Dispatch<React.SetStateAction<Omit<ServiceDTO, "img" | "id">>>;
+}
+
 const sizeTitle = 16;
 
 /**
- * @page `Страница для добавления услуги.`
+ * @widgets `Форма для добавления/редактирования сервиса.`
  */
-const AdminAddService: FC = () => { 
+const FormService: FC<IFormService> = ({data, setData}) => {
 
     const router = useRouter();
     const {modalMessageError, isMessage} = useHookCheckErrorResponce();
@@ -36,14 +42,6 @@ const AdminAddService: FC = () => {
      * @param nameSelectedDepatment Имя выбранной группы.
      */
     const [nameSelectedDepatment, setNameSelectedDepatment] = useState<string>('');
-
-    const [data, setData] = useState< Omit<ServiceDTO, 'img' | 'id'> >({ 
-        title: 'рш',
-        description: '',
-        price: 0,
-        time: 0,
-        id_department: 0
-    });
 
     const {dataDepartments} = useHookGetDataDepartments();
 
@@ -110,6 +108,7 @@ const AdminAddService: FC = () => {
     );
 };
 
+
 const styles = StyleSheet.create({
     main: {flex: 1, paddingHorizontal: 10},
     selectItem: {
@@ -134,4 +133,5 @@ const styles = StyleSheet.create({
     }
 });
 
-export default AdminAddService;
+
+export default FormService;

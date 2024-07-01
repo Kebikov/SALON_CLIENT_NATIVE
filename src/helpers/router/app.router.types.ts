@@ -1,3 +1,4 @@
+import type { ServiceDTOAndDepartmentName } from "@/api/routes/service/types/service.types";
 
 
 export type AppRouterTypes = {
@@ -16,10 +17,26 @@ export type AppRouterTypes = {
 
     '/admin/adminAddDepartment': undefined;
     '/admin/adminDepartment': undefined;
-    '/admin/[idEditDepartment]': { discription: string, icon: string, id: number, name: string };
+    '/admin/adminEditDepartment/[id]': { 
+        discription: string, 
+        icon: string, 
+        id: number, 
+        name: string 
+    };
 
     '/admin/adminService': undefined;
     '/admin/adminAddService': undefined;
+    '/admin/adminEditService/[id]': {
+        id: number, 
+        title: string, 
+        description: string, 
+        price: number, 
+        time: number, 
+        img: string, 
+        id_department?: number, 
+        name?: string 
+    }
+
 
     '/admin/modal': undefined;
 
@@ -31,4 +48,12 @@ export type AppRouterTypes = {
     //Admin
     'test': undefined;
 };
+
+
+export type TNumbersToString<T> = {
+    [key in keyof T]: T[key] extends number ? string : T[key] extends number | undefined ? string | undefined : T[key];
+};
+
+
+
 

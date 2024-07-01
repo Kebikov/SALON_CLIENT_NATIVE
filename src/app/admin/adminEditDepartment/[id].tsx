@@ -14,7 +14,6 @@ import { useHookRouter } from '@/helpers/router/useHookRouter';
  * @example 
  */
 const AdminEditDepartment: FC = () => {
-    console.log('render AdminEditDepartment');
 
     const {router} = useHookRouter();
 
@@ -37,15 +36,15 @@ const AdminEditDepartment: FC = () => {
     return (
         <WrapperMenu titlePage='Редактирование группы'>
             <View style={styles.main} >
-                    <DepartmentForm
-                        initialData={{
-                            name: name,
-                            discription: discription,
-                            icon: icon
-                        }}
-                        titleForButton='редактировать'
-                        handlePressButton={(data: IDataDepartment) => pressEditDepertment(data)}
-                    />
+                <DepartmentForm
+                    initialData={{
+                        name: name,
+                        discription: discription,
+                        icon: icon
+                    }}
+                    titleForButton='редактировать'
+                    handlePressButton={(data: IDataDepartment) => pressEditDepertment(data)}
+                />
             </View>
         </WrapperMenu>
     );

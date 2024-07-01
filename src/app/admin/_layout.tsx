@@ -12,7 +12,8 @@ const AdminLayout = () => {
                     headerShown: false
                 }}
             >
-                <Stack.Screen name="[idEditDepartment]" />
+                <Stack.Screen name="adminEditService/[id]" />
+                <Stack.Screen name="adminEditDepartment/[id]" />
                 <Stack.Screen name="adminAdd" />
                 <Stack.Screen name="adminAddDepartment" />
                 <Stack.Screen name="adminAddService" /> 

@@ -42,7 +42,7 @@ const AdminDepartment: FC= () => {
     const closeModal = () => refModalSheet.current?.closeModal();
 
     const goEditDepartment = (item: IDataDepartmentAndId) => {
-        appRouter.navigate({pathname: 'admin/[idEditDepartment]', params: {id: item.id, name: item.name, discription: item.discription, icon: item.icon}});
+        appRouter.navigate({pathname: '/admin/adminEditDepartment/[id]', params: {id: item.id, name: item.name, discription: item.discription, icon: item.icon}});
     }
 
     const openModalDeleteDepartment = (id: IDelDepartment) => {
@@ -106,7 +106,7 @@ const AdminDepartment: FC= () => {
                 <View style={styles.boxButton}>
                     <ButtonWithIcon 
                         title='добавить группу' 
-                        pushButton={() => appRouter.navigate('admin/adminAddDepartment')} 
+                        pushButton={() => appRouter.navigate('/admin/adminAddDepartment')} 
                         img={require('@/source/img/icon/plus-white.png')} 
                         marginTop={10} 
                     />

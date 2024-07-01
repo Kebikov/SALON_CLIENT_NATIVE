@@ -41,6 +41,11 @@ const AdminService: FC = () => {
         );
     }
 
+    const editService = (item: ServiceDTOAndDepartmentName) => {
+        console.log({...item});
+        appRouter.navigate({pathname: '/admin/adminEditService/[id]', params: {...item}})
+    }
+
     useEffect(() => {
         httpServiceService
             .GET_getAllServices()
@@ -63,7 +68,7 @@ const AdminService: FC = () => {
                                 <ButtonSwipeable 
                                     totalButton={2}
 
-                                    onPressButton1={() => {}}
+                                    onPressButton1={() => editService(item)}
                                     colorButton1={COLOR_ROOT.BUTTON_COLOR_YELLOW}
                                     iconForButton1={require('@/source/img/icon/edit-btn.png')}
 

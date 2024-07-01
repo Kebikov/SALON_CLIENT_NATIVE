@@ -19,5 +19,5 @@ export interface ServiceDTO {
 }
 
 export interface ServiceDTOAndDepartmentName extends ServiceDTO {
-    name: string;
+    name?: string;
 }
