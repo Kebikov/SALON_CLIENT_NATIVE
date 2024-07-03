@@ -3,6 +3,7 @@ import { getUserInfo } from './getUserInfo';
 import { AuthSessionResult } from 'expo-auth-session';
 import { registrationUserOnTheServer } from './registrationUserOnTheServer';
 import { IUserGoogle } from './formatToInterfaceIUser';
+import { IAppRouter } from '@/helpers/router/useHookRouter';
 
 
 /**
@@ -10,13 +11,13 @@ import { IUserGoogle } from './formatToInterfaceIUser';
  * - Проверяет, есть ли уже пользователь, если есть перенаправляем на главную.
  * - Если нет, запускает getUserInfo.
  */
-const handleSingInWithGoogle = async (response: AuthSessionResult | null, navigate: Function) => {
+const handleSingInWithGoogle = async (response: AuthSessionResult | null, appRouter: IAppRouter) => {
     try{
 
         const user = await AsyncStorage.getItem('@user');
         
         if(user) {
-            navigate('Home');
+            appRouter.replace('/user');
         } else {
             if(response && response.type === "success" && response.authentication) {
                 const infoUser: IUserGoogle | null = await getUserInfo(response.authentication.accessToken);
@@ -25,7 +26,7 @@ const handleSingInWithGoogle = async (response: AuthSessionResult | null, naviga
 
                 const resultRegistration = await registrationUserOnTheServer(infoUser);
                 if(resultRegistration) {
-                    navigate('Home');
+                    appRouter.replace('/user')
                 }
             }
         }

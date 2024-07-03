@@ -1,12 +1,11 @@
 import { View, Text, StyleSheet, Image, Pressable } from 'react-native';
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect } from 'react';
 import { COLOR_ROOT } from '@/data/colors';
 import * as WebBrowser from 'expo-web-browser';
 import * as Google from 'expo-auth-session/providers/google';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import handleSingInWithGoogle from './helpers/handleSingInWithGoogle';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
-import { TypeRootPage } from '@/navigation/navigation.types';
+import { useHookRouter } from '@/helpers/router/useHookRouter';
 
 
 WebBrowser.maybeCompleteAuthSession();
@@ -28,8 +27,8 @@ interface IJoinGoogle {
  * @returns {JSX.Element}
  */
 const JoinGoogle: FC<IJoinGoogle> = ({title = 'Регистрация с Google', border = false }) => {
-    //console.log(process.env.ANDROID_CLIENT_ID);
-    const {navigate} = useNavigation<NavigationProp<TypeRootPage>>();
+    
+    const {appRouter} = useHookRouter();
 
 	const [request, response, promptAsync] = Google.useAuthRequest({
 		androidClientId: process.env.ANDROID_CLIENT_ID,
@@ -39,7 +38,7 @@ const JoinGoogle: FC<IJoinGoogle> = ({title = 'Регистрация с Google'
 
 	useEffect(() => {
         if(response) {
-            handleSingInWithGoogle(response, navigate);
+            handleSingInWithGoogle(response, appRouter);
         }
 	}, [response]);
 

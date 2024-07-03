@@ -1,13 +1,15 @@
 import { View, StyleSheet, FlatList, Text, Alert } from 'react-native';
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect, useState, useCallback } from 'react';
 import WrapperMenu from '@/components/wrappers/WrappersMenu/WrappersMenu';
 import ServiceCart from '@/components/shared/ServiceCart/ServiceCart';
 import ButtonWithIcon from '../../components/shared/ButtonWithIcon/ButtonWithIcon';
 import { useHookRouter } from '@/helpers/router/useHookRouter';
 import httpServiceService from '@/api/routes/service/service/http.service.service';
 import ButtonSwipeable from '@/components/widgets/ButtonSwipeable/ButtonSwipeable';
-import type { ServiceDTOAndDepartmentName } from '@/api/routes/service/types/service.types';
+import { useHookCheckErrorResponce } from '@/hooks/useHookCheckErrorResponce';
 import { COLOR_ROOT } from '@/data/colors';
+import type { ServiceDTOAndDepartmentName } from '@/api/routes/service/types/service.types';
+import { useFocusEffect } from 'expo-router';
 
 
 /**
@@ -19,8 +21,9 @@ const AdminService: FC = () => {
 
     const [services, setServices] = useState<ServiceDTOAndDepartmentName[] | []>([]);
 
-    const {appRouter} = useHookRouter();
+    const {isMessage} = useHookCheckErrorResponce();
 
+    const {appRouter} = useHookRouter();
 
     const deleteService = (id: number, title: string) => {
         Alert.alert(
@@ -34,7 +37,14 @@ const AdminService: FC = () => {
                 },
                 {
                     text: 'удалить',
-                    onPress: () => Alert.alert('вы удалили'),
+                    onPress: async () => {
+                        const result = await httpServiceService.DELETE_deleteServiceById(id, title);
+                        const newServices = services.filter((item) => (item.id !== id));
+                        if(result) {
+                            setServices(newServices);
+                            isMessage(result);
+                        }
+                    },
                     style: 'destructive',
                 }
             ]
@@ -42,18 +52,20 @@ const AdminService: FC = () => {
     }
 
     const editService = (item: ServiceDTOAndDepartmentName) => {
-        console.log({...item});
         appRouter.navigate({pathname: '/admin/adminEditService/[id]', params: {...item}})
     }
 
-    useEffect(() => {
-        httpServiceService
+    useFocusEffect(
+        useCallback(() => {
+            httpServiceService
             .GET_getAllServices()
             .then(res => {
                 if(res) setServices(res);
             })
             .catch(error => console.error(`Error in AdminService GET_getAllServices >>> `, error));
-    }, []);
+        }, [])
+    );
+
 
     return (
         <WrapperMenu titlePage='Услуги'>

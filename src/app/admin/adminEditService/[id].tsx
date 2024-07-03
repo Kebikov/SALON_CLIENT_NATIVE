@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet } from 'react-native';
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import { useLocalSearchParams } from 'expo-router';
+import FormService from '@/components/widgets/FormService/FormService';
 import type { ServiceDTOAndDepartmentName } from '@/api/routes/service/types/service.types';
 import type { TNumbersToString } from '@/helpers/router/app.router.types';
 
@@ -10,14 +11,22 @@ import type { TNumbersToString } from '@/helpers/router/app.router.types';
  */
 const AdminEditService: FC = () => {
 
-    const  { id } = useLocalSearchParams<TNumbersToString<ServiceDTOAndDepartmentName>>();
+    const  { id, title, description, price, time, id_department, name, img } = useLocalSearchParams<TNumbersToString<ServiceDTOAndDepartmentName>>();
 
-    console.log(id);
+    if(!id || !title || !description || !price || !time) return;
+
+    const [data, setData] = useState< Omit<ServiceDTOAndDepartmentName, 'id'> >({ 
+        title: title,
+        description: description,
+        price: Number(price),
+        time: Number(time),
+        id_department: id_department ? Number(id_department) : 0,
+        name: name ? name : '',
+        img: img ? img : ''
+    });
 
     return (
-        <View>
-            <Text>[idEditService]</Text>
-        </View>
+        <FormService titlePage='Редактирование услуги' data={data} setData={setData} />
     );
 };
 

@@ -4,7 +4,7 @@ import BottomMenu from '@/components/widgets/BottomMenu/BottomMenu';
 
 
 const UserLayout = () => {
-    console.log('UserLayout');
+
     return(
         <MainLayout>
             <Stack

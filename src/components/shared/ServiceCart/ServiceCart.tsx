@@ -96,8 +96,7 @@ const styles = StyleSheet.create({
         height: 110,
         borderRadius:15,
         overflow: 'hidden',
-        marginRight: 10,
-        backgroundColor: 'red'
+        marginRight: 10
     },
     right: {
         flex: 1,

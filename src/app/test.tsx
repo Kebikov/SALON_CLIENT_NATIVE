@@ -6,7 +6,7 @@ import DepartmentCartAdmin from '@/components/shared/DepartmentCartAdmin/Departm
 const Test: FC = () => {
 
     const press = () => {
-        console.log('YES');
+       
     }
 
     return (

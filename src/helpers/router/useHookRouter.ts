@@ -8,6 +8,20 @@ interface IObjectParams<T extends TKeyApp> {
     params: AppRouterTypes[T];
 }
 
+export interface IAppRouter {
+    push<T extends TKeyApp>(path: IObjectParams<T>): void;
+    push(path: TKeyApp): void;
+    push<T extends TKeyApp>(path: TKeyApp | IObjectParams<T>): void;
+
+    navigate<T extends TKeyApp>(path: IObjectParams<T>): void;
+    navigate(path: TKeyApp): void;
+    navigate<T extends TKeyApp>(path: TKeyApp | IObjectParams<T>): void;
+
+    replace<T extends TKeyApp>(path: IObjectParams<T>): void;
+    replace(path: TKeyApp): void;
+    replace<T extends TKeyApp>(path: TKeyApp | IObjectParams<T>): void;
+}
+
 /**
  * `Hook типизированной маршрутизации.`
  * @example const {appRouter, router} = useHookRouter();
@@ -16,7 +30,7 @@ interface IObjectParams<T extends TKeyApp> {
 export const useHookRouter = () => {
     const router = useRouter();
 
-    class AppRouter {
+    class AppRouter  {
 
         push<T extends TKeyApp>(path: IObjectParams<T>): void;
         push(path: TKeyApp): void;

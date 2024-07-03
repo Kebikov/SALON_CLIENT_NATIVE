@@ -29,7 +29,7 @@ const ChangePassword: FC = () => {
         password: '',
         passwordTwo: ''
     });
-    console.log('Pass >>> ', data.password);
+  
     const onChangeForm = (e: NativeSyntheticEvent<TextInputChangeEventData>, key: string) => {
         e.persist();
         setData( state => ({...state, [key]: e.nativeEvent.text}) );

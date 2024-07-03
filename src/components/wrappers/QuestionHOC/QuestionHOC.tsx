@@ -42,17 +42,19 @@ const QuestionHOC: FC<IQuestionHOC> = ({children, title, discription, marginTop 
     }
 
     return (
-        <Pressable 
+        <View 
             style={[styles.main, {marginTop}]}
-            onPress={() => openModal()}
         >
             <View style={styles.boxChildren} >
                 {children}
             </View>
-            <View style={styles.boxImg} >
+            <Pressable 
+                style={styles.boxImg} 
+                onPress={() => openModal()}
+            >
                 <Image style={styles.img} source={require('@/source/img/icon/question.png')}/>
-            </View>
-        </Pressable>
+            </Pressable>
+        </View>
     );
 };
 

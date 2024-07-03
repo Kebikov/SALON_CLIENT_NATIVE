@@ -12,7 +12,7 @@ import ButtonSwipeable from '@/components/widgets/ButtonSwipeable/ButtonSwipeabl
 const Test: FC = () => {
 
     const press = () => {
-        console.log('YES');
+      
     }
 
     return (

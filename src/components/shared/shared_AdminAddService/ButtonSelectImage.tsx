@@ -35,8 +35,6 @@ const ButtonSelectImage: FC<IButtonSelectImage> = ({selectedImage, setSelectedIm
         uriImg = selectedImage.uri;
     } 
 
-    console.log(uriImg);
-
     return (
         <>
         <Pressable
