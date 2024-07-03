@@ -30,9 +30,13 @@ interface IMasterCart {
  * @param masterUnit Специализация мастера.
  * @param img Фото мастера.
  * @param grade Рейтинг мастера.
- * @param delay ? Параметр для задержки анимации.
  */
-const MasterCart: FC<IMasterCart> = ({masterName, masterUnit, img, grade}) => {
+const MasterCart: FC<IMasterCart> = ({
+    masterName, 
+    masterUnit, 
+    img, 
+    grade
+}) => {
 
     return (
         <Animated.View style={[styles.main]} entering={ZoomIn.duration(500).delay(300)} >
@@ -57,8 +61,8 @@ const MasterCart: FC<IMasterCart> = ({masterName, masterUnit, img, grade}) => {
 
 const styles = StyleSheet.create({
     main: {
-        width: 145,
-        height: 182,
+        width: Platform.OS === 'ios' ? 145 : 135,
+        height: Platform.OS === 'ios' ? 182 : 172,
         borderRadius: 16,
         padding: 8,
         backgroundColor: 'white',
@@ -77,7 +81,7 @@ const styles = StyleSheet.create({
     },
     boxBg: {
         width: '100%',
-        height: 120,
+        height: Platform.OS === 'ios' ? 120 : 110,
         borderRadius: 8,
         overflow: 'hidden'
     },
@@ -118,9 +122,9 @@ const styles = StyleSheet.create({
     },
     masterUnit: {
         color: COLOR_ROOT.LIGHT_ICON,
-        fontSize: Platform.OS === 'ios' ? 14 : 13,
+        fontSize: Platform.OS === 'ios' ? 14 : 12,
         fontWeight: '400',
-        lineHeight: Platform.OS === 'ios' ? 17 : 15,
+        lineHeight: Platform.OS === 'ios' ? 17 : 14,
         paddingLeft: 5,
     }
 });

@@ -76,7 +76,6 @@ const FormService: FC<IFormService> = ({titlePage, data, setData}) => {
                             pushButton={() => {
                                     if(data.id) {
                                         //editData()
-                            
                                     } else {
                                         sendData({selectedImage, data, modalMessageError, isMessage, router});
                                     }

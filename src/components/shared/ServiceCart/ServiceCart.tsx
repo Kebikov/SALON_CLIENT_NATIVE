@@ -40,7 +40,14 @@ export interface IServiceCart {
  * @optional
  * @param borderRadius Радиус закругления
  */
-const ServiceCart: FC<IServiceCart> = ({title, department, time, price, img, borderRadius = 25}) => {
+const ServiceCart: FC<IServiceCart> = ({
+    title, 
+    department, 
+    time, 
+    price, 
+    img, 
+    borderRadius = 25
+}) => {
 
     return (
         <View style={styles.main} >
@@ -92,8 +99,8 @@ const styles = StyleSheet.create({
         elevation: 5
     },
     left: {
-        width: 110,
-        height: 110,
+        width: Platform.OS === 'ios' ? 110 : 100,
+        height: Platform.OS === 'ios' ? 110 : 100,
         borderRadius:15,
         overflow: 'hidden',
         marginRight: 10
@@ -109,7 +116,7 @@ const styles = StyleSheet.create({
     },
     title: {
         color: COLOR_ROOT.BLACK,
-        fontSize: Platform.OS === 'ios' ? 18 : 16,
+        fontSize: Platform.OS === 'ios' ? 18 : 15,
         fontWeight: '500'
     },
     department: {
@@ -127,12 +134,12 @@ const styles = StyleSheet.create({
     },
     time: {
         color: COLOR_ROOT.MAIN_COLOR,
-        fontSize: Platform.OS === 'ios' ? 16 : 15,
+        fontSize: Platform.OS === 'ios' ? 16 : 14,
         fontWeight: '500'
     },
     textTotal: {
         color: COLOR_ROOT.MAIN_COLOR,
-        fontSize: 17,
+        fontSize: Platform.OS === 'ios' ? 17 : 15,
         fontWeight: '500'
     },
     textByn: {
@@ -149,7 +156,7 @@ const styles = StyleSheet.create({
     },
     textOrder: {
         color: 'white',
-        fontSize: Platform.OS === 'ios' ? 14 : 13,
+        fontSize: Platform.OS === 'ios' ? 14 : 12,
         fontWeight: '500',
         textTransform: 'uppercase'
     }

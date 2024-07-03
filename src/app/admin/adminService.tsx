@@ -8,8 +8,8 @@ import httpServiceService from '@/api/routes/service/service/http.service.servic
 import ButtonSwipeable from '@/components/widgets/ButtonSwipeable/ButtonSwipeable';
 import { useHookCheckErrorResponce } from '@/hooks/useHookCheckErrorResponce';
 import { COLOR_ROOT } from '@/data/colors';
-import type { ServiceDTOAndDepartmentName } from '@/api/routes/service/types/service.types';
 import { useFocusEffect } from 'expo-router';
+import type { ServiceDTOAndDepartmentName } from '@/api/routes/service/types/service.types';
 
 
 /**
