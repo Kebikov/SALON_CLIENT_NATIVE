@@ -16,7 +16,7 @@ const AdminEditService: FC = () => {
     if(!id || !title || !description || !price || !time) return;
 
     const [data, setData] = useState<ServiceDTOAndDepartmentName>({ 
-        id: 0,
+        id: Number(id),
         title: title,
         description: description,
         price: Number(price),

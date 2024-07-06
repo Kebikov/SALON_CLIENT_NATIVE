@@ -15,6 +15,7 @@ import InputServiceTime from '@/components/shared/shared_AdminAddService/InputSe
 import ButtonSelectImage from '@/components/shared/shared_AdminAddService/ButtonSelectImage';
 import ButtonSelectDepartment from '@/components/shared/shared_AdminAddService/ButtonSelectDepartment';
 import { useRouter } from 'expo-router';
+import { editData } from '@/helpers/helpersForComponents/adminEditService/editData';
 import type { ServiceDTOAndDepartmentName } from '@/api/routes/service/types/service.types';
 import type { IRefBottomModalSheet } from '@/components/wrappers/BottomModalSheet/types';
 
@@ -31,7 +32,7 @@ const sizeTitle = 16;
  * @widgets `Форма для добавления/редактирования сервиса.`
  */
 const FormService: FC<IFormService> = ({titlePage, data, setData}) => {
-
+    console.log(data);
     const router = useRouter();
     const {modalMessageError, isMessage} = useHookCheckErrorResponce();
     
@@ -68,18 +69,23 @@ const FormService: FC<IFormService> = ({titlePage, data, setData}) => {
                     <InputServiceDescription sizeTitle={sizeTitle} data={data} onChangeForm={onChangeForm} />
                     <InputServicePrice sizeTitle={sizeTitle} data={data} onChangeForm={onChangeForm} />
                     <InputServiceTime sizeTitle={sizeTitle} data={data} onChangeForm={onChangeForm} />
-                    <ButtonSelectImage selectedImage={selectedImage} setSelectedImage={setSelectedImage} modalMessageError={modalMessageError} initialImage={data.img ? data.img : ''} />
+                    <ButtonSelectImage 
+                        selectedImage={selectedImage} 
+                        setSelectedImage={setSelectedImage} 
+                        modalMessageError={modalMessageError} 
+                        initialImage={data.img ? data.img : ''} 
+                    />
                     <ButtonSelectDepartment openList={openList} nameSelectedDepatment={data.name ? data.name : ''} />
                     <View style={{flex: 1, justifyContent: 'flex-end', paddingVertical: 10}}>
                         <ButtonWithIcon 
                             title='добавить' 
                             pushButton={() => {
+                                    // Если есть начальное ID то значит это редактирование услуги.
                                     if(data.id) {
-                                        //editData()
+                                        editData({selectedImage, data, modalMessageError, isMessage, router});
                                     } else {
                                         sendData({selectedImage, data, modalMessageError, isMessage, router});
                                     }
-                                    
                                 }
                             } 
                             img={require('@/source/img/icon/plus-white.png')}

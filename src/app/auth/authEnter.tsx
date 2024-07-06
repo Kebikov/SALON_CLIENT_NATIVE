@@ -42,7 +42,7 @@ const AuthEnter: FC = () => {
      * Переход на страницу => "AuthCreateAccount".
      */
     const goToPageRegistration = () => {
-        appRouter.navigate('auth/authCreateAccount');
+        appRouter.navigate('/auth/authCreateAccount');
     }
 
     const onChangeForm = (e: NativeSyntheticEvent<TextInputChangeEventData>, key: string) => {
@@ -65,8 +65,8 @@ const AuthEnter: FC = () => {
         await asyncStorageSaveUser(result);
         const role = await getStartDataUser();
 
-        if(role === 'admin') return appRouter.navigate('admin');
-        if(role === 'client') return appRouter.navigate('user');
+        if(role === 'admin') return appRouter.navigate('/admin');
+        if(role === 'client') return appRouter.navigate('/user');
     }
 
     return (
@@ -83,7 +83,7 @@ const AuthEnter: FC = () => {
                 <InputPassword onChangeForm={onChangeForm} marginBottom={0} />
                 <View style={styles.boxForgot}>
                     <Pressable 
-                        onPress={() => appRouter.navigate('auth/authForgot')}
+                        onPress={() => appRouter.navigate('/auth/authForgot')}
                     >
                         <Text style={styles.textForgot}>Забыли пароль ?</Text>
                     </Pressable>

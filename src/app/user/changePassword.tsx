@@ -4,7 +4,6 @@ import React, { FC, useState } from 'react';
 import InputGeneric from '@/components/shared/InputGeneric/InputGeneric';
 import WrapperScrollMenu from '@/components/wrappers/WrapperScrollMenu/WrapperScrollMenu';
 import ButtonWithIcon from '@/components/shared/ButtonWithIcon/ButtonWithIcon';
-import { COLOR_ROOT } from '@/data/colors';
 import { useHookCheckErrorResponce } from '@/hooks/useHookCheckErrorResponce';
 import httpAuthenticationService from '@/api/routes/authentication/service/http.authentication.service';
 import HeaderTitle from '@/components/widgets/HeaderTitle/HeaderTitle';
@@ -50,7 +49,7 @@ const ChangePassword: FC = () => {
     return (
         <>
             
-            <WrapperScrollMenu page='ChangePassword' >
+            <WrapperScrollMenu>
                 <HeaderTitle text='Смена пароля' />
 
                 <View style={styles.main}>

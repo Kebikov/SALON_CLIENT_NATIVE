@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
     },
     department: {
         color: COLOR_ROOT.LIGHT_ICON,
-        fontSize: Platform.OS === 'ios' ? 16 : 15,
+        fontSize: Platform.OS === 'ios' ? 14 : 13,
         fontWeight: '400'
     },
     boxPrice: {
@@ -135,17 +135,17 @@ const styles = StyleSheet.create({
     time: {
         color: COLOR_ROOT.MAIN_COLOR,
         fontSize: Platform.OS === 'ios' ? 16 : 14,
-        fontWeight: '500'
+        fontWeight: Platform.OS === 'ios' ? '600' : '500'
     },
     textTotal: {
         color: COLOR_ROOT.MAIN_COLOR,
         fontSize: Platform.OS === 'ios' ? 17 : 15,
-        fontWeight: '500'
+        fontWeight: Platform.OS === 'ios' ? '600' : '500'
     },
     textByn: {
         color: COLOR_ROOT.MAIN_COLOR,
         fontSize: Platform.OS === 'ios' ? 16 : 14,
-        fontWeight: '500',
+        fontWeight: Platform.OS === 'ios' ? '600' : '500',
         textTransform: 'uppercase'
     },
     order: {

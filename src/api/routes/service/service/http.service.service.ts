@@ -8,7 +8,7 @@ import { baseLink } from "@/api/axios/axios.instance/instance";
 class HttpClientService {
 
     /**
-     * `Добавление новой услуги.`
+     * `//: Добавление новой услуги.`
      * @param item [ type IService ]
      */
     async POST_createService(item: FormData) {
@@ -26,9 +26,25 @@ class HttpClientService {
             console.error(`Error in POST_createService >>> `, error);
         }
     };
+
+    /**
+     * `//: Редактирование услуги.`
+     */
+    async PATCH_editService(item: FormData) {
+        try {
+            const config = {
+                method: "PATCH",
+                headers: {"Content-Type": "multipart/form-data" },
+            }
+            const {data} = await axiosInstanceWithAuth.patch(`/service/edit-service`, item, config);
+            return data as IMessage;
+        } catch (error) {
+            console.error(`Error in PATCH_editService >>> `, error);
+        }
+    };
     
     /**
-     * `Получение всех услуг.`
+     * `//: Получение всех услуг.`
      */
     async GET_getAllServices() {
         try{
@@ -40,7 +56,7 @@ class HttpClientService {
     }
 
     /**
-     * `Удаление сервиса.`
+     * `//: Удаление сервиса.`
      * @param id ID Сервиса.
      * @param title Название сервиса.
      */

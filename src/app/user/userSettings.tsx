@@ -35,7 +35,7 @@ const UserSettings: FC = () => {
                         title='Password' 
                         subTitle='Изминение пароля пользователя' 
                         img={require('@/source/img/icon-menu/password-1.png')} 
-                        pushFunction={() => appRouter.navigate('user/changePassword')}
+                        pushFunction={() => appRouter.navigate('/user/changePassword')}
                     />
                     <MenuItem 
                         title='Выход' 
