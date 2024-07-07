@@ -111,6 +111,7 @@ const AdminDepartment: FC= () => {
                         marginTop={10} 
                     />
                 </View>
+                
                 <BottomModalSheet ref={refModalSheet} heightProcent={40} isWithScrooll={false} backgroundColorBody={COLOR_ROOT.MAIN_COLOR} >
                     <View style={styles.allowBody}>
                         <Text style={styles.allowTitle}>Вы хотите удалить группу ?</Text>

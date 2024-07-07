@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState, useCallback, useRef } from 'react';
+import { useState, useCallback } from 'react';
 import { useFocusEffect } from 'expo-router';
 import httpServiceService from '@/api/routes/service/service/http.service.service';
 import type { ServiceDTOAndDepartmentName } from '@/api/routes/service/types/service.types';

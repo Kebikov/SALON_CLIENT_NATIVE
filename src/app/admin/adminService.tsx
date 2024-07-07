@@ -1,5 +1,5 @@
-import { View, StyleSheet, FlatList, Text, Alert, Image } from 'react-native';
-import React, { FC, useEffect, useState, useCallback, useRef } from 'react';
+import { View, StyleSheet, FlatList, Text, Alert, Pressable, Image, Platform } from 'react-native';
+import React, { FC, useRef, useState } from 'react';
 import WrapperMenu from '@/components/wrappers/WrappersMenu/WrappersMenu';
 import ServiceCart from '@/components/shared/ServiceCart/ServiceCart';
 import ButtonWithIcon from '../../components/shared/ButtonWithIcon/ButtonWithIcon';
@@ -8,11 +8,13 @@ import httpServiceService from '@/api/routes/service/service/http.service.servic
 import ButtonSwipeable from '@/components/widgets/ButtonSwipeable/ButtonSwipeable';
 import { useHookCheckErrorResponce } from '@/hooks/useHookCheckErrorResponce';
 import { COLOR_ROOT } from '@/data/colors';
-import { useFocusEffect } from 'expo-router';
+import { baseLink } from '@/api/axios/axios.instance/instance';
 import { useHookGetDataServices } from '@/hooks/GET/useHookGetDataServices';
+import { useHookGetDataDepartments } from '@/hooks/GET/useHookGetDataDepartments';
 import BottomModalSheet from '@/components/wrappers/BottomModalSheet/BottomModalSheet';
 import type { ServiceDTOAndDepartmentName } from '@/api/routes/service/types/service.types';
 import type { IRefBottomModalSheet } from '@/components/wrappers/BottomModalSheet/types';
+import type { IDataDepartmentAndId } from '@/api/routes/department/types/department.dto';
 
 
 /**
@@ -26,10 +28,12 @@ const AdminService: FC = () => {
     const openList = () => bottomSheetRef.current?.openModal();
     const closeList = () => bottomSheetRef.current?.closeModal();
 
+    const {dataDepartments} = useHookGetDataDepartments();
     const {services, setServices} = useHookGetDataServices();
+    const [curentFilter, setCurentFilter] = useState<string>('Все услуги.');
     const {isMessage} = useHookCheckErrorResponce();
     const {appRouter} = useHookRouter();
-
+    
     const deleteService = (id: number, title: string) => {
         Alert.alert(
             'Удалить группу ?',
@@ -60,6 +64,31 @@ const AdminService: FC = () => {
         appRouter.navigate({pathname: '/admin/adminEditService/[id]', params: {...item}})
     }
 
+    let sheetDepartments: IDataDepartmentAndId[] = [
+        {
+            id: 0, name: 'Все услуги.', discription: '', icon: 'icon все услуги'
+        },
+        {
+            id: 0, name: 'Нет группы.', discription: '', icon: 'icon нет группы'
+        }
+    ];
+
+    sheetDepartments = [ ...sheetDepartments, ...dataDepartments];
+
+    const filterService = services.filter(item => {
+            if(curentFilter === 'Все услуги.') {
+                return item;
+            }
+
+            if(curentFilter === 'Нет группы.' && item.name === null) {
+                return item;
+            }
+
+            if(item.name === curentFilter) {
+                return item;
+            }
+        }  
+    );
 
     return (
         <>
@@ -70,8 +99,9 @@ const AdminService: FC = () => {
                         ?
                         <FlatList
                             contentContainerStyle={{ gap: 10, paddingBottom: 10 }}
-                            data={services}
-                            renderItem={ ({item}) => (
+                            data={filterService}
+                            renderItem={ 
+                                ({item}) => (
                                     <ButtonSwipeable 
                                         totalButton={2}
 
@@ -99,7 +129,7 @@ const AdminService: FC = () => {
                             keyExtractor={item => String(item.id)}
                             horizontal={false}
                             showsHorizontalScrollIndicator={false}
-                            extraData={services}
+                            extraData={[services, curentFilter]}
                             ListEmptyComponent={<View><Text>Нет элементов.</Text></View>}
                         />
                         :
@@ -117,19 +147,110 @@ const AdminService: FC = () => {
                     />
                 </View>
             </WrapperMenu>
-            <BottomModalSheet ref={bottomSheetRef} heightProcent={50} >
-                <Text>Hello !</Text>
+
+            {/*//* Модальное нижнее окно */}
+            <BottomModalSheet 
+                ref={bottomSheetRef} 
+                heightProcent={50} 
+                isWithScrooll={false}
+            >
+                <View style={styles.sheet_header}>
+                    <Text style={styles.sheet_title}>Фильтр услуг</Text>
+                </View>
+                <View style={styles.main_sheet} >
+                    {
+                        sheetDepartments.length > 2
+                        ?
+                        <FlatList
+                            contentContainerStyle={{ gap: 0, paddingBottom: 10 }}
+                            data={sheetDepartments}
+                            renderItem={ 
+                                ({item, index}) => (
+                                    <Pressable
+                                        style={index === 0 ? [styles.sheet_button_first, styles.sheet_button] : styles.sheet_button}
+                                        onPress={() => {
+                                            setCurentFilter(item.name);
+                                            closeList();
+                                        }}
+                                    >
+                                        <View style={styles.sheet_box_img} >
+                                            <Image style={styles.sheet_img} source={
+                                                    item.icon === 'icon все услуги'
+                                                    ?
+                                                    require('@/source/img/icon/all.png')
+                                                    :
+                                                    item.icon === 'icon нет группы'
+                                                    ?
+                                                    require('@/source/img/icon/not.png')
+                                                    :
+                                                    item.icon
+                                                    ?
+                                                    {uri: `${baseLink}/api/img/get-img/${item.icon}?type=icon_icon-group`}
+                                                    :
+                                                    null
+                                                } 
+                                            />
+                                        </View>
+                                        <Text style={styles.shet_text}>{item.name}</Text>
+                                    </Pressable>
+                                ) 
+                            }
+                            keyExtractor={item => item.name ?? 'key'}
+                            horizontal={false}
+                            showsHorizontalScrollIndicator={false}
+                        />
+                        :
+                        null
+                    }
+                </View>
             </BottomModalSheet>
         </>
     );
 };
 
+const COLOR_LINE = 'rgba(0, 0, 0, .3)';
+
 const styles = StyleSheet.create({
     main: { flex: 1, paddingHorizontal: 5, marginTop: 5 },
     boxButton: { paddingHorizontal: 10, marginBottom: 5 },
-    settings: {flexDirection: 'row',  justifyContent: 'flex-end', marginTop: 5, paddingHorizontal: 10},
-    filter: {width: 40, height: 40, borderRadius: 10, borderWidth: 2, borderColor: COLOR_ROOT.MAIN_COLOR},
-    filter_img: {resizeMode: 'contain', width: '100%', height: '100%'}
+    // sheet
+    main_sheet: {
+        flex: 1, padding: 10
+    },
+    sheet_header: {
+        backgroundColor: COLOR_ROOT.MAIN_COLOR, 
+        paddingVertical: 5
+    },
+    sheet_title: {
+        textAlign: 'center', 
+        fontSize: 16, 
+        fontWeight: '500', 
+        color: 'white'
+    },
+    sheet_button_first: { 
+        borderTopColor: COLOR_LINE, 
+        borderTopWidth: 1
+    },
+    sheet_button: {
+        paddingVertical: 5, 
+        borderBottomColor: COLOR_LINE, 
+        borderBottomWidth: 1, 
+        flexDirection: 'row',
+        alignItems: 'center'
+    },
+    shet_text: {
+        fontSize: Platform.OS === 'ios' ? 16 : 15,
+        marginLeft: 10
+    },
+    sheet_box_img: {
+        width: Platform.OS === 'ios' ? 32 : 30, 
+        height: Platform.OS === 'ios' ? 32 : 30, 
+        borderRadius: 200, 
+        borderColor: COLOR_ROOT.MAIN_COLOR, 
+        borderWidth: 1, 
+        padding: 4
+    },
+    sheet_img: {resizeMode: 'contain', width: '100%', height: '100%'}
 });
 
 export default AdminService;

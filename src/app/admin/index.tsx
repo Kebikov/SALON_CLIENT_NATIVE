@@ -29,7 +29,7 @@ const HomeAdmin: FC = () => {
         <WrapperScrollMenu>
             <HomeUserHeader/>
 
-            <Pressable
+            {/* <Pressable
                 onPress={() => press()}
             >
                 <Text 
@@ -37,7 +37,7 @@ const HomeAdmin: FC = () => {
                 >
                     кнопка для теста
                 </Text>
-            </Pressable>
+            </Pressable> */}
 
             <Text style={[styles.text, {marginTop: 10}]} >Service</Text>
             <ListDepartment/>
