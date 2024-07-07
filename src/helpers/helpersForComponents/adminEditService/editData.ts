@@ -16,7 +16,13 @@ interface IeditData {
 /**
  * `Редактирование данных на сервере.`
  */
-export const editData = async ({selectedImage, data, modalMessageError, isMessage, router}: IeditData) => {
+export const editData = async ({
+    selectedImage, 
+    data, 
+    modalMessageError, 
+    isMessage, 
+    router
+}: IeditData) => {
 
     try{
         if(!data?.id) return modalMessageError('Ошибка id.', 'Не переданно id услуги.');

@@ -6,29 +6,49 @@ import { useRouter } from 'expo-router';
 
 interface IHeaderTitle {
     text: string;
+    imgFilter?: number;
+    handlePessImgFilter?: Function;
 }
 
 
 /**
  * @shared `Текст загаловка.`
  * @param text Текст загаловка.
- * @param marginTop ? Отступ с верху.
+ * @optional
+ * @param imgFilter ? Иконка для дополнительной функциональности header.
+ * @param handlePessImgFilter ? Функция обработки нажатия на иконку.
  * @example <HeaderTitle text={#} />
  */
-const HeaderTitle: FC<IHeaderTitle> = ({text}) => {
+const HeaderTitle: FC<IHeaderTitle> = ({
+    text,
+    imgFilter,
+    handlePessImgFilter
+}) => {
 
     const router = useRouter();
 
     return (
-        <Pressable 
-            style={styles.main}
-            onPress={() => router.back()}
-        >
-            <View style={styles.boxImg} >
+        <View style={styles.main}>
+            <Pressable 
+                style={styles.boxImg} 
+                onPress={() => router.back()}
+            >
                 <Image style={styles.img} source={require('@/source/img/icon-menu/arrow-white.png')} />
-            </View>
+            </Pressable>
             <Text style={[styles.text]} >{text}</Text>
-        </Pressable>
+            {
+                imgFilter && handlePessImgFilter
+                ?
+                <Pressable 
+                    style={styles.filter} 
+                    onPress={() => handlePessImgFilter()}
+                >
+                    <Image style={styles.filter_img} source={require('@/source/img/icon/filter_white.png')} />
+                </Pressable>
+                :
+                null
+            }
+        </View>
     )
 };
 
@@ -43,14 +63,16 @@ const styles = StyleSheet.create({
     },
     boxImg: {        
         position: 'absolute',
-        top: '50%',
-        left: 7,
-        width: 22,
-        height: 22,
+        left: 0,
+        width: 80,
+        height: '100%',
+        paddingVertical: Platform.OS === 'ios' ? 0 : 2,
+        flexDirection: 'row',
+        justifyContent: 'flex-start'
     },
     img: {
         resizeMode: 'contain',
-        width: '100%',
+        width: 28,
         height: '100%',
         opacity: .9,
     },
@@ -58,7 +80,17 @@ const styles = StyleSheet.create({
         fontSize: Platform.OS === 'ios' ? 19 : 18,
         fontWeight: '500',
         color: 'white'
-    }
+    },
+    filter: {
+        position: 'absolute',
+        top: '50%',
+        height: 36,
+        marginTop: -8,
+        right: 10,
+        width: 37,
+        padding: 3
+    },
+    filter_img: {resizeMode: 'contain', width: '100%', height: '100%'}
 });
 
 export default HeaderTitle;

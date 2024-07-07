@@ -31,8 +31,12 @@ const sizeTitle = 16;
 /**
  * @widgets `Форма для добавления/редактирования сервиса.`
  */
-const FormService: FC<IFormService> = ({titlePage, data, setData}) => {
-    console.log(data);
+const FormService: FC<IFormService> = ({
+    titlePage, 
+    data, 
+    setData
+}) => {
+
     const router = useRouter();
     const {modalMessageError, isMessage} = useHookCheckErrorResponce();
     

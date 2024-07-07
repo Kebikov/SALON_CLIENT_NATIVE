@@ -8,6 +8,8 @@ import HeaderTitle from '@/components/widgets/HeaderTitle/HeaderTitle';
 interface IWrapper {
     children: JSX.Element | JSX.Element[];
     titlePage?: string;
+    imgFilter?: number;
+    handlePessImgFilter?: Function;
 }
 
 
@@ -16,12 +18,20 @@ interface IWrapper {
  * - SafeAreaView 
  * - StatusBar
  * @param titlePage ? Шапка в веху страницы с заголовком.
+ * @optional
+ * @param imgFilter ? Иконка для дополнительной функциональности header.
+ * @param handlePessImgFilter ? Функция обработки нажатия на иконку.
  * @example 
  * <WrapperScroll page={#}>
         {JSX.Elements}
     </WrapperScroll>
  */
-const WrapperMenu: FC<IWrapper> = ({children, titlePage}) => {
+const WrapperMenu: FC<IWrapper> = ({
+    children, 
+    titlePage,
+    imgFilter,
+    handlePessImgFilter
+}) => {
 
     return (
         <>
@@ -32,7 +42,7 @@ const WrapperMenu: FC<IWrapper> = ({children, titlePage}) => {
                 <SafeAreaView style={{ flex: 1, backgroundColor: COLOR_ROOT.BACKGROUND }} >
                     {
                         titlePage ?
-                        <HeaderTitle text={titlePage} />
+                        <HeaderTitle text={titlePage} imgFilter={imgFilter} handlePessImgFilter={handlePessImgFilter} />
                         :
                         null
                     }
