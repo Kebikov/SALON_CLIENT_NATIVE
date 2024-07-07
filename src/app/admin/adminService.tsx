@@ -9,6 +9,7 @@ import ButtonSwipeable from '@/components/widgets/ButtonSwipeable/ButtonSwipeabl
 import { useHookCheckErrorResponce } from '@/hooks/useHookCheckErrorResponce';
 import { COLOR_ROOT } from '@/data/colors';
 import { useFocusEffect } from 'expo-router';
+import { useHookGetDataServices } from '@/hooks/GET/useHookGetDataServices';
 import BottomModalSheet from '@/components/wrappers/BottomModalSheet/BottomModalSheet';
 import type { ServiceDTOAndDepartmentName } from '@/api/routes/service/types/service.types';
 import type { IRefBottomModalSheet } from '@/components/wrappers/BottomModalSheet/types';
@@ -25,10 +26,8 @@ const AdminService: FC = () => {
     const openList = () => bottomSheetRef.current?.openModal();
     const closeList = () => bottomSheetRef.current?.closeModal();
 
-    const [services, setServices] = useState<ServiceDTOAndDepartmentName[] | []>([]);
-
+    const {services, setServices} = useHookGetDataServices();
     const {isMessage} = useHookCheckErrorResponce();
-
     const {appRouter} = useHookRouter();
 
     const deleteService = (id: number, title: string) => {
@@ -61,21 +60,10 @@ const AdminService: FC = () => {
         appRouter.navigate({pathname: '/admin/adminEditService/[id]', params: {...item}})
     }
 
-    useFocusEffect(
-        useCallback(() => {
-            httpServiceService
-            .GET_getAllServices()
-            .then(res => {
-                if(res) setServices(res);
-            })
-            .catch(error => console.error(`Error in AdminService GET_getAllServices >>> `, error));
-        }, [])
-    );
-
 
     return (
         <>
-            <WrapperMenu titlePage='Услуги' imgFilter={require('@/source/img/icon/filter_white.png')} handlePessImgFilter={() => {}} >
+            <WrapperMenu titlePage='Услуги' imgFilter={require('@/source/img/icon/filter_white.png')} handlePessImgFilter={() => openList()} >
                 <View style={styles.main} >
                     {
                         services.length > 0

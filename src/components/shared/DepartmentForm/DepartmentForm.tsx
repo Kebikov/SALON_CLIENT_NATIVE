@@ -8,7 +8,7 @@ import { COLOR_ROOT } from '@/data/colors';
 import ButtonWithIcon from '@/components/shared/ButtonWithIcon/ButtonWithIcon';
 import { baseLink } from '@/api/axios/axios.instance/instance';
 import ImagesIcon from '@/components/shared/ImagesIcon/ImagesIcon';
-import { useHookGetIcon } from '@/hooks/useHookGetIcon';
+import { useHookGetIcon } from '@/hooks/GET/useHookGetIcon';
 import type { IDataDepartment } from '@/app/admin/adminAddDepartment';
 import type { IDepartmentForm } from './DepartmentForm.dto';
 import BottomModalSheet from '@/components/wrappers/BottomModalSheet/BottomModalSheet';

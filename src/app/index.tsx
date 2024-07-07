@@ -5,7 +5,7 @@ import ButtonWithIcon from '@/components/shared/ButtonWithIcon/ButtonWithIcon';
 import DoYouHaveAnAccount from '@/components/shared/DoYouHaveAnAccount/DoYouHaveAnAccount';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useHookRouter } from '@/helpers/router/useHookRouter';
-import { useHookGetStartDataUser } from '@/hooks/useHookGetStartDataUser';
+import { useHookGetStartDataUser } from '@/hooks/GET/useHookGetStartDataUser';
 
 
 

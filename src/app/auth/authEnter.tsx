@@ -15,7 +15,7 @@ import { asyncStorageSaveUser } from '@/helpers/save/saveUserInAsyncStorage';
 import Discription from '@/components/shared/Discription/Discription';
 import Title from '@/components/shared/Title/Title';
 import { useHookRouter } from '@/helpers/router/useHookRouter';
-import { useHookGetStartDataUser } from '@/hooks/useHookGetStartDataUser';
+import { useHookGetStartDataUser } from '@/hooks/GET/useHookGetStartDataUser';
 
 
 interface IAuthEnter {

@@ -3,7 +3,7 @@ import React, { FC, useState, useRef } from 'react';
 import WrapperScrollMenu from '@/components/wrappers/WrapperScrollMenu/WrapperScrollMenu';
 import * as ImagePicker from 'expo-image-picker';
 import BottomModalSheet from '@/components/wrappers/BottomModalSheet/BottomModalSheet';
-import { useHookGetDataDepartments } from '@/hooks/useHookGetDataDepartments';
+import { useHookGetDataDepartments } from '@/hooks/GET/useHookGetDataDepartments';
 import { COLOR_ROOT } from '@/data/colors';
 import ButtonWithIcon from '@/components/shared/ButtonWithIcon/ButtonWithIcon';
 import { useHookCheckErrorResponce } from '@/hooks/useHookCheckErrorResponce';

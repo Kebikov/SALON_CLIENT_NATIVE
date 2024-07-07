@@ -7,7 +7,7 @@ import DepartmentCartAdmin from '@/components/shared/DepartmentCartAdmin/Departm
 import ButtonWithIcon from '@/components/shared/ButtonWithIcon/ButtonWithIcon';
 import Discription from '@/components/shared/Discription/Discription';
 import NotElements from '@/components/shared/NotElements/NotElements';
-import { useHookGetDataDepartments } from '@/hooks/useHookGetDataDepartments';
+import { useHookGetDataDepartments } from '@/hooks/GET/useHookGetDataDepartments';
 import ButtonSwipeable from '@/components/widgets/ButtonSwipeable/ButtonSwipeable';
 import BottomModalSheet from '@/components/wrappers/BottomModalSheet/BottomModalSheet';
 import httpDepartmentService from '@/api/routes/department/service/http.department.service';
