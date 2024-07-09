@@ -12,6 +12,7 @@ import { baseLink } from '@/api/axios/axios.instance/instance';
 import { useHookGetDataServices } from '@/hooks/GET/useHookGetDataServices';
 import { useHookGetDataDepartments } from '@/hooks/GET/useHookGetDataDepartments';
 import BottomModalSheet from '@/components/wrappers/BottomModalSheet/BottomModalSheet';
+import ModalSheetLineDepartment from '@/components/shared/ModalSheetLineDepartment/ModalSheetLineDepartment';
 import type { ServiceDTOAndDepartmentName } from '@/api/routes/service/types/service.types';
 import type { IRefBottomModalSheet } from '@/components/wrappers/BottomModalSheet/types';
 import type { IDataDepartmentAndId } from '@/api/routes/department/types/department.dto';
@@ -166,33 +167,14 @@ const AdminService: FC = () => {
                             data={sheetDepartments}
                             renderItem={ 
                                 ({item, index}) => (
-                                    <Pressable
-                                        style={index === 0 ? [styles.sheet_button_first, styles.sheet_button] : styles.sheet_button}
-                                        onPress={() => {
+                                    <ModalSheetLineDepartment 
+                                        index={index} 
+                                        item={item} 
+                                        handlePress={(item) => {
                                             setCurentFilter(item.name);
                                             closeList();
                                         }}
-                                    >
-                                        <View style={styles.sheet_box_img} >
-                                            <Image style={styles.sheet_img} source={
-                                                    item.icon === 'icon все услуги'
-                                                    ?
-                                                    require('@/source/img/icon/all.png')
-                                                    :
-                                                    item.icon === 'icon нет группы'
-                                                    ?
-                                                    require('@/source/img/icon/not.png')
-                                                    :
-                                                    item.icon
-                                                    ?
-                                                    {uri: `${baseLink}/api/img/get-img/${item.icon}?type=icon_icon-group`}
-                                                    :
-                                                    null
-                                                } 
-                                            />
-                                        </View>
-                                        <Text style={styles.shet_text}>{item.name}</Text>
-                                    </Pressable>
+                                    />
                                 ) 
                             }
                             keyExtractor={item => item.name ?? 'key'}
