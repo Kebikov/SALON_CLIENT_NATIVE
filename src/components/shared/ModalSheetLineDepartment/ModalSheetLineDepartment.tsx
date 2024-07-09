@@ -2,6 +2,7 @@ import { View, Text, StyleSheet, Pressable, Platform, Image } from 'react-native
 import React, { FC } from 'react';
 import { baseLink } from '@/api/axios/axios.instance/instance';
 import { COLOR_ROOT } from '@/data/colors';
+import type { IDataDepartmentAndId } from '@/api/routes/department/types/department.dto';
 
 
 interface IModalSheetLineDepartment<T> {
@@ -17,7 +18,7 @@ interface IModalSheetLineDepartment<T> {
  * @param handlePress Функци обработки нажатия элемента.
  * @param item Обьект группы.
  */
-const ModalSheetLineDepartment = <T extends object>({
+const ModalSheetLineDepartment = <T extends IDataDepartmentAndId>({
     index,
     handlePress,
     item

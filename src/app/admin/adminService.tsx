@@ -12,6 +12,7 @@ import { baseLink } from '@/api/axios/axios.instance/instance';
 import { useHookGetDataServices } from '@/hooks/GET/useHookGetDataServices';
 import { useHookGetDataDepartments } from '@/hooks/GET/useHookGetDataDepartments';
 import BottomModalSheet from '@/components/wrappers/BottomModalSheet/BottomModalSheet';
+import BottomModalSheetWithDepartment from '@/components/widgets/BottomModalSheetWithDepartment/BottomModalSheetWithDepartment';
 import ModalSheetLineDepartment from '@/components/shared/ModalSheetLineDepartment/ModalSheetLineDepartment';
 import type { ServiceDTOAndDepartmentName } from '@/api/routes/service/types/service.types';
 import type { IRefBottomModalSheet } from '@/components/wrappers/BottomModalSheet/types';
@@ -91,6 +92,8 @@ const AdminService: FC = () => {
         }  
     );
 
+    const arr = [{name: 'sdf'}, {name: 'sdff'}]
+
     return (
         <>
             <WrapperMenu titlePage='Услуги' imgFilter={require('@/source/img/icon/filter_white.png')} handlePessImgFilter={() => openList()} >
@@ -149,90 +152,24 @@ const AdminService: FC = () => {
                 </View>
             </WrapperMenu>
 
-            {/*//* Модальное нижнее окно */}
-            <BottomModalSheet 
-                ref={bottomSheetRef} 
-                heightProcent={50} 
-                isWithScrooll={false}
-            >
-                <View style={styles.sheet_header}>
-                    <Text style={styles.sheet_title}>Фильтр услуг</Text>
-                </View>
-                <View style={styles.main_sheet} >
-                    {
-                        sheetDepartments.length > 2
-                        ?
-                        <FlatList
-                            contentContainerStyle={{ gap: 0, paddingBottom: 10 }}
-                            data={sheetDepartments}
-                            renderItem={ 
-                                ({item, index}) => (
-                                    <ModalSheetLineDepartment 
-                                        index={index} 
-                                        item={item} 
-                                        handlePress={(item) => {
-                                            setCurentFilter(item.name);
-                                            closeList();
-                                        }}
-                                    />
-                                ) 
-                            }
-                            keyExtractor={item => item.name ?? 'key'}
-                            horizontal={false}
-                            showsHorizontalScrollIndicator={false}
-                        />
-                        :
-                        null
-                    }
-                </View>
-            </BottomModalSheet>
+            {/*//* Модальное нижнее окно с группами*/}
+            <BottomModalSheetWithDepartment
+                bottomSheetRef={bottomSheetRef}
+                sheetDepartments={sheetDepartments}
+                handlePress={(item) => {
+                    setCurentFilter(item.name);
+                    closeList();
+                }}
+            />
         </>
     );
 };
 
-const COLOR_LINE = 'rgba(0, 0, 0, .3)';
 
 const styles = StyleSheet.create({
     main: { flex: 1, paddingHorizontal: 5, marginTop: 5 },
-    boxButton: { paddingHorizontal: 10, marginBottom: 5 },
-    // sheet
-    main_sheet: {
-        flex: 1, padding: 10
-    },
-    sheet_header: {
-        backgroundColor: COLOR_ROOT.MAIN_COLOR, 
-        paddingVertical: 5
-    },
-    sheet_title: {
-        textAlign: 'center', 
-        fontSize: 16, 
-        fontWeight: '500', 
-        color: 'white'
-    },
-    sheet_button_first: { 
-        borderTopColor: COLOR_LINE, 
-        borderTopWidth: 1
-    },
-    sheet_button: {
-        paddingVertical: 5, 
-        borderBottomColor: COLOR_LINE, 
-        borderBottomWidth: 1, 
-        flexDirection: 'row',
-        alignItems: 'center'
-    },
-    shet_text: {
-        fontSize: Platform.OS === 'ios' ? 16 : 15,
-        marginLeft: 10
-    },
-    sheet_box_img: {
-        width: Platform.OS === 'ios' ? 32 : 30, 
-        height: Platform.OS === 'ios' ? 32 : 30, 
-        borderRadius: 200, 
-        borderColor: COLOR_ROOT.MAIN_COLOR, 
-        borderWidth: 1, 
-        padding: 4
-    },
-    sheet_img: {resizeMode: 'contain', width: '100%', height: '100%'}
+    boxButton: { paddingHorizontal: 10, marginBottom: 5 }
 });
+
 
 export default AdminService;
