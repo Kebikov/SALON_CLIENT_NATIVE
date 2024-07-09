@@ -12,6 +12,7 @@ interface IBottomModalSheetWithDepartment<T> {
     bottomSheetRef: React.RefObject<IRefBottomModalSheet>;
     handlePress: (item: T) => void; 
     sheetDepartments: T[];
+    typeModal?: 'filter' | 'select';
 }
 
 
@@ -20,12 +21,33 @@ interface IBottomModalSheetWithDepartment<T> {
  * @param bottomSheetRef Ref для модального окна.
  * @param handlePress Функция обработки нажатия пункта в FlatList.
  * @param sheetDepartments Массив групп.
+ * @optional
+ * @param typeModal ? Тип модального окна(для фильтрации групп, для выбора группы) 
  */
 const BottomModalSheetWithDepartment = <T extends IDataDepartmentAndId>({
     bottomSheetRef,
     handlePress,
-    sheetDepartments
+    sheetDepartments,
+    typeModal = 'select'
 }: IBottomModalSheetWithDepartment<T>) => {
+
+    let expectedLenght: number;
+    let currentTitle: string;
+
+    switch(typeModal) {
+        case 'select':
+            expectedLenght = 0;
+            currentTitle = 'Выбор группы'
+            break;
+        case 'filter': 
+            expectedLenght = 2;
+            currentTitle = 'Фильтр по группе'
+            break;
+        default:
+            expectedLenght = 0;
+            currentTitle = ''
+            break;
+    }
 
     return (
         <BottomModalSheet 
@@ -34,11 +56,11 @@ const BottomModalSheetWithDepartment = <T extends IDataDepartmentAndId>({
             isWithScrooll={false}
         >
             <View style={styles.sheet_header}>
-                <Text style={styles.sheet_title}>Фильтр услуг</Text>
+                <Text style={styles.sheet_title}>{currentTitle}</Text>
             </View>
             <View style={styles.main_sheet} >
                 {
-                    sheetDepartments.length > 2
+                    sheetDepartments.length > expectedLenght
                     ?
                     <FlatList
                         contentContainerStyle={{ gap: 0, paddingBottom: 10 }}

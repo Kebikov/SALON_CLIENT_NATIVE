@@ -156,6 +156,7 @@ const AdminService: FC = () => {
             <BottomModalSheetWithDepartment
                 bottomSheetRef={bottomSheetRef}
                 sheetDepartments={sheetDepartments}
+                typeModal='filter'
                 handlePress={(item) => {
                     setCurentFilter(item.name);
                     closeList();

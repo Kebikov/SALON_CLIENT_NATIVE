@@ -15,7 +15,7 @@ import InputServiceTime from '@/components/shared/shared_AdminAddService/InputSe
 import ButtonSelectImage from '@/components/shared/shared_AdminAddService/ButtonSelectImage';
 import ButtonSelectDepartment from '@/components/shared/shared_AdminAddService/ButtonSelectDepartment';
 import { useRouter } from 'expo-router';
-
+import BottomModalSheetWithDepartment from '../BottomModalSheetWithDepartment/BottomModalSheetWithDepartment';
 import { editData } from '@/helpers/helpersForComponents/adminEditService/editData';
 import type { ServiceDTOAndDepartmentName } from '@/api/routes/service/types/service.types';
 import type { IRefBottomModalSheet } from '@/components/wrappers/BottomModalSheet/types';
@@ -99,26 +99,11 @@ const FormService: FC<IFormService> = ({
                 </View>
             </WrapperScrollMenu>
             
-            <BottomModalSheet ref={bottomSheetRef} heightProcent={50} >
-                <>
-                    {
-                        dataDepartments.length > 0
-                        ?
-                        dataDepartments.map((item, i) => {
-                            return (
-                                <Pressable 
-                                    onPress={() => choiceDepartment(item.id, item.name)}
-                                    style={[styles.selectItem, i === 0 ? {borderTopWidth: 1} : null]} key={item.id} 
-                                >
-                                    <Text style={{fontSize: 16, paddingLeft: 10}} >{item.name}</Text>
-                                </Pressable>
-                            )
-                        })
-                        :
-                        null
-                    }
-                </>
-            </BottomModalSheet>
+            <BottomModalSheetWithDepartment
+                bottomSheetRef={bottomSheetRef}
+                sheetDepartments={dataDepartments}
+                handlePress={(item) => choiceDepartment(item.id, item.name)}
+            />
         </>
     );
 };
