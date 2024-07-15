@@ -14,7 +14,7 @@ class HttpRegistrationService {
             const {data} = await axiosInstance.post(`/registration/email`, body);
             return data as IResRegistration;
         } catch (error) {
-            console.error('Error in POST_registrationEmail >>> ',error);
+            console.error('Error in [POST_registrationEmail] >>> ',error);
         }
     }
 
@@ -28,7 +28,7 @@ class HttpRegistrationService {
         
             return data as IResRegistration;
         } catch (error) {
-            console.error('Error in POST_registrationEmail >>> ',error);
+            console.error('Error in [POST_registrationEmail] >>> ',error);
         }
     }
 

@@ -12,8 +12,9 @@ export const responseGoogleInfoUser = async (token: string): Promise<IUserGoogle
     const response = await fetch('https://www.googleapis.com/userinfo/v2/me', {
         headers: { Authorization: `Bearer ${token}` }
     });
-
+    
     const user = await response.json();
-    const userFormatToInterfaceIUser: IUserGoogle | null = formatToInterfaceIUserGoogleuser;
+    console.log('responseGoogleInfoUser >>> ', user);
+    const userFormatToInterfaceIUser: IUserGoogle | null = formatToInterfaceIUserGoogle(user);
     return userFormatToInterfaceIUser;
 }

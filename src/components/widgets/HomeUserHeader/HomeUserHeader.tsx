@@ -10,6 +10,7 @@ import { useAppSelector } from '@/redux/store/hooks';
 const HomeUserHeader: FC = () => {
 
     const userInfo = useAppSelector(state => state.userSlice.user);
+    console.log(userInfo);
 
     return (
         <View style={styles.main} >

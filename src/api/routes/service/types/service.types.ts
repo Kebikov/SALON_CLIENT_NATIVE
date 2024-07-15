@@ -23,7 +23,6 @@ export interface ServiceDTOAndDepartmentName extends ServiceDTO {
 }
 
 
-export interface ServiceDTOforEdit extends Omit<ServiceDTO, 'img'> {
-    img?: string;
+export interface ServiceDTOforEdit extends ServiceDTO {
     oldImgName?: string;
 }

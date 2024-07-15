@@ -48,8 +48,9 @@ export const editData = async ({
         formData.append('id', String(data.id));
         formData.append('title', data.title);
         formData.append('description', data.description);
-        formData.append('price', String(data.price) );
-        formData.append('time', String(data.time) );
+        formData.append('img', data.img);
+        formData.append('price', String(data.price));
+        formData.append('time', String(data.time));
         
         const result = await httpServiceService.PATCH_editService(formData);
         if(result) isMessage(result);

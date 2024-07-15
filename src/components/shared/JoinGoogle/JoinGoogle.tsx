@@ -4,7 +4,6 @@ import { COLOR_ROOT } from '@/data/colors';
 import * as WebBrowser from 'expo-web-browser';
 import * as Google from 'expo-auth-session/providers/google';
 import handleSingInWithGoogle from './helpers/handleSingInWithGoogle';
-import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { useHookRouter } from '@/helpers/router/useHookRouter';
 
 
@@ -12,9 +11,6 @@ WebBrowser.maybeCompleteAuthSession();
 
 
 interface IJoinGoogle {
-	/**
-	 * Надо ли border в кнопке.
-	 */
 	border?: boolean;
     title?: string; 
 }
@@ -27,7 +23,7 @@ interface IJoinGoogle {
  * @returns {JSX.Element}
  */
 const JoinGoogle: FC<IJoinGoogle> = ({title = 'Регистрация с Google', border = false }) => {
-    
+
     const {appRouter} = useHookRouter();
 
 	const [request, response, promptAsync] = Google.useAuthRequest({
@@ -36,7 +32,11 @@ const JoinGoogle: FC<IJoinGoogle> = ({title = 'Регистрация с Google'
 		webClientId: process.env.WEB_CLIENT_ID,
 	});
 
+    console.log('request >>> ', request);
+    console.log('response >>> ', response);
+
 	useEffect(() => {
+        
         if(response) {
             handleSingInWithGoogle(response, appRouter);
         }

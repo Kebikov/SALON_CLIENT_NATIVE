@@ -13,7 +13,7 @@ const AdminEditService: FC = () => {
 
     const  { id, title, description, price, time, id_department, name, img } = useLocalSearchParams<TNumbersToString<ServiceDTOAndDepartmentName>>();
 
-    if(!id || !title || !description || !price || !time) return;
+    if(!id || !title || !description || !price || !time || !img) return;
 
     const [data, setData] = useState<ServiceDTOAndDepartmentName>({ 
         id: Number(id),
@@ -23,7 +23,7 @@ const AdminEditService: FC = () => {
         time: Number(time),
         id_department: id_department ? Number(id_department) : 0,
         name: name ? name : '',
-        img: img ? img : ''
+        img
     });
 
     return (

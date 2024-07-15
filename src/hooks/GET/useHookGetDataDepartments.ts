@@ -18,11 +18,11 @@ export const useHookGetDataDepartments = () => {
         useCallback(() => {
 
             httpDepartmentService.GET_getDepartments()
-            .then(res => {
-                if(!res) return;
-                setDataDepartments(res);
-            })
-            .catch(error => console.error(error));
+                .then(res => {
+                    if(!res) return;
+                    setDataDepartments(res);
+                })
+                .catch(error => console.error(error));
 
             return () => {}
         }, [])

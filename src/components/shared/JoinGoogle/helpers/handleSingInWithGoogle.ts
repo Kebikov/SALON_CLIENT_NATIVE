@@ -15,7 +15,7 @@ const handleSingInWithGoogle = async (response: AuthSessionResult | null, appRou
     try{
 
         const user = await AsyncStorage.getItem('@user');
-        
+        console.log('@user >>> ',user);
         if(user) {
             appRouter.replace('/user');
         } else {

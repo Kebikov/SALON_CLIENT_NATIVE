@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, ImageBackground, Platform, Image } from 'react-native';
+import { View, Text, StyleSheet, ImageBackground, Platform, Image, StatusBar } from 'react-native';
 import React, { FC, useEffect, useState } from 'react';
 import JoinGoogle from '@/components/shared/JoinGoogle/JoinGoogle';
 import ButtonWithIcon from '@/components/shared/ButtonWithIcon/ButtonWithIcon';
@@ -6,6 +6,7 @@ import DoYouHaveAnAccount from '@/components/shared/DoYouHaveAnAccount/DoYouHave
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useHookRouter } from '@/helpers/router/useHookRouter';
 import { useHookGetStartDataUser } from '@/hooks/GET/useHookGetStartDataUser';
+import { COLOR_ROOT } from '@/data/colors';
 
 
 
@@ -13,7 +14,7 @@ import { useHookGetStartDataUser } from '@/hooks/GET/useHookGetStartDataUser';
  * @page Стартовая страница приложения.
  */
 const Index: FC = () => {
-
+    console.log('INDEX');
     const {appRouter} = useHookRouter();
 
     /**
@@ -23,23 +24,15 @@ const Index: FC = () => {
 
     const {getStartDataUser} = useHookGetStartDataUser();
 
-    const goToPageRegistration = () => {
-        appRouter.navigate('/auth/authCreateAccount');
-    }
-
-    const goToPageAuthEnter = () => {
-        appRouter.navigate('/auth/authEnter');
-    }
-
-
     useEffect(() => {
 
         /**
          * Переход на домашнюю страницу в случае существования пользователя.
          */
         async function check() {
-            const curentUser = await AsyncStorage.getItem('@user');
-            if(curentUser) {
+            const currentUser = await AsyncStorage.getItem('@user');
+            console.log('index @user >>> ', currentUser);
+            if(currentUser) {
                 const role = await getStartDataUser();
                 if(!role) return;
 
@@ -60,18 +53,20 @@ const Index: FC = () => {
     return (
         <>
             <ImageBackground style={styles.main} source={require('@/source/img/auth/main-crop.jpg')} >
+                <View style={{backgroundColor: 'transparent', height: Platform.OS === 'ios' ? 47 : StatusBar.currentHeight}} >
+                    <StatusBar animated={true} barStyle={'light-content'} backgroundColor={'transparent'} />
+                </View>
                 <View style={styles.overlay} />
                 <View style={styles.authStart} >
                     <View style={styles.box}>
-                        {/* <Image source={require('@/source/img/masters/1.jpg')}/> */}
                         <Text style={styles.textTitle} >Давай, присоеденяйся к нам !</Text>
                         <View style={styles.titleBox} >
                             <Text style={styles.textSubTitle} >Лучшие Beauty мастера ждут тебя. Маникюр, парикмахерские услуги, лазерная эпиляция и многое еще.</Text>
                         </View>
                         
-                        <ButtonWithIcon pushButton={goToPageRegistration} title='Регистрация с Email' />
+                        <ButtonWithIcon pushButton={() => appRouter.navigate('/auth/authCreateAccount')} title='Регистрация с Email' />
                         <JoinGoogle/>
-                        <DoYouHaveAnAccount pushButton={goToPageAuthEnter} title='Уже есть аккаунт ?' textButton=' Войти' color='white' />
+                        <DoYouHaveAnAccount pushButton={() => appRouter.navigate('/auth/authEnter')} title='Уже есть аккаунт ?' textButton=' Войти' color='white' />
                     </View>
                 </View>
             </ImageBackground>

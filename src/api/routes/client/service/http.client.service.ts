@@ -14,7 +14,7 @@ class HttpClientService {
             const {data} = await axiosInstanceWithAuth.get(`/client/client-info/${id}`);
             return data as IgetInfoBasic;
         } catch (error) {
-            console.error('Error in GET_getClientInfo >>> ', error);
+            console.error('Error in [GET_getClientInfo] >>> ', error);
         }
     };
     

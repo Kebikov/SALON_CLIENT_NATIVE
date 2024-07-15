@@ -92,8 +92,6 @@ const AdminService: FC = () => {
         }  
     );
 
-    const arr = [{name: 'sdf'}, {name: 'sdff'}]
-
     return (
         <>
             <WrapperMenu titlePage='Услуги' imgFilter={require('@/source/img/icon/filter_white.png')} handlePessImgFilter={() => openList()} >
