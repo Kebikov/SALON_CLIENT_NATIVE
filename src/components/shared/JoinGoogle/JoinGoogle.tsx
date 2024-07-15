@@ -1,14 +1,12 @@
 import { View, Text, StyleSheet, Image, Pressable } from 'react-native';
 import React, { FC, useEffect } from 'react';
 import { COLOR_ROOT } from '@/data/colors';
-import * as WebBrowser from 'expo-web-browser';
 import * as Google from 'expo-auth-session/providers/google';
+import * as WebBrowser from 'expo-web-browser';
 import handleSingInWithGoogle from './helpers/handleSingInWithGoogle';
 import { useHookRouter } from '@/helpers/router/useHookRouter';
 
-
 WebBrowser.maybeCompleteAuthSession();
-
 
 interface IJoinGoogle {
 	border?: boolean;

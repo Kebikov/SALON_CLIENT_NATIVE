@@ -9,7 +9,6 @@ import { useHookGetStartDataUser } from '@/hooks/GET/useHookGetStartDataUser';
 import { COLOR_ROOT } from '@/data/colors';
 
 
-
 /**
  * @page Стартовая страница приложения.
  */
@@ -133,3 +132,4 @@ const styles = StyleSheet.create({
 
 
 export default Index;
+
