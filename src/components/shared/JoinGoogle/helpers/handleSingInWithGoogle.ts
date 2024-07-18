@@ -11,23 +11,21 @@ import { IAppRouter } from '@/helpers/router/useHookRouter';
  * - Проверяет, есть ли уже пользователь, если есть перенаправляем на главную.
  * - Если нет, запускает getUserInfo.
  */
-const handleSingInWithGoogle = async (response: AuthSessionResult | null, appRouter: IAppRouter) => {
+const handleSingInWithGoogle = async (response: AuthSessionResult | null): Promise<boolean | undefined> => {
     try{
 
         const user = await AsyncStorage.getItem('@user');
-        console.log('@user >>> ',user);
+
         if(user) {
-            appRouter.replace('/user');
+            return true;
         } else {
             if(response && response.type === "success" && response.authentication) {
                 const infoUser: IUserGoogle | null = await getUserInfo(response.authentication.accessToken);
-
-                if(!infoUser) return;
-
+                if(!infoUser) return false;
                 const resultRegistration = await registrationUserOnTheServer(infoUser);
-                if(resultRegistration) {
-                    appRouter.replace('/user')
-                }
+                if(resultRegistration) return true;
+            } else {
+                return false;
             }
         }
     } catch(error) {

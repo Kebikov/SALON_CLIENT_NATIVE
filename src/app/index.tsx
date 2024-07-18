@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, ImageBackground, Platform, Image, StatusBar } from 'react-native';
+import { View, Text, StyleSheet, ImageBackground, Platform, StatusBar } from 'react-native';
 import React, { FC, useEffect, useState } from 'react';
 import JoinGoogle from '@/components/shared/JoinGoogle/JoinGoogle';
 import ButtonWithIcon from '@/components/shared/ButtonWithIcon/ButtonWithIcon';
@@ -6,14 +6,15 @@ import DoYouHaveAnAccount from '@/components/shared/DoYouHaveAnAccount/DoYouHave
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useHookRouter } from '@/helpers/router/useHookRouter';
 import { useHookGetStartDataUser } from '@/hooks/GET/useHookGetStartDataUser';
-import { COLOR_ROOT } from '@/data/colors';
+
 
 
 /**
- * @page Стартовая страница приложения.
+ * @page Стартовая страница приложения. 
  */
 const Index: FC = () => {
-    console.log('INDEX');
+
+    
     const {appRouter} = useHookRouter();
 
     /**
@@ -30,7 +31,7 @@ const Index: FC = () => {
          */
         async function check() {
             const currentUser = await AsyncStorage.getItem('@user');
-            console.log('index @user >>> ', currentUser);
+            
             if(currentUser) {
                 const role = await getStartDataUser();
                 if(!role) return;
@@ -41,7 +42,6 @@ const Index: FC = () => {
             } else {
                 setShowThisComponent(true);
             }
-            
         };
         check();
     }, []);
@@ -133,3 +133,5 @@ const styles = StyleSheet.create({
 
 export default Index;
 
+
+  

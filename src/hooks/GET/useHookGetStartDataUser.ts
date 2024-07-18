@@ -6,8 +6,6 @@ import { setAppUserInfo } from '@/redux/slice/user.slice';
 import { IResRegistration } from '@/api/routes/registration/types/registration.types';
 import { useHookRouter } from '@/helpers/router/useHookRouter';
 
-import type { TRole } from '@/api/routes/registration/types/registration.types';
-
 
 /**
  * `Hook для получения базовой информации о пользователе.`

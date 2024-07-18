@@ -3,14 +3,12 @@ import React, { FC } from 'react';
 import { COLOR_ROOT } from '@/data/colors';
 import { useAppSelector } from '@/redux/store/hooks';
 
-
 /**
  * @widgets Блок с пользователем на главной странице в верху.
  */
 const HomeUserHeader: FC = () => {
 
     const userInfo = useAppSelector(state => state.userSlice.user);
-    console.log(userInfo);
 
     return (
         <View style={styles.main} >

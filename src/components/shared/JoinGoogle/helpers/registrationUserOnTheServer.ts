@@ -5,7 +5,7 @@ import { asyncStorageSaveUser } from '@/helpers/save/saveUserInAsyncStorage';
 
 
 /**
- * Регистрация пользователя на сервере.
+ * `Регистрация пользователя на сервере.`
  * - При ошибке вернет false и выведет toast с ошибкой.
  * - При регистрации вернет true.
  * @param {IUserGoogle} user Обьект пользователя.
@@ -21,7 +21,7 @@ export const registrationUserOnTheServer = async (user: IUserGoogle) => {
     };
 
     const result = await httpRegistrationService.POST_registrationGoogle(body);
-    if(!result) return;
+    if(!result) return false;
     await asyncStorageSaveUser(result);
 
     return true;

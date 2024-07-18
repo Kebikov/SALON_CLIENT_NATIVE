@@ -1,5 +1,5 @@
 import { Text, StyleSheet, Pressable, Platform } from 'react-native';
-import React, { FC, useRef } from 'react';
+import React, { FC, useRef, useEffect } from 'react';
 import { COLOR_ROOT } from '@/data/colors';
 import WrapperScrollMenu from '@/components/wrappers/WrapperScrollMenu/WrapperScrollMenu';
 import HomeUserHeader from '@/components/widgets/HomeUserHeader/HomeUserHeader';
@@ -9,17 +9,25 @@ import ListService from '@/components/widgets/ListService/ListService';
 
 import BottomModalSheet from '@/components/wrappers/BottomModalSheet/BottomModalSheet';
 import { IRefBottomModalSheet } from '@/components/wrappers/BottomModalSheet/types';
+import { useHookGetStartDataUser } from '@/hooks/GET/useHookGetStartDataUser';
+
 
 /** 
  * @page Главная страница Clien приложения после регистрации.
  */
 const HomeUser: FC = () => {
 
+    const {getStartDataUser} = useHookGetStartDataUser();
+
     const refModal = useRef<IRefBottomModalSheet>(null);
 
     const press = () => {
         refModal.current?.openModal();
     }
+
+    useEffect(() => {
+        getStartDataUser();
+    }, []);
 
     return (
         <WrapperScrollMenu >
@@ -64,3 +72,4 @@ const styles = StyleSheet.create({
 
 
 export default HomeUser;
+

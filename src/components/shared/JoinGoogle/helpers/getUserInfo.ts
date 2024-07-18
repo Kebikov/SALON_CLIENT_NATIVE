@@ -11,7 +11,7 @@ export const getUserInfo = async (token: string): Promise<IUserGoogle | null> =>
     if (!token) return null;
     try {
         const userFormatToInterfaceIUser: IUserGoogle | null = await responseGoogleInfoUser(token);
-        console.log(userFormatToInterfaceIUser);
+
         if(!userFormatToInterfaceIUser) {
             ToastAndroid.show('Не верный формат пользователя. Попробуйте еще раз или войдите через Email.', ToastAndroid.LONG);
             return null;
