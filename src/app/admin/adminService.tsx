@@ -21,8 +21,6 @@ import type { IDataDepartmentAndId } from '@/api/routes/department/types/departm
 
 /**
  * @page `Страница с услугами и кнопкой добавления услуги.`
- * @example 
- * @returns {JSX.Element}
  */
 const AdminService: FC = () => {
 

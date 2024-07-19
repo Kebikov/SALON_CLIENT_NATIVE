@@ -20,7 +20,7 @@ class HttpDepartmentService {
             const {data} = await axiosInstanceWithAuth.post(`/department/create-department`, payload);  
             return data as IMessage;
         } catch (error) {
-            console.error('Error in POST_createDepartment >>> ', error);
+            console.error('Error in [POST_createDepartment] >>> ', error);
         }
     };
 
@@ -33,7 +33,7 @@ class HttpDepartmentService {
             if(data === null) return null;
             return data as IDataDepartmentAndId[];
         } catch (error) {
-            console.error('Error in GET_getDepartments >>> ', error);
+            console.error('Error in [GET_getDepartments] >>> ', error);
         }
     }
 
@@ -47,7 +47,7 @@ class HttpDepartmentService {
             if(data === null) return null;
             return data as IDataDepartmentAndId;
         } catch (error) {
-            console.error('Error in getDepartmentById >>> ', error);
+            console.error('Error in [getDepartmentById] >>> ', error);
         }
     }
 
@@ -61,7 +61,7 @@ class HttpDepartmentService {
 
             return data as IMessage;
         } catch (error) {
-            console.error('Error in PATCH_patchDepartment >>> ', error);
+            console.error('Error in [PATCH_patchDepartment] >>> ', error);
         }
     }
 
@@ -75,7 +75,7 @@ class HttpDepartmentService {
 
             return data as IMessage;
         } catch (error) {
-            console.error('Error in DELETE_deleteDepartment >>> ', error);
+            console.error('Error in [DELETE_deleteDepartment] >>> ', error);
         }
     }
 }
