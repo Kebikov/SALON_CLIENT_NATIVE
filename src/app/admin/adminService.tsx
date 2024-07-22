@@ -164,7 +164,7 @@ const AdminService: FC = () => {
 
 
 const styles = StyleSheet.create({
-    main: { flex: 1, paddingHorizontal: 5, marginTop: 5 },
+    main: { flex: 1, paddingHorizontal: 15, marginTop: 5 },
     boxButton: { paddingHorizontal: 10, marginBottom: 5 }
 });
 

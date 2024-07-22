@@ -2,13 +2,15 @@ export type TRole = 'admin' | 'master' | 'client';
 
 /** 
  * @table registration
- * @param email - Email пользователя.
- * @param password - Пароль пользователя.
- * @param role - Роль пользователя.
- * @param activationId - id для подтверждения почты.
- * @param isActivated - Флаг активации учетной записи (0 - не активирована, 1 - активирована).
+ * @param id Id записи.
+ * @param email Email пользователя.
+ * @param password Пароль пользователя.
+ * @param role Роль пользователя.
+ * @param activationId ID для подтверждения почты.
+ * @param isActivated Флаг активации учетной записи (0 - не активирована, 1 - активирована).
  */
-export interface IRegistration {
+export interface RegistrationDTO {
+    id: number;
     email: string;
     password: string;
     role: TRole;
@@ -17,13 +19,12 @@ export interface IRegistration {
 }
 
 
-
 /**
  * Входяший boby на регистрацию нового пользователя через Google.
  * @param name Имя.
  * @param picture Аватарка пользователя.
  */
-export interface IReqBodyRegistrationGoogle extends Pick<IRegistration, 'email' | 'password' > {
+export interface IReqBodyRegistrationGoogle extends Pick<RegistrationDTO, 'email' | 'password' > {
     name: string;
     picture: string;
 }
@@ -33,7 +34,7 @@ export interface IReqBodyRegistrationGoogle extends Pick<IRegistration, 'email' 
  * @param name Имя.
  * @param picture Аватарка пользователя.
  */
-export interface IReqBodyRegistrationEmail extends Pick<IRegistration, 'email' | 'password'> {
+export interface IReqBodyRegistrationEmail extends Pick<RegistrationDTO, 'email' | 'password'> {
     name: string;
     phone: string;
 }

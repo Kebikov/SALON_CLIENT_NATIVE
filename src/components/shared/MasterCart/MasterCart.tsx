@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet, ImageBackground, Image, Platform } from 'react-native';
 import React, { FC } from 'react';
 import { COLOR_ROOT } from '@/data/colors';
+import { baseLink } from '@/api/axios/axios.instance/instance';
 import Animated, {ZoomIn} from 'react-native-reanimated';
 
 
@@ -20,7 +21,7 @@ interface IMasterCart {
     /**
      * Фото мастера.
      */
-    img: number;
+    img: number | string;
 }
 
 
@@ -42,7 +43,7 @@ const MasterCart: FC<IMasterCart> = ({
         <Animated.View style={[styles.main]} entering={ZoomIn.duration(500).delay(300)} >
             <View style={styles.box} >
                 <View style={styles.boxBg} >
-                    <ImageBackground style={styles.imageBackground} source={img} >
+                    <ImageBackground style={styles.imageBackground} source={typeof img === 'number' ? img : {uri: `${baseLink}/api/img/get-img/${img}?type=img_imgMaster`}} >
                         <View style={styles.grade}>
                             <View style={styles.gradeBox}>
                                 <Image style={styles.gradeImg} source={require('@/source/img/icon/grade.png')}/>
