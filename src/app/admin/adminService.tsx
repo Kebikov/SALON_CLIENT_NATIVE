@@ -1,4 +1,5 @@
-import { View, StyleSheet, FlatList, Text, Alert, Pressable, Image, Platform } from 'react-native';
+import { View, StyleSheet, Text, Alert, Pressable, Image, Platform } from 'react-native';
+import { FlatList } from 'react-native-gesture-handler';
 import React, { FC, useRef, useState } from 'react';
 import WrapperMenu from '@/components/wrappers/WrappersMenu/WrappersMenu';
 import ServiceCart from '@/components/shared/ServiceCart/ServiceCart';
@@ -139,6 +140,7 @@ const AdminService: FC = () => {
                 <View style={styles.boxButton}>
                     <ButtonWithIcon 
                         title='добавить услугу'
+                        height={50}
                         pushButton={() => {
                             appRouter.navigate('/admin/adminAddService');
                         }} 

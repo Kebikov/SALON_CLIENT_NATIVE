@@ -18,6 +18,7 @@ export interface MasterDTO {
     picture: string;
     access_ban: number;
     id_registration: number;
+    id_department: number;
 }
 
 export interface IAddMaster extends Omit<MasterDTO, 'id' | 'picture' | 'access_ban' | 'id_registration'>, Pick<RegistrationDTO, 'email' | 'password'> {}
@@ -29,6 +30,13 @@ export interface IReqEditMaster extends Omit<MasterDTO,  'id_registration'> {
 }
 
 export interface IEditMaster extends Omit<MasterDTO, 'id_registration' | 'id'> {};
+
+/**
+ * `Результат поиска строки в таблице Master.`
+ * @param department_name Имя группы.
+ * @param average_stars Средняя оценка поставленая мастеру.
+ */
 export interface IMasterFind extends MasterDTO, Pick<RegistrationDTO, 'email'> {
     department_name: string;
+    average_stars: string;
 };

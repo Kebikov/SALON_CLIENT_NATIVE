@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet } from 'react-native';
 import type { NativeSyntheticEvent, TextInputChangeEventData } from 'react-native';
 import React, { FC, useState } from 'react';
-import WrapperScroll from '@/components/wrappers/WrapperScroll/WrapperScroll';
+import WrapperScrollMenu from '@/components/wrappers/WrapperScrollMenu/WrapperScrollMenu';
 import { COLOR_ROOT } from '@/data/colors';
 import InputGeneric from '@/components/shared/InputGeneric/InputGeneric';
 import ButtonWithIcon from '@/components/shared/ButtonWithIcon/ButtonWithIcon';
@@ -22,7 +22,7 @@ interface IEmail {
  * @page Страница востановления пароля.
  */
 const AuthForgot: FC = () => {
-
+    console.log('FOGOT');
     const {appRouter} = useHookRouter();
 
     const  {checkDataForm} = useHookCheckDataForm();
@@ -41,7 +41,7 @@ const AuthForgot: FC = () => {
     }
 
     return (
-        <WrapperScroll backgroundColor='white' barStyle='dark-content' >
+        <WrapperScrollMenu backgroundColor={COLOR_ROOT.BACKGROUND} barStyle='dark-content' >
             <View style={styles.main}>
                 <Title text='Если забыли пароль,' location='left' fontSize={19} />
                 <Discription text='пожалуйста введите ваш email ниже и мы вышлим вам новый пароль для входа.' marginTop={5}/>
@@ -54,7 +54,7 @@ const AuthForgot: FC = () => {
                 <ButtonWithIcon pushButton={() => recovery()} title='Востановить' marginTop={30}/>
                 <DoYouHaveAnAccount pushButton={() => appRouter.navigate('/')} title='Вернуться к началу ?' color={COLOR_ROOT.MIDDLE_GRAY} textButton=' Вернуться' />
             </View>
-        </WrapperScroll>
+        </WrapperScrollMenu>
     );
 };
 

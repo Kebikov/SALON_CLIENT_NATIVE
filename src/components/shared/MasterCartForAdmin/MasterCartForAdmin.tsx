@@ -5,11 +5,12 @@ import { COLOR_ROOT } from '@/data/colors';
 import * as Clipboard from 'expo-clipboard';
 import ButtonSwipeable from '@/components/widgets/ButtonSwipeable/ButtonSwipeable';
 
+
 interface IMasterCartForAdmin {
     name: string;
     surname: string;
     department: string;
-    grade: number;
+    grade: string;
     picture: number | string;
     access_ban: number;
     email: string;
@@ -29,17 +30,6 @@ interface IMasterCartForAdmin {
  */
 const MasterCartForAdmin: FC<IMasterCartForAdmin> = ({name, surname, department, grade, picture, access_ban, email, phone}) => {
 
-    // const name = 'Маша';
-    // const surname = 'Фомина';
-    // const department = 'Маникюр';
-    // const grade = 4.2;
-    // const picture = '1721338917465.jpg';
-    // const access_ban = 1;
-    // const email = 'sdf@wer.com';
-    // const phone = '+375296557843';
-    
-    
-
     const copyToClipboard = async (str: string) => {
         await Clipboard.setStringAsync(str);
         Platform.OS === 'ios'
@@ -49,12 +39,17 @@ const MasterCartForAdmin: FC<IMasterCartForAdmin> = ({name, surname, department,
         ToastAndroid.show(`Номер скопирован.`, ToastAndroid.SHORT)
     };
 
-
     return (
         <ButtonSwipeable
-            totalButton={3}
+            totalButton={2}
+
             onPressButton1={() => {}}
-            iconForButton1={require('@/source/img/icon/bell-white.png')}
+            iconForButton1={require('@/source/img/icon/edit-btn.png')}
+            colorButton1={COLOR_ROOT.BUTTON_COLOR_YELLOW}
+
+            onPressButton2={() => {}}
+            iconForButton2={require('@/source/img/icon/del-btn.png')}
+            colorButton2={COLOR_ROOT.BUTTON_COLOR_RED}
         >
             <View style={styles.main}>
                 <View style={styles.cart} >
@@ -71,12 +66,18 @@ const MasterCartForAdmin: FC<IMasterCartForAdmin> = ({name, surname, department,
                             <Text style={styles.phone} >{phone}</Text>
                         </Pressable>
                     </View>
-                    <View style={styles.grade}>
-                        <View style={styles.gradeBox}>
-                            <Image style={styles.gradeImg} source={require('@/source/img/icon/grade.png')}/>
-                            <Text style={styles.gradeText} >{grade}</Text>
+                    {
+                        grade
+                        ?
+                        <View style={styles.grade}>
+                            <View style={styles.gradeBox}>
+                                <Image style={styles.gradeImg} source={require('@/source/img/icon/grade.png')} />
+                                <Text style={styles.gradeText} >{grade.slice(0, 3)}</Text>
+                            </View>
                         </View>
-                    </View>
+                        :
+                        null
+                    }
                 </View>
             </View>
         </ButtonSwipeable>

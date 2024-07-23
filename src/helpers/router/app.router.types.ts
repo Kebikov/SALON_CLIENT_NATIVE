@@ -38,6 +38,7 @@ export type AppRouterTypes = {
     }
 
     '/admin/adminMaster': undefined;
+    '/admin/adminAddMaster': undefined;
 
 
     '/admin/modal': undefined;

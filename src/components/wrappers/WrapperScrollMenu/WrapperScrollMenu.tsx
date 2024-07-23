@@ -1,4 +1,4 @@
-import { StatusBar, View, Platform } from 'react-native';
+import { StatusBar, View, Platform, StatusBarStyle } from 'react-native';
 import React, { FC } from 'react';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { COLOR_ROOT } from '@/data/colors';
@@ -10,6 +10,8 @@ interface IWrapper {
     children: JSX.Element | JSX.Element[];
     titlePage?: string;
     scrollEnabled?: boolean;
+    barStyle?: StatusBarStyle;
+    backgroundColor?: string;
 }
 
 
@@ -18,19 +20,27 @@ interface IWrapper {
  * - SafeAreaView 
  * - StatusBar
  * - ScrollView 
- * @param titlePage ? Шапка в веху страницы с заголовком.
- * @param scrollEnabled ? Разрешена ли прокрутка.
+ * @param titlePage ? Заголовок страницы.
+ * @param scrollEnabled ? Включить/выключить ScrollView.
+ * @param barStyle ? Стиль StatusBar.
+ * @param backgroundColor ? Цвет фона StatusBar.
  * @example 
- * <WrapperScroll page={#}>
+ * <WrapperScrollMenu page={#}>
         {JSX.Element}
-    </WrapperScroll>
+    </WrapperScrollMenu>
  */
-const WrapperScrollMenu: FC<IWrapper> = ({children, titlePage, scrollEnabled = true}) => {
+const WrapperScrollMenu: FC<IWrapper> = ({
+    children, 
+    titlePage, 
+    scrollEnabled = true,
+    barStyle = 'light-content',
+    backgroundColor = COLOR_ROOT.MAIN_COLOR
+}) => {
 
     return (
         <>
-            <View style={{backgroundColor: COLOR_ROOT.MAIN_COLOR, height: Platform.OS === 'ios' ? 47 : StatusBar.currentHeight}} >
-                <StatusBar animated={true} barStyle={'light-content'} backgroundColor={COLOR_ROOT.MAIN_COLOR} />
+            <View style={{backgroundColor, height: Platform.OS === 'ios' ? 47 : StatusBar.currentHeight}} >
+                <StatusBar animated={true} barStyle={barStyle} backgroundColor={backgroundColor} />
             </View>
             <SafeAreaProvider>
                 <SafeAreaView style={{ flex: 1, backgroundColor: '#f2f1f7' }}>

@@ -5,22 +5,11 @@ import { COLOR_ROOT } from '@/data/colors';
 
 
 interface IButtonWithIcon {
-    /**
-     * Функция срабатываюшая после нажатия на кнопку.
-     */
     pushButton: Function;
-    /**
-     * Текст кнопки.
-     */
     title: string;
-    /**
-     * Отступ с верху.
-     */
     marginTop?: number;
-    /**
-     * Иконка кнопки(по умолчании конверт почты)
-     */
     img?: number;
+    height?: number;
 }
 
 
@@ -28,15 +17,22 @@ interface IButtonWithIcon {
  * @component `Кнопка c иконкой.`
  * @param title Текст кнопки.
  * @param pushButton Функция срабатываюшая после нажатия на кнопку.
+ * @optional
  * @param marginTop ? Отступ с верху.
  * @param img ? Иконка кнопки(по умолчании конверт почты)
+ * @param height ? Высота кнопки.
  */
-const ButtonWithIcon: FC<IButtonWithIcon> = ({title, pushButton, marginTop, img = require('@/source/img/logo/email.png')}) => {
-
+const ButtonWithIcon: FC<IButtonWithIcon> = ({
+    title, 
+    pushButton, 
+    marginTop, 
+    img = require('@/source/img/logo/email.png'),
+    height = 60
+}) => {
 
     return (
         <Pressable 
-            style={[styles.main, {marginTop}]}
+            style={[styles.main, {marginTop, height}]}
             onPress={() => {
                     Vibration.vibrate([7, 8, 10]);
                     pushButton();
@@ -56,7 +52,6 @@ const ButtonWithIcon: FC<IButtonWithIcon> = ({title, pushButton, marginTop, img 
 const styles = StyleSheet.create({
     main: {
         width: '100%',
-        height: 60,
         borderRadius: 35,
         backgroundColor: COLOR_ROOT.MAIN_COLOR,
         justifyContent: 'center',

@@ -106,6 +106,7 @@ const AdminDepartment: FC= () => {
                 <View style={styles.boxButton}>
                     <ButtonWithIcon 
                         title='добавить группу' 
+                        height={50}
                         pushButton={() => appRouter.navigate('/admin/adminAddDepartment')} 
                         img={require('@/source/img/icon/plus-white.png')} 
                         marginTop={10} 

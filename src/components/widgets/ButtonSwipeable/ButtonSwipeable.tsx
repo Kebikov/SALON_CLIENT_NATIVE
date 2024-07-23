@@ -154,6 +154,7 @@ const ButtonSwipeable: FC<IButtonSwipeable> = ({
                     </Pressable>
                 </Animated.View>
             </GestureDetector>
+            {/* Background */}
             <View style={[styles.down]}>
                 <Animated.View 
                     style={[styles.down_button_common, animatedStyleDownButton1,
@@ -243,6 +244,7 @@ const ButtonSwipeable: FC<IButtonSwipeable> = ({
                     null
                 }
             </View>
+
         </View>
     );
 };
@@ -253,7 +255,7 @@ const styles = StyleSheet.create({
     down: { 
         position: 'absolute', 
         top: 0, 
-        right: 0, 
+        right: -1, 
         height: '100%', 
         flexDirection: 'row', 
         justifyContent: 'flex-end'
