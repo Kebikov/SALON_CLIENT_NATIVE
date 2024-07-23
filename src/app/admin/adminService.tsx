@@ -22,7 +22,7 @@ import type { IDataDepartmentAndId } from '@/api/routes/department/types/departm
  * @page `Страница с услугами и кнопкой добавления услуги.`
  */
 const AdminService: FC = () => {
-    console.log('Service');
+
     const bottomSheetRef = useRef<IRefBottomModalSheet>(null);
     const openList = () => bottomSheetRef.current?.openModal();
     const closeList = () => bottomSheetRef.current?.closeModal();

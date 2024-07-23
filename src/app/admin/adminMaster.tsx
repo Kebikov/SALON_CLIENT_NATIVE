@@ -9,6 +9,7 @@ import { useHookRouter } from '@/helpers/router/useHookRouter';
 
 import type { IMasterFind } from '@/api/routes/master/types/master.dto';
 
+
 /**
  * @page 'Страница с мастерами и кнопкой добавления мастера.'
  */

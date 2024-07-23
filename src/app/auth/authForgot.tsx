@@ -22,7 +22,7 @@ interface IEmail {
  * @page Страница востановления пароля.
  */
 const AuthForgot: FC = () => {
-    console.log('FOGOT');
+
     const {appRouter} = useHookRouter();
 
     const  {checkDataForm} = useHookCheckDataForm();

@@ -99,8 +99,8 @@ const styles = StyleSheet.create({
         elevation: 5
     },
     left: {
-        width: Platform.OS === 'ios' ? 110 : 100,
-        height: Platform.OS === 'ios' ? 110 : 100,
+        width: Platform.OS === 'ios' ? 95 : 90,
+        height: Platform.OS === 'ios' ? 95 : 90,
         borderRadius:15,
         overflow: 'hidden',
         marginRight: 10
@@ -116,8 +116,8 @@ const styles = StyleSheet.create({
     },
     title: {
         color: COLOR_ROOT.BLACK,
-        fontSize: Platform.OS === 'ios' ? 18 : 15,
-        fontWeight: '500'
+        fontSize: Platform.OS === 'ios' ? 17 : 15,
+        fontWeight: '500',
     },
     department: {
         color: COLOR_ROOT.LIGHT_ICON,
