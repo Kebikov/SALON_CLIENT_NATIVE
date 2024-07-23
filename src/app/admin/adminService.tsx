@@ -1,7 +1,7 @@
-import { View, StyleSheet, Text, Alert, Pressable, Image, Platform } from 'react-native';
+import { View, StyleSheet, Text, Alert, Platform } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import React, { FC, useRef, useState } from 'react';
-import WrapperMenu from '@/components/wrappers/WrappersMenu/WrappersMenu';
+import WrapperScrollMenu from '@/components/wrappers/WrapperScrollMenu/WrapperScrollMenu';
 import ServiceCart from '@/components/shared/ServiceCart/ServiceCart';
 import ButtonWithIcon from '../../components/shared/ButtonWithIcon/ButtonWithIcon';
 import { useHookRouter } from '@/helpers/router/useHookRouter';
@@ -9,12 +9,10 @@ import httpServiceService from '@/api/routes/service/service/http.service.servic
 import ButtonSwipeable from '@/components/widgets/ButtonSwipeable/ButtonSwipeable';
 import { useHookCheckErrorResponce } from '@/hooks/useHookCheckErrorResponce';
 import { COLOR_ROOT } from '@/data/colors';
-import { baseLink } from '@/api/axios/axios.instance/instance';
 import { useHookGetDataServices } from '@/hooks/GET/useHookGetDataServices';
 import { useHookGetDataDepartments } from '@/hooks/GET/useHookGetDataDepartments';
-import BottomModalSheet from '@/components/wrappers/BottomModalSheet/BottomModalSheet';
 import BottomModalSheetWithDepartment from '@/components/widgets/BottomModalSheetWithDepartment/BottomModalSheetWithDepartment';
-import ModalSheetLineDepartment from '@/components/shared/ModalSheetLineDepartment/ModalSheetLineDepartment';
+
 import type { ServiceDTOAndDepartmentName } from '@/api/routes/service/types/service.types';
 import type { IRefBottomModalSheet } from '@/components/wrappers/BottomModalSheet/types';
 import type { IDataDepartmentAndId } from '@/api/routes/department/types/department.dto';
@@ -24,7 +22,7 @@ import type { IDataDepartmentAndId } from '@/api/routes/department/types/departm
  * @page `Страница с услугами и кнопкой добавления услуги.`
  */
 const AdminService: FC = () => {
-
+    console.log('Service');
     const bottomSheetRef = useRef<IRefBottomModalSheet>(null);
     const openList = () => bottomSheetRef.current?.openModal();
     const closeList = () => bottomSheetRef.current?.closeModal();
@@ -93,7 +91,7 @@ const AdminService: FC = () => {
 
     return (
         <>
-            <WrapperMenu titlePage='Услуги' imgFilter={require('@/source/img/icon/filter_white.png')} handlePessImgFilter={() => openList()} >
+            <WrapperScrollMenu titlePage='Услуги' isScrollEnabled={false} imgFilter={require('@/source/img/icon/filter_white.png')} handlePessImgFilter={() => openList()} >
                 <View style={styles.main} >
                     {
                         services.length > 0
@@ -148,7 +146,7 @@ const AdminService: FC = () => {
                         marginTop={10} 
                     />
                 </View>
-            </WrapperMenu>
+            </WrapperScrollMenu>
 
             {/*//* Модальное нижнее окно с группами*/}
             <BottomModalSheetWithDepartment

@@ -1,20 +1,19 @@
 import { View, Text, StyleSheet } from 'react-native';
 import React, { FC, useState, useEffect } from 'react';
 import httpMasterService from '@/api/routes/master/service/http.master.service';
-import WrapperMenu from '@/components/wrappers/WrappersMenu/WrappersMenu';
+import WrapperScrollMenu from '@/components/wrappers/WrapperScrollMenu/WrapperScrollMenu';
 import ButtonWithIcon from '@/components/shared/ButtonWithIcon/ButtonWithIcon';
 import MasterCartForAdmin from '@/components/shared/MasterCartForAdmin/MasterCartForAdmin';
 import { FlatList } from 'react-native-gesture-handler';
 import { useHookRouter } from '@/helpers/router/useHookRouter';
 
 import type { IMasterFind } from '@/api/routes/master/types/master.dto';
-import { COLOR_ROOT } from '@/data/colors';
 
 /**
  * @page 'Страница с мастерами и кнопкой добавления мастера.'
  */
 const AdminMaster: FC = () => {
-
+    
     const [masters, setMasters] = useState<IMasterFind[]>([]);
     const {appRouter} = useHookRouter();
     
@@ -30,10 +29,10 @@ const AdminMaster: FC = () => {
     if(masters.length === 0) return;
 
     return (
-        <WrapperMenu titlePage='Команда'>
-
+        <WrapperScrollMenu titlePage='Команда' isScrollEnabled={false} >
+            <View style={styles.main} >
                 <FlatList
-                    contentContainerStyle={{paddingVertical: 10, marginHorizontal: 15, gap: 10}}
+                    contentContainerStyle={{paddingVertical: 10, gap: 10}}
                     data={masters}
                     extraData={masters}
                     renderItem={({item}) => (
@@ -53,22 +52,22 @@ const AdminMaster: FC = () => {
                     showsHorizontalScrollIndicator={false}
                     scrollEventThrottle={16}
                 />
-                
-                <View style={styles.boxButton}>
-                    <ButtonWithIcon 
-                        title='добавить мастера' 
-                        pushButton={() => appRouter.navigate('/admin/adminAddMaster')} 
-                        img={require('@/source/img/icon/plus-white.png')} 
-                        marginTop={10} 
-                        height={50}
-                    />
-                </View>
-        </WrapperMenu>
-
+            </View>
+            <View style={styles.boxButton}>
+                <ButtonWithIcon 
+                    title='добавить мастера' 
+                    pushButton={() => appRouter.navigate('/admin/adminAddMaster')} 
+                    img={require('@/source/img/icon/plus-white.png')} 
+                    marginTop={10} 
+                    height={50}
+                />
+            </View>
+        </WrapperScrollMenu>
     );
 };
 
 const styles = StyleSheet.create({
+    main: { flex: 1, paddingHorizontal: 15},
     boxButton: { paddingHorizontal: 10, marginBottom: 5 },
 });
 

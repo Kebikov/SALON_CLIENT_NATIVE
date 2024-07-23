@@ -21,7 +21,7 @@ const HomeAdmin: FC = () => {
     const refModal = useRef<IRefBottomModalSheet>(null);
 
     const press = () => {
-        appRouter.navigate('test');
+        appRouter.navigate('/test');
         //refModal.current?.openModal();
     }
 

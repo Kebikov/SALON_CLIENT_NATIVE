@@ -9,9 +9,11 @@ import HeaderTitle from '@/components/widgets/HeaderTitle/HeaderTitle';
 interface IWrapper {
     children: JSX.Element | JSX.Element[];
     titlePage?: string;
-    scrollEnabled?: boolean;
+    isScrollEnabled?: boolean;
     barStyle?: StatusBarStyle;
     backgroundColor?: string;
+    imgFilter?: number;
+    handlePessImgFilter?: Function;
 }
 
 
@@ -21,9 +23,11 @@ interface IWrapper {
  * - StatusBar
  * - ScrollView 
  * @param titlePage ? Заголовок страницы.
- * @param scrollEnabled ? Включить/выключить ScrollView.
+ * @param scrollEnabled ? Если не нужен ScrollView, передаем false.
  * @param barStyle ? Стиль StatusBar.
  * @param backgroundColor ? Цвет фона StatusBar.
+ * @param imgFilter ? Иконка для дополнительной функциональности header.
+ * @param handlePessImgFilter ? Функция обработки нажатия на иконку.
  * @example 
  * <WrapperScrollMenu page={#}>
         {JSX.Element}
@@ -32,9 +36,11 @@ interface IWrapper {
 const WrapperScrollMenu: FC<IWrapper> = ({
     children, 
     titlePage, 
-    scrollEnabled = true,
+    isScrollEnabled = true,
     barStyle = 'light-content',
-    backgroundColor = COLOR_ROOT.MAIN_COLOR
+    backgroundColor = COLOR_ROOT.MAIN_COLOR,
+    imgFilter,
+    handlePessImgFilter
 }) => {
 
     return (
@@ -46,17 +52,25 @@ const WrapperScrollMenu: FC<IWrapper> = ({
                 <SafeAreaView style={{ flex: 1, backgroundColor: '#f2f1f7' }}>
                     {
                         titlePage ?
-                        <HeaderTitle text={titlePage} />
+                        <HeaderTitle text={titlePage} imgFilter={imgFilter} handlePessImgFilter={handlePessImgFilter} />
                         :
                         null
                     }
-                    <ScrollView 
-                        contentContainerStyle={{flexGrow: 1}} 
-                        keyboardShouldPersistTaps={'handled'} 
-                        scrollEnabled={scrollEnabled}
-                    >
+                    {
+                        isScrollEnabled
+                        ?
+                        <ScrollView 
+                            contentContainerStyle={{flexGrow: 1}} 
+                            keyboardShouldPersistTaps={'handled'} 
+                        >
                             {children}
-                    </ScrollView>
+                        </ScrollView>
+                        :
+                        <>
+                            {children}
+                        </>
+                    }
+
                 </SafeAreaView>
             </SafeAreaProvider>
         </>
