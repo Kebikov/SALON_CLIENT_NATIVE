@@ -1,7 +1,7 @@
 import { Text, StyleSheet, Pressable } from 'react-native';
 import React, { FC, useRef } from 'react';
 import { COLOR_ROOT } from '@/data/colors';
-import WrapperScrollMenu from '@/components/wrappers/WrapperScrollMenu/WrapperScrollMenu';
+import WrapperScroll from '@/components/wrappers/WrapperScroll/WrapperScroll';
 import HomeUserHeader from '@/components/widgets/HomeUserHeader/HomeUserHeader';
 import ListDepartment from '@/components/widgets/ListDepartment/ListDepartment';
 import ListMasters from '@/components/widgets/ListMasters/ListMasters';
@@ -26,7 +26,7 @@ const HomeAdmin: FC = () => {
     }
 
     return (
-        <WrapperScrollMenu>
+        <WrapperScroll>
             <HomeUserHeader/>
 
             {/* <Pressable
@@ -50,7 +50,7 @@ const HomeAdmin: FC = () => {
                 <Text style={{fontSize: 30}}>Home</Text>
             </BottomModalSheet>
 
-        </WrapperScrollMenu>
+        </WrapperScroll>
     );
 };
 

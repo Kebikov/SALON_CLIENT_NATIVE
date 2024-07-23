@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet, TextInput, Image, NativeSyntheticEvent, TextInputChangeEventData, Platform } from 'react-native';
 import React, { FC, useState } from 'react';
-import WrapperScrollMenu from '@/components/wrappers/WrapperScrollMenu/WrapperScrollMenu';
+import WrapperScroll from '@/components/wrappers/WrapperScroll/WrapperScroll';
 import { COLOR_ROOT } from '@/data/colors';
 import JoinGoogle from '@/components/shared/JoinGoogle/JoinGoogle';
 import ButtonWithIcon from '@/components/shared/ButtonWithIcon/ButtonWithIcon';
@@ -58,7 +58,7 @@ const AuthCreateAccount: FC = () => {
     }
 
     return (
-        <WrapperScrollMenu backgroundColor={COLOR_ROOT.BACKGROUND} barStyle='dark-content' >
+        <WrapperScroll backgroundColor={COLOR_ROOT.BACKGROUND} barStyle='dark-content' >
             <View style={styles.main}>
                 <Title text='Создание вашего акаунта' location='left' fontSize={19} />
                 <Discription text='Пожалуйста заполните информацию о себе ниже и мы создадим для вас акаунт.' marginTop={5}/>
@@ -81,7 +81,7 @@ const AuthCreateAccount: FC = () => {
                 <JoinGoogle border={true} />
                 <DoYouHaveAnAccount pushButton={goToPageAuthEnter} title='Уже есть аккаунт ?' textButton=' Войти' color={COLOR_ROOT.MIDDLE_GRAY} />
             </View> 
-        </WrapperScrollMenu>
+        </WrapperScroll>
     );
 };
 

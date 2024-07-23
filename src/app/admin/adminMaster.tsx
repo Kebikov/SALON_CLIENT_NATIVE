@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet } from 'react-native';
 import React, { FC, useState, useEffect } from 'react';
 import httpMasterService from '@/api/routes/master/service/http.master.service';
-import WrapperScrollMenu from '@/components/wrappers/WrapperScrollMenu/WrapperScrollMenu';
+import WrapperScroll from '@/components/wrappers/WrapperScroll/WrapperScroll';
 import ButtonWithIcon from '@/components/shared/ButtonWithIcon/ButtonWithIcon';
 import MasterCartForAdmin from '@/components/shared/MasterCartForAdmin/MasterCartForAdmin';
 import { FlatList } from 'react-native-gesture-handler';
@@ -29,7 +29,7 @@ const AdminMaster: FC = () => {
     if(masters.length === 0) return;
 
     return (
-        <WrapperScrollMenu titlePage='Команда' isScrollEnabled={false} >
+        <WrapperScroll titlePage='Команда' isScrollEnabled={false} >
             <View style={styles.main} >
                 <FlatList
                     contentContainerStyle={{paddingVertical: 10, gap: 10}}
@@ -62,7 +62,7 @@ const AdminMaster: FC = () => {
                     height={50}
                 />
             </View>
-        </WrapperScrollMenu>
+        </WrapperScroll>
     );
 };
 

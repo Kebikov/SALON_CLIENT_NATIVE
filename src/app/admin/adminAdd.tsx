@@ -1,6 +1,6 @@
 import { View, StyleSheet } from 'react-native';
 import React, { FC } from 'react';
-import WrapperScrollMenu from '@/components/wrappers/WrapperScrollMenu/WrapperScrollMenu';
+import WrapperScroll from '@/components/wrappers/WrapperScroll/WrapperScroll';
 import MenuItem from '@/components/shared/MenuItem/MenuItem';
 import Title from '@/components/shared/Title/Title';
 import { useHookRouter } from '@/helpers/router/useHookRouter';
@@ -15,7 +15,7 @@ const AdminAdd: FC = () => {
     const {appRouter} = useHookRouter();
 
     return (
-        <WrapperScrollMenu>
+        <WrapperScroll>
             <View style={styles.main} >
                 <Title text='Основные настройки' marginTop={10}/>
                 <MenuItem
@@ -37,7 +37,7 @@ const AdminAdd: FC = () => {
                     pushFunction={() => appRouter.navigate('/admin/adminMaster')}
                 />
             </View>
-        </WrapperScrollMenu>
+        </WrapperScroll>
     );
 };
 

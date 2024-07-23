@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet, NativeSyntheticEvent, TextInputChangeEventData, Pressable, Platform, Image } from 'react-native';
 import React, { FC, useState, useRef } from 'react';
-import WrapperScrollMenu from '@/components/wrappers/WrapperScrollMenu/WrapperScrollMenu';
+import WrapperScroll from '@/components/wrappers/WrapperScroll/WrapperScroll';
 import * as ImagePicker from 'expo-image-picker';
 import BottomModalSheet from '@/components/wrappers/BottomModalSheet/BottomModalSheet';
 import { useHookGetDataDepartments } from '@/hooks/GET/useHookGetDataDepartments';
@@ -68,7 +68,7 @@ const FormService: FC<IFormService> = ({
 
     return (
         <>
-            <WrapperScrollMenu titlePage={titlePage} >
+            <WrapperScroll titlePage={titlePage} >
                 <View style={styles.main} >
                     <InputServiceTitle sizeTitle={sizeTitle} data={data} onChangeForm={onChangeForm} />
                     <InputServiceDescription sizeTitle={sizeTitle} data={data} onChangeForm={onChangeForm} />
@@ -97,7 +97,7 @@ const FormService: FC<IFormService> = ({
                         />
                     </View>
                 </View>
-            </WrapperScrollMenu>
+            </WrapperScroll>
             
             <BottomModalSheetWithDepartment
                 bottomSheetRef={bottomSheetRef}

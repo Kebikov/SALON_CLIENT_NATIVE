@@ -1,7 +1,7 @@
 import { View, StyleSheet, Text, Alert, Platform } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import React, { FC, useRef, useState } from 'react';
-import WrapperScrollMenu from '@/components/wrappers/WrapperScrollMenu/WrapperScrollMenu';
+import WrapperScroll from '@/components/wrappers/WrapperScroll/WrapperScroll';
 import ServiceCart from '@/components/shared/ServiceCart/ServiceCart';
 import ButtonWithIcon from '../../components/shared/ButtonWithIcon/ButtonWithIcon';
 import { useHookRouter } from '@/helpers/router/useHookRouter';
@@ -91,7 +91,7 @@ const AdminService: FC = () => {
 
     return (
         <>
-            <WrapperScrollMenu titlePage='Услуги' isScrollEnabled={false} imgFilter={require('@/source/img/icon/filter_white.png')} handlePessImgFilter={() => openList()} >
+            <WrapperScroll titlePage='Услуги' isScrollEnabled={false} imgFilter={require('@/source/img/icon/filter_white.png')} handlePessImgFilter={() => openList()} >
                 <View style={styles.main} >
                     {
                         services.length > 0
@@ -146,7 +146,7 @@ const AdminService: FC = () => {
                         marginTop={10} 
                     />
                 </View>
-            </WrapperScrollMenu>
+            </WrapperScroll>
 
             {/*//* Модальное нижнее окно с группами*/}
             <BottomModalSheetWithDepartment

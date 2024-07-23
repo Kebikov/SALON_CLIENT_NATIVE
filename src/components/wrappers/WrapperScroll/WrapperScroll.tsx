@@ -29,11 +29,11 @@ interface IWrapper {
  * @param imgFilter ? Иконка для дополнительной функциональности header.
  * @param handlePessImgFilter ? Функция обработки нажатия на иконку.
  * @example 
- * <WrapperScrollMenu page={#}>
+ * <WrapperScroll page={#}>
         {JSX.Element}
-    </WrapperScrollMenu>
+    </WrapperScroll>
  */
-const WrapperScrollMenu: FC<IWrapper> = ({
+const WrapperScroll: FC<IWrapper> = ({
     children, 
     titlePage, 
     isScrollEnabled = true,
@@ -78,6 +78,6 @@ const WrapperScrollMenu: FC<IWrapper> = ({
 };
 
 
-export default WrapperScrollMenu;
+export default WrapperScroll;
 
 

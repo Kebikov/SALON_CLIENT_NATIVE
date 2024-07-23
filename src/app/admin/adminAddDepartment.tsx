@@ -1,7 +1,7 @@
 import { View, StyleSheet } from 'react-native';
 import React, { FC } from 'react';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
-import WrapperScrollMenu from '@/components/wrappers/WrapperScrollMenu/WrapperScrollMenu';
+import WrapperScroll from '@/components/wrappers/WrapperScroll/WrapperScroll';
 import httpDepartmentService from '@/api/routes/department/service/http.department.service';
 import { useHookCheckErrorResponce } from '@/hooks/useHookCheckErrorResponce';
 import DepartmentForm from '@/components/shared/DepartmentForm/DepartmentForm';
@@ -44,13 +44,13 @@ const AdminAddDepartment: FC = () => {
     };
 
     return (
-        <WrapperScrollMenu titlePage='Добавление группы' >
+        <WrapperScroll titlePage='Добавление группы' >
             <View style={styles.main} >
                 <DepartmentForm 
                     handlePressButton={onAddDepartment} 
                 />
             </View>
-        </WrapperScrollMenu>
+        </WrapperScroll>
     );
 };
 

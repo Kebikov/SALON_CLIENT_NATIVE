@@ -2,7 +2,7 @@ import { View, Text, StyleSheet } from 'react-native';
 import type { NativeSyntheticEvent, TextInputChangeEventData } from 'react-native';
 import React, { FC, useState } from 'react';
 import InputGeneric from '@/components/shared/InputGeneric/InputGeneric';
-import WrapperScrollMenu from '@/components/wrappers/WrapperScrollMenu/WrapperScrollMenu';
+import WrapperScroll from '@/components/wrappers/WrapperScroll/WrapperScroll';
 import ButtonWithIcon from '@/components/shared/ButtonWithIcon/ButtonWithIcon';
 import { useHookCheckErrorResponce } from '@/hooks/useHookCheckErrorResponce';
 import httpAuthenticationService from '@/api/routes/authentication/service/http.authentication.service';
@@ -49,7 +49,7 @@ const ChangePassword: FC = () => {
     return (
         <>
             
-            <WrapperScrollMenu>
+            <WrapperScroll>
                 <HeaderTitle text='Смена пароля' />
 
                 <View style={styles.main}>
@@ -71,7 +71,7 @@ const ChangePassword: FC = () => {
                     />
                     <ButtonWithIcon title='смена пароля' marginTop={20} pushButton={() => changePassword()} />
                 </View>
-            </WrapperScrollMenu>
+            </WrapperScroll>
         </>
     );
 };

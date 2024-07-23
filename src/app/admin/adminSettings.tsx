@@ -3,7 +3,7 @@ import React, { FC } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { COLOR_ROOT } from '@/data/colors';
 import MenuItem from '@/components/shared/MenuItem/MenuItem';
-import WrapperScrollMenu from '@/components/wrappers/WrapperScrollMenu/WrapperScrollMenu';
+import WrapperScroll from '@/components/wrappers/WrapperScroll/WrapperScroll';
 import { useHookRouter } from '@/helpers/router/useHookRouter';
 import { useAppDispatch } from '@/redux/store/hooks';
 import { setAppUserInfo } from '@/redux/slice/user.slice';
@@ -23,7 +23,7 @@ const AdminSettings: FC = () => {
     }
 
     return (
-        <WrapperScrollMenu>
+        <WrapperScroll>
             <View style={styles.main} >
                 <View style={styles.box} >
                     <View style={styles.boxSettings}>
@@ -44,7 +44,7 @@ const AdminSettings: FC = () => {
                     />
                 </View>
             </View>
-        </WrapperScrollMenu>
+        </WrapperScroll>
     );
 };
 

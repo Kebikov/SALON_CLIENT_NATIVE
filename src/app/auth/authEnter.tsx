@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet, NativeSyntheticEvent, TextInputChangeEventData, Pressable } from 'react-native';
 import React, { FC, useState } from 'react';
-import WrapperScrollMenu from '@/components/wrappers/WrapperScrollMenu/WrapperScrollMenu';
+import WrapperScroll from '@/components/wrappers/WrapperScroll/WrapperScroll';
 import InputPassword from '@/components/shared/InputPassword/InputPassword';
 import InputGeneric from '@/components/shared/InputGeneric/InputGeneric';
 import ButtonWithIcon from '@/components/shared/ButtonWithIcon/ButtonWithIcon';
@@ -70,7 +70,7 @@ const AuthEnter: FC = () => {
     }
 
     return (
-        <WrapperScrollMenu backgroundColor={COLOR_ROOT.BACKGROUND} barStyle='dark-content' >
+        <WrapperScroll backgroundColor={COLOR_ROOT.BACKGROUND} barStyle='dark-content' >
             <View style={styles.main}>
                 <Title text='Добро пожаловать' location='left' fontSize={19}/>
                 <Discription text='Рады снова Вас видеть, пожалуйста введите свой email и пароль, для входа.' marginTop={5}/>
@@ -93,7 +93,7 @@ const AuthEnter: FC = () => {
                 <JoinGoogle title='Вход через Google' border={true} />
                 <DoYouHaveAnAccount pushButton={goToPageRegistration} title='Нет аккаунта ?' textButton=' Регистрация' color={COLOR_ROOT.MIDDLE_GRAY} />
             </View>
-        </WrapperScrollMenu>
+        </WrapperScroll>
     );
 };
 

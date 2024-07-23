@@ -1,6 +1,6 @@
 import { View, StyleSheet, Text } from 'react-native';
 import React, { FC, useEffect, useState } from 'react';
-import WrapperScrollMenu from '@/components/wrappers/WrapperScrollMenu/WrapperScrollMenu';
+import WrapperScroll from '@/components/wrappers/WrapperScroll/WrapperScroll';
 import DepartmentForm from '@/components/shared/DepartmentForm/DepartmentForm';
 import httpDepartmentService from '@/api/routes/department/service/http.department.service';
 import type { IDataDepartment } from '@/api/routes/department/types/department.dto';
@@ -33,7 +33,7 @@ const AdminEditDepartment: FC = () => {
 
 
     return (
-        <WrapperScrollMenu titlePage='Редактирование группы' >
+        <WrapperScroll titlePage='Редактирование группы' >
             <View style={styles.main} >
                 <DepartmentForm
                     initialData={{
@@ -45,7 +45,7 @@ const AdminEditDepartment: FC = () => {
                     handlePressButton={(data: IDataDepartment) => pressEditDepertment(data)}
                 />
             </View>
-        </WrapperScrollMenu>
+        </WrapperScroll>
     );
 };
 

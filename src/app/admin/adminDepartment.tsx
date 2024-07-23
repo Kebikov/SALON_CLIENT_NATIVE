@@ -2,7 +2,7 @@ import { COLOR_ROOT } from '@/data/colors';
 import { View, StyleSheet, Platform, Text, Pressable } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import React, { FC, useRef, useState } from 'react';
-import WrapperScrollMenu from '@/components/wrappers/WrapperScrollMenu/WrapperScrollMenu';
+import WrapperScroll from '@/components/wrappers/WrapperScroll/WrapperScroll';
 import DepartmentCartAdmin from '@/components/shared/DepartmentCartAdmin/DepartmentCartAdmin';
 import ButtonWithIcon from '@/components/shared/ButtonWithIcon/ButtonWithIcon';
 import Discription from '@/components/shared/Discription/Discription';
@@ -63,7 +63,7 @@ const AdminDepartment: FC= () => {
 
     return (
         <>
-            <WrapperScrollMenu titlePage='Группы услуг' isScrollEnabled={false} >
+            <WrapperScroll titlePage='Группы услуг' isScrollEnabled={false} >
                 <View style={styles.main} >
                     <Discription text='Работа с группами услуг. Для обьединения услуг в определенные группы.' marginTop={10}/>
                     {
@@ -127,7 +127,7 @@ const AdminDepartment: FC= () => {
                         </View>
                     </View>
                 </BottomModalSheet>
-            </WrapperScrollMenu> 
+            </WrapperScroll> 
         </>
     );
 };
