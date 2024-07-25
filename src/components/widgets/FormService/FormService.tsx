@@ -80,7 +80,10 @@ const FormService: FC<IFormService> = ({
                         modalMessageError={modalMessageError} 
                         initialImage={data.img ? data.img : ''} 
                     />
-                    <ButtonSelectDepartment openList={openList} nameSelectedDepatment={data.name ? data.name : ''} />
+                    <ButtonSelectDepartment 
+                        openList={openList} 
+                        nameSelectedDepatment={data.name ? data.name : ''} 
+                    />
                     <View style={{flex: 1, justifyContent: 'flex-end', paddingVertical: 10}}>
                         <ButtonWithIcon 
                             title='добавить' 

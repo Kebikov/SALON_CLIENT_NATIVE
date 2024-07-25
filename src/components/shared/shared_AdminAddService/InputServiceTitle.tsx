@@ -23,7 +23,7 @@ const InputServiceTitle: FC<IInputService> = ({sizeTitle, onChangeForm, data}) =
         <>
             <QuestionHOC
                 title='Название'
-                discription='Введите название услуги, например: маникюр ручной, стрижка женикая, окрашевание волос и т.д.'
+                discription={`Введите название услуги, например: маникюр ручной, стрижка женикая, окрашевание волос и т.д. \nМаскимальная длинна названия до 30 символов.`}
                 marginTop={10}
             >
                 <Title text='Название' location='left' fontSize={sizeTitle} />
@@ -35,6 +35,7 @@ const InputServiceTitle: FC<IInputService> = ({sizeTitle, onChangeForm, data}) =
                 img={require('@/source/img/icon/group-gray.png')}
                 onChangeForm={onChangeForm}
                 value={data.title}
+                maxLength={30}
             />
         </>
     );

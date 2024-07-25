@@ -8,7 +8,7 @@ import type { ServiceDTOAndDepartmentName } from '@/api/routes/service/types/ser
  */
 const AdminAddService: FC = () => { 
 
-    const [data, setData] = useState< ServiceDTOAndDepartmentName >({ 
+    const [data, setData] = useState<ServiceDTOAndDepartmentName>({ 
         id: 0,
         title: '',
         description: '',

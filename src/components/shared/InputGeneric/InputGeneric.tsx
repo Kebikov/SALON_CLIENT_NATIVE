@@ -17,6 +17,7 @@ interface IInputGeneric<T> {
     value?: string;
     lines?: number;
     keyboardType?: 'default' | 'numeric';
+    maxLength?: number;
 }
 
 
@@ -27,9 +28,11 @@ interface IInputGeneric<T> {
  * @param placeholder Плейсхолдер.
  * @param keyName Ключ в обьекте состояния формы.
  * @param img Изображение иконки в поле ввода.
+ * @optional
  * @param value ? Значение поля.
  * @param lines ? Количество линий в input.
  * @param keyboardType ? Тип клавиатуры для ввода.
+ * @param maxLength ? Максимальная длинна текста.
  * @example <InputGeneric onChangeForm={#} placeholder={#} key={#} img={#} />
  */
 const InputGeneric = <T,>({
@@ -39,7 +42,8 @@ const InputGeneric = <T,>({
     img, 
     value = undefined, 
     lines = 1,
-    keyboardType = 'default'
+    keyboardType = 'default',
+    maxLength
 }: IInputGeneric<keyof T>) => {
     return (
         <View style={[stylesGeneric.boxInput, stylesGeneric.shadowTop]} >
@@ -52,6 +56,7 @@ const InputGeneric = <T,>({
                 onChange={text => onChangeForm(text, keyName)} 
                 value={value}
                 keyboardType={keyboardType}
+                maxLength={maxLength}
             />
             <Image style={stylesGeneric.icon} source={img} />
         </View>
