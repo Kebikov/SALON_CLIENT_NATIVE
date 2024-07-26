@@ -13,7 +13,7 @@ import type { DepartmentDTO } from "@/api/routes/department/types/department.typ
  */
 export const useHookGetDataDepartments = () => {
 
-    const [dataDepartments, setDataDepartments] = useState<Omit<DepartmentDTO, 'id'>[]>([]);
+    const [dataDepartments, setDataDepartments] = useState<DepartmentDTO[]>([]);
 
     useFocusEffect(
         useCallback(() => {

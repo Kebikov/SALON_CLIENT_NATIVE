@@ -17,7 +17,13 @@ interface IsendData {
 /**
  * `Отправка данных на сервер.`
  */
-export const sendData = async ({selectedImage, data, modalMessageError, isMessage, router}: IsendData) => {
+export const sendData = async ({
+    selectedImage, 
+    data, 
+    modalMessageError, 
+    isMessage, 
+    router
+}: IsendData) => {
 
     try{
         if(!data?.title) return modalMessageError('Нет названия.', 'Введите название услуги.');

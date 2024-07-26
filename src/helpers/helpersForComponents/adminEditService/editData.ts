@@ -1,12 +1,12 @@
 import * as ImagePicker from 'expo-image-picker';
 import httpServiceService from '@/api/routes/service/service/http.service.service';
 import type { ExpoRouter } from 'expo-router/types/expo-router';
-import type { ServiceDTOforEdit } from '@/api/routes/service/types/service.types';
+import type { ServiceDTO } from '@/api/routes/service/types/service.types';
 
 
 interface IeditData {
     selectedImage: ImagePicker.ImagePickerAsset | null;
-    data: ServiceDTOforEdit;
+    data: ServiceDTO | null;
     modalMessageError: (title: string, discription: string) => void;
     isMessage: (data: unknown) => void;
     router: ExpoRouter.Router

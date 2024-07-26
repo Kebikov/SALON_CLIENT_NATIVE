@@ -16,7 +16,6 @@ import ButtonSelectImage from '@/components/shared/shared_AdminAddService/Button
 import ButtonSelectDepartment from '@/components/shared/shared_AdminAddService/ButtonSelectDepartment';
 import { useRouter } from 'expo-router';
 import BottomModalSheetWithDepartment from '@/components/widgets/BottomModalSheetWithDepartment/BottomModalSheetWithDepartment';
-import { editData } from '@/helpers/helpersForComponents/adminEditService/editData';
 import InputMasterName from '@/components/shared/shared_AdminAddMaster/InputMasterName';
 import InputMasterSurname from '@/components/shared/shared_AdminAddMaster/InputMasterSurname';
 import InputMasterDescription from '@/components/shared/shared_AdminAddMaster/InputMasterDescription';

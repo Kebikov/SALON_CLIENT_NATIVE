@@ -1,3 +1,4 @@
+//: ServiceDTO                                                                 
 /** 
  * @table service
  * @param id Id записи.
@@ -15,14 +16,20 @@ export interface ServiceDTO {
     price: number;
     time: number;
     img: string;
-    id_department?: number;
+    id_department?: number; 
 }
 
+//: Types                                                                 
 export interface ServiceDTOAndDepartmentName extends ServiceDTO {
     name?: string;
 }
 
-
-export interface ServiceDTOforEdit extends ServiceDTO {
+export interface IResServiceDTOforEdit extends Omit<ServiceDTO, 'img'> {
     oldImgName?: string;
 }
+
+export interface ServiceDTOforEdit extends Omit<ServiceDTO, 'img' | 'id'> {
+    img?: string;
+    oldImgName?: string;
+}
+

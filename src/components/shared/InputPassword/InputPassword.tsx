@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet, TextInput, Image, Pressable, NativeSyntheticEvent, TextInputChangeEventData } from 'react-native';
 import React, { FC, useState } from 'react';
-import { TKeyStateCreateAccount } from '@/pages/AuthCreateAccount/AuthCreateAccount';
+import { TKeyStateCreateAccount } from '@/app/auth/authCreateAccount'; 
 import { stylesGeneric } from '../InputGeneric/InputGeneric';
 import { COLOR_ROOT } from '@/data/colors';
 

@@ -38,9 +38,9 @@ const AdminEditDepartment: FC = () => {
             <View style={styles.main} >
                 <DepartmentForm
                     initialData={{
-                        name: name,
-                        discription: discription,
-                        icon: icon
+                        name: name ?? '',
+                        discription: discription ?? '',
+                        icon: icon ?? ''
                     }}
                     titleForButton='редактировать'
                     handlePressButton={(data: Omit<DepartmentDTO, 'id'>) => pressEditDepertment(data)}
