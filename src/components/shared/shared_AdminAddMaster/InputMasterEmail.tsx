@@ -25,10 +25,11 @@ const InputMasterEmail: FC<IInputMaster> = ({sizeTitle, onChangeForm, data}) => 
             <InputGeneric<IAddMaster>
                 keyName='email'
                 placeholder='master@gmail.com'
-                img={require('@/source/img/icon/group-gray.png')}
+                img={require('@/source/img/icon/email-grey.png')}
                 onChangeForm={onChangeForm}
                 value={data.email}
                 maxLength={30}
+                marginTop={4}
             />
         </>
     );

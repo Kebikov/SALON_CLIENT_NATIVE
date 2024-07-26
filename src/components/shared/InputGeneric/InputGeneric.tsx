@@ -18,6 +18,7 @@ interface IInputGeneric<T> {
     lines?: number;
     keyboardType?: 'default' | 'numeric';
     maxLength?: number;
+    marginTop?: number;
 }
 
 
@@ -33,6 +34,7 @@ interface IInputGeneric<T> {
  * @param lines ? Количество линий в input.
  * @param keyboardType ? Тип клавиатуры для ввода.
  * @param maxLength ? Максимальная длинна текста.
+ * @param marginTop ? Отступ с верху.
  * @example <InputGeneric onChangeForm={#} placeholder={#} key={#} img={#} />
  */
 const InputGeneric = <T,>({
@@ -43,10 +45,11 @@ const InputGeneric = <T,>({
     value = undefined, 
     lines = 1,
     keyboardType = 'default',
-    maxLength
+    maxLength,
+    marginTop = 10
 }: IInputGeneric<keyof T>) => {
     return (
-        <View style={[stylesGeneric.boxInput, stylesGeneric.shadowTop]} >
+        <View style={[stylesGeneric.boxInput, stylesGeneric.shadowTop, {marginTop}]} >
             <TextInput 
                 multiline
                 numberOfLines={lines}
@@ -87,7 +90,6 @@ export const stylesGeneric = StyleSheet.create({
     },
     boxInput: {
         position: 'relative',
-        marginTop: 10,
         width: '100%',
         borderRadius: 30
     },

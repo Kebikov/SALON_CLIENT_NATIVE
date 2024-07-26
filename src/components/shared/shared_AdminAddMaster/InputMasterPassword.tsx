@@ -19,16 +19,17 @@ const InputMasterPassword: FC<IInputMaster> = ({sizeTitle, onChangeForm, data}) 
                 discription={`Введите пароль для мастера, он будет использоватся при входе в приложение. Минимальная длинна пароля 5 символов, маскимальная длинна до 30 символов.`}
                 marginTop={10}
             >
-                <Title text='Email' location='left' fontSize={sizeTitle} />
+                <Title text='Password' location='left' fontSize={sizeTitle} />
             </QuestionHOC>
             
             <InputGeneric<IAddMaster>
                 keyName='password'
                 placeholder='минимум 5 символов'
-                img={require('@/source/img/icon/group-gray.png')}
+                img={require('@/source/img/icon/password-grey.png')}
                 onChangeForm={onChangeForm}
                 value={data.password}
                 maxLength={30}
+                marginTop={4}
             />
         </>
     );

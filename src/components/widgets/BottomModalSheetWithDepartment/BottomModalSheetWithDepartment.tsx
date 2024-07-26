@@ -5,7 +5,7 @@ import ModalSheetLineDepartment from '@/components/shared/ModalSheetLineDepartme
 import { COLOR_ROOT } from '@/data/colors';
 
 import type { IRefBottomModalSheet } from '@/components/wrappers/BottomModalSheet/types';
-import type { IDataDepartmentAndId } from '@/api/routes/department/types/department.dto';
+import type { DepartmentDTO } from "@/api/routes/department/types/department.types";
 
 
 interface IBottomModalSheetWithDepartment<T> {
@@ -24,7 +24,7 @@ interface IBottomModalSheetWithDepartment<T> {
  * @optional
  * @param typeModal ? Тип модального окна(для фильтрации групп, для выбора группы) 
  */
-const BottomModalSheetWithDepartment = <T extends IDataDepartmentAndId>({
+const BottomModalSheetWithDepartment = <T extends Omit<DepartmentDTO, 'id'>>({
     bottomSheetRef,
     handlePress,
     sheetDepartments,

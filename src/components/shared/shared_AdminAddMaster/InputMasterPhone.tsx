@@ -25,10 +25,11 @@ const InputMasterPhone: FC<IInputMaster> = ({sizeTitle, onChangeForm, data}) => 
             <InputGeneric<IAddMaster>
                 keyName='phone'
                 placeholder='+375291234567'
-                img={require('@/source/img/icon/group-gray.png')}
+                img={require('@/source/img/icon/grey-phone.png')}
                 onChangeForm={onChangeForm}
                 value={data.phone}
                 maxLength={13}
+                marginTop={4}
             />
         </>
     );

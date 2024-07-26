@@ -6,19 +6,7 @@ import httpDepartmentService from '@/api/routes/department/service/http.departme
 import { useHookCheckErrorResponce } from '@/hooks/useHookCheckErrorResponce';
 import DepartmentForm from '@/components/shared/DepartmentForm/DepartmentForm';
 import { useHookRouter } from '@/helpers/router/useHookRouter';
-
-
-/** 
- * @interface `Department - Таблица с группами.`
- * @param name - Имя группы.
- * @param discription - Описание группы.
- * @param icon - Иконка группы, например: "16.png"
- */
-export interface IDataDepartment {
-    name: string;
-    discription: string;
-    icon: string;
-}
+import type { DepartmentDTO } from "@/api/routes/department/types/department.types";
 
 
 /**
@@ -29,7 +17,7 @@ const AdminAddDepartment: FC = () => {
     const {appRouter} = useHookRouter();
     const {modalMessageError, isMessage} = useHookCheckErrorResponce();
 
-    const onAddDepartment = async (data: IDataDepartment) => {
+    const onAddDepartment = async (data: Omit<DepartmentDTO, 'id'>) => {
         if(!data.name) return modalMessageError('Нет группы', 'Вы не ввели имя создаваемой группы.');
         if(!data.discription) return modalMessageError('Нет описания', 'Вы не ввели описание для создаваемой группы.'); 
         if(!data.icon) return modalMessageError('Нет иконки', 'Вы не выбрали иконку для создаваемой группы.');

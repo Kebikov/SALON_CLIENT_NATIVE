@@ -25,10 +25,11 @@ const InputMasterSurname: FC<IInputMaster> = ({sizeTitle, onChangeForm, data}) =
             <InputGeneric<IAddMaster>
                 keyName='surname'
                 placeholder='Фамилия мастера'
-                img={require('@/source/img/icon/group-gray.png')}
+                img={require('@/source/img/icon/user-grey.png')}
                 onChangeForm={onChangeForm}
                 value={data.surname}
                 maxLength={30}
+                marginTop={4}
             />
         </>
     );

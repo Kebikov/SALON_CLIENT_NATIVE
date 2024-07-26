@@ -53,7 +53,7 @@ const AdminAddMaster: FC = () => {
         password: '',
         id_department: 0
     });
-
+    console.log(data);
     const bottomSheetRef = useRef<IRefBottomModalSheet>(null);
     const openList = () => bottomSheetRef.current?.openModal();
     const closeList = () => bottomSheetRef.current?.closeModal();
@@ -97,6 +97,7 @@ const AdminAddMaster: FC = () => {
             </WrapperScroll>
 
             <BottomModalSheetWithDepartment
+                typeModal='select'
                 bottomSheetRef={bottomSheetRef}
                 sheetDepartments={dataDepartments}
                 handlePress={(item) => choiceDepartment(item.id, item.name)}

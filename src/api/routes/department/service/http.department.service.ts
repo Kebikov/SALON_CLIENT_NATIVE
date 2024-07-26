@@ -1,5 +1,5 @@
 import { axiosInstance, axiosInstanceWithAuth } from "@/api/axios/axios.instance/instance";
-import type { IDataDepartment, IDataDepartmentAndId } from "../types/department.dto";
+import type { DepartmentDTO } from "@/api/routes/department/types/department.types";
 import type { IMessage } from "../../authentication/types/authentication.types";
 
 
@@ -7,7 +7,7 @@ class HttpDepartmentService {
 
     /**
      * `Добавление нового департамента(группы).`
-     * @param payload type IDataDepartment
+     * @param payload type DepartmentDTO
      * @example 
      * await httpDepartmentService.POST_createDepartment({
      *    name: '#', 
@@ -15,7 +15,7 @@ class HttpDepartmentService {
      *    icon: '#'
      * });
      */
-    async POST_createDepartment(payload: IDataDepartment): Promise<IMessage | undefined> {
+    async POST_createDepartment(payload: Omit<DepartmentDTO, 'id'>): Promise<IMessage | undefined> {
         try {
             const {data} = await axiosInstanceWithAuth.post(`/department/create-department`, payload);  
             return data as IMessage;
@@ -27,11 +27,11 @@ class HttpDepartmentService {
     /**
      * `Получение всех групп.`
      */
-    async GET_getDepartments(): Promise<IDataDepartmentAndId[] | null | undefined> {
+    async GET_getDepartments(): Promise<DepartmentDTO[] | null | undefined> {
         try {
             const {data} = await axiosInstanceWithAuth.get('/department/get-departments');
             if(data === null) return null;
-            return data as IDataDepartmentAndId[];
+            return data as DepartmentDTO[];
         } catch (error) {
             console.error('Error in [GET_getDepartments] >>> ', error);
         }
@@ -41,11 +41,11 @@ class HttpDepartmentService {
      * `Получение группы по ее id.`
      * @param id ID Группы.
      */
-    async GET_getDepartmentById(id: number): Promise<IDataDepartmentAndId | null | undefined> {
+    async GET_getDepartmentById(id: number): Promise<DepartmentDTO | null | undefined> {
         try {
             const {data} = await axiosInstanceWithAuth.get(`/department/get-department/${id}`);
             if(data === null) return null;
-            return data as IDataDepartmentAndId;
+            return data as DepartmentDTO;
         } catch (error) {
             console.error('Error in [getDepartmentById] >>> ', error);
         }
@@ -55,7 +55,7 @@ class HttpDepartmentService {
      * `Редактирование группы.`
      * @param payload Данные группы.
      */
-    async PATCH_patchDepartment(payload: IDataDepartmentAndId) {
+    async PATCH_patchDepartment(payload: DepartmentDTO) {
         try {
             const {data} = await axiosInstanceWithAuth.patch(`/department/patch-department`, payload);
 

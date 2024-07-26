@@ -19,16 +19,17 @@ const InputMasterDescription: FC<IInputMaster> = ({sizeTitle, onChangeForm, data
                 discription={`Введите описание для мастера, его будет видеть клиент при переходе на страницу мастера. \nМаскимальная длинна названия до 200 символов.`}
                 marginTop={10}
             >
-                <Title text='Фамилия' location='left' fontSize={sizeTitle} />
+                <Title text='Описание' location='left' fontSize={sizeTitle} />
             </QuestionHOC>
             
             <InputGeneric<IAddMaster>
                 keyName='description'
                 placeholder='Описание для мастера'
-                img={require('@/source/img/icon/group-gray.png')}
+                img={require('@/source/img/icon/write.png')}
                 onChangeForm={onChangeForm}
                 value={data.description}
                 maxLength={200}
+                marginTop={4}
             />
         </>
     );

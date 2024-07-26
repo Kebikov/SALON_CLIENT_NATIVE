@@ -1,18 +1,19 @@
 import React, { FC, useCallback, useMemo, useRef, useState, useEffect } from 'react';
 import httpDepartmentService from '@/api/routes/department/service/http.department.service';
-import type { IDataDepartmentAndId } from '@/api/routes/department/types/department.dto';
 import { useFocusEffect } from 'expo-router';
+
+import type { DepartmentDTO } from "@/api/routes/department/types/department.types";
 
 
 /**
  * `Hook для получения информации о всех группах.`
  * @example 
  * @return Object 
- * { dataDepartments: IDataDepartmentAndId[] }
+ * { dataDepartments: DepartmentDTO[] }
  */
 export const useHookGetDataDepartments = () => {
 
-    const [dataDepartments, setDataDepartments] = useState<IDataDepartmentAndId[]>([]);
+    const [dataDepartments, setDataDepartments] = useState<Omit<DepartmentDTO, 'id'>[]>([]);
 
     useFocusEffect(
         useCallback(() => {

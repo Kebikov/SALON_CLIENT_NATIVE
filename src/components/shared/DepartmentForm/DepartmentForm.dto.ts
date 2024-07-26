@@ -1,7 +1,7 @@
-import type { IDataDepartment } from '@/pages/AdminAddDepartment/AdminAddGroupDepartment';
+import type { DepartmentDTO } from "@/api/routes/department/types/department.types";
 
 export interface IDepartmentForm {
-    handlePressButton: (data: IDataDepartment) => void;
+    handlePressButton: (data: Omit<DepartmentDTO, 'id'>) => void;
     titleForButton?: string;
-    initialData?: IDataDepartment;
+    initialData?: Omit<DepartmentDTO, 'id'>;
 }

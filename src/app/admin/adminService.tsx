@@ -15,7 +15,7 @@ import BottomModalSheetWithDepartment from '@/components/widgets/BottomModalShee
 
 import type { ServiceDTOAndDepartmentName } from '@/api/routes/service/types/service.types';
 import type { IRefBottomModalSheet } from '@/components/wrappers/BottomModalSheet/types';
-import type { IDataDepartmentAndId } from '@/api/routes/department/types/department.dto';
+import type { DepartmentDTO } from "@/api/routes/department/types/department.types";
 
 
 /**
@@ -63,7 +63,7 @@ const AdminService: FC = () => {
         appRouter.navigate({pathname: '/admin/adminEditService/[id]', params: {...item}})
     }
 
-    let sheetDepartments: IDataDepartmentAndId[] = [
+    let sheetDepartments: DepartmentDTO[] = [
         {
             id: 0, name: 'Все услуги.', discription: '', icon: 'icon все услуги'
         },

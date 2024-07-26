@@ -25,16 +25,17 @@ const InputMasterName: FC<IInputMaster> = ({sizeTitle, onChangeForm, data}) => {
                 discription={`Введите имя, например: Мария, Катя и т.д. \nМаскимальная длинна названия до 30 символов.`}
                 marginTop={10}
             >
-                <Title text='Название' location='left' fontSize={sizeTitle} />
+                <Title text='Имя' location='left' fontSize={sizeTitle} />
             </QuestionHOC>
             
             <InputGeneric<IAddMaster>
                 keyName='name'
                 placeholder='Имя мастера'
-                img={require('@/source/img/icon/group-gray.png')}
+                img={require('@/source/img/icon/user-grey.png')}
                 onChangeForm={onChangeForm}
                 value={data.name}
                 maxLength={30}
+                marginTop={4}
             />
         </>
     );

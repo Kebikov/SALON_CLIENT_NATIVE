@@ -14,7 +14,7 @@ import httpDepartmentService from '@/api/routes/department/service/http.departme
 import { IRefBottomModalSheet } from '@/components/wrappers/BottomModalSheet/types';
 import { useHookCheckErrorResponce } from '@/hooks/useHookCheckErrorResponce';
 import { useHookRouter } from '@/helpers/router/useHookRouter';
-import type { IDataDepartmentAndId } from '@/api/routes/department/types/department.dto';
+import type { DepartmentDTO } from "@/api/routes/department/types/department.types";
 
 
 interface IDelDepartment {
@@ -41,7 +41,7 @@ const AdminDepartment: FC= () => {
     const openModal = () => refModalSheet.current?.openModal();
     const closeModal = () => refModalSheet.current?.closeModal();
 
-    const goEditDepartment = (item: IDataDepartmentAndId) => {
+    const goEditDepartment = (item: DepartmentDTO) => {
         appRouter.navigate({pathname: '/admin/adminEditDepartment/[id]', params: {id: item.id, name: item.name, discription: item.discription, icon: item.icon}});
     }
 
