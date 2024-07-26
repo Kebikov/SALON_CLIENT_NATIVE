@@ -1,4 +1,3 @@
-import { Platform } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import httpServiceService from '@/api/routes/service/service/http.service.service';
 import type { ExpoRouter } from 'expo-router/types/expo-router';

@@ -20,7 +20,7 @@ interface IButtonWithIcon {
  * @optional
  * @param marginTop ? Отступ с верху.
  * @param img ? Иконка кнопки(по умолчании конверт почты)
- * @param height ? Высота кнопки.
+ * @param height ?=60 Высота кнопки.
  */
 const ButtonWithIcon: FC<IButtonWithIcon> = ({
     title, 

@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useMemo, useRef, useState, useEffect } from 'react';
+import { useCallback, useState } from 'react';
 import httpDepartmentService from '@/api/routes/department/service/http.department.service';
 import { useFocusEffect } from 'expo-router';
 
@@ -7,9 +7,6 @@ import type { DepartmentDTO } from "@/api/routes/department/types/department.typ
 
 /**
  * `Hook для получения информации о всех группах.`
- * @example 
- * @return Object 
- * { dataDepartments: DepartmentDTO[] }
  */
 export const useHookGetDataDepartments = () => {
 
@@ -23,7 +20,7 @@ export const useHookGetDataDepartments = () => {
                     if(!res) return;
                     setDataDepartments(res);
                 })
-                .catch(error => console.error(error));
+                .catch(error => console.error('Error in [useHookGetDataDepartments] >>> ', error));
 
             return () => {}
         }, [])

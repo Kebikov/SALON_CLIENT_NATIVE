@@ -1,6 +1,6 @@
 import { axiosInstance, axiosInstanceWithAuth } from "@/api/axios/axios.instance/instance";
 
-import { IMasterFind } from "../types/master.dto";
+import { IMasterFind, IAddMaster } from "@/api/routes/master/types/master.dto";
 import type { IMessage } from "../../authentication/types/authentication.types";
 
 
@@ -18,6 +18,20 @@ class HttpMasterService {
             console.error('Error in [GET_getMasterAll] >>> ', error);
         }
     };
+
+    /**
+     * `Add Master.`
+     */
+    async POST_addMaster(formData: FormData) {
+        try {
+            const config = { method: "POST", headers: {"Content-Type": "multipart/form-data" } };
+            const {data} = await axiosInstanceWithAuth.post(`/master/add-master`, formData, config);
+
+            return data as IMessage;
+        } catch (error) {
+            console.error('Error in [HttpMasterService.addMaster] >>> ', error);
+        }
+    }
 
 }
 

@@ -7,7 +7,6 @@ import { useHookGetDataDepartments } from '@/hooks/GET/useHookGetDataDepartments
 import { COLOR_ROOT } from '@/data/colors';
 import ButtonWithIcon from '@/components/shared/ButtonWithIcon/ButtonWithIcon';
 import { useHookCheckErrorResponce } from '@/hooks/useHookCheckErrorResponce';
-import { sendData } from '@/helpers/helpersForComponents/adminAddService/sendData';
 import InputServiceTitle from '@/components/shared/shared_AdminAddService/InputServiceTitle';
 import InputServiceDescription from '@/components/shared/shared_AdminAddService/InputServiceDescription';
 import InputServicePrice from '@/components/shared/shared_AdminAddService/InputServicePrice';
@@ -17,6 +16,7 @@ import ButtonSelectDepartment from '@/components/shared/shared_AdminAddService/B
 import { useRouter } from 'expo-router';
 import BottomModalSheetWithDepartment from '../BottomModalSheetWithDepartment/BottomModalSheetWithDepartment';
 import { editData } from '@/helpers/helpersForComponents/adminEditService/editData';
+import { sendData } from '@/helpers/helpersForComponents/adminAddService/sendData';
 import type { ServiceDTOAndDepartmentName } from '@/api/routes/service/types/service.types';
 import type { IRefBottomModalSheet } from '@/components/wrappers/BottomModalSheet/types';
 

@@ -1,5 +1,6 @@
-import { RegistrationDTO } from "../../registration/types/registration.types";
+import { RegistrationDTO } from "@/api/routes/registration/types/registration.types";
 
+//: MasterDTO                                                    
 /** 
  * @table master
  * @param id Id записи.@param id Id записи.
@@ -21,9 +22,15 @@ export interface MasterDTO {
     id_department: number;
 }
 
-export interface IAddMaster extends Omit<MasterDTO, 'id' | 'picture' | 'access_ban' | 'id_registration'>, Pick<RegistrationDTO, 'email' | 'password'> {}
+//: Types                                                        
+export interface IAddMaster extends 
+    Omit<MasterDTO, 'id' | 'picture' | 'access_ban' | 'id_registration'>, 
+    Pick<RegistrationDTO, 'email' | 'password'> 
+{}
 
-export interface IReqEditMaster extends Omit<MasterDTO,  'id_registration'> {
+export interface IReqEditMaster extends 
+    Omit<MasterDTO,  'id_registration'> 
+{
     email: string;
     oldImgName?: string;
     password?: string;

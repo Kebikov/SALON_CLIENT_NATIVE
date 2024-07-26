@@ -9,17 +9,13 @@ class HttpClientService {
 
     /**
      * `//: Добавление новой услуги.`
-     * @param item [ type IService ]
+     * @param formData [ type IService ]
      */
-    async POST_createService(item: FormData) {
+    async POST_createService(formData: FormData) {
         try {
 
-            const config = {
-                method: "POST",
-                headers: {"Content-Type": "multipart/form-data" },
-            }
-
-            const {data} = await axiosInstanceWithAuth.post(`/service/create-service`, item, config);
+            const config = { method: "POST", headers: {"Content-Type": "multipart/form-data" } };
+            const {data} = await axiosInstanceWithAuth.post(`/service/create-service`, formData, config);
 
             return data as IMessage;
         } catch (error) {
@@ -30,13 +26,11 @@ class HttpClientService {
     /**
      * `//: Редактирование услуги.`
      */
-    async PATCH_editService(item: FormData) {
+    async PATCH_editService(formData: FormData) {
         try {
-            const config = {
-                method: "PATCH",
-                headers: {"Content-Type": "multipart/form-data" },
-            }
-            const {data} = await axiosInstanceWithAuth.patch(`/service/edit-service`, item, config);
+            const config = { method: "PATCH", headers: {"Content-Type": "multipart/form-data" } };
+            const {data} = await axiosInstanceWithAuth.patch(`/service/edit-service`, formData, config);
+            
             return data as IMessage;
         } catch (error) {
             console.error(`Error in PATCH_editService >>> `, error);
