@@ -1,4 +1,6 @@
 import type { ServiceDTOAndDepartmentName } from "@/api/routes/service/types/service.types";
+import type { IReqEditMaster } from "@/api/routes/master/types/master.dto";
+import type { IMasterFind } from "@/api/routes/master/types/master.dto";
 
 
 export type AppRouterTypes = {
@@ -27,18 +29,30 @@ export type AppRouterTypes = {
     '/admin/adminService': undefined;
     '/admin/adminAddService': undefined;
     '/admin/adminEditService/[id]': {
-        id: number, 
-        title: string, 
-        description: string, 
-        price: number, 
-        time: number, 
-        img: string, 
-        id_department?: number, 
-        name?: string 
-    }
+        id: number;
+        title: string;
+        description: string;
+        price: number;
+        time: number;
+        img: string;
+        id_department?: number; 
+        name?: string;
+    };
 
     '/admin/adminMaster': undefined;
     '/admin/adminAddMaster': undefined;
+    '/admin/adminEditMaster/[id]': {
+        id: number;
+        name: string;
+        surname: string;
+        description: string;
+        phone: string;
+        picture: string;
+        access_ban: number;
+        id_department: number | null;
+        email: string;
+        department_name: string | null;
+    };
 
 
     '/admin/modal': undefined;
@@ -53,8 +67,25 @@ export type AppRouterTypes = {
 };
 
 
-export type TNumbersToString<T> = {
-    [key in keyof T]: T[key] extends number ? string : T[key] extends number | undefined ? string | undefined : T[key];
+export type TTypeToString<T> = {
+    [key in keyof T]: 
+        T[key] extends number 
+        ? 
+        string 
+        : 
+        T[key] extends number | undefined 
+        ? 
+        string
+        : 
+        T[key] extends number | null
+        ?
+        string
+        :
+        T[key] extends string | null
+        ?
+        string
+        :
+        T[key];
 };
 
 

@@ -35,7 +35,7 @@ export const useHookRouter = () => {
         push<T extends TKeyApp>(path: IObjectParams<T>): void;
         push(path: TKeyApp): void;
         push<T extends TKeyApp>(path: TKeyApp | IObjectParams<T>): void {
-            if(typeof path === 'object' && 'pathname' in path) {
+            if(typeof path === 'object' && 'pathname' in path && 'params' in path) {
                 router.push({pathname: path.pathname, params: path.params});
             } else {
                 router.push(path);

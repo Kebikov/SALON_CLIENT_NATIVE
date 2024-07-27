@@ -4,31 +4,23 @@ import { baseLink } from '@/api/axios/axios.instance/instance';
 import { COLOR_ROOT } from '@/data/colors';
 import * as Clipboard from 'expo-clipboard';
 import ButtonSwipeable from '@/components/widgets/ButtonSwipeable/ButtonSwipeable';
+import { useHookRouter } from '@/helpers/router/useHookRouter';
+
+import type { IMasterFind } from '@/api/routes/master/types/master.dto';
 
 
 interface IMasterCartForAdmin {
-    name: string;
-    surname: string;
-    department: string;
-    grade: string;
-    picture: number | string;
-    access_ban: number;
-    email: string;
-    phone: string;
+    master: IMasterFind;
 }
+
 
 /**
  * @shared `Карточка мастера у админа.`
- * @param name Имя мастера.
- * @param surname Фамилия мастера.
- * @param department Группа услуг мастера.
- * @param grade Рейтинг мастера.
- * @param picture Аватарка мастера.
- * @param access_ban Заблокирован ли мастер, 0 - не заблокирован, 1 - заблокирован.
- * @param email Почта мастера.
- * @param phone Телефон мастера.
  */
-const MasterCartForAdmin: FC<IMasterCartForAdmin> = ({name, surname, department, grade, picture, access_ban, email, phone}) => {
+const MasterCartForAdmin: FC<IMasterCartForAdmin> = ({master}) => {
+
+    const {id, name, phone, picture, access_ban, department_name, email, surname, average_stars, description, id_department} = master;
+    const {appRouter} = useHookRouter();
 
     const copyToClipboard = async (str: string) => {
         await Clipboard.setStringAsync(str);
@@ -43,7 +35,10 @@ const MasterCartForAdmin: FC<IMasterCartForAdmin> = ({name, surname, department,
         <ButtonSwipeable
             totalButton={2}
 
-            onPressButton1={() => {}}
+            onPressButton1={() => appRouter.navigate({
+                    pathname: '/admin/adminEditMaster/[id]', 
+                    params: {id, name, surname, description, phone, picture, access_ban, id_department, email, department_name}
+                })}
             iconForButton1={require('@/source/img/icon/edit-btn.png')}
             colorButton1={COLOR_ROOT.BUTTON_COLOR_YELLOW}
 
@@ -60,19 +55,19 @@ const MasterCartForAdmin: FC<IMasterCartForAdmin> = ({name, surname, department,
                     </View>
                     <View style={styles.right} >
                         <Text style={styles.masterName} >{name} {surname}</Text>
-                        <Text style={styles.masterUnit} >{department}</Text>
+                        <Text style={styles.masterUnit} >{department_name}</Text>
                         <Text style={styles.masterUnit} >{email}</Text>
                         <Pressable onLongPress={() => copyToClipboard(phone)} >
                             <Text style={styles.phone} >{phone}</Text>
                         </Pressable>
                     </View>
                     {
-                        grade
+                        average_stars
                         ?
                         <View style={styles.grade}>
                             <View style={styles.gradeBox}>
                                 <Image style={styles.gradeImg} source={require('@/source/img/icon/grade.png')} />
-                                <Text style={styles.gradeText} >{grade.slice(0, 3)}</Text>
+                                <Text style={styles.gradeText} >{average_stars.slice(0, 3)}</Text>
                             </View>
                         </View>
                         :

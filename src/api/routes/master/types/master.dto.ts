@@ -19,7 +19,7 @@ export interface MasterDTO {
     picture: string;
     access_ban: number;
     id_registration: number;
-    id_department: number;
+    id_department: number | null;
 }
 
 //: Types                                                        
@@ -28,6 +28,12 @@ export interface IAddMaster extends
     Pick<RegistrationDTO, 'email' | 'password'> 
 {}
 
+/**
+ * `Интерфейс для редактирования мастера.`
+ * @param email Email мастера.
+ * @param oldImgName Имя старого изображения для удаления.
+ * @param password Password мастера.
+ */
 export interface IReqEditMaster extends 
     Omit<MasterDTO,  'id_registration'> 
 {
@@ -44,6 +50,9 @@ export interface IEditMaster extends Omit<MasterDTO, 'id_registration' | 'id'> {
  * @param average_stars Средняя оценка поставленая мастеру.
  */
 export interface IMasterFind extends MasterDTO, Pick<RegistrationDTO, 'email'> {
-    department_name: string;
-    average_stars: string;
+    department_name: string | null;
+    average_stars: string | null;
 };
+
+
+

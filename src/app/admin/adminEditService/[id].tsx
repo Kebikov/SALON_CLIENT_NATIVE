@@ -3,7 +3,7 @@ import React, { FC, useState } from 'react';
 import { useLocalSearchParams } from 'expo-router';
 import FormService from '@/components/widgets/FormService/FormService';
 import type { ServiceDTOAndDepartmentName } from '@/api/routes/service/types/service.types';
-import type { TNumbersToString } from '@/helpers/router/app.router.types';
+import type { TTypeToString } from '@/helpers/router/app.router.types';
 
 
 /**
@@ -11,7 +11,7 @@ import type { TNumbersToString } from '@/helpers/router/app.router.types';
  */
 const AdminEditService: FC = () => {
 
-    const  { id, title, description, price, time, id_department, name, img } = useLocalSearchParams<TNumbersToString<ServiceDTOAndDepartmentName>>();
+    const  { id, title, description, price, time, id_department, name, img } = useLocalSearchParams<TTypeToString<ServiceDTOAndDepartmentName>>();
 
     if(!id || !title || !description || !price || !time || !img) return;
 
