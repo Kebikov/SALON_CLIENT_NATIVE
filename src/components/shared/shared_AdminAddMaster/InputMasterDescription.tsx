@@ -3,8 +3,8 @@ import QuestionHOC from '@/components/wrappers/QuestionHOC/QuestionHOC';
 import Title from '@/components/shared/Title/Title';
 import InputGeneric from '@/components/shared/InputGeneric/InputGeneric';
 
-import type { IAddMaster } from '@/api/routes/master/types/master.dto';
 import type { IInputMaster } from './InputMasterName';
+import type { TFormMaster } from '@/app/admin/adminMaster';
 
 
 /**
@@ -22,7 +22,7 @@ const InputMasterDescription: FC<IInputMaster> = ({sizeTitle, onChangeForm, data
                 <Title text='Описание' location='left' fontSize={sizeTitle} />
             </QuestionHOC>
             
-            <InputGeneric<IAddMaster>
+            <InputGeneric<TFormMaster>
                 keyName='description'
                 placeholder='Описание для мастера'
                 img={require('@/source/img/icon/write.png')}

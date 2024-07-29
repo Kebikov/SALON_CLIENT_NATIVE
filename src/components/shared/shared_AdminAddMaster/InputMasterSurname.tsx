@@ -5,6 +5,7 @@ import InputGeneric from '@/components/shared/InputGeneric/InputGeneric';
 
 import type { IAddMaster } from '@/api/routes/master/types/master.dto';
 import type { IInputMaster } from './InputMasterName';
+import type { TFormMaster } from '@/app/admin/adminMaster';
 
 
 /**
@@ -22,7 +23,7 @@ const InputMasterSurname: FC<IInputMaster> = ({sizeTitle, onChangeForm, data}) =
                 <Title text='Фамилия' location='left' fontSize={sizeTitle} />
             </QuestionHOC>
             
-            <InputGeneric<IAddMaster>
+            <InputGeneric<TFormMaster>
                 keyName='surname'
                 placeholder='Фамилия мастера'
                 img={require('@/source/img/icon/user-grey.png')}

@@ -5,6 +5,7 @@ import InputGeneric from '@/components/shared/InputGeneric/InputGeneric';
 
 import type { IAddMaster } from '@/api/routes/master/types/master.dto';
 import type { IInputMaster } from './InputMasterName';
+import type { TFormMaster } from '@/app/admin/adminMaster';
 
 
 /**
@@ -22,9 +23,9 @@ const InputMasterPassword: FC<IInputMaster> = ({sizeTitle, onChangeForm, data}) 
                 <Title text='Password' location='left' fontSize={sizeTitle} />
             </QuestionHOC>
             
-            <InputGeneric<IAddMaster>
+            <InputGeneric<TFormMaster>
                 keyName='password'
-                placeholder='минимум 5 символов'
+                placeholder={data.id ? 'введите, если надо поменять' : 'минимум 5 символов'}
                 img={require('@/source/img/icon/password-grey.png')}
                 onChangeForm={onChangeForm}
                 value={data.password}

@@ -1,4 +1,6 @@
 import { axiosInstance, axiosInstanceWithAuth } from "@/api/axios/axios.instance/instance";
+import axios from "axios";
+import { baseLink } from "@/api/axios/axios.instance/instance";
 
 import { IMasterFind, IAddMaster } from "@/api/routes/master/types/master.dto";
 import type { IMessage } from "../../authentication/types/authentication.types";
@@ -30,6 +32,20 @@ class HttpMasterService {
             return data as IMessage;
         } catch (error) {
             console.error('Error in [HttpMasterService.addMaster] >>> ', error);
+        }
+    }
+
+    /**
+     * `Edit Master.`
+     */
+    async PATCH_editMaster(formData: FormData) {
+        try {
+            console.log('EDIT PATCH !');
+            const {data} = await axiosInstanceWithAuth.patch(`/master/edit-master`, formData, {method: 'patch', headers: {"Content-Type": "multipart/form-data"}});
+
+            return data as IMessage;
+        } catch (error) {
+            console.error('Error in [HttpMasterService.PATCH_editMaster] >>> ', error);
         }
     }
 

@@ -3,14 +3,14 @@ import QuestionHOC from '@/components/wrappers/QuestionHOC/QuestionHOC';
 import Title from '@/components/shared/Title/Title';
 import InputGeneric from '@/components/shared/InputGeneric/InputGeneric';
 
-import type { IAddMaster } from '@/api/routes/master/types/master.dto';
 import type { NativeSyntheticEvent, TextInputChangeEventData } from 'react-native';
+import type { TFormMaster } from '@/app/admin/adminMaster';
 
 
 export interface IInputMaster {
     sizeTitle: number;
     onChangeForm: (e: NativeSyntheticEvent<TextInputChangeEventData>, key: string) => void;
-    data: IAddMaster;
+    data: TFormMaster;
 }
 
 /**
@@ -28,7 +28,7 @@ const InputMasterName: FC<IInputMaster> = ({sizeTitle, onChangeForm, data}) => {
                 <Title text='Имя' location='left' fontSize={sizeTitle} />
             </QuestionHOC>
             
-            <InputGeneric<IAddMaster>
+            <InputGeneric<TFormMaster>
                 keyName='name'
                 placeholder='Имя мастера'
                 img={require('@/source/img/icon/user-grey.png')}

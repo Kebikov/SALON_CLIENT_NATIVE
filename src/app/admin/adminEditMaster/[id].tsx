@@ -16,35 +16,29 @@ import type { TFormMaster } from '../adminMaster';
 const AdminEditMaster: FC = () => {
 
     const  { 
-        id, 
-        name, surname, description, phone, email, picture, access_ban, id_department,  department_name
+        id, name, surname, description, phone, email, picture, access_ban, id_department, department_name
     } = useLocalSearchParams<TTypeToString<IMasterFind>>();
 
     // department_name, id_department, 
 
-    if(!id || !name || !surname || !description || !phone || !picture || !access_ban || !id_department || !email) return;
+    if(!id || !name || !surname || !description || !phone || !picture || !access_ban || !email) return;
 
     const [data, setData] = useState<TFormMaster>({
-        id: undefined,
-        picture: undefined,
-        access_ban: undefined,
-            name: '',
-            surname: '',
-            description: '',
-            phone: '',
-            email: '',
-            id_department: null,
-            department_name: '',
-            password: undefined
+        id: Number(id),
+        picture,
+        access_ban: Number(access_ban),
+        name,
+        surname,
+        description,
+        phone,
+        email,
+        id_department: id_department ? Number(id_department) : undefined,
+        department_name: department_name ?? undefined,
+        password: undefined
     });
 
-
-
-    //console.log(id, name, surname, description, phone, picture, access_ban, id_department, email, department_name);
-
     return (
-        <></>
-        // <FormMaster titlePage='Редактирование мастера' data={data} setData={setData} />
+        <FormMaster titlePage='Редактирование мастера' data={data} setData={setData} />
     );
 };
 

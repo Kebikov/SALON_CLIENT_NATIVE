@@ -12,7 +12,8 @@ import type { IMasterFind } from '@/api/routes/master/types/master.dto';
 import type { RegistrationDTO } from '@/api/routes/registration/types/registration.types';
 
 
-export type TFormMaster = Partial<Pick<IMasterFind, 'id' | 'picture' | 'access_ban' | 'id_department'>> & Omit<IMasterFind, 'id' | 'picture' | 'access_ban' | 'id_department' | 'id_registration' | 'average_stars'> & Partial<Pick<RegistrationDTO, 'password'>>
+export type TFormMaster = Partial<Pick<IMasterFind, 'id' | 'picture' | 'access_ban' | 'id_department' | 'department_name'>> & Omit<IMasterFind, 'id' | 'picture' | 'access_ban' | 'id_department' | 'id_registration' | 'average_stars' | 'department_name'> & Partial<Pick<RegistrationDTO, 'password'>>
+
 
 /**
  * @page 'Страница с мастерами и кнопкой добавления мастера.'
@@ -21,7 +22,7 @@ const AdminMaster: FC = () => {
     
     const {appRouter} = useHookRouter();
     const {masters} = useHookGetDataMasters();
-    log.info(...masters);
+
     if(masters.length === 0) return;
 
     return (

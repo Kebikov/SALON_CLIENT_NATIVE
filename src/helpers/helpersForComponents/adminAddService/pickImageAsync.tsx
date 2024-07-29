@@ -10,6 +10,20 @@ export const pickImageAsync = async (
     modalMessageError: (title: string, discription: string) => void
 ) => {
 
+    const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+
+    if (permissionResult.granted === false) {
+        alert("Permission to access camera roll is required!");
+        //Alert.alert('')
+        return;
+    }
+
+    const getPermissionResult = await ImagePicker.getMediaLibraryPermissionsAsync();
+    if(!getPermissionResult) {
+        return;
+    }
+
+
     let result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
         allowsEditing: true,
@@ -18,6 +32,7 @@ export const pickImageAsync = async (
     });
 
     if (!result.canceled) {
+        console.log('canceled !!!');
         const typeImg = result.assets[0].mimeType;
         const sizeImg = result.assets[0].fileSize;
         

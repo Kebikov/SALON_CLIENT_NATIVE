@@ -10,15 +10,18 @@ import type { TFormMaster } from '@/app/admin/adminMaster';
  */
 const AdminAddMaster: FC = () => {
 
-    const [data, setData] = useState<IAddMaster & {department_name: string}>({
-        name: '', 
+    const [data, setData] = useState<TFormMaster>({
+        id: undefined,
+        picture: undefined,
+        access_ban: undefined,
+        name: '',
         surname: '',
         description: '',
         phone: '',
         email: '',
-        password: '',
-        id_department: 0,
-        department_name: ''
+        id_department: undefined,
+        department_name: undefined,
+        password: undefined
     });
 
     return (

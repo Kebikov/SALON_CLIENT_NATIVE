@@ -51,7 +51,6 @@ const InputGeneric = <T,>({
     return (
         <View style={[stylesGeneric.boxInput, stylesGeneric.shadowTop, {marginTop}]} >
             <TextInput 
-                multiline
                 numberOfLines={lines}
                 style={[stylesGeneric.input]} 
                 placeholder={placeholder} 

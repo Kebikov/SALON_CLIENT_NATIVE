@@ -23,12 +23,17 @@ interface IButtonSelectImage {
  * @optional
  * @param initialImage ? Начальное изображение. ['14.png']
  */
-const ButtonSelectImage: FC<IButtonSelectImage> = ({selectedImage, setSelectedImage, modalMessageError, initialImage = null}) => {
+const ButtonSelectImage: FC<IButtonSelectImage> = ({
+    selectedImage, 
+    setSelectedImage, 
+    modalMessageError, 
+    initialImage = null
+}) => {
 
     let uriImg = '';
-    
+
     if (initialImage) {
-        uriImg = `${baseLink}/api/img/get-img/${initialImage}?type=img_imgService`;
+        uriImg = `${baseLink}/api/img/get-img/${initialImage}?type=img_imgMaster`;
     } 
 
     if(selectedImage) {

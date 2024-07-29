@@ -16,16 +16,19 @@ import InputMasterPhone from '@/components/shared/shared_AdminAddMaster/InputMas
 import InputMasterEmail from '@/components/shared/shared_AdminAddMaster/InputMasterEmail';
 import InputMasterPassword from '@/components/shared/shared_AdminAddMaster/InputMasterPassword';
 import { addMaster } from '@/helpers/helpersForComponents/adminAddMaster/addMaster';
+import Switcher from '@/components/shared/Switcher/Switcher';
+import Title from '@/components/shared/Title/Title';
+import { editMaster } from '@/helpers/helpersForComponents/adminAddMaster/editMaster';
 
 import type { IRefBottomModalSheet } from '@/components/wrappers/BottomModalSheet/types';
-import type { IAddMaster } from '@/api/routes/master/types/master.dto';
-import type { IMasterFind } from '@/api/routes/master/types/master.dto';
+import type { TFormMaster } from '@/app/admin/adminMaster';
+
 
 
 interface IFormMaster {
     titlePage: string;
-    data: IAddMaster & {department_name: string};
-    setData: React.Dispatch<React.SetStateAction<IAddMaster & {department_name: string}>>;
+    data: TFormMaster;
+    setData: React.Dispatch<React.SetStateAction<TFormMaster>>;
 }
 
 const sizeTitle = 16;
@@ -51,6 +54,11 @@ const FormMaster: FC<IFormMaster> = ({
      * @param selectedImage Выбраное изображение.
      */
     const [selectedImage, setSelectedImage] = useState<ImagePicker.ImagePickerAsset | null>(null);
+    console.log('selectedImage >>> ', selectedImage);
+    /**
+     * @param isAccessBan Заблокирован ли мастер.
+     */
+    const [isAccessBan, setIsAccessBan] = useState<boolean | undefined>(data.access_ban === undefined ? undefined : data.access_ban ? true : false);
 
     const bottomSheetRef = useRef<IRefBottomModalSheet>(null);
     const openList = () => bottomSheetRef.current?.openModal();
@@ -71,7 +79,7 @@ const FormMaster: FC<IFormMaster> = ({
         e.persist();
         setData( state => ({...state, [key]: e.nativeEvent.text}) );
     }
-    
+
     return (
         <>
             <WrapperScroll titlePage={titlePage} >
@@ -82,10 +90,22 @@ const FormMaster: FC<IFormMaster> = ({
                     <InputMasterPhone sizeTitle={sizeTitle} onChangeForm={onChangeForm} data={data} />
                     <InputMasterEmail sizeTitle={sizeTitle} onChangeForm={onChangeForm} data={data} />
                     <InputMasterPassword sizeTitle={sizeTitle} onChangeForm={onChangeForm} data={data} />
+                    {
+                        data.access_ban !== undefined
+                        ?
+                        <View style={styles.switcher} >
+                            <Switcher isEnabledInitial={data.access_ban ? false : true} setState={data.access_ban === undefined ? undefined : setIsAccessBan}/>
+                            <Title text={isAccessBan ? 'Мастер заблокирован.' : 'Мастер активен.'} fontSize={16} />
+                        </View>
+                        :
+                        null
+                    }
+                    
                     <ButtonSelectImage 
                         selectedImage={selectedImage} 
                         setSelectedImage={setSelectedImage} 
                         modalMessageError={modalMessageError}
+                        initialImage={data.picture}
                     />
                     <ButtonSelectDepartment
                         openList={openList} 
@@ -97,13 +117,11 @@ const FormMaster: FC<IFormMaster> = ({
                         height={50}
                         title='добавить' 
                         pushButton={() => {
-                                addMaster({selectedImage, data, modalMessageError, isMessage, router});
-                                // Если есть начальное ID то значит это редактирование услуги.
-                                // if(data.id) {
-                                //     editData({selectedImage, data, modalMessageError, isMessage, router});
-                                // } else {
-                                //     sendData({selectedImage, data, modalMessageError, isMessage, router});
-                                // }
+                                if(data.id) {
+                                    editMaster({selectedImage, data, isAccessBan, modalMessageError, isMessage, router});
+                                } else {
+                                    addMaster({selectedImage, data, modalMessageError, isMessage, router});
+                                }
                             }
                         } 
                         img={require('@/source/img/icon/plus-white.png')}
@@ -123,6 +141,13 @@ const FormMaster: FC<IFormMaster> = ({
 
 const styles = StyleSheet.create({
     main: {flex: 1, paddingHorizontal: 10},
+    switcher: {
+        marginTop: 10,
+        marginBottom: -5,
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 10
+    }
 });
 
 export default FormMaster;

@@ -2,13 +2,13 @@ import * as ImagePicker from 'expo-image-picker';
 import httpMasterService from '@/api/routes/master/service/http.master.service';
 
 import type { ExpoRouter } from 'expo-router/types/expo-router';
-import type { MasterDTO, IAddMaster } from '@/api/routes/master/types/master.dto';
+import type { TFormMaster } from '@/app/admin/adminMaster';
 
 
 
 interface IaddMasterForm {
     selectedImage: ImagePicker.ImagePickerAsset | null;
-    data: IAddMaster | null;
+    data: TFormMaster | null;
     modalMessageError: (title: string, discription: string) => void;
     isMessage: (data: unknown) => void;
     router: ExpoRouter.Router
@@ -22,6 +22,7 @@ export const addMaster = async ({
     isMessage,
     router
 }: IaddMasterForm) => {
+    console.log('**********************************************');
     try{
         if(!data?.name) return modalMessageError('Нет имени.', 'Введите имя мастера.');
         if(!data?.surname) return modalMessageError('Нет фамилии.', 'Введите фамилию мастера.');
@@ -34,6 +35,10 @@ export const addMaster = async ({
         const sliceWithFileName = selectedImage.uri.split('/').at(-1);
 
         const formData = new FormData();
+        console.log(sliceWithFileName);
+        console.log(selectedImage.uri);
+        console.log(selectedImage.mimeType);
+        console.log(selectedImage.fileName || sliceWithFileName || 'image.jpg');
         formData.append('foo', {
             uri: selectedImage.uri,
             type: selectedImage.mimeType,

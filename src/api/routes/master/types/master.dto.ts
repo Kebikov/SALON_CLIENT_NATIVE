@@ -38,7 +38,6 @@ export interface IReqEditMaster extends
     Omit<MasterDTO,  'id_registration'> 
 {
     email: string;
-    oldImgName?: string;
     password?: string;
 }
 
@@ -53,6 +52,4 @@ export interface IMasterFind extends MasterDTO, Pick<RegistrationDTO, 'email'> {
     department_name: string | null;
     average_stars: string | null;
 };
-
-
 
