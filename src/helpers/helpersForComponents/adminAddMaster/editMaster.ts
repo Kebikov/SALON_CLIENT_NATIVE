@@ -8,7 +8,7 @@ import type { TFormMaster } from '@/app/admin/adminMaster';
 
 
 interface IEditMaster {
-    selectedImage: ImagePicker.ImagePickerAsset | null;
+    selectedImage: string | null;
     isAccessBan: boolean | undefined;
     data: TFormMaster | null;
     modalMessageError: (title: string, discription: string) => void;
@@ -48,6 +48,17 @@ export const editMaster = async ({
 
         //* Добавление данных.
         const formData = new FormData();
+
+        //* Выбрано ли новое изображение.
+        if(selectedImage && (await FileSystem.getInfoAsync(selectedImage)).exists) {
+            //const sliceWithFileName = selectedImage.uri.split('/').at(-1);
+            formData.append('foo', {
+                uri: selectedImage,
+                type: "image/jpeg", //selectedImage.mimeType,
+                name: "387536e7-e93f-4d90-a63a-b5488d185fab.jpeg" //selectedImage.fileName || sliceWithFileName || 'image.jpeg'
+            } as any);
+        }
+
         formData.append('id', String(data.id));
         formData.append('name', data.name);
         formData.append('surname', data.surname);
@@ -61,20 +72,6 @@ export const editMaster = async ({
         if(data.password) formData.append('password', data.password);
         //* Выбрана ли группа.
         if(data.id_department) formData.append('id_department', String(data.id_department) );
-
-        //* Выбрано ли новое изображение.
-        if(selectedImage && (await FileSystem.getInfoAsync(selectedImage.uri)).exists) {
-            const sliceWithFileName = selectedImage.uri.split('/').at(-1);
-            console.log('selectedImage.uri >>> ', selectedImage.uri);
-            console.log('selectedImage.mimeType >>> ', selectedImage.mimeType);
-            console.log('selectedImage.fileName >>> ', selectedImage.fileName);
-            console.log('sliceWithFileName >>> ', sliceWithFileName);
-            formData.append('foo', {
-                uri: selectedImage.uri,
-                type: selectedImage.mimeType,
-                name: selectedImage.fileName || sliceWithFileName || 'image.jpeg'
-            } as any);
-        }
 
         const result = await httpMasterService.PATCH_editMaster(formData);
         if(result) isMessage(result);

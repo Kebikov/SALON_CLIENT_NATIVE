@@ -31,7 +31,7 @@ class HttpMasterService {
 
             return data as IMessage;
         } catch (error) {
-            console.error('Error in [HttpMasterService.addMaster] >>> ', error);
+            console.error('Error in [POST_addMaster] >>> ', error);
         }
     }
 
@@ -40,12 +40,12 @@ class HttpMasterService {
      */
     async PATCH_editMaster(formData: FormData) {
         try {
-            console.log('EDIT PATCH !');
-            const {data} = await axiosInstanceWithAuth.patch(`/master/edit-master`, formData, {method: 'patch', headers: {"Content-Type": "multipart/form-data"}});
+            const config = { method: "POST", headers: {"Content-Type": "multipart/form-data" } };
+            const {data} = await axiosInstanceWithAuth.post(`/master/edit-master`, formData, config);
 
             return data as IMessage;
         } catch (error) {
-            console.error('Error in [HttpMasterService.PATCH_editMaster] >>> ', error);
+            console.error('Error in [PATCH_editMaster] >>> ', error);
         }
     }
 

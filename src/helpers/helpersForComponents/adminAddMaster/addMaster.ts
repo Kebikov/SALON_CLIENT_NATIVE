@@ -7,7 +7,7 @@ import type { TFormMaster } from '@/app/admin/adminMaster';
 
 
 interface IaddMasterForm {
-    selectedImage: ImagePicker.ImagePickerAsset | null;
+    selectedImage: string | null;
     data: TFormMaster | null;
     modalMessageError: (title: string, discription: string) => void;
     isMessage: (data: unknown) => void;
@@ -32,17 +32,13 @@ export const addMaster = async ({
         if(!data?.password) return modalMessageError('Нет Password.', 'Введите пароль для входа мастера.');
         if(!selectedImage) return modalMessageError('Нет изображения.', 'Выберите фотографию мастера.');
 
-        const sliceWithFileName = selectedImage.uri.split('/').at(-1);
+        //const sliceWithFileName = selectedImage.uri.split('/').at(-1);
 
         const formData = new FormData();
-        console.log(sliceWithFileName);
-        console.log(selectedImage.uri);
-        console.log(selectedImage.mimeType);
-        console.log(selectedImage.fileName || sliceWithFileName || 'image.jpg');
         formData.append('foo', {
-            uri: selectedImage.uri,
-            type: selectedImage.mimeType,
-            name: selectedImage.fileName || sliceWithFileName || 'image.jpg'
+            uri: selectedImage,
+            type: "image/jpeg",
+            name: "foo.jpeg"
         } as any);
         formData.append('name', data.name);
         formData.append('surname', data.surname);

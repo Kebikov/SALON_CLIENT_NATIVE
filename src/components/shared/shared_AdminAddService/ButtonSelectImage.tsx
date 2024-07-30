@@ -8,8 +8,8 @@ import { COLOR_ROOT } from '@/data/colors';
 
 
 interface IButtonSelectImage {
-    selectedImage: ImagePicker.ImagePickerAsset | null;
-    setSelectedImage: React.Dispatch<React.SetStateAction<ImagePicker.ImagePickerAsset | null>>;
+    selectedImage: string | null;
+    setSelectedImage: React.Dispatch<React.SetStateAction<string | null>>;
     modalMessageError: (title: string, discription: string) => void;
     initialImage?: string;
 }
@@ -37,7 +37,7 @@ const ButtonSelectImage: FC<IButtonSelectImage> = ({
     } 
 
     if(selectedImage) {
-        uriImg = selectedImage.uri;
+        uriImg = selectedImage;
     } 
 
     return (
