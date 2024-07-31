@@ -1,8 +1,7 @@
 import { axiosInstance, axiosInstanceWithAuth } from "@/api/axios/axios.instance/instance";
-import axios from "axios";
-import { baseLink } from "@/api/axios/axios.instance/instance";
+import { checkNetwork } from "@/api/axios/check/checkNetwork";
 
-import { IMasterFind, IAddMaster } from "@/api/routes/master/types/master.dto";
+import type { IMasterFind, IAddMaster } from "@/api/routes/master/types/master.dto";
 import type { IMessage } from "../../authentication/types/authentication.types";
 
 
@@ -40,12 +39,26 @@ class HttpMasterService {
      */
     async PATCH_editMaster(formData: FormData) {
         try {
-            const config = { method: "POST", headers: {"Content-Type": "multipart/form-data" } };
-            const {data} = await axiosInstanceWithAuth.post(`/master/edit-master`, formData, config);
+            await checkNetwork();
+            const config = { method: "PATCH", headers: {"Content-Type": "multipart/form-data" } };
+            const {data} = await axiosInstanceWithAuth.patch(`/master/edit-master`, formData, config);
 
             return data as IMessage;
         } catch (error) {
             console.error('Error in [PATCH_editMaster] >>> ', error);
+        }
+    }
+
+    /**
+     * `Delete Master.`
+     */
+    async DELETE_deleteMaster(id: number) {
+        try {
+            const {data} = await axiosInstanceWithAuth.delete(`/master/delete-master/${id}`);
+
+            return data as IMessage;
+        } catch (error) {
+            console.error('Error in [DELETE_deleteMaster] >>> ', error);
         }
     }
 

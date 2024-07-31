@@ -21,7 +21,7 @@ export type TFormMaster = Partial<Pick<IMasterFind, 'id' | 'picture' | 'access_b
 const AdminMaster: FC = () => {
     
     const {appRouter} = useHookRouter();
-    const {masters} = useHookGetDataMasters();
+    const {masters, setMasters} = useHookGetDataMasters();
 
     if(masters.length === 0) return;
 
@@ -33,7 +33,7 @@ const AdminMaster: FC = () => {
                     data={masters}
                     extraData={masters}
                     renderItem={({item}) => (
-                        <MasterCartForAdmin master={item} />
+                        <MasterCartForAdmin master={item} setMasters={setMasters} />
                     )}
                     keyExtractor={item => String(item.id)}
                     horizontal={false}

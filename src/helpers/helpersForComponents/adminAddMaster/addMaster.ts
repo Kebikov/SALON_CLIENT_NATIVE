@@ -7,7 +7,7 @@ import type { TFormMaster } from '@/app/admin/adminMaster';
 
 
 interface IaddMasterForm {
-    selectedImage: string | null;
+    selectedImage: ImagePicker.ImagePickerAsset | null;
     data: TFormMaster | null;
     modalMessageError: (title: string, discription: string) => void;
     isMessage: (data: unknown) => void;
@@ -22,7 +22,7 @@ export const addMaster = async ({
     isMessage,
     router
 }: IaddMasterForm) => {
-    console.log('**********************************************');
+    
     try{
         if(!data?.name) return modalMessageError('Нет имени.', 'Введите имя мастера.');
         if(!data?.surname) return modalMessageError('Нет фамилии.', 'Введите фамилию мастера.');
@@ -36,7 +36,7 @@ export const addMaster = async ({
 
         const formData = new FormData();
         formData.append('foo', {
-            uri: selectedImage,
+            uri: selectedImage.uri,
             type: "image/jpeg",
             name: "foo.jpeg"
         } as any);

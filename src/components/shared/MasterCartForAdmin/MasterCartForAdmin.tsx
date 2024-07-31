@@ -5,19 +5,21 @@ import { COLOR_ROOT } from '@/data/colors';
 import * as Clipboard from 'expo-clipboard';
 import ButtonSwipeable from '@/components/widgets/ButtonSwipeable/ButtonSwipeable';
 import { useHookRouter } from '@/helpers/router/useHookRouter';
+import httpMasterService from '@/api/routes/master/service/http.master.service';
 
 import type { IMasterFind } from '@/api/routes/master/types/master.dto';
 
 
 interface IMasterCartForAdmin {
     master: IMasterFind;
+    setMasters: React.Dispatch<React.SetStateAction<IMasterFind[]>>
 }
 
 
 /**
  * @shared `Карточка мастера у админа.`
  */
-const MasterCartForAdmin: FC<IMasterCartForAdmin> = ({master}) => {
+const MasterCartForAdmin: FC<IMasterCartForAdmin> = ({master, setMasters}) => {
 
     const {id, name, phone, picture, access_ban, department_name, email, surname, average_stars, description, id_department} = master;
     const {appRouter} = useHookRouter();
@@ -42,7 +44,29 @@ const MasterCartForAdmin: FC<IMasterCartForAdmin> = ({master}) => {
             iconForButton1={require('@/source/img/icon/edit-btn.png')}
             colorButton1={COLOR_ROOT.BUTTON_COLOR_YELLOW}
 
-            onPressButton2={() => {}}
+            onPressButton2={() => {
+                Alert.alert(
+                    'Удалить мастера ?',
+                    'После нажатия удалить, мастер будет удален.',
+                    [
+                        {
+                            text: 'удалить',
+                            onPress: async () => {
+                                await httpMasterService.DELETE_deleteMaster(id);
+                                setMasters(state => state.filter(item => item.id !== id));
+                            },
+                            style: 'destructive',
+                        },
+                        {
+                            text: 'отмена',
+                            onPress: () => {},
+                            style: 'cancel',
+                        },
+                    ]
+                );
+                
+              
+            }}
             iconForButton2={require('@/source/img/icon/del-btn.png')}
             colorButton2={COLOR_ROOT.BUTTON_COLOR_RED}
         >

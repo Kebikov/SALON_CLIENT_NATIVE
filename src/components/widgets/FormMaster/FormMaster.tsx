@@ -53,8 +53,8 @@ const FormMaster: FC<IFormMaster> = ({
     /**
      * @param selectedImage Выбраное изображение.
      */
-    const [selectedImage, setSelectedImage] = useState<string | null>(null);
-    // console.log('selectedImage >>> ', selectedImage);
+    const [selectedImage, setSelectedImage] = useState<ImagePicker.ImagePickerAsset | null>(null);
+    
     /**
      * @param isAccessBan Заблокирован ли мастер.
      */

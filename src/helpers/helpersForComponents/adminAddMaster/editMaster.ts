@@ -2,13 +2,14 @@ import * as ImagePicker from 'expo-image-picker';
 import httpMasterService from '@/api/routes/master/service/http.master.service';
 import * as FileSystem from 'expo-file-system';
 
+
 import type { ExpoRouter } from 'expo-router/types/expo-router';
-import type { ServiceDTO } from '@/api/routes/service/types/service.types';
 import type { TFormMaster } from '@/app/admin/adminMaster';
+import { baseLink } from '@/api/axios/axios.instance/instance';
 
 
 interface IEditMaster {
-    selectedImage: string | null;
+    selectedImage: ImagePicker.ImagePickerAsset | null;
     isAccessBan: boolean | undefined;
     data: TFormMaster | null;
     modalMessageError: (title: string, discription: string) => void;
@@ -34,9 +35,8 @@ export const editMaster = async ({
     router,
     isAccessBan
 }: IEditMaster) => {
-    console.log('-------------------------------------------------------------------------');
     try{
-
+        console.log('EditMaster');
         if(!data?.id) return modalMessageError('Ошибка id.', 'Не переданно id мастера.');
         if(!data?.name) return modalMessageError('Нет имени.', 'Введите имя мастера.');
         if(!data?.surname) return modalMessageError('Нет фамилии.', 'Введите фамилию мастера.');
@@ -50,10 +50,10 @@ export const editMaster = async ({
         const formData = new FormData();
 
         //* Выбрано ли новое изображение.
-        if(selectedImage && (await FileSystem.getInfoAsync(selectedImage)).exists) {
-            //const sliceWithFileName = selectedImage.uri.split('/').at(-1);
+        if(selectedImage && (await FileSystem.getInfoAsync(selectedImage.uri)).exists) {
+            
             formData.append('foo', {
-                uri: selectedImage,
+                uri: selectedImage.uri,
                 type: "image/jpeg", //selectedImage.mimeType,
                 name: "387536e7-e93f-4d90-a63a-b5488d185fab.jpeg" //selectedImage.fileName || sliceWithFileName || 'image.jpeg'
             } as any);
@@ -77,6 +77,8 @@ export const editMaster = async ({
         if(result) isMessage(result);
         router.back();
     } catch(err) {
-        console.error(err);
+        console.log(err);
     }
 }
+
+

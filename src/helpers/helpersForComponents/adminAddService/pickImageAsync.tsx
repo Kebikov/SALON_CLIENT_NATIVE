@@ -7,10 +7,10 @@ import * as FileSystem from 'expo-file-system';
  * `Выбор изображения.`
  */
 export const pickImageAsync = async (
-    setSelectedImage: React.Dispatch<React.SetStateAction<string | null>>,
+    setSelectedImage: React.Dispatch<React.SetStateAction<ImagePicker.ImagePickerAsset | null>>,
     modalMessageError: (title: string, discription: string) => void
 ) => {
-    await clearCache();
+
     const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
 
     if (permissionResult.granted === false) {
@@ -43,30 +43,6 @@ export const pickImageAsync = async (
             return modalMessageError('Ошибка формата', 'Выберите изображение подходяшего формата, а именно:  jpg / jpeg / png');
         }
         
-        setSelectedImage(result.assets[0].uri);
-
-    
-    } else {
-        Alert.alert('Фото не выбрано.', 'Вы не выбрали ни одного фото');
+        setSelectedImage(result.assets[0]);
     }
 };
-
-async function clearCache() {
-    try{
-        const cacheDir = FileSystem.cacheDirectory;
-        if(!cacheDir) return;
-        const fileInfo = await FileSystem.getInfoAsync(cacheDir + 'ExperienceData');
-        console.log(fileInfo);
-
-        if(fileInfo.exists) {
-            await FileSystem.deleteAsync(cacheDir + 'ExperienceData');
-            //const files = await FileSystem.readDirectoryAsync('file:///data/user/0/host.exp.exponent/cache/ExperienceData/%2540kebikov%252Fsalon_client_native/ImagePicker/');
-            console.log(cacheDir);
-            //console.log('files >>> ', files);
-        }
-
-    } catch(error) {
-        console.log('Error clearing cache >>> ', error);
-    }
-
-}
