@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet, Image, Pressable } from 'react-native';
 import React, { FC } from 'react';
 import { COLOR_ROOT } from '@/data/colors';
+import VibrationApp from '@/helpers/helpersForComponents/vibration/VibrationApp';
 
 
 interface IMenuItem {
@@ -26,7 +27,10 @@ const MenuItem: FC<IMenuItem> = ({title, subTitle, img, pushFunction, isShowArro
 
     return (
         <Pressable 
-            onPress={() => pushFunction()}
+            onPress={() => {
+                VibrationApp.pressButton();
+                pushFunction();
+            }}
             style={[styles.main,{marginTop}]} 
         >
             <View style={styles.boxImg}>

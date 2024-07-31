@@ -6,6 +6,7 @@ import * as Clipboard from 'expo-clipboard';
 import ButtonSwipeable from '@/components/widgets/ButtonSwipeable/ButtonSwipeable';
 import { useHookRouter } from '@/helpers/router/useHookRouter';
 import httpMasterService from '@/api/routes/master/service/http.master.service';
+import * as Haptics from 'expo-haptics';
 
 import type { IMasterFind } from '@/api/routes/master/types/master.dto';
 
@@ -45,6 +46,7 @@ const MasterCartForAdmin: FC<IMasterCartForAdmin> = ({master, setMasters}) => {
             colorButton1={COLOR_ROOT.BUTTON_COLOR_YELLOW}
 
             onPressButton2={() => {
+                Haptics.selectionAsync()
                 Alert.alert(
                     'Удалить мастера ?',
                     'После нажатия удалить, мастер будет удален.',

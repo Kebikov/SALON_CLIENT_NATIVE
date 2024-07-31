@@ -4,6 +4,7 @@ import { COLOR_ROOT } from '@/data/colors';
 import menu, {TKeyPage, IButtonPage} from './listMenu';
 import type { TRole } from '@/api/routes/registration/types/registration.types';
 import { useRouter, usePathname } from 'expo-router';
+import VibrationApp from '@/helpers/helpersForComponents/vibration/VibrationApp';
 
 
 interface IBottomMenu {
@@ -27,7 +28,10 @@ const BottomMenu: FC<IBottomMenu> = ({role}) => {
         return(
             <Pressable 
                 style={styles.boxImg} 
-                onPress={() => item && item.page !== null ? router.navigate(item.page) : null} 
+                onPress={() => {
+                    VibrationApp.pressButton();
+                    item && item.page !== null ? router.navigate(item.page) : null;
+                }} 
                 key={item.id} 
             >
                 <Image source={item.img} style={styles.icon} />
