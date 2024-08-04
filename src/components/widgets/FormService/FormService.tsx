@@ -47,7 +47,7 @@ const FormService: FC<IFormService> = ({
     const [selectedImage, setSelectedImage] = useState<ImagePicker.ImagePickerAsset | null>(null);
     
     const {dataDepartments} = useHookGetDataDepartments();
-
+    
     const bottomSheetRef = useRef<IRefBottomModalSheet>(null);
     const openList = () => bottomSheetRef.current?.openModal();
     const closeList = () => bottomSheetRef.current?.closeModal();
@@ -62,9 +62,10 @@ const FormService: FC<IFormService> = ({
      * Выбор группы.
      */
     const choiceDepartment = (id: number, name: string) => {
-        setData( state => ({...state, id_department: id, name}) );
+        setData( state => ({...state, id_department: id, department_name: name}) );
         closeList();
     }
+
 
     return (
         <>

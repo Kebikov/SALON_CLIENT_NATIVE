@@ -13,7 +13,7 @@ interface IButtonSelectDepartment {
  * @shared `Кнопка выбора группы.`
  */
 const ButtonSelectDepartment: FC<IButtonSelectDepartment> = ({openList, nameSelectedDepatment}) => {
-
+    console.log(nameSelectedDepatment);
     return (
         <Pressable 
             onPress={openList}

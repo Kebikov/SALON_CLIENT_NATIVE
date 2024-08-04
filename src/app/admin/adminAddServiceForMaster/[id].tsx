@@ -1,4 +1,4 @@
-import { View, StyleSheet, Text } from 'react-native';
+import { View, StyleSheet, Text, NativeSyntheticEvent, NativeScrollEvent } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import React, { FC } from 'react';
 import WrapperScroll from '@/components/wrappers/WrapperScroll/WrapperScroll';
@@ -71,6 +71,11 @@ const AdminAddServiceForMaster: FC = () => {
         }
     } 
 
+    const handleScroll = (event:  NativeSyntheticEvent<NativeScrollEvent>) => {
+        const {contentOffset} = event.nativeEvent;
+        console.log(contentOffset);
+    }
+
 
     return (
         <>
@@ -107,6 +112,8 @@ const AdminAddServiceForMaster: FC = () => {
                             showsHorizontalScrollIndicator={false}
                             extraData={[services, curentFilter]}
                             ListEmptyComponent={<View><Text>Нет элементов.</Text></View>}
+                            scrollEventThrottle={16}
+                            onScroll={handleScroll}
                         />
                         :
                         null

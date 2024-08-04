@@ -32,3 +32,4 @@ export interface ServiceDTOforEdit extends Omit<ServiceDTO, 'img' | 'id'> {
     img?: string;
     oldImgName?: string;
 }
+
