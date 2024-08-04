@@ -19,7 +19,7 @@ export const useHookGetDataServices = () => {
 
     return {
         /**
-         * `Все услуги.`
+         * `Все услуги`
          */
         services,
         /**

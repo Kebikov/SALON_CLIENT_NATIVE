@@ -23,7 +23,7 @@ const InputServiceDescription: FC<IInputService> = ({sizeTitle, onChangeForm, da
             </QuestionHOC>
             <InputGeneric<Omit<ServiceDTO, 'id'>>
                 keyName='description'
-                placeholder='Название услуги'
+                placeholder='Описание услуги'
                 img={require('@/source/img/icon/group-gray.png')}
                 onChangeForm={onChangeForm}
                 value={data.description}

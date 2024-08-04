@@ -6,6 +6,7 @@ import { COLOR_ROOT } from '@/data/colors';
 interface ITitle {
     text: string;
     marginTop?: number;
+    marginBottom?: number;
     location?: 'center' | 'left';
     fontSize?: number;
 }
@@ -15,14 +16,21 @@ interface ITitle {
  * @shared `Title.`
  * @param text Text title.
  * @param marginTop ? Margin top.
+ * @param marginBottom ? Margin Bottom.
  * @param location ? Text location, 'left' or 'center' (default center).
  * @param fontSize ? Header size (default 18)
  * @example <Title text={#} marginTop={?#} location={?#} fontSize={?#} />
  */
-const Title: FC<ITitle> = ({text, marginTop = 0, location = 'center', fontSize = 18}) => {
+const Title: FC<ITitle> = ({
+    text, 
+    marginTop = 0,
+    marginBottom = 0,
+    location = 'center', 
+    fontSize = 18
+}) => {
 
     return( 
-        <Text style={[styles.text, {marginTop, fontSize: Platform.OS === 'ios' ? fontSize + 2 : fontSize, textAlign: location}]} >
+        <Text style={[styles.text, {marginTop, marginBottom, fontSize: Platform.OS === 'ios' ? fontSize + 2 : fontSize, textAlign: location}]} >
                 {text}
         </Text>
     )
