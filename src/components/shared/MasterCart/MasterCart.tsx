@@ -6,21 +6,9 @@ import Animated, {ZoomIn} from 'react-native-reanimated';
 
 
 interface IMasterCart {
-    /**
-     * Имя мастера.
-     */
     masterName: string;
-    /**
-     * Специализация мастера.
-     */
     masterUnit: string;
-    /**
-     * Рейтинг мастера.
-     */
     grade: number;
-    /**
-     * Фото мастера.
-     */
     img: number | string;
 }
 

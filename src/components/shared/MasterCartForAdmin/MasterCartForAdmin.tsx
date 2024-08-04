@@ -34,48 +34,63 @@ const MasterCartForAdmin: FC<IMasterCartForAdmin> = ({master, setMasters}) => {
         ToastAndroid.show(`Номер скопирован.`, ToastAndroid.SHORT)
     };
 
+    const deleteMaster = () => {
+        Haptics.selectionAsync()
+        Alert.alert(
+            'Удалить мастера ?', 'После нажатия удалить, мастер будет удален.',
+            [
+                {
+                    text: 'удалить',
+                    onPress: async () => {
+                        await httpMasterService.DELETE_deleteMaster(id);
+                        setMasters(state => state.filter(item => item.id !== id));
+                    },
+                    style: 'destructive',
+                },
+                {
+                    text: 'отмена',
+                    onPress: () => {},
+                    style: 'cancel',
+                },
+            ]
+        );
+    };
+
+    const editMaster = () => {
+        appRouter.navigate({
+            pathname: '/admin/adminEditMaster/[id]', 
+            params: {id, name, surname, description, phone, picture, access_ban, id_department, email, department_name}
+        });
+    };
+
+    const addService = () => {
+        appRouter.navigate({pathname: '/admin/adminAddServiceForMaster/[id]', params: {id: String(id)}});
+    }
+
     return (
         <ButtonSwipeable
-            totalButton={2}
+            totalButton={3}
 
-            onPressButton1={() => appRouter.navigate({
-                    pathname: '/admin/adminEditMaster/[id]', 
-                    params: {id, name, surname, description, phone, picture, access_ban, id_department, email, department_name}
-                })}
-            iconForButton1={require('@/source/img/icon/edit-btn.png')}
-            colorButton1={COLOR_ROOT.BUTTON_COLOR_YELLOW}
+            onPressButton1={() => addService()}
+            colorButton1={COLOR_ROOT.BUTTON_COLOR_GREEN}
+            iconForButton1={require('@/source/img/icon/plus-white.png')}
 
-            onPressButton2={() => {
-                Haptics.selectionAsync()
-                Alert.alert(
-                    'Удалить мастера ?',
-                    'После нажатия удалить, мастер будет удален.',
-                    [
-                        {
-                            text: 'удалить',
-                            onPress: async () => {
-                                await httpMasterService.DELETE_deleteMaster(id);
-                                setMasters(state => state.filter(item => item.id !== id));
-                            },
-                            style: 'destructive',
-                        },
-                        {
-                            text: 'отмена',
-                            onPress: () => {},
-                            style: 'cancel',
-                        },
-                    ]
-                );
-                
-              
-            }}
-            iconForButton2={require('@/source/img/icon/del-btn.png')}
-            colorButton2={COLOR_ROOT.BUTTON_COLOR_RED}
+            onPressButton2={() => editMaster()}
+            iconForButton2={require('@/source/img/icon/edit-btn.png')}
+            colorButton2={COLOR_ROOT.BUTTON_COLOR_YELLOW}
+
+            onPressButton3={() => deleteMaster()}
+            iconForButton3={require('@/source/img/icon/del-btn.png')}
+            colorButton3={COLOR_ROOT.BUTTON_COLOR_RED}
         >
             <View style={styles.main}>
                 <View style={styles.cart} >
                     <View style={styles.left} >
-                        <Image style={styles.img} source={typeof picture === 'number' ? picture : {uri: `${baseLink}/api/img/get-img/${picture}?type=img_imgMaster`}} />
+                        <Image 
+                            defaultSource={require('@/source/img/plug/plug.jpg')}
+                            style={styles.img}
+                            source={typeof picture === 'number' ? picture : {uri: `${baseLink}/api/img/get-img/${picture}?type=img_imgMaster`}} 
+                        />
                         <View style={[styles.point, {backgroundColor: access_ban ? 'red' : 'green'}]} />
                         <View style={styles.pointBottom} />
                     </View>

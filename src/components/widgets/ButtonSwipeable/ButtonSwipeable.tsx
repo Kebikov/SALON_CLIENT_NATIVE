@@ -5,6 +5,7 @@ import React, { FC, useState, useMemo, useRef, useEffect } from 'react';
 import { StyleSheet, View, Dimensions, Image, Pressable } from 'react-native';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import Animated, { runOnJS } from 'react-native-reanimated';
+import VibrationApp from '@/helpers/helpersForComponents/vibration/VibrationApp';
 
 
 interface IButtonSwipeable {
@@ -136,6 +137,7 @@ const ButtonSwipeable: FC<IButtonSwipeable> = ({
      */
     const onHandlePress = () => {
         'worklet';
+        VibrationApp.pressButton();
         setIsActiveButton(state => {
             state ? closeStateButton() : openStateButton(250);
             return !state;
@@ -170,7 +172,8 @@ const ButtonSwipeable: FC<IButtonSwipeable> = ({
                         onPress={
                             onPressButton1 
                             ? 
-                            () => { 
+                            () => {
+                                VibrationApp.pressButton(); 
                                 onPressButton1(); 
                                 closeStateButton();
                             } 
@@ -199,6 +202,7 @@ const ButtonSwipeable: FC<IButtonSwipeable> = ({
                                 onPressButton2 
                                 ? 
                                 () => {
+                                    VibrationApp.pressButton();
                                     onPressButton2();
                                     closeStateButton();
                                 } 
@@ -230,6 +234,7 @@ const ButtonSwipeable: FC<IButtonSwipeable> = ({
                                 onPressButton3 
                                 ? 
                                 () => {
+                                    VibrationApp.pressButton();
                                     onPressButton3();
                                     closeStateButton();
                                 }

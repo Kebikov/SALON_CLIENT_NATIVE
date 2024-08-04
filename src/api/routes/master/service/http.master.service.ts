@@ -3,6 +3,7 @@ import { checkNetwork } from "@/api/axios/check/checkNetwork";
 
 import type { IMasterFind, IAddMaster } from "@/api/routes/master/types/master.dto";
 import type { IMessage } from "../../authentication/types/authentication.types";
+import type { IGetServiceOfMaster } from "@/api/routes/master/types/master.dto";
 
 
 class HttpMasterService {
@@ -61,6 +62,32 @@ class HttpMasterService {
             console.error('Error in [DELETE_deleteMaster] >>> ', error);
         }
     }
+
+    /**
+     * `Получение услуг мастера.`
+     */
+    async GET_getServicesOfMaster(id: number): Promise<IGetServiceOfMaster[] | null | undefined> {
+        try {
+            const {data} = await axiosInstanceWithAuth.get(`/master/get-service-of-master/${id}`);
+
+            return data as IGetServiceOfMaster[] | null;
+        } catch (error) {
+            console.error('Error in [GET_getServicesOfMaster] >>> ', error);
+        }
+    }
+
+    /**
+     * `Получение услуг мастера.`
+     */
+        async POST_masterAndService(action: 'push' | 'remove',  id_master: number, id_service: number): Promise<IMessage | undefined> {
+            try {
+                const {data} = await axiosInstanceWithAuth.post(`/master/master-and-service`, {action, id_master, id_service});
+    
+                return data as IMessage;
+            } catch (error) {
+                console.error('Error in [POST_masterAndService] >>> ', error);
+            }
+        }
 
 }
 

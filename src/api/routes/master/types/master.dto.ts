@@ -1,4 +1,5 @@
 import { RegistrationDTO } from "@/api/routes/registration/types/registration.types";
+import { ServiceDTO } from "../../service/types/service.types";
 
 //: MasterDTO                                                    
 /** 
@@ -52,4 +53,14 @@ export interface IMasterFind extends MasterDTO, Pick<RegistrationDTO, 'email'> {
     department_name: string | null;
     average_stars: string | null;
 };
+
+/**
+ * `Все сервисы мастера.`
+ * @param department_name Имя группы к которой относится сервис.
+ * @param id_master ID мастера кому добавлены данные сервисы.
+ */
+export interface IGetServiceOfMaster extends ServiceDTO {
+    department_name: string; 
+    id_master: number;
+}
 

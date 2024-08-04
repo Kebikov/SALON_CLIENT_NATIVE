@@ -1,72 +1,72 @@
-import { View, Text, StyleSheet, Image, Platform } from 'react-native';
-import React, { FC } from 'react';
+import { View, Text, StyleSheet, Image, Platform, Pressable } from 'react-native';
+import React, { FC, useState } from 'react';
 import { COLOR_ROOT } from '@/data/colors';
 import { baseLink } from '@/api/axios/axios.instance/instance';
+import { ServiceDTOAndDepartmentName } from '@/api/routes/service/types/service.types';
 
 
 export interface IServiceCart {
-    id?: string;
-    /**
-     * Название услуги.
-     */
-    title: string;
-    /**
-     * Отдел к которому относится услуга
-     */
-    department: string;
-    /**
-     * Время выполнения услуги.
-     */
-    time: number;
-    /**
-     * Стоимость услуги.
-     */
-    price: number;
-    /**
-     * Изображение услуги.
-     */
-    img: number | string;
+    service: ServiceDTOAndDepartmentName;
     borderRadius?: number;
+    isShowButton?: boolean;
+    handlePressButton?: Function;
+    textButton?: string;
+    backgroundColorButton?: string;
 }
 
 
 /**
  * @shared Мини карточка услуги.
- * @param title Название услуги.
- * @param department Отдел к которому относится услуга.
- * @param time Время выполнения услуги.
- * @param price Стоимость услуги.
- * @param img Изображение услуги.
+ * @param service ServiceDTO.
  * @optional
- * @param borderRadius Радиус закругления
+ * @param borderRadius ? Радиус закругления.
+ * @param isShowButton ? Показывать ли кнопку в правом, нижнем углу.
+ * @param handlePressButton ? Обработка нажатия кнопки в правом, нижнем углу.
+ * @param textButton ? Текст кнопки.
+ * @param backgroundColorButton ? Цвет кнопки.
  */
 const ServiceCart: FC<IServiceCart> = ({
-    title, 
-    department, 
-    time, 
-    price, 
-    img, 
-    borderRadius = 25
+    service, 
+    borderRadius = 25,
+    isShowButton = true,
+    handlePressButton = () => {},
+    textButton = 'запись',
+    backgroundColorButton = COLOR_ROOT.PINK
 }) => {
+
+    const [cartState, setCartState] = useState();
 
     return (
         <View style={styles.main} >
             <View style={[styles.box, {borderRadius}]} >
                 <View style={styles.left} >
-                    <Image style={styles.img} source={typeof img === 'number' ? img : {uri: `${baseLink}/api/img/get-img/${img}?type=img_imgService`}} />
+                    <Image 
+                        defaultSource={require('@/source/img/plug/plug.jpg')}
+                        style={styles.img} 
+                        source={typeof service.img === 'number' ? service.img : {uri: `${baseLink}/api/img/get-img/${service.img}?type=img_imgService`}}
+                    />
                 </View>
                 <View style={styles.right} >
-                    <Text style={styles.title} >{title}</Text>
-                    <Text style={styles.department} >{department}</Text>
-                    <Text style={styles.time} >{'Время: ' + time + 'мин.'}</Text>
+                    <Text style={styles.title} >{service.title}</Text>
+                    <Text style={styles.department} >{service.department_name}</Text>
+                    <Text style={styles.time} >{'Время: ' + service.time + 'мин.'}</Text>
                     <View style={styles.boxPrice} >
                         <View style={styles.price}>
-                            <Text style={styles.textTotal}>{price}</Text>
+                            <Text style={styles.textTotal}>{service.price}</Text>
                             <Text style={styles.textByn} > byn</Text>
                         </View>
-                        <View style={styles.order}>
-                            <Text style={styles.textOrder}>запись</Text>
-                        </View>
+                        {
+                            isShowButton
+                            ?
+                            <Pressable 
+                                style={[styles.order, { backgroundColor: backgroundColorButton}]}
+                                onPress={() => handlePressButton()}
+                            >
+                                <Text style={styles.textOrder}>{textButton}</Text>
+                            </Pressable>
+                            :
+                            null
+                        }
                     </View>
                 </View>
             </View>
@@ -149,7 +149,6 @@ const styles = StyleSheet.create({
         textTransform: 'uppercase'
     },
     order: {
-        backgroundColor: COLOR_ROOT.PINK,
         paddingHorizontal: 12,
         paddingVertical: Platform.OS === 'ios' ? 5 : 3,
         borderRadius: 15,

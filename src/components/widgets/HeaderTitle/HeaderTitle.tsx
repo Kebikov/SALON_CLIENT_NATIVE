@@ -2,6 +2,7 @@ import { View, Text, StyleSheet, Image, Pressable, Platform } from 'react-native
 import React, { FC } from 'react';
 import { COLOR_ROOT } from '@/data/colors';
 import { useRouter } from 'expo-router';
+import VibrationApp from '@/helpers/helpersForComponents/vibration/VibrationApp';
 
 
 interface IHeaderTitle {
@@ -31,7 +32,10 @@ const HeaderTitle: FC<IHeaderTitle> = ({
         <View style={styles.main}>
             <Pressable 
                 style={styles.boxImg} 
-                onPress={() => router.back()}
+                onPress={() => {
+                    VibrationApp.pressButton();
+                    router.back();
+                }}
             >
                 <Image style={styles.img} source={require('@/source/img/icon-menu/arrow-white.png')} />
             </Pressable>

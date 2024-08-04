@@ -3,65 +3,45 @@ import { FlatList } from 'react-native-gesture-handler';
 import React, { FC, useRef, useState } from 'react';
 import WrapperScroll from '@/components/wrappers/WrapperScroll/WrapperScroll';
 import ServiceCart from '@/components/shared/ServiceCart/ServiceCart';
-import ButtonWithIcon from '../../components/shared/ButtonWithIcon/ButtonWithIcon';
 import { useHookRouter } from '@/helpers/router/useHookRouter';
 import httpServiceService from '@/api/routes/service/service/http.service.service';
+import httpMasterService from '@/api/routes/master/service/http.master.service';
 import ButtonSwipeable from '@/components/widgets/ButtonSwipeable/ButtonSwipeable';
 import { useHookCheckErrorResponce } from '@/hooks/useHookCheckErrorResponce';
 import { COLOR_ROOT } from '@/data/colors';
 import { useHookGetDataServices } from '@/hooks/GET/useHookGetDataServices';
 import { useHookGetDataDepartments } from '@/hooks/GET/useHookGetDataDepartments';
 import BottomModalSheetWithDepartment from '@/components/widgets/BottomModalSheetWithDepartment/BottomModalSheetWithDepartment';
+import { useLocalSearchParams } from 'expo-router';
+import { useHookGetServiceOfMaster } from '@/hooks/GET/useHookGetServiceOfMaster';
 
 import type { ServiceDTOAndDepartmentName } from '@/api/routes/service/types/service.types';
 import type { IRefBottomModalSheet } from '@/components/wrappers/BottomModalSheet/types';
 import type { DepartmentDTO } from "@/api/routes/department/types/department.types";
 
+interface ISetButton {
+    color: string;
+    text: string;
+    handlePressButton: Function;
+}
+
 
 /**
- * @page `Страница с услугами и кнопкой добавления услуги.`
+ * @page `Страница добавления/удаления услуг мастера.`
  */
-const AdminService: FC = () => {
+const AdminAddServiceForMaster: FC = () => {
+
+    let { id } = useLocalSearchParams<{id: string}>();
+    if(!id) return;
 
     const bottomSheetRef = useRef<IRefBottomModalSheet>(null);
     const openList = () => bottomSheetRef.current?.openModal();
     const closeList = () => bottomSheetRef.current?.closeModal();
 
+    const {serviceOfMaster, setServiceOfMaster} = useHookGetServiceOfMaster(Number(id));
     const {dataDepartments} = useHookGetDataDepartments();
     const {services, setServices} = useHookGetDataServices();
     const [curentFilter, setCurentFilter] = useState<string>('Все услуги.');
-    const {isMessage} = useHookCheckErrorResponce();
-    const {appRouter} = useHookRouter();
-    
-    const deleteService = (id: number, title: string) => {
-        Alert.alert(
-            'Удалить группу ?',
-            `После нажатия удалить, группа "${title}" будет удалена.`,
-            [
-                {
-                    text: 'отмена',
-                    onPress: () => {},
-                    style: 'cancel',
-                },
-                {
-                    text: 'удалить',
-                    onPress: async () => {
-                        const result = await httpServiceService.DELETE_deleteServiceById(id, title);
-                        const newServices = services.filter((item) => (item.id !== id));
-                        if(result) {
-                            setServices(newServices);
-                            isMessage(result);
-                        }
-                    },
-                    style: 'destructive',
-                }
-            ]
-        );
-    }
-
-    const editService = (item: ServiceDTOAndDepartmentName) => {
-        appRouter.navigate({pathname: '/admin/adminEditService/[id]', params: {...item}})
-    }
 
     let sheetDepartments: DepartmentDTO[] = [
         {
@@ -79,19 +59,44 @@ const AdminService: FC = () => {
                 return item;
             }
 
-            if(curentFilter === 'Нет группы.' && item.name === null) {
+            if(curentFilter === 'Нет группы.' && item.department_name === null) {
                 return item;
             }
 
-            if(item.name === curentFilter) {
+            if(item.department_name === curentFilter) {
                 return item;
             }
         }  
     );
 
+    /**
+     * `Установить настройки кнопки.`
+     */
+    const setSettingsButton = (item: ServiceDTOAndDepartmentName): ISetButton => {
+        if(serviceOfMaster === null || !serviceOfMaster.some(el => el.id === item.id)) {
+            return {
+                color: COLOR_ROOT.BUTTON_COLOR_GREEN,
+                text: 'добавить',
+                handlePressButton: async () => {
+                    await httpMasterService.POST_masterAndService('push', Number(id), item.id);
+                }
+            }
+        } else {
+            return {
+                color: COLOR_ROOT.BUTTON_COLOR_RED,
+                text: 'убрать',
+                handlePressButton: async () => {
+                    await httpMasterService.POST_masterAndService('remove', Number(id), item.id);
+                }
+            }
+        }
+    } 
+
+
+
     return (
         <>
-            <WrapperScroll titlePage='Услуги' isScrollEnabled={false} imgFilter={require('@/source/img/icon/filter_white.png')} handlePessImgFilter={() => openList()} >
+            <WrapperScroll titlePage='Добавление услуг' isScrollEnabled={false} imgFilter={require('@/source/img/icon/filter_white.png')} handlePessImgFilter={() => openList()} >
                 <View style={styles.main} >
                     {
                         services.length > 0
@@ -101,25 +106,13 @@ const AdminService: FC = () => {
                             data={filterService}
                             renderItem={ 
                                 ({item}) => (
-                                    <ButtonSwipeable 
-                                        totalButton={2}
-
-                                        onPressButton1={() => editService(item)}
-                                        colorButton1={COLOR_ROOT.BUTTON_COLOR_YELLOW}
-                                        iconForButton1={require('@/source/img/icon/edit-btn.png')}
-
-                                        onPressButton2={() => deleteService(item.id, item.title)}
-                                        colorButton2={COLOR_ROOT.BUTTON_COLOR_RED}
-                                        iconForButton2={require('@/source/img/icon/del-btn.png')}
-
-                                        paddingForButton={23}
-                                    >
-                                        <ServiceCart 
-                                            service={item}
-                                            borderRadius={0}
-                                            isShowButton={false}
-                                        />
-                                    </ButtonSwipeable>
+                                    <ServiceCart
+                                        service={item}
+                                        borderRadius={0}
+                                        textButton={setSettingsButton(item).text}
+                                        backgroundColorButton={setSettingsButton(item).color}
+                                        handlePressButton={setSettingsButton(item).handlePressButton}
+                                    />
                                 ) 
                             }
                             keyExtractor={item => String(item.id)}
@@ -131,17 +124,6 @@ const AdminService: FC = () => {
                         :
                         null
                     }
-                </View>
-                <View style={styles.boxButton}>
-                    <ButtonWithIcon 
-                        title='добавить услугу'
-                        height={50}
-                        pushButton={() => {
-                            appRouter.navigate('/admin/adminAddService');
-                        }} 
-                        img={require('@/source/img/icon/plus-white.png')} 
-                        marginTop={10} 
-                    />
                 </View>
             </WrapperScroll>
 
@@ -166,4 +148,4 @@ const styles = StyleSheet.create({
 });
 
 
-export default AdminService;
+export default AdminAddServiceForMaster;

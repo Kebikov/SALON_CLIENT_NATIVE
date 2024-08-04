@@ -2,40 +2,45 @@ import { View, Text, StyleSheet } from 'react-native';
 import React, { FC, useEffect, useState, useRef } from 'react';
 import { IServiceCart } from '@/components/shared/ServiceCart/ServiceCart';
 import ServiceCart from '@/components/shared/ServiceCart/ServiceCart';
+import type { ServiceDTOAndDepartmentName } from '@/api/routes/service/types/service.types';
 
 
-const DATA: Array<IServiceCart> = [
+const DATA: Array<ServiceDTOAndDepartmentName> = [
     {
-        id: '1',
+        id: 1,
         title: 'Макияж свадебный',
-        department: 'макияж и укладка',
+        description: '',
         time: 40,
         price: 45,
-        img: require('@/source/img/service-img/3.jpg')
+        img: require('@/source/img/service-img/3.jpg'),
+        name: 'макияж и укладка',
     },
     {
-        id: '2',
+        id: 2,
         title: 'Стрижка женская',
-        department: 'парикмахерские услуги',
+        description: '',
         time: 45,
         price: 55,
-        img: require('@/source/img/service-img/1.jpg')
+        img: require('@/source/img/service-img/1.jpg'),
+        name: 'парикмахерские услуги',
     },
     {
-        id: '3',
+        id: 3,
         title: 'Эпиляция зоны',
-        department: 'эпиляция',
+        description: '',
         time: 30,
         price: 35,
-        img: require('@/source/img/service-img/2.jpg')
+        img: require('@/source/img/service-img/2.jpg'),
+        name: 'эпиляция',
     },
     {
-        id: '4',
+        id: 4,
         title: 'Окрашивание простое',
-        department: 'парикмахерские услуги',
+        description: '',
         time: 120,
         price: 85,
-        img: require('@/source/img/service-img/4.jpg')
+        img: require('@/source/img/service-img/4.jpg'),
+        name: 'парикмахерские услуги',
     },
 ]
 
@@ -44,9 +49,9 @@ const DATA: Array<IServiceCart> = [
  */
 const ListService: FC = () => {
 
-    const [data, setData] = useState<IServiceCart[]>(DATA);
+    const [data, setData] = useState<ServiceDTOAndDepartmentName[]>(DATA);
 
-    const items = data.map(item => <ServiceCart key={item.id} id={item.id} title={item.title} department={item.department} time={item.time} price={item.price} img={item.img} /> );
+    const items = data.map(item => <ServiceCart key={item.id} service={item} />);
 
 
     return (
