@@ -6,7 +6,7 @@ import type { IGetServiceOfMaster } from '@/api/routes/master/types/master.dto';
 
 export const useHookGetServiceOfMaster = (id: number) => {
 
-    const [serviceOfMaster, setServiceOfMaster] = useState<IGetServiceOfMaster[] | null>(null);
+    const [serviceOfMaster, setServiceOfMaster] = useState<IGetServiceOfMaster[] | []>([]);
 
     useEffect(() => {
         httpMasterService.GET_getServicesOfMaster(id)

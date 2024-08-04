@@ -11,7 +11,7 @@ import type { TTypeToString } from '@/helpers/router/app.router.types';
  */
 const AdminEditService: FC = () => {
 
-    const  { id, title, description, price, time, id_department, name, img } = useLocalSearchParams<TTypeToString<ServiceDTOAndDepartmentName>>();
+    const  { id, title, description, price, time, id_department, department_name, img } = useLocalSearchParams<TTypeToString<ServiceDTOAndDepartmentName>>();
 
     if(!id || !title || !description || !price || !time || !img) return;
 
@@ -22,7 +22,7 @@ const AdminEditService: FC = () => {
         price: Number(price),
         time: Number(time),
         id_department: id_department ? Number(id_department) : 0,
-        name: name ? name : '',
+        department_name: department_name ? department_name : '',
         img
     });
 

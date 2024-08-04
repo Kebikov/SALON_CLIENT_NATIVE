@@ -45,7 +45,10 @@ const HeaderTitle: FC<IHeaderTitle> = ({
                 ?
                 <Pressable 
                     style={styles.filter} 
-                    onPress={() => handlePessImgFilter()}
+                    onPress={() => {
+                        VibrationApp.select();
+                        handlePessImgFilter();
+                    }}
                 >
                     <Image style={styles.filter_img} source={require('@/source/img/icon/filter_white.png')} />
                 </Pressable>

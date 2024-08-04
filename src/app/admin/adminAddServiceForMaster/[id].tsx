@@ -14,6 +14,7 @@ import { useHookGetDataDepartments } from '@/hooks/GET/useHookGetDataDepartments
 import BottomModalSheetWithDepartment from '@/components/widgets/BottomModalSheetWithDepartment/BottomModalSheetWithDepartment';
 import { useLocalSearchParams } from 'expo-router';
 import { useHookGetServiceOfMaster } from '@/hooks/GET/useHookGetServiceOfMaster';
+import VibrationApp from '@/helpers/helpersForComponents/vibration/VibrationApp';
 
 import type { ServiceDTOAndDepartmentName } from '@/api/routes/service/types/service.types';
 import type { IRefBottomModalSheet } from '@/components/wrappers/BottomModalSheet/types';
@@ -78,7 +79,9 @@ const AdminAddServiceForMaster: FC = () => {
                 color: COLOR_ROOT.BUTTON_COLOR_GREEN,
                 text: 'добавить',
                 handlePressButton: async () => {
+                    VibrationApp.select();
                     await httpMasterService.POST_masterAndService('push', Number(id), item.id);
+                    setServiceOfMaster(state => ([...state, {...item, id_master: Number(id)}]));
                 }
             }
         } else {
@@ -86,7 +89,9 @@ const AdminAddServiceForMaster: FC = () => {
                 color: COLOR_ROOT.BUTTON_COLOR_RED,
                 text: 'убрать',
                 handlePressButton: async () => {
+                    VibrationApp.select();
                     await httpMasterService.POST_masterAndService('remove', Number(id), item.id);
+                    setServiceOfMaster( state => state.filter(el => el.id !== item.id) );
                 }
             }
         }

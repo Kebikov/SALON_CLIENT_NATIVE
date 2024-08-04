@@ -82,7 +82,7 @@ const FormService: FC<IFormService> = ({
                     />
                     <ButtonSelectDepartment 
                         openList={openList} 
-                        nameSelectedDepatment={data.name ? data.name : ''} 
+                        nameSelectedDepatment={data.department_name ? data.department_name : ''} 
                     />
                     <View style={{flex: 1, justifyContent: 'flex-end', paddingVertical: 10}}>
                         <ButtonWithIcon 

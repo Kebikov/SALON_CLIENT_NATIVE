@@ -15,7 +15,7 @@ const AdminAddService: FC = () => {
         price: 0,
         time: 0,
         id_department: 0,
-        name: '',
+        department_name: '',
         img: ''
     });
 

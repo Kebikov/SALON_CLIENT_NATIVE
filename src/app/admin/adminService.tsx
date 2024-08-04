@@ -79,11 +79,11 @@ const AdminService: FC = () => {
                 return item;
             }
 
-            if(curentFilter === 'Нет группы.' && item.name === null) {
+            if(curentFilter === 'Нет группы.' && item.department_name === null) {
                 return item;
             }
 
-            if(item.name === curentFilter) {
+            if(item.department_name === curentFilter) {
                 return item;
             }
         }  

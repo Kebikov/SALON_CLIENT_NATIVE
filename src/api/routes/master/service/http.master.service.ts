@@ -66,11 +66,11 @@ class HttpMasterService {
     /**
      * `Получение услуг мастера.`
      */
-    async GET_getServicesOfMaster(id: number): Promise<IGetServiceOfMaster[] | null | undefined> {
+    async GET_getServicesOfMaster(id: number): Promise<IGetServiceOfMaster[] | [] | undefined> {
         try {
             const {data} = await axiosInstanceWithAuth.get(`/master/get-service-of-master/${id}`);
 
-            return data as IGetServiceOfMaster[] | null;
+            return data as IGetServiceOfMaster[] | [];
         } catch (error) {
             console.error('Error in [GET_getServicesOfMaster] >>> ', error);
         }

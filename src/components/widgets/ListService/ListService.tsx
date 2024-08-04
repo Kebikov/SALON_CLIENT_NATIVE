@@ -13,7 +13,7 @@ const DATA: Array<ServiceDTOAndDepartmentName> = [
         time: 40,
         price: 45,
         img: require('@/source/img/service-img/3.jpg'),
-        name: 'макияж и укладка',
+        department_name: 'макияж и укладка',
     },
     {
         id: 2,
@@ -22,7 +22,7 @@ const DATA: Array<ServiceDTOAndDepartmentName> = [
         time: 45,
         price: 55,
         img: require('@/source/img/service-img/1.jpg'),
-        name: 'парикмахерские услуги',
+        department_name: 'парикмахерские услуги',
     },
     {
         id: 3,
@@ -31,7 +31,7 @@ const DATA: Array<ServiceDTOAndDepartmentName> = [
         time: 30,
         price: 35,
         img: require('@/source/img/service-img/2.jpg'),
-        name: 'эпиляция',
+        department_name: 'эпиляция',
     },
     {
         id: 4,
@@ -40,7 +40,7 @@ const DATA: Array<ServiceDTOAndDepartmentName> = [
         time: 120,
         price: 85,
         img: require('@/source/img/service-img/4.jpg'),
-        name: 'парикмахерские услуги',
+        department_name: 'парикмахерские услуги',
     },
 ]
 
