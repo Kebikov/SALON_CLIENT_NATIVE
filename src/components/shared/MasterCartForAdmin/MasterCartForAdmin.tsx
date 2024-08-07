@@ -64,7 +64,15 @@ const MasterCartForAdmin: FC<IMasterCartForAdmin> = ({master, setMasters}) => {
     };
 
     const addService = () => {
-        appRouter.navigate({pathname: '/admin/adminAddServiceForMaster/[id]', params: {id: String(id)}});
+        appRouter.navigate({pathname: '/admin/adminAddServiceForMaster/[id]', 
+            params: {
+                id: String(id),
+                name,
+                picture, 
+                department_name: department_name ? department_name : undefined,
+                surname
+            }
+        });
     }
 
     return (

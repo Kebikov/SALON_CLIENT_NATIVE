@@ -1,6 +1,6 @@
-import { View, StyleSheet, Text, NativeSyntheticEvent, NativeScrollEvent } from 'react-native';
+import { View, StyleSheet, Text } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
-import React, { FC } from 'react';
+import React, { FC, useRef } from 'react';
 import WrapperScroll from '@/components/wrappers/WrapperScroll/WrapperScroll';
 import ServiceCart from '@/components/shared/ServiceCart/ServiceCart';
 import httpMasterService from '@/api/routes/master/service/http.master.service';
@@ -10,7 +10,7 @@ import { useLocalSearchParams } from 'expo-router';
 import { useHookGetServiceOfMaster } from '@/hooks/GET/useHookGetServiceOfMaster';
 import VibrationApp from '@/helpers/helpersForComponents/vibration/VibrationApp';
 import { useFilterService } from '@/hooks/useFilterService';
-import Title from '@/components/shared/Title/Title';
+import AnimatedHeaderUser, {IAnimatedHeaderUserRef} from '@/components/widgets/AnimatedHeaderUser/animatedHeaderUser';
 
 import type { ServiceDTOAndDepartmentName } from '@/api/routes/service/types/service.types';
 
@@ -26,10 +26,11 @@ interface ISetButton {
  * @page `Страница добавления/удаления услуг мастера.`
  */
 const AdminAddServiceForMaster: FC = () => {
+    let { id, name, department_name, picture, surname } = useLocalSearchParams<{id: string, name: string, picture: string , department_name?: string, surname: string}>();
+    if(!id || !name || !picture || !surname) return;
 
-    let { id } = useLocalSearchParams<{id: string}>();
-    if(!id) return;
-
+    const someRef = useRef<IAnimatedHeaderUserRef>(null);
+    
     const {serviceOfMaster, setServiceOfMaster} = useHookGetServiceOfMaster(Number(id));
 
     const {        
@@ -43,6 +44,7 @@ const AdminAddServiceForMaster: FC = () => {
         filterService,
         notFilter
     } = useFilterService();
+
 
     /**
      * `Установить настройки кнопки.`
@@ -71,25 +73,12 @@ const AdminAddServiceForMaster: FC = () => {
         }
     } 
 
-    const handleScroll = (event:  NativeSyntheticEvent<NativeScrollEvent>) => {
-        const {contentOffset} = event.nativeEvent;
-        console.log(contentOffset);
-    }
-
 
     return (
         <>
             <WrapperScroll titlePage='Услуги мастера' isScrollEnabled={false} imgFilter={require('@/source/img/icon/filter_white.png')} handlePessImgFilter={() => openList()} >
+                <AnimatedHeaderUser title={`${surname} ${name}`} subtitle={department_name} picture={picture} ref={someRef} />
                 <View style={styles.main} >
-
-                    {
-                        curentFilter === notFilter
-                        ?
-                        null
-                        :
-                        <Title text={`Фильтр: ${curentFilter}`} location='left' fontSize={16} marginBottom={5} />
-                    }
-
                     {
                         services.length > 0
                         ?
@@ -113,7 +102,7 @@ const AdminAddServiceForMaster: FC = () => {
                             extraData={[services, curentFilter]}
                             ListEmptyComponent={<View><Text>Нет элементов.</Text></View>}
                             scrollEventThrottle={16}
-                            onScroll={handleScroll}
+                            onScroll={someRef.current?.handleScroll}
                         />
                         :
                         null
@@ -132,7 +121,7 @@ const AdminAddServiceForMaster: FC = () => {
                 }}
             />
         </>
-    );
+    )
 };
 
 

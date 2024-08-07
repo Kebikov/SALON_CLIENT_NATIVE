@@ -57,6 +57,10 @@ export type AppRouterTypes = {
 
     '/admin/adminAddServiceForMaster/[id]': {
         id: string;
+        name: string;
+        surname: string;
+        picture: string;
+        department_name?: string;
     };
     '/admin/modal': undefined;
 

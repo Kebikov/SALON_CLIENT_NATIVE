@@ -63,3 +63,14 @@ export const useFilterService = () => {
     }
 
 }
+
+            // Модальное нижнее окно с группами
+            // <BottomModalSheetWithDepartment
+            //     bottomSheetRef={bottomSheetRef}
+            //     sheetDepartments={sheetDepartments}
+            //     typeModal='filter'
+            //     handlePress={(item) => {
+            //         setCurentFilter(item.name);
+            //         closeList();
+            //     }}
+            // />
