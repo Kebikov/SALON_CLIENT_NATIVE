@@ -10,7 +10,7 @@ import { useLocalSearchParams } from 'expo-router';
 import { useHookGetServiceOfMaster } from '@/hooks/GET/useHookGetServiceOfMaster';
 import VibrationApp from '@/helpers/helpersForComponents/vibration/VibrationApp';
 import { useFilterService } from '@/hooks/useFilterService';
-import AnimatedHeaderUser, {IAnimatedHeaderUserRef} from '@/components/widgets/AnimatedHeaderUser/animatedHeaderUser';
+import AnimatedHeaderUser, {IAnimatedHeaderUserRef} from '@/components/widgets/AnimatedHeaderUser/AnimatedHeaderUser';
 
 import type { ServiceDTOAndDepartmentName } from '@/api/routes/service/types/service.types';
 

@@ -8,6 +8,7 @@ import ListMasters from '@/components/widgets/ListMasters/ListMasters';
 import ListService from '@/components/widgets/ListService/ListService';
 import { useHookRouter } from '@/helpers/router/useHookRouter';
 
+
 import BottomModalSheet from '@/components/wrappers/BottomModalSheet/BottomModalSheet';
 import { IRefBottomModalSheet } from '@/components/wrappers/BottomModalSheet/types';
 
@@ -28,7 +29,8 @@ const HomeAdmin: FC = () => {
     return (
         <WrapperScroll>
             <HomeUserHeader/>
-            {/* <Pressable
+
+            <Pressable
                 onPress={() => press()}
             >
                 <Text 
@@ -36,7 +38,7 @@ const HomeAdmin: FC = () => {
                 >
                     кнопка для теста
                 </Text>
-            </Pressable> */}
+            </Pressable>
 
             <Text style={[styles.text, {marginTop: 10}]} >Service</Text>
             <ListDepartment/>

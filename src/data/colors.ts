@@ -5,6 +5,7 @@ interface IColors {
     PINK: string;
     LIGHT_BLUE: string;
     GRAY: string;
+    GRAY_DARK: string;
     LIGHT_ICON: string;
     SKY_BLUE: string;
     BLACK: string;
@@ -29,6 +30,7 @@ export const COLOR_ROOT: IColors = {
     SKY_BLUE: '#3dc6d9',
     LIGHT_BLUE: '#e0f5fa',
 
+    GRAY_DARK: '#494949',
     GRAY: '#50555b',
     MIDDLE_GRAY: '#7f848a',
     LIGHT_ICON: '#acb3bc',

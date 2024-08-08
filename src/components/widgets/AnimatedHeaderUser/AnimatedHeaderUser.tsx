@@ -19,6 +19,7 @@ interface IAnimatedHeaderUser {
 const HEADER_SIZE = 150;
 const FONT_SIZE_TITLE = Platform.OS === 'ios' ? 18 : 16;
 const FONT_SIZE_SUBTITLE = Platform.OS === 'ios' ? 13 : 12;
+const IMG_SIZE = Platform.OS === 'ios' ? 74 : 70;
 
 
 /**
@@ -71,8 +72,8 @@ const AnimatedHeaderUser = forwardRef<IAnimatedHeaderUserRef, IAnimatedHeaderUse
 
     const animationImg = useAnimatedStyle(() => {
         return{
-            width: interpolate(flatListOffset.value, [0, needScroll], [70, 0], Extrapolation.CLAMP),
-            height: interpolate(flatListOffset.value, [0, needScroll], [70, 0], Extrapolation.CLAMP),
+            width: interpolate(flatListOffset.value, [0, needScroll], [IMG_SIZE, 0], Extrapolation.CLAMP),
+            height: interpolate(flatListOffset.value, [0, needScroll], [IMG_SIZE, 0], Extrapolation.CLAMP),
             opacity: interpolate(flatListOffset.value, [0, needScroll], [1, 0], Extrapolation.CLAMP)
         }
     });
@@ -116,13 +117,15 @@ const styles = StyleSheet.create({
         width: '100%',
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: COLOR_ROOT.MAIN_COLOR
+        backgroundColor: COLOR_ROOT.MAIN_COLOR,
     },
     img: {
         width: '100%',
         height: '100%',
         objectFit: 'cover',
-        borderRadius: 150
+        borderRadius: 150,
+        borderWidth: 2,
+        borderColor: 'white'
     },
     masterName: {
         color: 'white',
