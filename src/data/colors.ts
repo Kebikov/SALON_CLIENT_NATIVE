@@ -14,6 +14,7 @@ interface IColors {
     BUTTON_COLOR_RED: string;
     BUTTON_COLOR_GREEN: string;
     BUTTON_COLOR_YELLOW: string;
+    BLUE: string;
 }
 
 export const COLOR_ROOT: IColors = {
@@ -27,6 +28,7 @@ export const COLOR_ROOT: IColors = {
 
     PINK: '#eb555b',
 
+    BLUE: '#007aeb',
     SKY_BLUE: '#3dc6d9',
     LIGHT_BLUE: '#e0f5fa',
 

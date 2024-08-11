@@ -1,52 +1,55 @@
 import { View, Text, StyleSheet, Image, Pressable, Platform } from 'react-native';
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import Time from '@/helpers/Time/Time';
-
-import type { IcurrentDay } from './Calendar';
 
 
 interface ICalendarHeader {
-    date: IcurrentDay;
-    setCurrentDay: React.Dispatch<React.SetStateAction<IcurrentDay>>;
+    currentDay: string;
+    setCurrentDay: React.Dispatch<React.SetStateAction<string>>;
 }
 
 
 /**
  * @component `Шапка в календаре.`
- * @param date обьект interface IcurrentDay.
+ * @param currentDay обьект interface IcurrentDay.
  * @param setCurrentDay Установка текушей даты.
  */
 const CalendarHeader: FC<ICalendarHeader> = ({
-    date,
+    currentDay,
     setCurrentDay
 }) => {
     
+    /**
+     * `Добавить/отнять месяц.`
+     */
     const setMonth = (sign: 'plus' | 'minus') => {
-        setCurrentDay(currentDay => {
-            const date = new Date(currentDay.year, currentDay.month, currentDay.day, 14, 0, 0, 0);
+        setCurrentDay(state => {
+            const splitDate = Time.splitDate(state);
+            const date = new Date(splitDate.year, splitDate.month - 1, 1, 14, 0, 0, 0);
             date.setMonth(sign === 'plus' ? date.getMonth() + 1 : sign === 'minus' ? date.getMonth() - 1 : 0);
-            return Time.getIcurrentDay(date);
+            return Time.dateToOnlyDataString(date);
         });
     }
 
+    const splitDate = Time.splitDate(currentDay);
 
     return (
         <View style={styles.container} >
             <View style={styles.dataBox} >
-                <Text style={styles.textData}>{`${Time.getMonthString('full',date.month)} ${date.year}`}</Text>
+                <Text style={styles.textData}>{`${Time.getMonthString('full', splitDate.month)} ${splitDate.year}`}</Text>
             </View>
             <View style={styles.arrowsBox} >
                 <Pressable
                     style={styles.arrowLeft}
                     onPress={() => setMonth('minus')}
                 >
-                    <Image style={[styles.img, {transform: [{translateX: -10}]}]} source={require('@/source/img/icon-menu/arrow-white.png')} />
+                    <Image style={[styles.img, {transform: [{translateX: -10}]}]} source={require('@/source/img/icon-menu/arrow-blue.png')} />
                 </Pressable>
                 <Pressable
                     style={styles.arrowRight}
                     onPress={() => setMonth('plus')}
                 >
-                    <Image style={[styles.img, {transform: [{rotate: '180deg'}, {translateX: -10}]}]} source={require('@/source/img/icon-menu/arrow-white.png')} />
+                    <Image style={[styles.img, {transform: [{rotate: '180deg'}, {translateX: -10}]}]} source={require('@/source/img/icon-menu/arrow-blue.png')} />
                 </Pressable>
             </View>
         </View>
@@ -64,7 +67,7 @@ const styles = StyleSheet.create({
     textData: {
         paddingLeft: 5,
         color: 'white',
-        fontSize: 15,
+        fontSize: Platform.OS === 'ios' ? 17 : 15,
         fontWeight: '500'
     },
     arrowsBox: {
@@ -72,15 +75,13 @@ const styles = StyleSheet.create({
     },
     arrowLeft: {
         width: 50,
-        height: 22,
-        //backgroundColor: 'red',
+        height: 25,
         paddingVertical: 2
     },
     arrowRight: {
         width: 50,
-        height: 22,
+        height: 25,
         paddingVertical: 2,
-        //backgroundColor: 'green'
     },
     img: {
         width: '100%',

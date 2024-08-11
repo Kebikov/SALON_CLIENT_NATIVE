@@ -1,5 +1,5 @@
 import { Text, StyleSheet, Pressable } from 'react-native';
-import React, { FC, useRef } from 'react';
+import React, { FC, useRef, useState } from 'react';
 import { COLOR_ROOT } from '@/data/colors';
 import WrapperScroll from '@/components/wrappers/WrapperScroll/WrapperScroll';
 import HomeUserHeader from '@/components/widgets/HomeUserHeader/HomeUserHeader';
@@ -7,10 +7,14 @@ import ListDepartment from '@/components/widgets/ListDepartment/ListDepartment';
 import ListMasters from '@/components/widgets/ListMasters/ListMasters';
 import ListService from '@/components/widgets/ListService/ListService';
 import { useHookRouter } from '@/helpers/router/useHookRouter';
+import { Portal } from '@gorhom/portal';
+import Calendar from '@/components/widgets/CalendarDataTime/Calendar';
+import { ICalendarRef } from '@/components/widgets/CalendarDataTime/Calendar';
+import Time from '@/helpers/Time/Time';
 
 
 import BottomModalSheet from '@/components/wrappers/BottomModalSheet/BottomModalSheet';
-import { IRefBottomModalSheet } from '@/components/wrappers/BottomModalSheet/types';
+import type  { IRefBottomModalSheet } from '@/components/wrappers/BottomModalSheet/types';
 
 
 /** 
@@ -18,40 +22,55 @@ import { IRefBottomModalSheet } from '@/components/wrappers/BottomModalSheet/typ
  */
 const HomeAdmin: FC = () => {
 
+    /**
+     * @param selectedDays `Массив с выбранными датами.`
+     * @example ['2022-02-28', '2022-02-20']
+     */
+    const [selectedDays, setSelectedDays] = useState<string[]>([]);
+    const refCalendar = useRef<ICalendarRef>(null);
+
     const {appRouter} = useHookRouter();
     const refModal = useRef<IRefBottomModalSheet>(null);
+   
 
     const press = () => {
-        appRouter.navigate('/test');
-        //refModal.current?.openModal();
+        // Открыть календарь.
+        refCalendar.current?.openCalendar();
     }
 
     return (
-        <WrapperScroll>
-            <HomeUserHeader/>
-
-            <Pressable
-                onPress={() => press()}
-            >
-                <Text 
-                    style={{fontSize: 20, textAlign: 'center', backgroundColor: 'green', marginTop: 20, color: '#fff', paddingVertical: 5}} 
+        <>
+            <WrapperScroll>
+                <HomeUserHeader/>
+                <Calendar 
+                    selectedDays={selectedDays}
+                    setSelectedDays={setSelectedDays}
+                    select='multi'
+                    ref={refCalendar} 
+                />
+                <Pressable
+                    onPress={() => press()}
                 >
-                    кнопка для теста
-                </Text>
-            </Pressable>
+                    <Text 
+                        style={{fontSize: 20, textAlign: 'center', backgroundColor: 'green', marginTop: 20, color: '#fff', paddingVertical: 5}} 
+                    >
+                        кнопка для теста
+                    </Text>
+                </Pressable>
+                
+                <Text style={[styles.text, {marginTop: 10}]} >Service</Text>
+                <ListDepartment/>
+                <Text style={[styles.text, {marginTop: 10}]} >Masters</Text>
+                <ListMasters/>
+                <Text style={[styles.text, {marginTop: 0}]} >Популярные услуги</Text>
+                <ListService/>
 
-            <Text style={[styles.text, {marginTop: 10}]} >Service</Text>
-            <ListDepartment/>
-            <Text style={[styles.text, {marginTop: 10}]} >Masters</Text>
-            <ListMasters/>
-            <Text style={[styles.text, {marginTop: 0}]} >Популярные услуги</Text>
-            <ListService/>
+                <BottomModalSheet ref={refModal}>
+                    <Text style={{fontSize: 30}}>Home</Text>
+                </BottomModalSheet>
 
-            <BottomModalSheet ref={refModal}>
-                <Text style={{fontSize: 30}}>Home</Text>
-            </BottomModalSheet>
-
-        </WrapperScroll>
+            </WrapperScroll>
+        </>
     );
 };
 
@@ -69,3 +88,5 @@ const styles = StyleSheet.create({
 
 
 export default HomeAdmin;
+
+

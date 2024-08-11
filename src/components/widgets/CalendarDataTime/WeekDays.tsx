@@ -24,14 +24,12 @@ const WeekDays: FC = () => {
 
 const styles = StyleSheet.create({
     container: {
+        marginTop: 15,
         flexDirection: 'row',
-        paddingTop: 5,
         justifyContent: 'space-around'
     },
     itemGrid: {
-        aspectRatio: 1/1,
         width: `${100 / 7}%`,
-        height: '100%',
         justifyContent: 'center',
         alignItems: 'center'
     },

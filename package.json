@@ -13,6 +13,7 @@
     "check-types": "tsc --noEmit"
   },
   "dependencies": {
+    "@gorhom/portal": "^1.0.14",
     "@react-native-async-storage/async-storage": "1.23.1",
     "@react-native-community/netinfo": "^11.3.2",
     "@reduxjs/toolkit": "^2.2.3",

@@ -6,6 +6,8 @@ import ModalMsg from '@/components/shared/ModalMsg/ModalMsg';
 import ApiInterceptors from '@/components/wrappers/ApiInterceptors/ApiInterceptors';
 import Spinner from '@/components/shared/Spinner/Spinner';
 import { Stack } from 'expo-router';
+import { PortalProvider, PortalHost } from '@gorhom/portal';
+
 
 interface IMainLayout {
     children?: JSX.Element | JSX.Element[] | undefined;
@@ -15,15 +17,18 @@ export const MainLayout: FC<IMainLayout> = ({children}) => {
 
 	return (
         <GestureHandlerRootView style={{flex: 1}} >
-            <Provider store={store} >
-                <ApiInterceptors>
-                    <ModalMsg/>
-                    <Spinner/>
-                    <>
-                        {children}
-                    </>
-                </ApiInterceptors>
-            </Provider>
+            <PortalProvider>
+                <Provider store={store} >
+                    <ApiInterceptors>
+                        <PortalHost name='time' />
+                        <ModalMsg/>
+                        <Spinner/>
+                        <>
+                            {children}
+                        </>
+                    </ApiInterceptors>
+                </Provider>
+            </PortalProvider>
         </GestureHandlerRootView>
 	);
 }
@@ -47,5 +52,6 @@ const IndexLayout = () => {
 }
 
 export default IndexLayout;
+
 
 

@@ -1,9 +1,11 @@
-import { IcurrentDay } from "@/components/widgets/CalendarDataTime/Calendar";
-
 
 interface IYearAndMonth {
     year: number;
     month: number;
+}
+
+interface IFullDate extends IYearAndMonth {
+    day: number;
 }
 
 
@@ -20,7 +22,7 @@ class Time {
      * `Вернет на какой день недели попадает первый день в месяце, от 1(пн.) до 7(вс.).`
      */
     firstDayInMonth(date: IYearAndMonth) {
-        const firstDayInMonth = new Date(date.year, date.month, 1, 14, 0, 0, 0);
+        const firstDayInMonth = new Date(date.year, date.month - 1, 1, 14, 0, 0, 0);
         return firstDayInMonth.getDay() === 0 ? 7 : firstDayInMonth.getDay();
     }
 
@@ -33,48 +35,62 @@ class Time {
 
     /**
      * `Вернет имя месяца на русском.`
+     * @example 1 
+     * @return 'Январь.'
      */
     getMonthString(name: 'short' | 'full', month: number) {
         const monthFullName = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
         const monthShortName = ['Янв.', 'Февр.', 'Март', 'Апр.', 'Мая', 'Июня', 'Июль', 'Авг.', 'Сент.', 'Окт.', 'Нояб.', 'Дек.'];
         
         if(name === 'full') {
-            return monthFullName[month];
+            return monthFullName[month - 1];
         }
 
         if(name === 'short') {
-            return monthShortName[month];
+            return monthShortName[month - 1];
         }
     }
 
     /**
-     * `Вернет обьект с interface IcurrentDay.`
+     * `Вернет настояший день.`
+     * @example '2022-02-28'
      */
-    getIcurrentDay(date: Date | null): IcurrentDay {
+    getCurrentDay() {
+        const date = new Date().toISOString();
+        return date.split('T')[0];
+    }
 
-        let dateOne = null;
-        if(date) {
-            dateOne = new Date(date).toISOString();
-        } else {
-            dateOne = new Date().toISOString();
-        }
-        
-        const dateSplitByT = dateOne.split('T')[0];
-        const dateSplit = dateSplitByT.split('-');
-
+    /**
+     * `Вернет разбитую дату на год/месяц/день.`
+     * @param data '2022-02-28'
+     * @return : {year: 2022, month: 2, day: 28}
+     */
+    splitDate(date: string): IFullDate {
+        const dateSplit = date.split('-');
         return {
-            day: Number(dateSplit[2]),
-            month: Number(dateSplit[1]) - 1,
-            year: Number(dateSplit[0])
+            year: Number(dateSplit[0]),
+            month: Number(dateSplit[1]),
+            day: Number(dateSplit[2])
         }
+    }
+
+    /**
+     * `Вернет только дату строкой.`
+     * @param data '2022-02-28T00:00:00.000Z'
+     * @return '2022-02-28'
+     */
+    dateToOnlyDataString(date: Date) {
+        return date.toISOString().split('T')[0];
     }
 
     /**
      * `Вернет массив для формирования месяца.`
      */
-    getArrayForMonth(date: IcurrentDay): Array<null | number> {
-        const totalDays = this.totalDaysInMohth(date);
-        const firstDay = this.firstDayInMonth(date);
+    getArrayForMonth(date: string): Array<null | number> {
+        const splitDate = this.splitDate(date);
+        const totalDays = this.totalDaysInMohth({year: splitDate.year, month: splitDate.month});
+        const firstDay = this.firstDayInMonth({year: splitDate.year, month: splitDate.month});
+        console.log(firstDay);
         const allDays = [];
 
         for(let i = 1; i < firstDay; i++) {
@@ -87,6 +103,16 @@ class Time {
         
         return allDays;
     }
+
+    /**
+     * `Обьединение год/месяц/день в дату.`
+     * @signature combineForDate({year: 2024, month: 8, day: 20})
+     * @return '2024-08-20'
+     */
+    combineForDate(date: IFullDate): string {
+        const handleDate = new Date(date.year, date.month - 1, date.day, 14, 0, 0, 0);
+        return handleDate.toISOString().split('T')[0];
+    }   
 }
 
 export default new Time();
