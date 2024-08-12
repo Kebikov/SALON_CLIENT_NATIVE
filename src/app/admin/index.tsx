@@ -31,7 +31,7 @@ const HomeAdmin: FC = () => {
     /**
      * @param 
      */
-    const [selectedTime, setCurrentTime] = useState<ITimeClock>({hour: '03', minute: '00'});
+    const [selectedTime, setSelectedTime] = useState<ITimeClock>({hour: '14', minute: '15'});
     console.log(selectedTime);
 
     const press = () => {
@@ -42,14 +42,14 @@ const HomeAdmin: FC = () => {
         <>
             <WrapperScroll>
                 <HomeUserHeader/>
-                <Clock setCurrentTime={setCurrentTime} selectedTime={selectedTime} />
+                <Clock setSelectedTime={setSelectedTime} selectedTime={selectedTime} />
                 <Pressable
                     onPress={() => press()}
                 >
                     <Text 
                         style={{fontSize: 20, textAlign: 'center', backgroundColor: 'green', marginTop: 20, color: '#fff', paddingVertical: 5}} 
                     >
-                        {`кнопка для теста ${selectedTime.hour}`}
+                        {`кнопка для теста ${selectedTime.hour}:${selectedTime.minute}`}
                     </Text>
                 </Pressable>
                 

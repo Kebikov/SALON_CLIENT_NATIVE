@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Pressable } from 'react-native';
 import React, { FC, useState } from 'react';
 import { Portal } from '@gorhom/portal'; 
 import { COLOR_ROOT } from '@/data/colors';
@@ -9,7 +9,7 @@ import VibrationApp from '@/helpers/helpersForComponents/vibration/VibrationApp'
 
 interface IClock {
     selectedTime:  ITimeClock;
-    setCurrentTime: React.Dispatch<React.SetStateAction<ITimeClock>>
+    setSelectedTime: React.Dispatch<React.SetStateAction<ITimeClock>>
 }
 
 export interface ITimeClock {
@@ -20,21 +20,67 @@ export interface ITimeClock {
 /**
  * @widgets `Установка времени.`
  * @param selectedTime Обьект с выбранным временем.
- * @param setCurrentTime Установка выбранного времени.
+ * @param setSelectedTime Установка выбранного времени.
  */
 const Clock: FC<IClock> = ({
     selectedTime,
-    setCurrentTime
+    setSelectedTime
 }) => {
-
-    const hoursArray = ['00', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23'];
+    /**
+     * `Позиция часа.`
+     */
+    const hoursPosition = useSharedValue<number>(0);
+    /**
+     * `Последняя позиция часа.`
+     */
+    const lastHoursPosition = useSharedValue<number>(0);
+    /**
+     * `Позиция минут.`
+     */
+    const minutesPosition = useSharedValue<number>(0);
+    /**
+     * `Последняя позиция минут.`
+     */
+    const lastMinutesPosition = useSharedValue<number>(0);
+    /**
+     * `Выбраный пользователем час.`
+     */
+    const selectedHour = useSharedValue<string>(selectedTime.hour);
+    /**
+     * `Выбраные пользователем минуты.`
+     */
+    const selectedMinute = useSharedValue<string>(selectedTime.minute);
+    /**
+     * `Массив часов.`
+     */
+    const hoursArray = ['11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '00', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10'];
+    /**
+     * `Массив минут.`
+     */
     const minutesArray = ['00', '05', '10', '15', '20', '25', '30', '35', '40', '45', '50', '55'];
 
-    const height = 252;
-    const itemHeight = height / 7; // 36
-    const fullRotation = 24 * height / 7; // 864
     /**
-     * `Массив промежутков.`
+     * `Высота окна с цыфрами.`
+     */
+    const height = 252;
+    /**
+     * `Количество элементов в окне.`
+     */
+    const totalElements = 7;
+    /**
+     * `Высота одного элемента.`
+     */
+    const itemHeight = height / totalElements; 
+    /**
+     * `Диаметр полного оборота часов.`
+     */
+    const fullRotation = hoursArray.length * height / 7; 
+    /**
+     * `Диаметр полного оборота минут.`
+     */
+    const fullRotationMinutes = minutesArray.length * height / 7;
+    /**
+     * `Массив промежутков для часов.`
      */
     const gaps: number[] = [];
     for(let i = 0; i <= fullRotation; i += itemHeight) gaps.push(i);
@@ -42,20 +88,24 @@ const Clock: FC<IClock> = ({
         if(i == fullRotation) continue;
         gaps.push(i === 0 ? 0 : i * -1);
     }
-    gaps.push(-860);
-
+    gaps.push(fullRotation * -1);
+    /**
+     * `Массив промежутков для минут.`
+     */
     const gapsMinutes: number[] = [];
-    
+    for(let i = 0; i <= fullRotationMinutes; i += itemHeight) gapsMinutes.push(i);
+    for(let i = 0; i <= fullRotationMinutes; i += itemHeight) {
+        if(i == fullRotationMinutes) continue;
+        gapsMinutes.push(i === 0 ? 0 : i * -1);
+    }
+    gapsMinutes.push(fullRotationMinutes * -1);
 
-
-    const hoursPosition = useSharedValue<number>(0);
-    const lastHoursPosition = useSharedValue<number>(0);
-
-    const minutesPosition = useSharedValue<number>(0);
-    const lastMinutesPosition = useSharedValue<number>(0);
-
-    const selectedHour = useSharedValue<string>('03');
-    const selectedMinute = useSharedValue<string>('00');
+    /**
+     * `Установка выбраного времени.`
+     */
+    const setTime = () => {
+        setSelectedTime({hour: selectedHour.value, minute: selectedMinute.value});
+    }
 
     const gesturePanHours = Gesture.Pan()
         .onUpdate((e) => {
@@ -63,7 +113,7 @@ const Clock: FC<IClock> = ({
         })
         .onEnd(() => {
             let point: undefined | {value: number, i: number};
-            const position = hoursPosition.value === -860 ? 0 : hoursPosition.value;
+            const position = hoursPosition.value === fullRotation * -1 ? 0 : hoursPosition.value;
             for(let i = 0; i < gaps.length; i++) {
                 if(0 <= position) {
                     if(gaps[i] < position && position < gaps[i + 1]) {
@@ -71,9 +121,11 @@ const Clock: FC<IClock> = ({
                         if(0 <= point.i && point.i < 4) {
                             let x = 3 - point.i;
                             selectedHour.value = hoursArray[x];
+                            console.log('hour =', selectedHour.value);
                         } else {
                             let x = hoursArray.length + 3 - point.i;
                             selectedHour.value = hoursArray[x];
+                            console.log('hour =', selectedHour.value);
                         }
                     }
                 } else {
@@ -82,9 +134,11 @@ const Clock: FC<IClock> = ({
                         if(46 <= point.i && point.i <= 48) {
                             let x = point.i - 46;
                             selectedHour.value = hoursArray[x];
+                            console.log('hour =', selectedHour.value);
                         } else {
                             let x = point.i - 22;
                             selectedHour.value = hoursArray[x];
+                            console.log('hour =', selectedHour.value);
                         }
                     }
                 }
@@ -99,45 +153,47 @@ const Clock: FC<IClock> = ({
 
     const gesturePanMinutes = Gesture.Pan()
         .onUpdate((e) => {
-            minutesPosition.value = (lastMinutesPosition.value + e.translationY) % fullRotation;
+            minutesPosition.value = (lastMinutesPosition.value + e.translationY) % fullRotationMinutes;
         })
         .onEnd(() => {
             let point: undefined | {value: number, i: number};
 
-            const position = minutesPosition.value === -860 ? 0 : minutesPosition.value;
-
-            for(let i = 0; i < gaps.length; i++) {
+            const position = minutesPosition.value === fullRotationMinutes * -1 ? 0 : minutesPosition.value;
+            console.log('position = ', position);
+            for(let i = 0; i < gapsMinutes.length; i++) {
                 if(0 <= position) {
-                    if(gaps[i] < position && position < gaps[i + 1]) {
-                        point = Math.abs( Math.abs(gaps[i]) - Math.abs(position) ) <= itemHeight/2 ? {value: gaps[i], i} : {value: gaps[i + 1], i: i + 1};
-                        console.log('i = ', point.i);
-                        if(0 <= point.i && point.i < 4) {
+                    if(gapsMinutes[i] < position && position < gapsMinutes[i + 1]) {
+                        point = Math.abs( Math.abs(gapsMinutes[i]) - Math.abs(position) ) <= itemHeight/2 ? {value: gapsMinutes[i], i} : {value: gapsMinutes[i + 1], i: i + 1};
+                        //:                    
+                        console.log('+point.i = ', point.i);
+                        if(1 <= point.i && point.i <= 3) {
                             let x = 3 - point.i;
-                            console.log('Час = ', hoursArray[x]);
-                            selectedHour.value = hoursArray[x];
+                            selectedMinute.value = minutesArray[x];
+                            console.log('minutes = ', selectedMinute.value);
                         } else {
-                            let x = hoursArray.length + 3 - point.i;
-                            console.log('Час = ', hoursArray[x]);
-                            selectedHour.value = hoursArray[x];
+                            let x = minutesArray.length + 3 - point.i;
+                            
+                            selectedMinute.value = minutesArray[x];
+                            console.log('minutes = ', selectedMinute.value);
                         }
                     }
                 } else {
-                    if(gaps[i] > position && position > gaps[i + 1]) {
-                        point = Math.abs( Math.abs(gaps[i]) - Math.abs(position) ) <= itemHeight/2 ? {value: gaps[i], i} : {value: gaps[i + 1], i: i + 1};
-                        console.log('i = ', point.i);
-                        if(46 <= point.i && point.i <= 48) {
-                            let x = point.i - 46;
-                            console.log('Час = ', hoursArray[x]);
-                            selectedHour.value = hoursArray[x];
-                        } else {
+                    if(gapsMinutes[i] > position && position > gapsMinutes[i + 1]) {
+                        point = Math.abs( Math.abs(gapsMinutes[i]) - Math.abs(position) ) <= itemHeight/2 ? {value: gapsMinutes[i], i} : {value: gapsMinutes[i + 1], i: i + 1};
+                        console.log('-point.i = ', point.i);
+                        if(22 <= point.i && point.i <= 24) {
                             let x = point.i - 22;
-                            console.log('Час = ', hoursArray[x]);
-                            selectedHour.value = hoursArray[x];
+                            selectedMinute.value = minutesArray[x];
+                            console.log('minutes = ', selectedMinute.value);
+                        } else {
+                            let x = point.i - 10;
+                            selectedMinute.value = minutesArray[x];
+                            console.log('minutes = ', selectedMinute.value);
                         }
                     }
                 }
             }
-            console.log('Point = ', point);
+            //console.log('Point = ', point);
             if(point !== undefined) {
                 minutesPosition.value = withTiming(point.value, {duration: 200});
                 lastMinutesPosition.value = point.value;
@@ -145,7 +201,7 @@ const Clock: FC<IClock> = ({
                 lastMinutesPosition.value = minutesPosition.value;
             }
 
-            console.log(lastMinutesPosition.value);
+            //console.log(lastMinutesPosition.value);
         });
 
     const animatedHours = (i: number) => {
@@ -154,7 +210,7 @@ const Clock: FC<IClock> = ({
             const elementPositionBefore = hoursPosition.value + i * itemHeight;
             let iAfter = i;
 
-            if(elementPositionBefore > fullRotation/ 2 ) {
+            if(elementPositionBefore > fullRotation / 2) {
                 iAfter = (24 - i) * -1;
             }
 
@@ -187,20 +243,23 @@ const Clock: FC<IClock> = ({
 
             const elementPositionBefore = minutesPosition.value + i * itemHeight;
             let iAfter = i;
+            //console.log(`i-(${i}) = `, i);
 
-            if(elementPositionBefore > fullRotation/ 2 ) {
-                iAfter = (7 - i) * -1;
+            if(elementPositionBefore > fullRotationMinutes / 2) { // 216
+                iAfter = (12 - i) * -1;
             }
+            //console.log(`iAfter-(${iAfter}) = `, iAfter);
 
             let elementPositionAfter = minutesPosition.value + iAfter * itemHeight; 
 
-            if(elementPositionAfter < (fullRotation - height + itemHeight) * -1) {
-                iAfter = 7 + i;
+            if(elementPositionAfter < (fullRotationMinutes - height + itemHeight) * -1) {
+                iAfter = 12 + i;
                 elementPositionAfter = minutesPosition.value + iAfter * itemHeight;
             }
 
             const inboundData = [0, itemHeight * 3, itemHeight * 6];
 
+            //console.log(elementPositionAfter);
             return{
                 top: elementPositionAfter,
                 transform: [
@@ -258,9 +317,12 @@ const Clock: FC<IClock> = ({
 
                     </View>
                 </View>
-                <View style={styles.button}>
+                <Pressable 
+                    style={styles.button}
+                    onPress={() => setTime()}
+                >
                     <Text style={styles.buttonText} >OK</Text>
-                </View>
+                </Pressable>
             </View>
         </Portal>
     );
@@ -276,7 +338,7 @@ const styles = StyleSheet.create({
         height: '100%',
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: 'pink'
+        //backgroundColor: 'pink'
     },
     body: {
         width: widthClock,
@@ -298,6 +360,7 @@ const styles = StyleSheet.create({
     },
     block: {
         position: 'relative',
+        zIndex: 2,
         width: 40,
         height: '100%',
         overflow: 'hidden'
@@ -334,7 +397,7 @@ const styles = StyleSheet.create({
     },
     line: {
         position: 'absolute',
-        zIndex: 13,
+        zIndex: 1,
         top: 106,
         left: 0,
         width: '100%',
