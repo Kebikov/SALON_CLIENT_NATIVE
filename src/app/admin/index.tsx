@@ -11,10 +11,12 @@ import { Portal } from '@gorhom/portal';
 import Calendar from '@/components/widgets/CalendarDataTime/Calendar';
 import { ICalendarRef } from '@/components/widgets/CalendarDataTime/Calendar';
 import Time from '@/helpers/Time/Time';
+import Clock from '@/components/widgets/Clock/Clock';
 
 
 import BottomModalSheet from '@/components/wrappers/BottomModalSheet/BottomModalSheet';
 import type  { IRefBottomModalSheet } from '@/components/wrappers/BottomModalSheet/types';
+import type { ITimeClock } from '@/components/widgets/Clock/Clock';
 
 
 /** 
@@ -22,39 +24,32 @@ import type  { IRefBottomModalSheet } from '@/components/wrappers/BottomModalShe
  */
 const HomeAdmin: FC = () => {
 
-    /**
-     * @param selectedDays `Массив с выбранными датами.`
-     * @example ['2022-02-28', '2022-02-20']
-     */
-    const [selectedDays, setSelectedDays] = useState<string[]>([]);
-    const refCalendar = useRef<ICalendarRef>(null);
 
     const {appRouter} = useHookRouter();
     const refModal = useRef<IRefBottomModalSheet>(null);
-   
+
+    /**
+     * @param 
+     */
+    const [selectedTime, setCurrentTime] = useState<ITimeClock>({hour: '03', minute: '00'});
+    console.log(selectedTime);
 
     const press = () => {
-        // Открыть календарь.
-        refCalendar.current?.openCalendar();
+
     }
 
     return (
         <>
             <WrapperScroll>
                 <HomeUserHeader/>
-                <Calendar 
-                    selectedDays={selectedDays}
-                    setSelectedDays={setSelectedDays}
-                    select='multi'
-                    ref={refCalendar} 
-                />
+                <Clock setCurrentTime={setCurrentTime} selectedTime={selectedTime} />
                 <Pressable
                     onPress={() => press()}
                 >
                     <Text 
                         style={{fontSize: 20, textAlign: 'center', backgroundColor: 'green', marginTop: 20, color: '#fff', paddingVertical: 5}} 
                     >
-                        кнопка для теста
+                        {`кнопка для теста ${selectedTime.hour}`}
                     </Text>
                 </Pressable>
                 

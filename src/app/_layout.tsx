@@ -20,7 +20,8 @@ export const MainLayout: FC<IMainLayout> = ({children}) => {
             <PortalProvider>
                 <Provider store={store} >
                     <ApiInterceptors>
-                        <PortalHost name='time' />
+                        <PortalHost name='calendar' />
+                        <PortalHost name='clock' />
                         <ModalMsg/>
                         <Spinner/>
                         <>
