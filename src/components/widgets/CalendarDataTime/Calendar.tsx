@@ -62,7 +62,7 @@ const Calendar = forwardRef<ICalendarRef, ICalendar>(({
                     <BlurView 
                         intensity={30}
                         tint='dark'
-                        style={styles.blur} 
+                        style={styles.blur}
                     >
                         <View style={[styles.body, {marginTop: 15,marginBottom: select === 'one' ? 15 : 0}]} >
                             <CalendarHeader 

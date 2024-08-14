@@ -1,10 +1,11 @@
-import { View, Text, StyleSheet, Pressable } from 'react-native';
+import { View, Text, StyleSheet, Pressable, Platform } from 'react-native';
 import React, { FC, useState } from 'react';
 import { Portal } from '@gorhom/portal'; 
 import { COLOR_ROOT } from '@/data/colors';
 import { GestureDetector, Gesture } from 'react-native-gesture-handler';
 import Animated, { useAnimatedStyle, useSharedValue, interpolate, runOnJS, withTiming } from 'react-native-reanimated';
 import VibrationApp from '@/helpers/helpersForComponents/vibration/VibrationApp';
+import { BlurView } from 'expo-blur';
 
 
 interface IClock {
@@ -293,7 +294,11 @@ const Clock: FC<IClock> = ({
 
     return (
         <Portal name='clock' >
-            <View style={styles.container} >
+            <BlurView 
+                intensity={30}
+                tint='dark'
+                style={styles.container} 
+            >
                 <View style={styles.body} >
                     <View style={[styles.time, {height}]} >
                         <View style={styles.line}>
@@ -323,7 +328,7 @@ const Clock: FC<IClock> = ({
                 >
                     <Text style={styles.buttonText} >OK</Text>
                 </Pressable>
-            </View>
+            </BlurView>
         </Portal>
     );
 };
@@ -338,7 +343,7 @@ const styles = StyleSheet.create({
         height: '100%',
         justifyContent: 'center',
         alignItems: 'center',
-        //backgroundColor: 'pink'
+        backgroundColor: Platform.OS === 'ios' ? 'rgba(255, 255, 255, .2)' : 'rgba(255, 255, 255, .5)'
     },
     body: {
         width: widthClock,
@@ -376,7 +381,7 @@ const styles = StyleSheet.create({
     },
     timeText: {
         color: 'white',
-        fontSize: 23,
+        fontSize: Platform.OS === 'ios' ? 23 : 21,
         textAlign: 'center',
         //backgroundColor: 'pink'
     },
@@ -387,13 +392,13 @@ const styles = StyleSheet.create({
         borderBottomRightRadius: radiusClock,
         justifyContent: 'center',
         alignItems: 'center',
-        borderTopWidth: 1,
-        borderTopColor: 'rgba(255, 255, 255, .3)',
+        borderTopWidth: Platform.OS === 'ios' ? 2 : 1,
+        borderTopColor: 'rgba(255, 255, 255, 0.3)',
         backgroundColor: COLOR_ROOT.GRAY_DARK,
     },
     buttonText: {
         color: 'white',
-        fontSize: 16
+        fontSize: Platform.OS === 'ios' ? 16 : 16
     },
     line: {
         position: 'absolute',
@@ -401,7 +406,7 @@ const styles = StyleSheet.create({
         top: 106,
         left: 0,
         width: '100%',
-        height: 40,
+        height:  40,
     },
     lineBody: {
         flex: 1,
