@@ -15,8 +15,6 @@ const press = () => {
 }
 
 <Calendar 
-    setCurrentDay={setCurrentDay} 
-    currentDay={currentDay} 
     selectedDays={selectedDays}
     setSelectedDays={setSelectedDays}
     select='multi'

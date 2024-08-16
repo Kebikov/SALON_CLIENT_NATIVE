@@ -36,7 +36,6 @@ export const editMaster = async ({
     isAccessBan
 }: IEditMaster) => {
     try{
-        console.log('EditMaster');
         if(!data?.id) return modalMessageError('Ошибка id.', 'Не переданно id мастера.');
         if(!data?.name) return modalMessageError('Нет имени.', 'Введите имя мастера.');
         if(!data?.surname) return modalMessageError('Нет фамилии.', 'Введите фамилию мастера.');
@@ -77,7 +76,7 @@ export const editMaster = async ({
         if(result) isMessage(result);
         router.back();
     } catch(err) {
-        console.log(err);
+        console.error(err);
     }
 }
 

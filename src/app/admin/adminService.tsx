@@ -34,7 +34,6 @@ const AdminService: FC = () => {
         notFilter
     } = useFilterService();
 
-    console.log(curentFilter);
     const {isMessage} = useHookCheckErrorResponce();
     const {appRouter} = useHookRouter();
     

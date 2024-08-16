@@ -13,6 +13,8 @@ import { ICalendarRef } from '@/components/widgets/CalendarDataTime/Calendar';
 import Time from '@/helpers/Time/Time';
 import Clock from '@/components/widgets/Clock/Clock';
 
+import { IClockRef } from '@/components/widgets/Clock/Clock';
+
 
 import BottomModalSheet from '@/components/wrappers/BottomModalSheet/BottomModalSheet';
 import type  { IRefBottomModalSheet } from '@/components/wrappers/BottomModalSheet/types';
@@ -28,21 +30,32 @@ const HomeAdmin: FC = () => {
     const {appRouter} = useHookRouter();
     const refModal = useRef<IRefBottomModalSheet>(null);
 
+    const refClock = useRef<IClockRef>(null);
+
+    const [selectedDays, setSelectedDays] = useState<string[]>([]);
+    const refCalendar = useRef<ICalendarRef>(null);
     /**
      * @param 
      */
     const [selectedTime, setSelectedTime] = useState<ITimeClock>({hour: '14', minute: '15'});
-    console.log(selectedTime);
 
     const press = () => {
-
+        console.log('press');
+        //refClock.current?.openClock();
+        refCalendar.current?.openCalendar();
     }
 
     return (
         <>
             <WrapperScroll>
                 <HomeUserHeader/>
-                <Clock setSelectedTime={setSelectedTime} selectedTime={selectedTime} />
+                <Calendar 
+                    selectedDays={selectedDays}
+                    setSelectedDays={setSelectedDays}
+                    select='multi'
+                    ref={refCalendar} 
+                />
+                <Clock setSelectedTime={setSelectedTime} selectedTime={selectedTime} ref={refClock} />
                 <Pressable
                     onPress={() => press()}
                 >

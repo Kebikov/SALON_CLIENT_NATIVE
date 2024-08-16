@@ -1,12 +1,21 @@
-import { View, Text, StyleSheet, Pressable, Platform } from 'react-native';
-import React, { FC, useState } from 'react';
+import { View, Text, StyleSheet, Pressable, Platform, Vibration } from 'react-native';
+import React, { FC, useState, useRef, forwardRef, useImperativeHandle } from 'react';
 import { Portal } from '@gorhom/portal'; 
 import { COLOR_ROOT } from '@/data/colors';
 import { GestureDetector, Gesture } from 'react-native-gesture-handler';
-import Animated, { useAnimatedStyle, useSharedValue, interpolate, runOnJS, withTiming } from 'react-native-reanimated';
+import Animated, { useSharedValue, FadeIn, FadeOut } from 'react-native-reanimated';
 import VibrationApp from '@/helpers/helpersForComponents/vibration/VibrationApp';
 import { BlurView } from 'expo-blur';
+import { animatedStyles } from './helpers/animatedStyles';
+import { gapsForClock } from './helpers/gapsForClock';
+import { arraysForClock } from './helpers/arraysForClock';
+import { gestureHoursForClock } from './helpers/gestureHoursForClock';
+import { gestureMinutesForClock } from './helpers/gestureMinutesForClock';
 
+
+export interface IClockRef {
+    openClock: () => void;
+}
 
 interface IClock {
     selectedTime:  ITimeClock;
@@ -23,10 +32,24 @@ export interface ITimeClock {
  * @param selectedTime Обьект с выбранным временем.
  * @param setSelectedTime Установка выбранного времени.
  */
-const Clock: FC<IClock> = ({
+const Clock = forwardRef<IClockRef, IClock>(({
     selectedTime,
     setSelectedTime
-}) => {
+}, ref) => {
+    /**
+     * `Высота окна с цыфрами.`
+     */
+    const height = 252;
+    /**
+     * `Количество элементов в окне.`
+     */
+    const totalElements = 7;
+
+    /**
+     * @param isShow Показать/скрыть часы.
+     */
+    const [isShow, setIsShow] = useState<boolean>(false);
+    console.log(isShow);
     /**
      * `Позиция часа.`
      */
@@ -52,22 +75,16 @@ const Clock: FC<IClock> = ({
      */
     const selectedMinute = useSharedValue<string>(selectedTime.minute);
     /**
-     * `Массив часов.`
+     * `Последняя позиция вибрации для часов.`
      */
-    const hoursArray = ['11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '00', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10'];
+    const lastVibrationPositionHour = useSharedValue<number>(0);
     /**
-     * `Массив минут.`
+     * `Последняя позиция вибрации для минут.`
      */
-    const minutesArray = ['00', '05', '10', '15', '20', '25', '30', '35', '40', '45', '50', '55'];
+    const lastVibrationPositionMinutes = useSharedValue<number>(0);
 
-    /**
-     * `Высота окна с цыфрами.`
-     */
-    const height = 252;
-    /**
-     * `Количество элементов в окне.`
-     */
-    const totalElements = 7;
+    const {hoursArray, minutesArray} = arraysForClock();
+
     /**
      * `Высота одного элемента.`
      */
@@ -75,31 +92,14 @@ const Clock: FC<IClock> = ({
     /**
      * `Диаметр полного оборота часов.`
      */
-    const fullRotation = hoursArray.length * height / 7; 
+    const fullRotation = hoursArray.length * height / totalElements; 
     /**
      * `Диаметр полного оборота минут.`
      */
-    const fullRotationMinutes = minutesArray.length * height / 7;
-    /**
-     * `Массив промежутков для часов.`
-     */
-    const gaps: number[] = [];
-    for(let i = 0; i <= fullRotation; i += itemHeight) gaps.push(i);
-    for(let i = 0; i <= fullRotation; i += itemHeight) {
-        if(i == fullRotation) continue;
-        gaps.push(i === 0 ? 0 : i * -1);
-    }
-    gaps.push(fullRotation * -1);
-    /**
-     * `Массив промежутков для минут.`
-     */
-    const gapsMinutes: number[] = [];
-    for(let i = 0; i <= fullRotationMinutes; i += itemHeight) gapsMinutes.push(i);
-    for(let i = 0; i <= fullRotationMinutes; i += itemHeight) {
-        if(i == fullRotationMinutes) continue;
-        gapsMinutes.push(i === 0 ? 0 : i * -1);
-    }
-    gapsMinutes.push(fullRotationMinutes * -1);
+    const fullRotationMinutes = minutesArray.length * height / totalElements;
+
+    const {animatedHours, animatedMinutes} = animatedStyles({hoursPosition, itemHeight, fullRotation, height, fullRotationMinutes, minutesPosition});
+    const {gaps, gapsMinutes} = gapsForClock({fullRotation, itemHeight, fullRotationMinutes});
 
     /**
      * `Установка выбраного времени.`
@@ -108,173 +108,8 @@ const Clock: FC<IClock> = ({
         setSelectedTime({hour: selectedHour.value, minute: selectedMinute.value});
     }
 
-    const gesturePanHours = Gesture.Pan()
-        .onUpdate((e) => {
-            hoursPosition.value = (lastHoursPosition.value + e.translationY) % fullRotation;
-        })
-        .onEnd(() => {
-            let point: undefined | {value: number, i: number};
-            const position = hoursPosition.value === fullRotation * -1 ? 0 : hoursPosition.value;
-            for(let i = 0; i < gaps.length; i++) {
-                if(0 <= position) {
-                    if(gaps[i] < position && position < gaps[i + 1]) {
-                        point = Math.abs( Math.abs(gaps[i]) - Math.abs(position) ) <= itemHeight/2 ? {value: gaps[i], i} : {value: gaps[i + 1], i: i + 1};
-                        if(0 <= point.i && point.i < 4) {
-                            let x = 3 - point.i;
-                            selectedHour.value = hoursArray[x];
-                            console.log('hour =', selectedHour.value);
-                        } else {
-                            let x = hoursArray.length + 3 - point.i;
-                            selectedHour.value = hoursArray[x];
-                            console.log('hour =', selectedHour.value);
-                        }
-                    }
-                } else {
-                    if(gaps[i] > position && position > gaps[i + 1]) {
-                        point = Math.abs( Math.abs(gaps[i]) - Math.abs(position) ) <= itemHeight/2 ? {value: gaps[i], i} : {value: gaps[i + 1], i: i + 1};
-                        if(46 <= point.i && point.i <= 48) {
-                            let x = point.i - 46;
-                            selectedHour.value = hoursArray[x];
-                            console.log('hour =', selectedHour.value);
-                        } else {
-                            let x = point.i - 22;
-                            selectedHour.value = hoursArray[x];
-                            console.log('hour =', selectedHour.value);
-                        }
-                    }
-                }
-            }
-            if(point !== undefined) {
-                hoursPosition.value = withTiming(point.value, {duration: 200});
-                lastHoursPosition.value = point.value;
-            } else {
-                lastHoursPosition.value = hoursPosition.value;
-            }
-        });
-
-    const gesturePanMinutes = Gesture.Pan()
-        .onUpdate((e) => {
-            minutesPosition.value = (lastMinutesPosition.value + e.translationY) % fullRotationMinutes;
-        })
-        .onEnd(() => {
-            let point: undefined | {value: number, i: number};
-
-            const position = minutesPosition.value === fullRotationMinutes * -1 ? 0 : minutesPosition.value;
-            console.log('position = ', position);
-            for(let i = 0; i < gapsMinutes.length; i++) {
-                if(0 <= position) {
-                    if(gapsMinutes[i] < position && position < gapsMinutes[i + 1]) {
-                        point = Math.abs( Math.abs(gapsMinutes[i]) - Math.abs(position) ) <= itemHeight/2 ? {value: gapsMinutes[i], i} : {value: gapsMinutes[i + 1], i: i + 1};
-                        //:                    
-                        console.log('+point.i = ', point.i);
-                        if(1 <= point.i && point.i <= 3) {
-                            let x = 3 - point.i;
-                            selectedMinute.value = minutesArray[x];
-                            console.log('minutes = ', selectedMinute.value);
-                        } else {
-                            let x = minutesArray.length + 3 - point.i;
-                            
-                            selectedMinute.value = minutesArray[x];
-                            console.log('minutes = ', selectedMinute.value);
-                        }
-                    }
-                } else {
-                    if(gapsMinutes[i] > position && position > gapsMinutes[i + 1]) {
-                        point = Math.abs( Math.abs(gapsMinutes[i]) - Math.abs(position) ) <= itemHeight/2 ? {value: gapsMinutes[i], i} : {value: gapsMinutes[i + 1], i: i + 1};
-                        console.log('-point.i = ', point.i);
-                        if(22 <= point.i && point.i <= 24) {
-                            let x = point.i - 22;
-                            selectedMinute.value = minutesArray[x];
-                            console.log('minutes = ', selectedMinute.value);
-                        } else {
-                            let x = point.i - 10;
-                            selectedMinute.value = minutesArray[x];
-                            console.log('minutes = ', selectedMinute.value);
-                        }
-                    }
-                }
-            }
-            //console.log('Point = ', point);
-            if(point !== undefined) {
-                minutesPosition.value = withTiming(point.value, {duration: 200});
-                lastMinutesPosition.value = point.value;
-            } else {
-                lastMinutesPosition.value = minutesPosition.value;
-            }
-
-            //console.log(lastMinutesPosition.value);
-        });
-
-    const animatedHours = (i: number) => {
-        return useAnimatedStyle(() => {
-
-            const elementPositionBefore = hoursPosition.value + i * itemHeight;
-            let iAfter = i;
-
-            if(elementPositionBefore > fullRotation / 2) {
-                iAfter = (24 - i) * -1;
-            }
-
-            let elementPositionAfter = hoursPosition.value + iAfter * itemHeight;
-
-            if(elementPositionAfter < (fullRotation - height + itemHeight) * -1) {
-                iAfter = 24 + i;
-                elementPositionAfter = hoursPosition.value + iAfter * itemHeight;
-            }
-
-            const inboundData = [0, itemHeight * 3, itemHeight * 6];
-
-            return{
-                top: elementPositionAfter,
-                transform: [
-                    {
-                        rotateX: `${interpolate(elementPositionAfter, inboundData, [90, 0, 90])}deg`
-                    }, 
-                    {
-                        scale: interpolate(elementPositionAfter, inboundData, [.5, 1, .5])
-                    }
-                ],
-                opacity: interpolate(elementPositionAfter, inboundData, [.1, 1, .1])
-            }
-        })
-    }
-
-    const animatedMinutes = (i: number) => {
-        return useAnimatedStyle(() => {
-
-            const elementPositionBefore = minutesPosition.value + i * itemHeight;
-            let iAfter = i;
-            //console.log(`i-(${i}) = `, i);
-
-            if(elementPositionBefore > fullRotationMinutes / 2) { // 216
-                iAfter = (12 - i) * -1;
-            }
-            //console.log(`iAfter-(${iAfter}) = `, iAfter);
-
-            let elementPositionAfter = minutesPosition.value + iAfter * itemHeight; 
-
-            if(elementPositionAfter < (fullRotationMinutes - height + itemHeight) * -1) {
-                iAfter = 12 + i;
-                elementPositionAfter = minutesPosition.value + iAfter * itemHeight;
-            }
-
-            const inboundData = [0, itemHeight * 3, itemHeight * 6];
-
-            //console.log(elementPositionAfter);
-            return{
-                top: elementPositionAfter,
-                transform: [
-                    {
-                        rotateX: `${interpolate(elementPositionAfter, inboundData, [90, 0, 90])}deg`
-                    }, 
-                    {
-                        scale: interpolate(elementPositionAfter, inboundData, [.5, 1, .5])
-                    }
-                ],
-                opacity: interpolate(elementPositionAfter, inboundData, [.1, 1, .1])
-            }
-        })
-    }
+    const {gesturePanHours} = gestureHoursForClock({hoursPosition, lastHoursPosition, selectedHour, fullRotation, gaps, itemHeight, hoursArray, lastVibrationPositionHour});
+    const {gesturePanMinutes} = gestureMinutesForClock({minutesPosition, lastMinutesPosition, selectedMinute, fullRotationMinutes, gapsMinutes, itemHeight, minutesArray, lastVibrationPositionMinutes});
 
     const hours = hoursArray.map((item, i) => {
             return(
@@ -292,51 +127,78 @@ const Clock: FC<IClock> = ({
         )
     });
 
+    useImperativeHandle(ref, () => ({
+        openClock: () => setIsShow(true)
+    }));
+
     return (
         <Portal name='clock' >
-            <BlurView 
-                intensity={30}
-                tint='dark'
-                style={styles.container} 
-            >
-                <View style={styles.body} >
-                    <View style={[styles.time, {height}]} >
-                        <View style={styles.line}>
-                            <View style={styles.lineBody} ></View>
-                        </View>
-                        <GestureDetector gesture={gesturePanHours} >
-                            <View style={styles.block} >
-                                {hours}
-                            </View>
-                        </GestureDetector>
-
-                        <View>
-                            <Text style={{color: 'white', fontSize: 23}} >:</Text>
-                        </View>
-
-                        <GestureDetector gesture={gesturePanMinutes} >
-                            <View style={styles.block} >
-                                {minutes}
-                            </View>
-                        </GestureDetector>
-
-                    </View>
-                </View>
-                <Pressable 
-                    style={styles.button}
-                    onPress={() => setTime()}
+            {
+                isShow
+                ?
+                <Animated.View 
+                    style={styles.main} 
+                    entering={FadeIn.duration(500)} 
+                    exiting={FadeOut.duration(500)} 
                 >
-                    <Text style={styles.buttonText} >OK</Text>
-                </Pressable>
-            </BlurView>
+                    <BlurView 
+                        intensity={30}
+                        tint='dark'
+                        style={styles.container} 
+                    >
+                        <View style={styles.body} >
+                            <View style={[styles.time, {height}]} >
+                                <View style={styles.line}>
+                                    <View style={styles.lineBody} ></View>
+                                </View>
+                                <GestureDetector gesture={gesturePanHours} >
+                                    <View style={styles.block} >
+                                        {hours}
+                                    </View>
+                                </GestureDetector>
+
+                                <View>
+                                    <Text style={{color: 'white', fontSize: 23}} >:</Text>
+                                </View>
+
+                                <GestureDetector gesture={gesturePanMinutes} >
+                                    <View style={styles.block} >
+                                        {minutes}
+                                    </View>
+                                </GestureDetector>
+
+                            </View>
+                        </View>
+                        <Pressable 
+                            style={styles.button}
+                            onPress={() => {
+                                setTime();
+                                VibrationApp.pressButton();
+                                setIsShow(false);
+                            }}
+                        >
+                            <Text style={styles.buttonText} >OK</Text>
+                        </Pressable>
+                    </BlurView>
+                </Animated.View>
+                :
+                null
+            }
+            
         </Portal>
     );
-};
+});
 
 const radiusClock = 14;
 const widthClock = '60%';
 
 const styles = StyleSheet.create({
+
+    main: {
+        position: 'absolute',
+        width: '100%',
+        height: '100%'
+    },
     container: {
         position: 'absolute',
         width: '100%',

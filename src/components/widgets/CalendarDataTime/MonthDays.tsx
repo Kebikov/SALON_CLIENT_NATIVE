@@ -2,6 +2,7 @@ import { View, Text, StyleSheet, Pressable, Platform } from 'react-native';
 import React, { FC } from 'react';
 import Time from '@/helpers/Time/Time';
 import { COLOR_ROOT } from '@/data/colors';
+import VibrationApp from '@/helpers/helpersForComponents/vibration/VibrationApp';
 
 import type { TSelect } from './Calendar';
 
@@ -39,10 +40,9 @@ const MonthDays: FC<IMonthDays> = ({
     const splitCurrentDay = Time.splitDate(currentDay);
 
     const handlePressDay = (item: number | null): void => {
-        console.log('item = ', item);
+        VibrationApp.select();
         if(!item) return;
         const date = Time.combineForDate({year: splitCurrentDay.year, month: splitCurrentDay.month, day: item});
-        console.log('1', date);
         if(select === 'one') {
             setSelectedDays([date]);
             setTimeout(() => setIsShow(false), 300);

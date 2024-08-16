@@ -8,6 +8,7 @@ import Time from '@/helpers/Time/Time';
 import { BlurView } from 'expo-blur';
 import { Portal } from '@gorhom/portal';
 import Animated, {FadeIn, FadeOut} from 'react-native-reanimated';
+import VibrationApp from '@/helpers/helpersForComponents/vibration/VibrationApp';
 
 export type TSelect = 'multi' | 'one';
 
@@ -58,39 +59,48 @@ const Calendar = forwardRef<ICalendarRef, ICalendar>(({
             {
                 isShow
                 ?
-                <Animated.View style={[styles.container]} entering={FadeIn.duration(500)} exiting={FadeOut.duration(500)} >
-                    <BlurView 
+                <Animated.View
+                    style={styles.main}
+                    entering={FadeIn.duration(500)} 
+                    exiting={FadeOut.duration(500)} 
+                >
+                    <BlurView
+                        style={[styles.container]} 
                         intensity={30}
                         tint='dark'
-                        style={styles.blur}
                     >
-                        <View style={[styles.body, {marginTop: 15,marginBottom: select === 'one' ? 15 : 0}]} >
-                            <CalendarHeader 
-                                currentDay={currentDay} 
-                                setCurrentDay={setCurrentDay} 
-                            />
-                            <WeekDays/>
-                            <MonthDays 
-                                currentDay={currentDay} 
-                                setCurrentDay={setCurrentDay} 
-                                setIsShow={setIsShow} 
-                                selectedDays={selectedDays}
-                                setSelectedDays={setSelectedDays}
-                                select={select}
-                            />
+                        <View style={styles.blur} >
+                            <View style={[styles.body, {marginTop: 15,marginBottom: select === 'one' ? 15 : 0}]} >
+                                <CalendarHeader 
+                                    currentDay={currentDay} 
+                                    setCurrentDay={setCurrentDay} 
+                                />
+                                <WeekDays/>
+                                <MonthDays 
+                                    currentDay={currentDay} 
+                                    setCurrentDay={setCurrentDay} 
+                                    setIsShow={setIsShow} 
+                                    selectedDays={selectedDays}
+                                    setSelectedDays={setSelectedDays}
+                                    select={select}
+                                />
+                            </View>
+                            {
+                                select === 'multi'
+                                ?
+                                <Pressable 
+                                    style={styles.bodyOk}
+                                    onPress={() => {
+                                        VibrationApp.pressButton();
+                                        setIsShow(false);
+                                    }}
+                                >
+                                    <Text style={styles.textOk}>OK</Text>
+                                </Pressable>
+                                :
+                                null
+                            }
                         </View>
-                        {
-                            select === 'multi'
-                            ?
-                            <Pressable 
-                                style={styles.bodyOk}
-                                onPress={() => setIsShow(false)}
-                            >
-                                <Text style={styles.textOk}>OK</Text>
-                            </Pressable>
-                            :
-                            null
-                        }
                     </BlurView>
                 </Animated.View>
                 :
@@ -101,9 +111,14 @@ const Calendar = forwardRef<ICalendarRef, ICalendar>(({
 });
 
 const styles = StyleSheet.create({
-    container: {
+    main: {
         position: 'absolute',
         zIndex: 10,
+        width: '100%',
+        height: '100%'
+    },
+    container: {
+        position: 'absolute',
         width: '100%',
         height: '100%',
         justifyContent: 'center',

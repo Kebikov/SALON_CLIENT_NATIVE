@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet, Image, Pressable, Platform } from 'react-native';
 import React, { FC, useEffect } from 'react';
 import Time from '@/helpers/Time/Time';
+import VibrationApp from '@/helpers/helpersForComponents/vibration/VibrationApp';
 
 
 interface ICalendarHeader {
@@ -41,13 +42,19 @@ const CalendarHeader: FC<ICalendarHeader> = ({
             <View style={styles.arrowsBox} >
                 <Pressable
                     style={styles.arrowLeft}
-                    onPress={() => setMonth('minus')}
+                    onPress={() => {
+                        VibrationApp.select();
+                        setMonth('minus');
+                    }}
                 >
                     <Image style={[styles.img, {transform: [{translateX: -10}]}]} source={require('@/source/img/icon-menu/arrow-blue.png')} />
                 </Pressable>
                 <Pressable
                     style={styles.arrowRight}
-                    onPress={() => setMonth('plus')}
+                    onPress={() => {
+                        VibrationApp.select();
+                        setMonth('plus');
+                    }}
                 >
                     <Image style={[styles.img, {transform: [{rotate: '180deg'}, {translateX: -10}]}]} source={require('@/source/img/icon-menu/arrow-blue.png')} />
                 </Pressable>
