@@ -1,8 +1,8 @@
-import { View, Text, StyleSheet, Pressable, Platform } from 'react-native';
-import React, { FC } from 'react';
+import { View, StyleSheet, NativeSyntheticEvent, NativeScrollEvent, useWindowDimensions } from 'react-native';
+import React, { FC, useEffect, useState, useRef, forwardRef, useImperativeHandle } from 'react';
 import Time from '@/helpers/Time/Time';
-import { COLOR_ROOT } from '@/data/colors';
-import VibrationApp from '@/helpers/helpersForComponents/vibration/VibrationApp';
+import { FlatList } from 'react-native-gesture-handler';
+import DaysInTheMonth from './DaysInTheMonth';
 
 import type { TSelect } from './Calendar';
 
@@ -16,6 +16,19 @@ interface IMonthDays {
     select: TSelect;
 }
 
+export interface IRefMonthDays {
+    nextMonth: () => void;
+    previousMonth: () => void; 
+}
+
+
+/**
+ * `Количество элементов до и после опорного.`
+ * - Например при 10, будет добавлено в массив десять элементов до и десять элементов после опорного.
+ * - Длинна массива при 10 будет 21 элемент.
+ */
+const TOTAL_ELEMENT = 12;
+
 
 /**
  * @component `Дни месяца.`
@@ -23,139 +36,155 @@ interface IMonthDays {
  * @param setCurrentDay Установка даты с которой работаем.
  * @param selectedDays Выбраные даты, массив.
  * @param setSelectedDays Установка выбранных дат.
- * @param select Множественный выбор дат или нет.
+ * @param select Множественный выбор да или нет.
  */
-const MonthDays: FC<IMonthDays> = ({
+const MonthDays = forwardRef<IRefMonthDays, IMonthDays>(({
     currentDay,
     setCurrentDay,
     setIsShow,
     selectedDays,
     setSelectedDays,
-    select
-}) => {
+    select,
+}, ref) => {
     
-    const allDays = Time.getArrayForMonth(currentDay);
-    const nowDay = Time.getCurrentDay();
-
-    const splitCurrentDay = Time.splitDate(currentDay);
-
-    const handlePressDay = (item: number | null): void => {
-        VibrationApp.select();
-        if(!item) return;
-        const date = Time.combineForDate({year: splitCurrentDay.year, month: splitCurrentDay.month, day: item});
-        if(select === 'one') {
-            setSelectedDays([date]);
-            setTimeout(() => setIsShow(false), 300);
+    const {width} = useWindowDimensions();
+    const containerPadding = 10;
+    /**
+     * `Ширина календаря всего, равная 80% от ширины экрана.`
+     */
+    const widthCalendar = width * 80 / 100 - containerPadding * 2;
+    /**
+     * `Формирование данных для состояния отображаемых месяцев.`
+     * @param day Опорный день.
+     * @param total Количество элементов до и после опорного.
+     */
+    const initialMonth = (day: string, total: number): string[] => {
+        const arreyMonth: string[] = [];
+        for(let i = total; i > 0; i--) {
+            arreyMonth.push(Time.calcMonth(i * -1, day));
         }
-        if(select === 'multi') {
-            if(selectedDays.includes(date)) {
-                setSelectedDays(state => state.filter(item => item !== date));
-            } else {
-                setSelectedDays(state => ([...state, date]));
-            }
+        for(let i = 0; i <= total; i++) {
+            arreyMonth.push(Time.calcMonth(i, day));
         }
+        return arreyMonth;
+    }
+
+    const [visibleMonths, setVisibleMonths] = useState<string[]>([]);
+
+    const refKey = useRef<string>(currentDay);
+    const startDrag = useRef<number>(0);
+    const refFlatList = useRef<FlatList>(null);
+
+    const handleBeginDrag = (event:  NativeSyntheticEvent<NativeScrollEvent>) => {
+        const {contentOffset} = event.nativeEvent;
+        startDrag.current = contentOffset.x;
+    }
+
+    const renderItems = ({item}: {item: string}) => {
+        return(
+            <View style={[styles.container, {width: widthCalendar}]} >
+                    <DaysInTheMonth 
+                        day={item} 
+                        widthCalendar={widthCalendar} 
+                        selectedDays={selectedDays} 
+                        select={select} 
+                        setSelectedDays={setSelectedDays} 
+                        setIsShow={setIsShow} 
+                    />
+            </View>
+        )
     };
 
+    let previousIndex = TOTAL_ELEMENT;
+
+    const handleOnScroll = (event:  NativeSyntheticEvent<NativeScrollEvent>) => {
+        console.log('SCROLL');
+        const offSet = event.nativeEvent.contentOffset.x;
+        const index = Math.round(offSet / widthCalendar);
+        const delta = Math.abs(startDrag.current - offSet);
+
+        if(delta > widthCalendar / 2 && index !== previousIndex) {
+            setCurrentDay(visibleMonths[index]);
+            previousIndex = index;
+
+            if(index === 1) {
+                setVisibleMonths(initialMonth(visibleMonths[1], TOTAL_ELEMENT));
+                refKey.current = visibleMonths[1];
+            }
+
+            if(index === TOTAL_ELEMENT * 2) {
+                setVisibleMonths(initialMonth(visibleMonths[TOTAL_ELEMENT * 2], TOTAL_ELEMENT));
+                refKey.current = visibleMonths[TOTAL_ELEMENT * 2];
+            }
+        }
+    }
+
+    useImperativeHandle(ref, () => ({
+        nextMonth: () => {
+            if(refFlatList.current) {
+                refFlatList.current.scrollToIndex({index: previousIndex + 1, animated: true});
+                previousIndex++;
+            }
+        },
+        previousMonth: () => {
+            if(refFlatList.current) {
+                refFlatList.current.scrollToIndex({index: previousIndex - 1, animated: true});
+                previousIndex--;
+            }
+        }
+    }));
     
+    useEffect(() => {
+        setVisibleMonths(initialMonth(currentDay, TOTAL_ELEMENT));
+    }, []);
+
+    if(visibleMonths.length === 0) return;
+
     return (
-        <View style={styles.container} >
-            <View style={styles.body} >
-                {
-                    allDays.map((item, i) => {
-                        const itemDay = item ? Time.combineForDate({year: splitCurrentDay.year, month: splitCurrentDay.month, day: item}) : null;
-                        // Если текуший день и он выбран.
-                        if(itemDay && itemDay === nowDay && selectedDays.includes(itemDay)) {
-                            return (
-                                <Pressable style={[styles.itemGrid]} onPress={() => handlePressDay(item)} key={i} >
-                                    <View style={[styles.item, styles.round, styles.border, styles.checkItem]}>
-                                        <Text style={[styles.dayText]} >{item}</Text>
-                                    </View>
-                                </Pressable>
-                            )
-                        } 
-                        // Если текуший день.
-                        else if(itemDay && itemDay === nowDay) {
-                            return (
-                                <Pressable style={[styles.itemGrid]} onPress={() => handlePressDay(item)} key={i} >
-                                    <View style={[styles.item, styles.round, styles.border]} >
-                                        <Text style={[styles.dayText]} >{item}</Text>
-                                    </View>
-                                </Pressable>
-                            )
-                        } 
-                        // Если день выбран.
-                        else if(itemDay && selectedDays.includes(itemDay)) {
-                            return (
-                                <Pressable style={[styles.itemGrid]} onPress={() => handlePressDay(item)} key={i} >
-                                    <View style={[styles.item, styles.round, styles.checkItem]} >
-                                        <Text style={[styles.dayText]} >{item}</Text>
-                                    </View>
-                                </Pressable>
-                            )
-                        }
-                        // Остальные дни.
-                        else {
-                            return (
-                                <Pressable style={[styles.itemGrid]} onPress={() => handlePressDay(item)} key={i} >
-                                    <View style={[styles.item]}>
-                                        <Text style={[styles.dayText]} >{item}</Text>
-                                    </View>
-                                </Pressable>
-                            )
-                        }
-                    })
-                }
-            </View>
+        <View style={[styles.main, {paddingHorizontal: containerPadding, height: widthCalendar * 6 / 7}]} >
+            <FlatList
+                ref={refFlatList}
+                key={refKey.current}
+
+                contentContainerStyle={styles.flatListContainer}
+                showsHorizontalScrollIndicator={false}
+                horizontal={true}
+
+                data={visibleMonths}
+                renderItem={renderItems}
+                keyExtractor={item => item}
+                extraData={visibleMonths}
+                
+                pagingEnabled
+                onScrollBeginDrag={handleBeginDrag}
+                onScroll={handleOnScroll}
+
+                windowSize={5}
+                scrollEventThrottle={16}
+                getItemLayout={(data, index) => (
+                    { length: widthCalendar, offset: widthCalendar * index, index }
+                )}
+                initialScrollIndex={TOTAL_ELEMENT}
+            /> 
         </View>
     );
-};
-
+});
 
 
 const styles = StyleSheet.create({
+    main: {
+        width: '100%',
+        marginTop: 5
+    },
+    flatListContainer: {
+        flexGrow: 1,
+        height: '100%'
+    },
     container: {
-        marginTop: 5,
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    body: {
-        flexDirection: 'row',
-        justifyContent: 'flex-start',
-        flexWrap: 'wrap'
-    },
-    itemGrid: {
-        aspectRatio: 1 / 1,
-        width: `${100 / 7}%`,
         height: '100%',
         justifyContent: 'center',
         alignItems: 'center',
-        padding: 4
-    },
-    item: {
-        width: '100%',
-        height: '100%',
-        textAlign: 'center',
-        justifyContent: 'center',
-        overflow: 'hidden'
-    },
-    dayText: {
-        fontSize: Platform.OS === 'ios' ? 15 : 13,
-        fontWeight: '500',
-        color: 'white',
-        textAlign:'center'
-    },
-    checkItem: {
-        backgroundColor: COLOR_ROOT.BLUE, 
-    },
-    round: {
-        borderRadius: 150,
-        overflow: 'hidden',
-    },
-    border: {
-        borderWidth: 1,
-        borderColor: 'white'
     }
 });
-
 
 export default MonthDays;

@@ -56,8 +56,17 @@ class Time {
      * @example '2022-02-28'
      */
     getCurrentDay() {
-        const date = new Date().toISOString();
-        return date.split('T')[0];
+        const date = new Date();
+        date.setHours(date.getHours() +  3);
+        return date.toISOString().split('T')[0];
+    }
+
+    /**
+     * `Вернет первый день текушего месяца. Например сегодня '2022-02-28', вернет '2022-02-01'`
+     */
+    getCurrentMonth() {
+        const today = this.getCurrentDay();
+        return today.slice(0, 8) + '01';
     }
 
     /**
@@ -112,7 +121,29 @@ class Time {
     combineForDate(date: IFullDate): string {
         const handleDate = new Date(date.year, date.month - 1, date.day, 14, 0, 0, 0);
         return handleDate.toISOString().split('T')[0];
-    }   
+    }  
+    
+    /**
+     * `Прибавить/отнять месяц.`
+     */
+    plusMinusMonth(sign: 'plus' | 'minus', state: string) {
+        const splitDate = this.splitDate(state);
+        const date = new Date(splitDate.year, splitDate.month - 1, 1, 14, 0, 0, 0);
+        date.setMonth(sign === 'plus' ? date.getMonth() + 1 : sign === 'minus' ? date.getMonth() - 1 : 0);
+        return this.dateToOnlyDataString(date);
+    }
+
+    /**
+     * `Прибавить/отнять месяц.`
+     * @param value Сколько прибавить или отнять месяцев надо. Например: 1, -2.
+     * @param state Дата от которой отнимаем/прибавляем.
+     */
+    calcMonth(value: number, state: string) {
+        const splitDate = this.splitDate(state);
+        const date = new Date(splitDate.year, splitDate.month - 1, 1, 14, 0, 0, 0);
+        date.setMonth(date.getMonth() + value);
+        return this.dateToOnlyDataString(date);
+    }
 }
 
 export default new Time();

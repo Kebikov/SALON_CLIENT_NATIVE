@@ -1,36 +1,27 @@
 import { View, Text, StyleSheet, Image, Pressable, Platform } from 'react-native';
+import { FlatList } from 'react-native-gesture-handler';
 import React, { FC, useEffect } from 'react';
 import Time from '@/helpers/Time/Time';
 import VibrationApp from '@/helpers/helpersForComponents/vibration/VibrationApp';
 
+import type { IRefMonthDays } from './MonthDays';
+
 
 interface ICalendarHeader {
     currentDay: string;
-    setCurrentDay: React.Dispatch<React.SetStateAction<string>>;
+    refMonthDays: React.RefObject<IRefMonthDays>
 }
 
 
 /**
  * @component `Шапка в календаре.`
  * @param currentDay обьект interface IcurrentDay.
- * @param setCurrentDay Установка текушей даты.
+ * @param refMonthDays Ref управления FlatLIst у дней календаря.
  */
 const CalendarHeader: FC<ICalendarHeader> = ({
     currentDay,
-    setCurrentDay
+    refMonthDays
 }) => {
-    
-    /**
-     * `Добавить/отнять месяц.`
-     */
-    const setMonth = (sign: 'plus' | 'minus') => {
-        setCurrentDay(state => {
-            const splitDate = Time.splitDate(state);
-            const date = new Date(splitDate.year, splitDate.month - 1, 1, 14, 0, 0, 0);
-            date.setMonth(sign === 'plus' ? date.getMonth() + 1 : sign === 'minus' ? date.getMonth() - 1 : 0);
-            return Time.dateToOnlyDataString(date);
-        });
-    }
 
     const splitDate = Time.splitDate(currentDay);
 
@@ -44,7 +35,7 @@ const CalendarHeader: FC<ICalendarHeader> = ({
                     style={styles.arrowLeft}
                     onPress={() => {
                         VibrationApp.select();
-                        setMonth('minus');
+                        refMonthDays.current?.previousMonth();
                     }}
                 >
                     <Image style={[styles.img, {transform: [{translateX: -10}]}]} source={require('@/source/img/icon-menu/arrow-blue.png')} />
@@ -53,7 +44,7 @@ const CalendarHeader: FC<ICalendarHeader> = ({
                     style={styles.arrowRight}
                     onPress={() => {
                         VibrationApp.select();
-                        setMonth('plus');
+                        refMonthDays.current?.nextMonth();
                     }}
                 >
                     <Image style={[styles.img, {transform: [{rotate: '180deg'}, {translateX: -10}]}]} source={require('@/source/img/icon-menu/arrow-blue.png')} />

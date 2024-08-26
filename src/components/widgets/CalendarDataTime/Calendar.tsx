@@ -1,5 +1,6 @@
-import { View, Text, StyleSheet, Platform, Pressable } from 'react-native';
-import React, { FC, useState, forwardRef, useImperativeHandle, useEffect } from 'react';
+import { View, Text, StyleSheet, Platform, Pressable, Button } from 'react-native';
+import { FlatList } from 'react-native-gesture-handler';
+import React, { FC, useState, forwardRef, useImperativeHandle, useEffect, useRef } from 'react';
 import { COLOR_ROOT } from '@/data/colors';
 import CalendarHeader from './CalendarHeader';
 import WeekDays from './WeekDays';
@@ -9,6 +10,8 @@ import { BlurView } from 'expo-blur';
 import { Portal } from '@gorhom/portal';
 import Animated, {FadeIn, FadeOut} from 'react-native-reanimated';
 import VibrationApp from '@/helpers/helpersForComponents/vibration/VibrationApp';
+
+import type { IRefMonthDays } from './MonthDays';
 
 export type TSelect = 'multi' | 'one';
 
@@ -25,7 +28,6 @@ interface ICalendar {
     select?: TSelect;
 }
 
-
 /**
  * @widgets `Календарь.`
  * @param selectedDays `Массив с выбранными датами.`
@@ -37,22 +39,23 @@ const Calendar = forwardRef<ICalendarRef, ICalendar>(({
     setSelectedDays,
     select = 'one'
 }, ref) => {
-
     /**
      * @param currentDay `Текушяя дата с которой работаем.`
      * @example '2022-02-28'
      */
-    const [currentDay, setCurrentDay] = useState<string>(Time.getCurrentDay());
+    const [currentDay, setCurrentDay] = useState<string>(Time.getCurrentMonth());
     /**
      * @param isShow Показать/скрыть календарь.
      */
     const [isShow, setIsShow] = useState<boolean>(false);
-
+    /**
+     * `Ref управления FlatLIst у дней календаря.`
+     */
+    const refMonthDays = useRef<IRefMonthDays>(null);
 
     useImperativeHandle(ref, () => ({
         openCalendar: () => setIsShow(true)
     }));
-
 
     return (
         <Portal name='calendar' >
@@ -72,8 +75,8 @@ const Calendar = forwardRef<ICalendarRef, ICalendar>(({
                         <View style={styles.blur} >
                             <View style={[styles.body, {marginTop: 15,marginBottom: select === 'one' ? 15 : 0}]} >
                                 <CalendarHeader 
-                                    currentDay={currentDay} 
-                                    setCurrentDay={setCurrentDay} 
+                                    currentDay={currentDay}
+                                    refMonthDays={refMonthDays}
                                 />
                                 <WeekDays/>
                                 <MonthDays 
@@ -83,6 +86,7 @@ const Calendar = forwardRef<ICalendarRef, ICalendar>(({
                                     selectedDays={selectedDays}
                                     setSelectedDays={setSelectedDays}
                                     select={select}
+                                    ref={refMonthDays}
                                 />
                             </View>
                             {
@@ -93,6 +97,7 @@ const Calendar = forwardRef<ICalendarRef, ICalendar>(({
                                     onPress={() => {
                                         VibrationApp.pressButton();
                                         setIsShow(false);
+                                        setCurrentDay(Time.getCurrentMonth());
                                     }}
                                 >
                                     <Text style={styles.textOk}>OK</Text>
@@ -109,6 +114,7 @@ const Calendar = forwardRef<ICalendarRef, ICalendar>(({
         </Portal>
     );
 });
+
 
 const styles = StyleSheet.create({
     main: {
@@ -132,7 +138,8 @@ const styles = StyleSheet.create({
         overflow: 'hidden',
     },
     body: {
-        paddingHorizontal: '5%'
+        width: '100%',
+        //paddingHorizontal: '5%'
     },
     bodyOk: {
         marginTop: 10,
