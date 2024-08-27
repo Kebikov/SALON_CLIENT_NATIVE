@@ -1,5 +1,5 @@
 import { View, StyleSheet, NativeSyntheticEvent, NativeScrollEvent, useWindowDimensions } from 'react-native';
-import React, { FC, useEffect, useState, useRef, forwardRef, useImperativeHandle } from 'react';
+import React, { FC, useEffect, useState, useRef } from 'react';
 import Time from '@/helpers/Time/Time';
 import { FlatList } from 'react-native-gesture-handler';
 import DaysInTheMonth from './DaysInTheMonth';
@@ -14,11 +14,6 @@ interface IMonthDays {
     selectedDays: string[];
     setSelectedDays:  React.Dispatch<React.SetStateAction<string[]>>;
     select: TSelect;
-}
-
-export interface IRefMonthDays {
-    nextMonth: () => void;
-    previousMonth: () => void; 
 }
 
 
@@ -38,14 +33,14 @@ const TOTAL_ELEMENT = 12;
  * @param setSelectedDays Установка выбранных дат.
  * @param select Множественный выбор да или нет.
  */
-const MonthDays = forwardRef<IRefMonthDays, IMonthDays>(({
-    currentDay,
+const MonthDays: FC<IMonthDays> = ({
+    currentDay, 
     setCurrentDay,
     setIsShow,
     selectedDays,
     setSelectedDays,
     select,
-}, ref) => {
+}) => {
     
     const {width} = useWindowDimensions();
     const containerPadding = 10;
@@ -83,14 +78,14 @@ const MonthDays = forwardRef<IRefMonthDays, IMonthDays>(({
     const renderItems = ({item}: {item: string}) => {
         return(
             <View style={[styles.container, {width: widthCalendar}]} >
-                    <DaysInTheMonth 
-                        day={item} 
-                        widthCalendar={widthCalendar} 
-                        selectedDays={selectedDays} 
-                        select={select} 
-                        setSelectedDays={setSelectedDays} 
-                        setIsShow={setIsShow} 
-                    />
+                <DaysInTheMonth 
+                    day={item} 
+                    widthCalendar={widthCalendar} 
+                    selectedDays={selectedDays} 
+                    select={select} 
+                    setSelectedDays={setSelectedDays} 
+                    setIsShow={setIsShow} 
+                />
             </View>
         )
     };
@@ -98,7 +93,7 @@ const MonthDays = forwardRef<IRefMonthDays, IMonthDays>(({
     let previousIndex = TOTAL_ELEMENT;
 
     const handleOnScroll = (event:  NativeSyntheticEvent<NativeScrollEvent>) => {
-        console.log('SCROLL');
+
         const offSet = event.nativeEvent.contentOffset.x;
         const index = Math.round(offSet / widthCalendar);
         const delta = Math.abs(startDrag.current - offSet);
@@ -118,21 +113,6 @@ const MonthDays = forwardRef<IRefMonthDays, IMonthDays>(({
             }
         }
     }
-
-    useImperativeHandle(ref, () => ({
-        nextMonth: () => {
-            if(refFlatList.current) {
-                refFlatList.current.scrollToIndex({index: previousIndex + 1, animated: true});
-                previousIndex++;
-            }
-        },
-        previousMonth: () => {
-            if(refFlatList.current) {
-                refFlatList.current.scrollToIndex({index: previousIndex - 1, animated: true});
-                previousIndex--;
-            }
-        }
-    }));
     
     useEffect(() => {
         setVisibleMonths(initialMonth(currentDay, TOTAL_ELEMENT));
@@ -168,7 +148,7 @@ const MonthDays = forwardRef<IRefMonthDays, IMonthDays>(({
             /> 
         </View>
     );
-});
+};
 
 
 const styles = StyleSheet.create({

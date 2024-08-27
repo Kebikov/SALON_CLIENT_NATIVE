@@ -38,7 +38,7 @@ const DaysInTheMonth: FC<IDaysInTheMonth> = memo(({
 
     const nowDay = Time.getCurrentDay();
 
-    const handlePressDay = useCallback((item: string | null): void => {
+    const handlePressDay = (item: string | null): void => {
         if(!item) return;
         const splitCurrentDay = Time.splitDate(item);
         VibrationApp.select();
@@ -54,7 +54,7 @@ const DaysInTheMonth: FC<IDaysInTheMonth> = memo(({
                 setSelectedDays(state => ([...state, date]));
             }
         }
-    }, [day]);
+    };
 
     return (
         <View style={[styles.body]} >

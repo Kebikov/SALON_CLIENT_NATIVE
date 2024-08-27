@@ -11,8 +11,6 @@ import { Portal } from '@gorhom/portal';
 import Animated, {FadeIn, FadeOut} from 'react-native-reanimated';
 import VibrationApp from '@/helpers/helpersForComponents/vibration/VibrationApp';
 
-import type { IRefMonthDays } from './MonthDays';
-
 export type TSelect = 'multi' | 'one';
 
 export interface ICalendarRef {
@@ -48,10 +46,6 @@ const Calendar = forwardRef<ICalendarRef, ICalendar>(({
      * @param isShow Показать/скрыть календарь.
      */
     const [isShow, setIsShow] = useState<boolean>(false);
-    /**
-     * `Ref управления FlatLIst у дней календаря.`
-     */
-    const refMonthDays = useRef<IRefMonthDays>(null);
 
     useImperativeHandle(ref, () => ({
         openCalendar: () => setIsShow(true)
@@ -76,7 +70,6 @@ const Calendar = forwardRef<ICalendarRef, ICalendar>(({
                             <View style={[styles.body, {marginTop: 15,marginBottom: select === 'one' ? 15 : 0}]} >
                                 <CalendarHeader 
                                     currentDay={currentDay}
-                                    refMonthDays={refMonthDays}
                                 />
                                 <WeekDays/>
                                 <MonthDays 
@@ -86,7 +79,6 @@ const Calendar = forwardRef<ICalendarRef, ICalendar>(({
                                     selectedDays={selectedDays}
                                     setSelectedDays={setSelectedDays}
                                     select={select}
-                                    ref={refMonthDays}
                                 />
                             </View>
                             {
@@ -138,8 +130,7 @@ const styles = StyleSheet.create({
         overflow: 'hidden',
     },
     body: {
-        width: '100%',
-        //paddingHorizontal: '5%'
+        width: '100%'
     },
     bodyOk: {
         marginTop: 10,

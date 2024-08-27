@@ -63,6 +63,7 @@ export type AppRouterTypes = {
         department_name?: string;
     };
     '/admin/modal': undefined;
+    '/admin/adminAllMasters': undefined;
 
     //: user
     '/user': undefined;

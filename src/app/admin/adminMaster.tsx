@@ -6,7 +6,6 @@ import ButtonWithIcon from '@/components/shared/ButtonWithIcon/ButtonWithIcon';
 import MasterCartForAdmin from '@/components/shared/MasterCartForAdmin/MasterCartForAdmin';
 import { FlatList } from 'react-native-gesture-handler';
 import { useHookRouter } from '@/helpers/router/useHookRouter';
-import log from '@/helpers/log/logs';
 
 import type { IMasterFind } from '@/api/routes/master/types/master.dto';
 import type { RegistrationDTO } from '@/api/routes/registration/types/registration.types';

@@ -6,11 +6,13 @@ import { StyleSheet, View, Text, Pressable, Button } from 'react-native';
 
 const Test: FC = () => {
 
-
+    const press = () => {
+        //refClock.current?.openClock();
+    }
 
     return (
         <View style={styles.main}>
-           
+           <Button title='open modal' onPress={press}  />
         </View>
     );
 };

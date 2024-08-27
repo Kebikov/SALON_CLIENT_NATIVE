@@ -11,21 +11,21 @@ import { Portal } from '@gorhom/portal';
 import Calendar from '@/components/widgets/CalendarDataTime/Calendar';
 import { ICalendarRef } from '@/components/widgets/CalendarDataTime/Calendar';
 import Time from '@/helpers/Time/Time';
-import Clock from '@/components/widgets/Clock/Clock';
 
-import { IClockRef } from '@/components/widgets/Clock/Clock';
+import Clock, { ITimeClock, IClockRef } from '@/components/widgets/Clock/Clock';
+
+//import { Clock, IClockRef, ITimeClock} from 'react-native-modal-clock';
 
 
 import BottomModalSheet from '@/components/wrappers/BottomModalSheet/BottomModalSheet';
 import type  { IRefBottomModalSheet } from '@/components/wrappers/BottomModalSheet/types';
-import type { ITimeClock } from '@/components/widgets/Clock/Clock';
+
 
 
 /** 
  * @page Главная страница Admin приложения после регистрации.
  */
 const HomeAdmin: FC = () => {
-
 
     const {appRouter} = useHookRouter();
     const refModal = useRef<IRefBottomModalSheet>(null);
@@ -36,7 +36,7 @@ const HomeAdmin: FC = () => {
     const refCalendar = useRef<ICalendarRef>(null);
 
     /**
-     * @param 
+     * @param electedTime Выбранное время.
      */
     const [selectedTime, setSelectedTime] = useState<ITimeClock>({hour: '14', minute: '15'});
 
@@ -56,7 +56,11 @@ const HomeAdmin: FC = () => {
                     select='multi'
                     ref={refCalendar} 
                 />
-                <Clock setSelectedTime={setSelectedTime} selectedTime={selectedTime} ref={refClock} />
+                <Clock 
+                    setSelectedTime={setSelectedTime} 
+                    selectedTime={selectedTime} 
+                    ref={refClock} 
+                />
                 <Pressable
                     onPress={() => press()}
                 >

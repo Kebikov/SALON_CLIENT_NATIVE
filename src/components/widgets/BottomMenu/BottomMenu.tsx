@@ -69,7 +69,6 @@ const styles = StyleSheet.create({
     boxImg: {
         width: 37,
         height: 37,
-        //backgroundColor: 'red',
         padding: 5
     },
     boxImgLine: {

@@ -17,9 +17,9 @@ const AdminAdd: FC = () => {
     return (
         <WrapperScroll>
             <View style={styles.main} >
-                <Title text='Основные настройки' marginTop={10}/>
+                <Title text='Добавление данных' marginTop={10}/>
                 <MenuItem
-                    title='Группы услуг'
+                    title='Группы'
                     subTitle='добавить, редактировать, удалить'
                     img={require('@/source/img/icon/group.png')}
                     pushFunction={() => appRouter.navigate('/admin/adminDepartment')}
@@ -35,6 +35,13 @@ const AdminAdd: FC = () => {
                     subTitle='добавить, редактировать, удалить'
                     img={require('@/source/img/icon/masters.png')}
                     pushFunction={() => appRouter.navigate('/admin/adminMaster')}
+                />
+                <Title text='Работа салона' marginTop={10}/>
+                <MenuItem
+                    title='Мастера'
+                    subTitle='график работы'
+                    img={require('@/source/img/icon/masters.png')}
+                    pushFunction={() => appRouter.navigate('/admin/adminAllMasters')}
                 />
             </View>
         </WrapperScroll>

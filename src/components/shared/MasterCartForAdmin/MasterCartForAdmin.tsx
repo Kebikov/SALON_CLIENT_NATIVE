@@ -7,6 +7,7 @@ import ButtonSwipeable from '@/components/widgets/ButtonSwipeable/ButtonSwipeabl
 import { useHookRouter } from '@/helpers/router/useHookRouter';
 import httpMasterService from '@/api/routes/master/service/http.master.service';
 import * as Haptics from 'expo-haptics';
+import MasterCartHorizontal from '../MasterCartHorizontal/MasterCartHorizontal';
 
 import type { IMasterFind } from '@/api/routes/master/types/master.dto';
 
@@ -24,15 +25,6 @@ const MasterCartForAdmin: FC<IMasterCartForAdmin> = ({master, setMasters}) => {
 
     const {id, name, phone, picture, access_ban, department_name, email, surname, average_stars, description, id_department} = master;
     const {appRouter} = useHookRouter();
-
-    const copyToClipboard = async (str: string) => {
-        await Clipboard.setStringAsync(str);
-        Platform.OS === 'ios'
-        ?
-        Alert.alert(`${str}`, `Номер скопирован в буфер.`)
-        :
-        ToastAndroid.show(`Номер скопирован.`, ToastAndroid.SHORT)
-    };
 
     const deleteMaster = () => {
         Haptics.selectionAsync()
@@ -91,39 +83,16 @@ const MasterCartForAdmin: FC<IMasterCartForAdmin> = ({master, setMasters}) => {
             iconForButton3={require('@/source/img/icon/del-btn.png')}
             colorButton3={COLOR_ROOT.BUTTON_COLOR_RED}
         >
-            <View style={styles.main}>
-                <View style={styles.cart} >
-                    <View style={styles.left} >
-                        <Image 
-                            defaultSource={require('@/source/img/plug/plug.jpg')}
-                            style={styles.img}
-                            source={typeof picture === 'number' ? picture : {uri: `${baseLink}/api/img/get-img/${picture}?type=img_imgMaster`}} 
-                        />
-                        <View style={[styles.point, {backgroundColor: access_ban ? 'red' : 'green'}]} />
-                        <View style={styles.pointBottom} />
-                    </View>
-                    <View style={styles.right} >
-                        <Text style={styles.masterName} >{name} {surname}</Text>
-                        <Text style={styles.masterUnit} >{department_name}</Text>
-                        <Text style={styles.masterUnit} >{email}</Text>
-                        <Pressable onLongPress={() => copyToClipboard(phone)} >
-                            <Text style={styles.phone} >{phone}</Text>
-                        </Pressable>
-                    </View>
-                    {
-                        average_stars
-                        ?
-                        <View style={styles.grade}>
-                            <View style={styles.gradeBox}>
-                                <Image style={styles.gradeImg} source={require('@/source/img/icon/grade.png')} />
-                                <Text style={styles.gradeText} >{average_stars.slice(0, 3)}</Text>
-                            </View>
-                        </View>
-                        :
-                        null
-                    }
-                </View>
-            </View>
+            <MasterCartHorizontal
+                name={name}
+                surname={surname}
+                email={email}
+                phone={phone}
+                picture={picture}
+                access_ban={access_ban}
+                department_name={department_name}
+                average_stars={average_stars}
+            />
         </ButtonSwipeable>
     );
 };
