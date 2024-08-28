@@ -13,7 +13,7 @@ import type { DepartmentDTO } from "@/api/routes/department/types/department.typ
  * @page `Страница с формой для добавления департамента(группы).`
  */
 const AdminAddDepartment: FC = () => {
-
+    console.info('PAGE_admin/adminAddDepartment');
     const {appRouter} = useHookRouter();
     const {modalMessageError, isMessage} = useHookCheckErrorResponce();
 

@@ -20,7 +20,7 @@ import type { ServiceDTOAndDepartmentName } from '@/api/routes/service/types/ser
  * @page `Страница с услугами и кнопкой добавления услуги.`
  */
 const AdminService: FC = () => {
-
+    console.info('PAGE_admin/adminService');
     const {
         bottomSheetRef,
         openList,

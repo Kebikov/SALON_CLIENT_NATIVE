@@ -27,7 +27,7 @@ interface IDelDepartment {
  * @page `Страница с группами и кнопкой добавления группы.`
  */
 const AdminDepartment: FC= () => {
-
+    console.info('PAGE_admin/adminDepartment');
     const {appRouter} = useHookRouter();
     /**
      * @param currentDepartment Текушяя удаляемая группа.

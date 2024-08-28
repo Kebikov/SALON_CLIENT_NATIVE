@@ -2,6 +2,8 @@ import type { ServiceDTOAndDepartmentName } from "@/api/routes/service/types/ser
 import type { IReqEditMaster } from "@/api/routes/master/types/master.dto";
 import type { IMasterFind } from "@/api/routes/master/types/master.dto";
 
+import { TRouteAdminSettingsMaster } from "../../app/admin/adminSettingsMaster/[id]";
+
 
 export type AppRouterTypes = {
     '/': undefined;
@@ -28,16 +30,7 @@ export type AppRouterTypes = {
 
     '/admin/adminService': undefined;
     '/admin/adminAddService': undefined;
-    '/admin/adminEditService/[id]': {
-        id: number;
-        title: string;
-        description: string;
-        price: number;
-        time: number;
-        img: string;
-        id_department?: number; 
-        name?: string;
-    };
+    '/admin/adminEditService/[id]': TRouteAdminSettingsMaster;
 
     '/admin/adminMaster': undefined;
     '/admin/adminAddMaster': undefined;
@@ -61,6 +54,13 @@ export type AppRouterTypes = {
         surname: string;
         picture: string;
         department_name?: string;
+    };
+    '/admin/adminSettingsMaster/[id]': {
+        id: number;
+        name: string;
+        surname: string; 
+        picture: string;
+        departmentName: string | null;
     };
     '/admin/modal': undefined;
     '/admin/adminAllMasters': undefined;

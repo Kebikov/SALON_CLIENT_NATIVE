@@ -14,7 +14,7 @@ import type { TFormMaster } from '../adminMaster';
  * @returns {JSX.Element}
  */
 const AdminEditMaster: FC = () => {
-
+    console.info('PAGE_admin/adminEditMaster/[id]');
     const  { 
         id, name, surname, description, phone, email, picture, access_ban, id_department, department_name
     } = useLocalSearchParams<TTypeToString<IMasterFind>>();

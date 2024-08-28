@@ -19,7 +19,11 @@ export interface IClockRef {
 
 interface IClock {
     selectedTime:  ITimeClock;
-    setSelectedTime: React.Dispatch<React.SetStateAction<ITimeClock>>
+    setSelectedTime: React.Dispatch<React.SetStateAction<ITimeClock>>;
+    colorBody?: string;
+    colorButton?:string;
+    colorText?: string;
+    colorLine?: string;
 }
 
 export interface ITimeClock {
@@ -34,7 +38,11 @@ export interface ITimeClock {
  */
 const Clock = forwardRef<IClockRef, IClock>(({
     selectedTime,
-    setSelectedTime
+    setSelectedTime,
+    colorBody = COLOR_ROOT.GRAY_DARK,
+    colorButton = COLOR_ROOT.GRAY_DARK,
+    colorText = 'white',
+    colorLine = 'rgba(255, 255, 255, 0.3)'
 }, ref) => {
     /**
      * `Высота окна с цыфрами.`
@@ -114,7 +122,7 @@ const Clock = forwardRef<IClockRef, IClock>(({
     const hours = hoursArray.map((item, i) => {
             return(
                 <Animated.View style={[styles.timeBox, {height: itemHeight}, animatedHours(Number(i))]} key={i} >
-                    <Text style={styles.timeText} >{item}</Text>
+                    <Text style={[styles.timeText, {color: colorText}]} >{item}</Text>
                 </Animated.View>
             )
     });
@@ -122,7 +130,7 @@ const Clock = forwardRef<IClockRef, IClock>(({
     const minutes = minutesArray.map((item, i) => {
         return(
             <Animated.View style={[styles.timeBox, {height: itemHeight}, animatedMinutes(Number(i))]} key={i} >
-                <Text style={styles.timeText} >{item}</Text>
+                <Text style={[styles.timeText, {color: colorText}]} >{item}</Text>
             </Animated.View>
         )
     });
@@ -146,7 +154,7 @@ const Clock = forwardRef<IClockRef, IClock>(({
                         tint='dark'
                         style={styles.container} 
                     >
-                        <View style={styles.body} >
+                        <View style={[styles.body, {backgroundColor: colorBody}]} >
                             <View style={[styles.time, {height}]} >
                                 <View style={styles.line}>
                                     <View style={styles.lineBody} ></View>
@@ -158,7 +166,7 @@ const Clock = forwardRef<IClockRef, IClock>(({
                                 </GestureDetector>
 
                                 <View>
-                                    <Text style={{color: 'white', fontSize: 23}} >:</Text>
+                                    <Text style={{color: colorText, fontSize: 23}} >:</Text>
                                 </View>
 
                                 <GestureDetector gesture={gesturePanMinutes} >
@@ -170,14 +178,14 @@ const Clock = forwardRef<IClockRef, IClock>(({
                             </View>
                         </View>
                         <Pressable 
-                            style={styles.button}
+                            style={[styles.button, {backgroundColor: colorButton, borderTopColor: colorLine}]}
                             onPress={() => {
                                 setTime();
                                 VibrationApp.pressButton();
                                 setIsShow(false);
                             }}
                         >
-                            <Text style={styles.buttonText} >OK</Text>
+                            <Text style={[styles.buttonText, {color: colorText}]} >OK</Text>
                         </Pressable>
                     </BlurView>
                 </Animated.View>
@@ -213,8 +221,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         borderTopLeftRadius: radiusClock,
-        borderTopRightRadius: radiusClock,
-        backgroundColor: COLOR_ROOT.GRAY_DARK,
+        borderTopRightRadius: radiusClock
     },
     time: {
         position: 'relative',
@@ -239,13 +246,10 @@ const styles = StyleSheet.create({
         width: '100%',
         justifyContent: 'center',
         alignItems: 'center',
-        //backgroundColor: 'red',
     },
     timeText: {
-        color: 'white',
         fontSize: Platform.OS === 'ios' ? 23 : 21,
         textAlign: 'center',
-        //backgroundColor: 'pink'
     },
     button: {
         width: '60%',
@@ -254,12 +258,9 @@ const styles = StyleSheet.create({
         borderBottomRightRadius: radiusClock,
         justifyContent: 'center',
         alignItems: 'center',
-        borderTopWidth: Platform.OS === 'ios' ? 2 : 1,
-        borderTopColor: 'rgba(255, 255, 255, 0.3)',
-        backgroundColor: COLOR_ROOT.GRAY_DARK,
+        borderTopWidth: Platform.OS === 'ios' ? 2 : 1
     },
     buttonText: {
-        color: 'white',
         fontSize: Platform.OS === 'ios' ? 16 : 16
     },
     line: {

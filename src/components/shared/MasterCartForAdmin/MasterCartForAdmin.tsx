@@ -55,33 +55,18 @@ const MasterCartForAdmin: FC<IMasterCartForAdmin> = ({master, setMasters}) => {
         });
     };
 
-    const addService = () => {
-        appRouter.navigate({pathname: '/admin/adminAddServiceForMaster/[id]', 
-            params: {
-                id: String(id),
-                name,
-                picture, 
-                department_name: department_name ? department_name : undefined,
-                surname
-            }
-        });
-    }
 
     return (
         <ButtonSwipeable
-            totalButton={3}
+            totalButton={2}
 
-            onPressButton1={() => addService()}
-            colorButton1={COLOR_ROOT.BUTTON_COLOR_GREEN}
-            iconForButton1={require('@/source/img/icon/plus-white.png')}
+            onPressButton1={() => editMaster()}
+            iconForButton1={require('@/source/img/icon/edit-btn.png')}
+            colorButton1={COLOR_ROOT.BUTTON_COLOR_YELLOW}
 
-            onPressButton2={() => editMaster()}
-            iconForButton2={require('@/source/img/icon/edit-btn.png')}
-            colorButton2={COLOR_ROOT.BUTTON_COLOR_YELLOW}
-
-            onPressButton3={() => deleteMaster()}
-            iconForButton3={require('@/source/img/icon/del-btn.png')}
-            colorButton3={COLOR_ROOT.BUTTON_COLOR_RED}
+            onPressButton2={() => deleteMaster()}
+            iconForButton2={require('@/source/img/icon/del-btn.png')}
+            colorButton2={COLOR_ROOT.BUTTON_COLOR_RED}
         >
             <MasterCartHorizontal
                 name={name}

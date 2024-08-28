@@ -10,6 +10,7 @@ interface IMasterCart {
     masterUnit: string;
     grade: number;
     img: number | string;
+    width?: number;
 }
 
 
@@ -19,16 +20,18 @@ interface IMasterCart {
  * @param masterUnit Специализация мастера.
  * @param img Фото мастера.
  * @param grade Рейтинг мастера.
+ * @param width ? Ширина карточки.
  */
 const MasterCart: FC<IMasterCart> = ({
     masterName, 
     masterUnit, 
     img, 
-    grade
+    grade,
+    width = Platform.OS === 'ios' ? 145 : 135
 }) => {
 
     return (
-        <Animated.View style={[styles.main]} entering={ZoomIn.duration(500).delay(300)} >
+        <Animated.View style={[styles.main, {width}]} entering={ZoomIn.duration(500).delay(300)} >
             <View style={styles.box} >
                 <View style={styles.boxBg} >
                     <ImageBackground style={styles.imageBackground} source={typeof img === 'number' ? img : {uri: `${baseLink}/api/img/get-img/${img}?type=img_imgMaster`}} >
@@ -50,7 +53,6 @@ const MasterCart: FC<IMasterCart> = ({
 
 const styles = StyleSheet.create({
     main: {
-        width: Platform.OS === 'ios' ? 145 : 135,
         height: Platform.OS === 'ios' ? 182 : 172,
         borderRadius: 16,
         padding: 8,

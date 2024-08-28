@@ -18,7 +18,7 @@ export type TFormMaster = Partial<Pick<IMasterFind, 'id' | 'picture' | 'access_b
  * @page 'Страница с мастерами и кнопкой добавления мастера.'
  */
 const AdminMaster: FC = () => {
-    
+    console.info('PAGE_admin/adminMaster');
     const {appRouter} = useHookRouter();
     const {masters, setMasters} = useHookGetDataMasters();
 

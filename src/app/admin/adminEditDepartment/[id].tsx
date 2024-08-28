@@ -14,7 +14,7 @@ import type { DepartmentDTO } from "@/api/routes/department/types/department.typ
  * @page Страница редактирования группы.
  */
 const AdminEditDepartment: FC = () => {
-
+    console.info('PAGE_admin/adminEditDepartment/[id]');
     const {router} = useHookRouter();
 
     const { id, name, discription, icon } = useLocalSearchParams<{ discription: string, icon: string, id: string, name: string }>();

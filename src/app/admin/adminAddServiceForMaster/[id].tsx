@@ -26,6 +26,7 @@ interface ISetButton {
  * @page `Страница добавления/удаления услуг мастера.`
  */
 const AdminAddServiceForMaster: FC = () => {
+    console.info('PAGE_admin/adminAddServiceForMaster/[id]');
     let { id, name, department_name, picture, surname } = useLocalSearchParams<{id: string, name: string, picture: string , department_name?: string, surname: string}>();
     if(!id || !name || !picture || !surname) return;
 

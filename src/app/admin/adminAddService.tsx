@@ -7,7 +7,7 @@ import type { ServiceDTOAndDepartmentName } from '@/api/routes/service/types/ser
  * @page `Страница для добавления услуги.`
  */
 const AdminAddService: FC = () => { 
-
+    console.info('PAGE_admin/adminAddService');
     const [data, setData] = useState<ServiceDTOAndDepartmentName>({ 
         id: 0,
         title: '',

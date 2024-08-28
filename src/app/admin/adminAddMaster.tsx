@@ -9,7 +9,7 @@ import type { TFormMaster } from '@/app/admin/adminMaster';
  * @page `Страница добавления мастера.`
  */
 const AdminAddMaster: FC = () => {
-
+    console.info('PAGE_admin/adminAddMaster');
     const [data, setData] = useState<TFormMaster>({
         id: undefined,
         picture: undefined,

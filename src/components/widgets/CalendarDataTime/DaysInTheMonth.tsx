@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, Pressable, Platform } from 'react-native';
-import React, { FC, useCallback, memo } from 'react';
+import React, { FC, useEffect, memo, useMemo } from 'react';
 import { COLOR_ROOT } from '@/data/colors';
 import Time from '@/helpers/Time/Time';
 import VibrationApp from '@/helpers/helpersForComponents/vibration/VibrationApp';
@@ -56,53 +56,64 @@ const DaysInTheMonth: FC<IDaysInTheMonth> = memo(({
         }
     };
 
+
+    const days = useMemo(() => allDays.map((item, i) => {
+        const itemDay = item ? Time.combineForDate({year: splitCurrentDay.year, month: splitCurrentDay.month, day: item}) : null;
+        // Если текуший день и он выбран.
+        if(itemDay && itemDay === nowDay && selectedDays.includes(itemDay)) {
+            return (
+                <Pressable style={[styles.itemGrid, {width: sizeSide, height: sizeSide}]} onPress={() => handlePressDay(itemDay)} key={i} >
+                    <View style={[styles.item, styles.round, styles.border, styles.checkItem]}>
+                        <Text style={[styles.dayText]} >{item}</Text>
+                    </View>
+                </Pressable>
+            )
+        } 
+        // Если текуший день.
+        else if(itemDay && itemDay === nowDay) {
+            return (
+                <Pressable style={[styles.itemGrid, {width: sizeSide, height: sizeSide}]} onPress={() => handlePressDay(itemDay)} key={i} >
+                    <View style={[styles.item, styles.round, styles.border]} >
+                        <Text style={[styles.dayText]} >{item}</Text>
+                    </View>
+                </Pressable>
+            )
+        } 
+        // Если день выбран.
+        else if(itemDay && selectedDays.includes(itemDay)) {
+            return (
+                <Pressable style={[styles.itemGrid, {width: sizeSide, height: sizeSide}]} onPress={() => handlePressDay(itemDay)} key={i} >
+                    <View style={[styles.item, styles.round, styles.checkItem]} >
+                        <Text style={[styles.dayText]} >{item}</Text>
+                    </View>
+                </Pressable>
+            )
+        }
+        // Остальные дни.
+        else {
+            return (
+                <Pressable 
+                    style={[styles.itemGrid, {width: sizeSide, height: sizeSide}]} 
+                    onPress={() => handlePressDay(itemDay)} 
+                    key={i}
+                >
+                    <View style={[styles.item]}>
+                        <Text style={[styles.dayText]} >{item}</Text>
+                    </View>
+                </Pressable>
+            )
+        }
+    }), [allDays]);
+
+
+    useEffect(() => {
+        console.log('Готово !');
+    }, []);
+
+
     return (
         <View style={[styles.body]} >
-            {
-                allDays.map((item, i) => {
-                    const itemDay = item ? Time.combineForDate({year: splitCurrentDay.year, month: splitCurrentDay.month, day: item}) : null;
-                    // Если текуший день и он выбран.
-                    if(itemDay && itemDay === nowDay && selectedDays.includes(itemDay)) {
-                        return (
-                            <Pressable style={[styles.itemGrid, {width: sizeSide, height: sizeSide}]} onPress={() => handlePressDay(itemDay)} key={i} >
-                                <View style={[styles.item, styles.round, styles.border, styles.checkItem]}>
-                                    <Text style={[styles.dayText]} >{item}</Text>
-                                </View>
-                            </Pressable>
-                        )
-                    } 
-                    // Если текуший день.
-                    else if(itemDay && itemDay === nowDay) {
-                        return (
-                            <Pressable style={[styles.itemGrid, {width: sizeSide, height: sizeSide}]} onPress={() => handlePressDay(itemDay)} key={i} >
-                                <View style={[styles.item, styles.round, styles.border]} >
-                                    <Text style={[styles.dayText]} >{item}</Text>
-                                </View>
-                            </Pressable>
-                        )
-                    } 
-                    // Если день выбран.
-                    else if(itemDay && selectedDays.includes(itemDay)) {
-                        return (
-                            <Pressable style={[styles.itemGrid, {width: sizeSide, height: sizeSide}]} onPress={() => handlePressDay(itemDay)} key={i} >
-                                <View style={[styles.item, styles.round, styles.checkItem]} >
-                                    <Text style={[styles.dayText]} >{item}</Text>
-                                </View>
-                            </Pressable>
-                        )
-                    }
-                    // Остальные дни.
-                    else {
-                        return (
-                            <Pressable style={[styles.itemGrid, {width: sizeSide, height: sizeSide}]} onPress={() => handlePressDay(itemDay)} key={i} >
-                                <View style={[styles.item]}>
-                                    <Text style={[styles.dayText]} >{item}</Text>
-                                </View>
-                            </Pressable>
-                        )
-                    }
-                })
-            }
+            { days }
         </View>
     );
 });

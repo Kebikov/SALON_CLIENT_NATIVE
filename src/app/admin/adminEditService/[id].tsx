@@ -10,7 +10,7 @@ import type { TTypeToString } from '@/helpers/router/app.router.types';
  * @page Страница редактирования услуги.
  */
 const AdminEditService: FC = () => {
-
+    console.info('PAGE_admin/adminEditService/[id]');
     const  { id, title, description, price, time, id_department, department_name, img } = useLocalSearchParams<TTypeToString<ServiceDTOAndDepartmentName>>();
 
     if(!id || !title || !description || !price || !time || !img) return;

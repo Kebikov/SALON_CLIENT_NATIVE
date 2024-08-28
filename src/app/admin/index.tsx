@@ -26,7 +26,7 @@ import type  { IRefBottomModalSheet } from '@/components/wrappers/BottomModalShe
  * @page Главная страница Admin приложения после регистрации.
  */
 const HomeAdmin: FC = () => {
-
+    console.info('PAGE_admin/index');
     const {appRouter} = useHookRouter();
     const refModal = useRef<IRefBottomModalSheet>(null);
 
@@ -42,8 +42,8 @@ const HomeAdmin: FC = () => {
 
     const press = () => {
         console.log('press');
-        //refClock.current?.openClock();
-        refCalendar.current?.openCalendar();
+        refClock.current?.openClock();
+        //refCalendar.current?.openCalendar();
     }
 
     return (
@@ -54,11 +54,15 @@ const HomeAdmin: FC = () => {
                     selectedDays={selectedDays}
                     setSelectedDays={setSelectedDays}
                     select='multi'
-                    ref={refCalendar} 
+                    ref={refCalendar}
                 />
                 <Clock 
                     setSelectedTime={setSelectedTime} 
                     selectedTime={selectedTime} 
+                    colorBody='#241d3f'
+                    colorButton='#241d3f'
+                    colorLine='#e2e0de'
+                    colorText='#ffce6c'
                     ref={refClock} 
                 />
                 <Pressable

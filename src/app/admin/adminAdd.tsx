@@ -11,7 +11,7 @@ import { useHookRouter } from '@/helpers/router/useHookRouter';
  * - Департамента.
  */
 const AdminAdd: FC = () => {
-
+    console.info('PAGE_admin/adminAdd');
     const {appRouter} = useHookRouter();
 
     return (
@@ -23,18 +23,21 @@ const AdminAdd: FC = () => {
                     subTitle='добавить, редактировать, удалить'
                     img={require('@/source/img/icon/group.png')}
                     pushFunction={() => appRouter.navigate('/admin/adminDepartment')}
+                    arrowColor='grey'
                 />
                 <MenuItem
                     title='Услуги'
                     subTitle='добавить, редактировать, удалить'
                     img={require('@/source/img/icon/hair.png')}
                     pushFunction={() => appRouter.navigate('/admin/adminService')}
+                    arrowColor='grey'
                 />
                 <MenuItem
                     title='Команда'
                     subTitle='добавить, редактировать, удалить'
                     img={require('@/source/img/icon/masters.png')}
                     pushFunction={() => appRouter.navigate('/admin/adminMaster')}
+                    arrowColor='grey'
                 />
                 <Title text='Работа салона' marginTop={10}/>
                 <MenuItem
@@ -42,6 +45,7 @@ const AdminAdd: FC = () => {
                     subTitle='график работы'
                     img={require('@/source/img/icon/masters.png')}
                     pushFunction={() => appRouter.navigate('/admin/adminAllMasters')}
+                    arrowColor='grey'
                 />
             </View>
         </WrapperScroll>

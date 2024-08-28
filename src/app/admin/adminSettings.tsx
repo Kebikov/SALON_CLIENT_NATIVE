@@ -12,7 +12,7 @@ import { setAppUserInfo } from '@/redux/slice/user.slice';
  * @page Страница пользователя.
  */
 const AdminSettings: FC = () => {
-
+    console.info('PAGE_admin/adminSettings');
     const {appRouter} = useHookRouter();
     const dispatch = useAppDispatch();
 

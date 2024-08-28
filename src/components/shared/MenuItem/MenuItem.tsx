@@ -3,6 +3,7 @@ import React, { FC } from 'react';
 import { COLOR_ROOT } from '@/data/colors';
 import VibrationApp from '@/helpers/helpersForComponents/vibration/VibrationApp';
 
+type TArrow = 'default' | 'grey' | 'main';
 
 interface IMenuItem {
     title: string;
@@ -11,6 +12,7 @@ interface IMenuItem {
     pushFunction: Function;
     isShowArrow?: boolean;
     marginTop?: number;
+    arrowColor?: TArrow;
 }
 
 
@@ -23,7 +25,21 @@ interface IMenuItem {
  * @param isShowArrow ? Показывать ли стрелку в конце пункта меню.
  * @param marginTop ? Отступ с верху.
  */
-const MenuItem: FC<IMenuItem> = ({title, subTitle, img, pushFunction, isShowArrow = true, marginTop = 0}) => {
+const MenuItem: FC<IMenuItem> = ({
+    title, 
+    subTitle, 
+    img, 
+    pushFunction, 
+    isShowArrow = true, 
+    marginTop = 0,
+    arrowColor = 'default'
+}) => {
+
+    const arrow = {
+        default: require('@/source/img/icon-menu/arrow.png'),
+        grey: require('@/source/img/icon-menu/arrow-grey.png'),
+        main: require('@/source/img/icon-menu/arrow-main.png')
+    }
 
     return (
         <Pressable 
@@ -50,7 +66,7 @@ const MenuItem: FC<IMenuItem> = ({title, subTitle, img, pushFunction, isShowArro
                     <View style={styles.rightItem} >
                         <Image
                             style={styles.img}
-                            source={require('@/source/img/icon-menu/arrow.png')}
+                            source={arrow[arrowColor]}
                         />
                     </View>
                     :
