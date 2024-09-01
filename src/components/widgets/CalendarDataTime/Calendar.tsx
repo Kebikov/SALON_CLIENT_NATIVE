@@ -1,15 +1,18 @@
-import { View, Text, StyleSheet, Platform, Pressable, Button } from 'react-native';
+import { View, Text, StyleSheet, Platform, Pressable, Button, useWindowDimensions } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import React, { FC, useState, forwardRef, useImperativeHandle, useEffect, useRef } from 'react';
 import { COLOR_ROOT } from '@/data/colors';
 import CalendarHeader from './CalendarHeader';
 import WeekDays from './WeekDays';
-import MonthDays from './MonthDays';
+import Month from './Month';
 import Time from '@/helpers/Time/Time';
 import { BlurView } from 'expo-blur';
 import { Portal } from '@gorhom/portal';
 import Animated, {FadeIn, FadeOut} from 'react-native-reanimated';
 import VibrationApp from '@/helpers/helpersForComponents/vibration/VibrationApp';
+import contexSelectedDays from './helper/contexSelectedDays';
+
+const {Provider} = contexSelectedDays;
 
 export type TSelect = 'multi' | 'one';
 
@@ -37,6 +40,9 @@ const Calendar = forwardRef<ICalendarRef, ICalendar>(({
     setSelectedDays,
     select = 'one'
 }, ref) => {
+    const {width} = useWindowDimensions();
+    const widthCalendar = Math.round(width * 80 / 100);
+
     /**
      * @param currentDay `Текушяя дата с которой работаем.`
      * @example '2022-02-28'
@@ -51,58 +57,64 @@ const Calendar = forwardRef<ICalendarRef, ICalendar>(({
         openCalendar: () => setIsShow(true)
     }));
 
+    // const setContexSelectedDays = (data: string) => {
+    //     setSelectedDays(state => ([...state, data]));
+    // }
+
     return (
         <Portal name='calendar' >
-            {
-                isShow
-                ?
-                <Animated.View
-                    style={styles.main}
-                    entering={FadeIn.duration(500)} 
-                    exiting={FadeOut.duration(500)} 
-                >
-                    <BlurView
-                        style={[styles.container]} 
-                        intensity={30}
-                        tint='dark'
+            {/* <Provider value={{selectedDays, setContexSelectedDays}} > */}
+                {
+                    isShow
+                    ?
+                    <Animated.View
+                        style={styles.main}
+                        entering={FadeIn.duration(500)} 
+                        exiting={FadeOut.duration(500)} 
                     >
-                        <View style={styles.blur} >
-                            <View style={[styles.body, {marginTop: 15,marginBottom: select === 'one' ? 15 : 0}]} >
-                                <CalendarHeader 
-                                    currentDay={currentDay}
-                                />
-                                <WeekDays/>
-                                <MonthDays 
-                                    currentDay={currentDay} 
-                                    setCurrentDay={setCurrentDay} 
-                                    setIsShow={setIsShow} 
-                                    selectedDays={selectedDays}
-                                    setSelectedDays={setSelectedDays}
-                                    select={select}
-                                />
+                        <BlurView
+                            style={[styles.container]} 
+                            intensity={30}
+                            tint='dark'
+                        >
+                            <View style={[styles.blur, {width: widthCalendar}]} >
+                                <View style={[styles.body, {marginTop: 15, marginBottom: select === 'one' ? 15 : 0}]} >
+                                    <CalendarHeader 
+                                        currentDay={currentDay}
+                                    />
+                                    <WeekDays/>
+                                    <Month 
+                                        currentDay={currentDay} 
+                                        setCurrentDay={setCurrentDay} 
+                                        setIsShow={setIsShow} 
+                                        selectedDays={selectedDays}
+                                        setSelectedDays={setSelectedDays}
+                                        select={select}
+                                    />
+                                </View>
+                                {
+                                    select === 'multi'
+                                    ?
+                                    <Pressable 
+                                        style={styles.bodyOk}
+                                        onPress={() => {
+                                            VibrationApp.pressButton();
+                                            setIsShow(false);
+                                            setCurrentDay(Time.getCurrentMonth());
+                                        }}
+                                    >
+                                        <Text style={styles.textOk}>OK</Text>
+                                    </Pressable>
+                                    :
+                                    null
+                                }
                             </View>
-                            {
-                                select === 'multi'
-                                ?
-                                <Pressable 
-                                    style={styles.bodyOk}
-                                    onPress={() => {
-                                        VibrationApp.pressButton();
-                                        setIsShow(false);
-                                        setCurrentDay(Time.getCurrentMonth());
-                                    }}
-                                >
-                                    <Text style={styles.textOk}>OK</Text>
-                                </Pressable>
-                                :
-                                null
-                            }
-                        </View>
-                    </BlurView>
-                </Animated.View>
-                :
-                null
-            }
+                        </BlurView>
+                    </Animated.View>
+                    :
+                    null
+                }
+            {/* </Provider> */}
         </Portal>
     );
 });
@@ -124,7 +136,6 @@ const styles = StyleSheet.create({
         backgroundColor: Platform.OS === 'ios' ? 'rgba(255, 255, 255, .2)' : 'rgba(255, 255, 255, .5)'
     },
     blur: {
-        width: '80%',
         backgroundColor: COLOR_ROOT.GRAY_DARK,
         borderRadius: 14,
         overflow: 'hidden',

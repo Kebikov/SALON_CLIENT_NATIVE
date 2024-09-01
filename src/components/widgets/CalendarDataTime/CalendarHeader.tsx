@@ -15,7 +15,7 @@ interface ICalendarHeader {
 const CalendarHeader: FC<ICalendarHeader> = ({
     currentDay
 }) => {
-
+    console.log('currentDay = ', currentDay);
     const splitDate = Time.splitDate(currentDay);
 
     return (

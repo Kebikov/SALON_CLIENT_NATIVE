@@ -41,21 +41,16 @@ const HomeAdmin: FC = () => {
     const [selectedTime, setSelectedTime] = useState<ITimeClock>({hour: '14', minute: '15'});
 
     const press = () => {
-        console.log('press');
-        refClock.current?.openClock();
-        //refCalendar.current?.openCalendar();
+        console.log('PRESS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
+        //appRouter.navigate('/test');
+        //refClock.current?.openClock();
+        refCalendar.current?.openCalendar();
     }
 
     return (
         <>
             <WrapperScroll>
                 <HomeUserHeader/>
-                <Calendar 
-                    selectedDays={selectedDays}
-                    setSelectedDays={setSelectedDays}
-                    select='multi'
-                    ref={refCalendar}
-                />
                 <Clock 
                     setSelectedTime={setSelectedTime} 
                     selectedTime={selectedTime} 
@@ -64,6 +59,12 @@ const HomeAdmin: FC = () => {
                     colorLine='#e2e0de'
                     colorText='#ffce6c'
                     ref={refClock} 
+                />
+                <Calendar 
+                    selectedDays={selectedDays}
+                    setSelectedDays={setSelectedDays}
+                    select='multi'
+                    ref={refCalendar}
                 />
                 <Pressable
                     onPress={() => press()}

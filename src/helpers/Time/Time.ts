@@ -15,7 +15,7 @@ class Time {
      * `Вернет количество дней в месяце.`
      */
     totalDaysInMohth(date: IYearAndMonth): number {
-        return new Date(date.year, date.month + 1, 0).getDate();
+        return new Date(date.year, date.month, 0).getDate();
     }
 
     /**
@@ -99,7 +99,7 @@ class Time {
         const splitDate = this.splitDate(date);
         const totalDays = this.totalDaysInMohth({year: splitDate.year, month: splitDate.month});
         const firstDay = this.firstDayInMonth({year: splitDate.year, month: splitDate.month});
-
+        //console.log('Day = ', date, 'firstDay = ', firstDay, 'totalDays = ', totalDays);
         const allDays = [];
 
         for(let i = 1; i < firstDay; i++) {
@@ -109,7 +109,6 @@ class Time {
         for(let i = 1; i <= totalDays; i++) {
             allDays.push(i);
         }
-        
         return allDays;
     }
 
@@ -119,7 +118,7 @@ class Time {
      * @return '2024-08-20'
      */
     combineForDate(date: IFullDate): string {
-        const handleDate = new Date(date.year, date.month - 1, date.day, 14, 0, 0, 0);
+        const handleDate = new Date(date.year, date.month, date.day, 14, 0, 0, 0);
         return handleDate.toISOString().split('T')[0];
     }  
     
