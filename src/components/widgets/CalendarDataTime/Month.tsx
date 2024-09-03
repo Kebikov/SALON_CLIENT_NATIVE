@@ -1,5 +1,5 @@
-import { View, StyleSheet, NativeSyntheticEvent, NativeScrollEvent, useWindowDimensions, Text,LayoutChangeEvent } from 'react-native';
-import React, { FC, useEffect, useState, useRef, useCallback, useMemo } from 'react';
+import { View, StyleSheet, NativeSyntheticEvent, NativeScrollEvent, LayoutChangeEvent } from 'react-native';
+import React, { FC, useState, useRef, useCallback } from 'react';
 import { initialMonth } from './helper/initialMonth';
 import { FlatList } from 'react-native-gesture-handler';
 import DaysInTheMonth from './DaysInTheMonth';
@@ -13,8 +13,6 @@ interface IMonthDays {
     currentDay: string;
     setCurrentDay: React.Dispatch<React.SetStateAction<string>>;
     setIsShow: React.Dispatch<React.SetStateAction<boolean>>;
-    selectedDays: string[];
-    setSelectedDays:  React.Dispatch<React.SetStateAction<string[]>>;
     select: TSelect;
 }
 
@@ -35,21 +33,17 @@ const CONTAINER_PADDING = 10;
  * @component `Дни месяца.`
  * @param currentDay Дата с которой работаем. '2022-02-28'
  * @param setCurrentDay Установка даты с которой работаем.
- * @param selectedDays Выбраные даты, массив.
- * @param setSelectedDays Установка выбранных дат.
+ * @param setIsShow Установка видимости календаря.
  * @param select Множественный выбор да или нет.
  */
 const Month: FC<IMonthDays> = ({
     currentDay, 
     setCurrentDay,
     setIsShow,
-    selectedDays,
-    setSelectedDays,
     select
 }) => {
     const flatListRef = useRef<number>(0);
     let previousIndex = TOTAL_ELEMENT;
-
     /**
      * @param visibleMonths Массив месяцев.
      * @example ['2022-02-01', '2022-03-01', ...]
@@ -59,7 +53,9 @@ const Month: FC<IMonthDays> = ({
      * @param widthElement 
      */
     const [widthElement, setWidthElement] = useState<number>(0);
-
+    /**
+     * `Высота дней в теле календаря.`
+     */
     const svHeightMonth = useSharedValue<number>(0);
     
     let startDrag = 0;
@@ -70,7 +66,9 @@ const Month: FC<IMonthDays> = ({
         const {contentOffset} = event.nativeEvent;
         startDrag = contentOffset.x;
     }, []);
-
+    /**
+     * `Изминение высоты дней календаря.`
+     */
     const changeHeight = (state: string) => {
         'worklet';
         const value = Time.getArrayForMonth(state).length > 35 ? widthElement * 6 / 7 : widthElement * 5 / 7;
@@ -86,18 +84,15 @@ const Month: FC<IMonthDays> = ({
         const delta = startDrag - offSet;
         const deltaAbs = Math.abs(delta);
         if(deltaAbs > widthElement / 2 && index !== previousIndex) {
-            //console.log('works');
             if(index > previousIndex) {
                 setCurrentDay(state => {
                     const newState = Time.plusMinusMonth('plus', state);
-                    console.log('state day 1+ = ', state, 'leng = ', Time.getArrayForMonth(newState).length);
                     changeHeight(newState);
                     return newState;
                 });
                 previousIndex = index;
             } else if(index < previousIndex){
                 setCurrentDay(state => {
-                    console.log('state day 1- = ', state);
                     const newState = Time.plusMinusMonth('minus', state);
                     changeHeight(newState);
                     return newState;
@@ -106,6 +101,7 @@ const Month: FC<IMonthDays> = ({
             }
         }
     }, [widthElement]);
+
     /**
      * Скролл закончен. 
      */
@@ -120,10 +116,7 @@ const Month: FC<IMonthDays> = ({
         } 
 
         if(index === 0) {
-            setCurrentDay(state => {
-                console.log('state day 2- = ', state);
-                return Time.plusMinusMonth('minus', state)
-            });
+            setCurrentDay(state => Time.plusMinusMonth('minus', state));
             setVisibleMonths(state => initialMonth(state[0], TOTAL_ELEMENT));
             previousIndex = TOTAL_ELEMENT;
             flatListRef.current++;
@@ -136,25 +129,19 @@ const Month: FC<IMonthDays> = ({
     const renderItems = useCallback(({item}: {item: string}) => {
 
         return(
-            // <View style={{backgroundColor: 'yellow', width: widthElement, justifyContent: 'center', alignItems: 'center'}}>
-            //     <Text>{item}</Text>
-            // </View>
             <View style={[styles.container, {width: widthElement}]} >
                 <DaysInTheMonth 
                     day={item} 
                     widthMonth={widthElement} 
-                    selectedDays={selectedDays} 
                     select={select} 
-                    setSelectedDays={setSelectedDays} 
                     setIsShow={setIsShow} 
                 />
             </View>
         )
-    }, [visibleMonths, selectedDays, widthElement]);
+    }, [visibleMonths, widthElement]);
 
     const onLayout = (event: LayoutChangeEvent) => {
         if(widthElement) return;
-        console.log('onLey');
         const { width } = event.nativeEvent.layout;
         svHeightMonth.value = Time.getArrayForMonth(currentDay).length > 35 ? width * 6 / 7 : width * 5 / 7
         setWidthElement(width);
@@ -202,13 +189,11 @@ const Month: FC<IMonthDays> = ({
 
 const styles = StyleSheet.create({
     main: {
-        marginTop: 5,
-        //backgroundColor: 'blue'
+        marginTop: 5
     },
     container: {
         justifyContent: 'center',
-        alignItems: 'center',
-        //backgroundColor: 'red'
+        alignItems: 'center'
     }
 });
 

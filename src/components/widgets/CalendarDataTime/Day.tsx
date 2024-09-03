@@ -4,7 +4,6 @@ import { COLOR_ROOT } from '@/data/colors';
 
 
 interface IDay {
-    sizeSide: number;
     handlePressDay: (item: string | null) => void;
     itemDay: string | null;
     item: number | null;
@@ -16,7 +15,6 @@ interface IDay {
  * @component 'Один день в календаре.'
  */
 const Day: FC<IDay> = ({
-    sizeSide,
     handlePressDay,
     itemDay,
     item,
@@ -44,8 +42,6 @@ const Day: FC<IDay> = ({
                 styleItem = [];
                 break;
         }
-    
-        //console.log('render = ', itemDay);
 
         return (
             <Pressable 
@@ -68,7 +64,6 @@ const styles = StyleSheet.create({
         padding: 4,
         aspectRatio: 1 / 1,
         width: `${100 / 7}%`,
-        //backgroundColor: 'green',
     },
     item: {
         flex: 1,

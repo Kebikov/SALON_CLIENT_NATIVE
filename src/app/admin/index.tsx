@@ -33,6 +33,7 @@ const HomeAdmin: FC = () => {
     const refClock = useRef<IClockRef>(null);
 
     const [selectedDays, setSelectedDays] = useState<string[]>([]);
+    console.log('index = ', selectedDays);
     const refCalendar = useRef<ICalendarRef>(null);
 
     /**

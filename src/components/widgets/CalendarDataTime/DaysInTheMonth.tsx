@@ -1,16 +1,14 @@
-import { View, StyleSheet, NativeSyntheticEvent, NativeScrollEvent, useWindowDimensions, LayoutChangeEvent } from 'react-native';
-import React, { FC, memo, useMemo } from 'react';
+import React, { FC, useMemo, useContext } from 'react';
 import VibrationApp from '@/helpers/helpersForComponents/vibration/VibrationApp';
 import Days from './Days';
+import contexSelectedDays from './helper/contexSelectedDays';
 
 import type { TSelect } from './Calendar';
 
 interface IDaysInTheMonth {
     widthMonth: number;
     day: string;
-    selectedDays: string[];
     select: TSelect;
-    setSelectedDays: React.Dispatch<React.SetStateAction<string[]>>;
     setIsShow: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
@@ -21,14 +19,11 @@ interface IDaysInTheMonth {
 const DaysInTheMonth: FC<IDaysInTheMonth> = ({
     widthMonth,
     day,
-    selectedDays,
     select,
-    setSelectedDays,
     setIsShow
 }) => {
 
-    const totalColum = 7;
-    const sizeSide = Number((widthMonth / totalColum));
+    const context = useContext(contexSelectedDays);
 
     //* memoDaysInTheMonth
     const memoDaysInTheMonth = useMemo(() => {
@@ -37,14 +32,14 @@ const DaysInTheMonth: FC<IDaysInTheMonth> = ({
             VibrationApp.select();
     
             if(select === 'one') {
-                setSelectedDays([item]);
+                context.setSelectedDays([item]);
                 setTimeout(() => setIsShow(false), 300);
             }
             if(select === 'multi') {
-                if(selectedDays.includes(item)) {
-                    setSelectedDays(state => state.filter(item => item !== item));
+                if(context.selectedDays.includes(item)) {
+                    context.setSelectedDays(state => state.filter(value => value !== item));
                 } else {
-                    setSelectedDays(state => ([...state, item]));
+                    context.setSelectedDays(state => ([...state, item]));
                 }
             }
         };
@@ -52,13 +47,12 @@ const DaysInTheMonth: FC<IDaysInTheMonth> = ({
         return (
             <Days
                 day={day}
-                selectedDays={selectedDays}
-                sizeSide={sizeSide}
+                selectedDays={context.selectedDays}
                 handlePressDay={handlePressDay}
             />
         );
 
-    }, [day, selectedDays, widthMonth]);
+    }, [day, context.selectedDays, widthMonth]);
     
 
     return memoDaysInTheMonth;
@@ -67,3 +61,6 @@ const DaysInTheMonth: FC<IDaysInTheMonth> = ({
 
 
 export default DaysInTheMonth;
+
+
+

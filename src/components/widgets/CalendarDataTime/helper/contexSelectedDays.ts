@@ -2,10 +2,10 @@ import { createContext } from "react";
 
 interface IcontexSelectedDays {
     selectedDays: string[];
-    setContexSelectedDays: (data: string) => void;
+    setSelectedDays: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
-const contexSelectedDays = createContext<IcontexSelectedDays>({selectedDays: [], setContexSelectedDays: () => {}});
+const contexSelectedDays = createContext<IcontexSelectedDays>({selectedDays: [], setSelectedDays: () => {}});
 
 export default contexSelectedDays;
 

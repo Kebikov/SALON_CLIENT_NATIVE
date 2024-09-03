@@ -1,6 +1,5 @@
-import { View, Text, StyleSheet, Platform, Pressable, Button, useWindowDimensions } from 'react-native';
-import { FlatList } from 'react-native-gesture-handler';
-import React, { FC, useState, forwardRef, useImperativeHandle, useEffect, useRef } from 'react';
+import { View, Text, StyleSheet, Platform, Pressable, useWindowDimensions } from 'react-native';
+import React, { useState, forwardRef, useImperativeHandle } from 'react';
 import { COLOR_ROOT } from '@/data/colors';
 import CalendarHeader from './CalendarHeader';
 import WeekDays from './WeekDays';
@@ -57,13 +56,10 @@ const Calendar = forwardRef<ICalendarRef, ICalendar>(({
         openCalendar: () => setIsShow(true)
     }));
 
-    // const setContexSelectedDays = (data: string) => {
-    //     setSelectedDays(state => ([...state, data]));
-    // }
 
     return (
         <Portal name='calendar' >
-            {/* <Provider value={{selectedDays, setContexSelectedDays}} > */}
+            <Provider value={{selectedDays, setSelectedDays}} >
                 {
                     isShow
                     ?
@@ -86,9 +82,7 @@ const Calendar = forwardRef<ICalendarRef, ICalendar>(({
                                     <Month 
                                         currentDay={currentDay} 
                                         setCurrentDay={setCurrentDay} 
-                                        setIsShow={setIsShow} 
-                                        selectedDays={selectedDays}
-                                        setSelectedDays={setSelectedDays}
+                                        setIsShow={setIsShow}
                                         select={select}
                                     />
                                 </View>
@@ -114,7 +108,7 @@ const Calendar = forwardRef<ICalendarRef, ICalendar>(({
                     :
                     null
                 }
-            {/* </Provider> */}
+            </Provider>
         </Portal>
     );
 });
