@@ -21,6 +21,7 @@ import type { ServiceDTOAndDepartmentName } from '@/api/routes/service/types/ser
  */
 const AdminService: FC = () => {
     console.info('PAGE_admin/adminService');
+
     const {
         bottomSheetRef,
         openList,
@@ -61,6 +62,7 @@ const AdminService: FC = () => {
             ]
         );
     }
+
 
     const editService = (item: ServiceDTOAndDepartmentName) => {
         appRouter.navigate({pathname: '/admin/adminEditService/[id]', params: {...item}});

@@ -12,6 +12,7 @@ import VibrationApp from '@/helpers/helpersForComponents/vibration/VibrationApp'
 import { useFilterService } from '@/hooks/useFilterService';
 import AnimatedHeaderUser, {IAnimatedHeaderUserRef} from '@/components/widgets/AnimatedHeaderUser/AnimatedHeaderUser';
 
+import type { TRouteAdminSettingsMaster } from '../adminSettingsMaster/[id]';
 import type { ServiceDTOAndDepartmentName } from '@/api/routes/service/types/service.types';
 
 
@@ -25,9 +26,10 @@ interface ISetButton {
 /**
  * @page `Страница добавления/удаления услуг мастера.`
  */
-const AdminAddServiceForMaster: FC = () => {
-    console.info('PAGE_admin/adminAddServiceForMaster/[id]');
-    let { id, name, department_name, picture, surname } = useLocalSearchParams<{id: string, name: string, picture: string , department_name?: string, surname: string}>();
+const AdminAddServiceForMaster: FC = () => { console.info('PAGE_admin/adminAddServiceForMaster/[id]');
+    let { 
+        id, name, departmentName, picture, surname 
+    } = useLocalSearchParams<TRouteAdminSettingsMaster>();
     if(!id || !name || !picture || !surname) return;
 
     const someRef = useRef<IAnimatedHeaderUserRef>(null);
@@ -78,7 +80,7 @@ const AdminAddServiceForMaster: FC = () => {
     return (
         <>
             <WrapperScroll titlePage='Услуги мастера' isScrollEnabled={false} imgFilter={require('@/source/img/icon/filter_white.png')} handlePessImgFilter={() => openList()} >
-                <AnimatedHeaderUser title={`${surname} ${name}`} subtitle={department_name} picture={picture} ref={someRef} />
+                <AnimatedHeaderUser title={`${surname} ${name}`} subtitle={departmentName} picture={picture} ref={someRef} />
                 <View style={styles.main} >
                     {
                         services.length > 0

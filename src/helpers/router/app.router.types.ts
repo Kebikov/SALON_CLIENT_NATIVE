@@ -1,8 +1,9 @@
-import type { ServiceDTOAndDepartmentName } from "@/api/routes/service/types/service.types";
 import type { IReqEditMaster } from "@/api/routes/master/types/master.dto";
 import type { IMasterFind } from "@/api/routes/master/types/master.dto";
 
-import { TRouteAdminSettingsMaster } from "../../app/admin/adminSettingsMaster/[id]";
+
+import type { TRouteAdminSettingsMaster } from "../../app/admin/adminSettingsMaster/[id]";
+import type { ServiceDTOAndDepartmentName } from "@/api/routes/service/types/service.types";
 
 
 export type AppRouterTypes = {
@@ -30,7 +31,11 @@ export type AppRouterTypes = {
 
     '/admin/adminService': undefined;
     '/admin/adminAddService': undefined;
-    '/admin/adminEditService/[id]': TRouteAdminSettingsMaster;
+    
+    '/admin/adminEditService/[id]': ServiceDTOAndDepartmentName;
+
+    '/admin/adminTimetable': undefined;
+    '/admin/masterTimetable/[id]': IMasterFind;
 
     '/admin/adminMaster': undefined;
     '/admin/adminAddMaster': undefined;
@@ -48,13 +53,8 @@ export type AppRouterTypes = {
     };
 
 
-    '/admin/adminAddServiceForMaster/[id]': {
-        id: string;
-        name: string;
-        surname: string;
-        picture: string;
-        department_name?: string;
-    };
+    '/admin/adminAddServiceForMaster/[id]': TRouteAdminSettingsMaster;
+
     '/admin/adminSettingsMaster/[id]': {
         id: number;
         name: string;
@@ -63,7 +63,6 @@ export type AppRouterTypes = {
         departmentName: string | null;
     };
     '/admin/modal': undefined;
-    '/admin/adminAllMasters': undefined;
 
     //: user
     '/user': undefined;
@@ -79,20 +78,24 @@ export type TTypeToString<T> = {
     [key in keyof T]: 
         T[key] extends number 
         ? 
-        string 
-        : 
+        string : 
+
         T[key] extends number | undefined 
         ? 
-        string
-        : 
+        string | undefined : 
+
         T[key] extends number | null
+        ? 
+        string : 
+
+        T[key] extends string | undefined 
         ?
-        string
-        :
+        string :
+
         T[key] extends string | null
         ?
-        string
-        :
+        string :
+
         T[key];
 };
 

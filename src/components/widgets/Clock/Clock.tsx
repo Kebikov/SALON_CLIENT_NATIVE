@@ -57,7 +57,6 @@ const Clock = forwardRef<IClockRef, IClock>(({
      * @param isShow Показать/скрыть часы.
      */
     const [isShow, setIsShow] = useState<boolean>(false);
-    console.log(isShow);
     /**
      * `Позиция часа.`
      */

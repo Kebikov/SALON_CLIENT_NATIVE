@@ -16,6 +16,12 @@
 
 [![любой текст](./image/6.jpg)](vscode://file/E:\html-css\CODE\My\work\salon\SALON_CLIENT_NATIVE\src\components\shared\DepartmentCartAdmin\DepartmentCartAdmin.tsx)
 
+>MasterCartHorizontal без обертки
+
+>MasterCartForAdmin с оберткой, кнопки с права
+
+[![любой текст](./image/17.jpg)](vscode://file/E:\html-css\CODE\My\work\salon\SALON_CLIENT_NATIVE\src\components\shared\MasterCartForAdmin\MasterCartForAdmin.tsx)
+
 ## Текст
 
 >Title
@@ -67,3 +73,7 @@
 >Clock
 
 [![любой текст](./image/15.jpg)](vscode://file/E:\html-css\CODE\My\work\salon\SALON_CLIENT_NATIVE\src\components\widgets\Clock\Clock.tsx)
+
+>FloatingButtons
+
+[![любой текст](./image/16.jpg)](vscode://file/E:\html-css\CODE\My\work\salon\SALON_CLIENT_NATIVE\src\components\widgets\FloatingButtons\FloatingButtons.tsx)

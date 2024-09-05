@@ -12,7 +12,7 @@ interface IhandleOnMomentumScrollEnd {
     flatListRef: React.MutableRefObject<number>;
 }
 
-const handleOnMomentumScrollEnd = ({
+export const handleScrollEnd = ({
     event,
     widthElement,
     TOTAL_ELEMENT,
@@ -36,5 +36,4 @@ const handleOnMomentumScrollEnd = ({
         previousIndex = TOTAL_ELEMENT;
         flatListRef.current++;
     }
-        
 }

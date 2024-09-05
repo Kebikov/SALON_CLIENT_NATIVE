@@ -7,6 +7,9 @@ import WrapperScroll from '@/components/wrappers/WrapperScroll/WrapperScroll';
 import { useHookRouter } from '@/helpers/router/useHookRouter';
 import { useAppDispatch } from '@/redux/store/hooks';
 import { setAppUserInfo } from '@/redux/slice/user.slice';
+import IosMenuItem from '@/components/widgets/IosMenuItem/IosMenuItem';
+import IosWrapperMenu from '@/components/wrappers/IosWrapperMenu/IosWrapperMenu';
+import Title from '@/components/shared/Title/Title';
 
 /**
  * @page Страница пользователя.
@@ -25,51 +28,27 @@ const AdminSettings: FC = () => {
     return (
         <WrapperScroll>
             <View style={styles.main} >
-                <View style={styles.box} >
-                    <View style={styles.boxSettings}>
-                        <Text style={styles.textSettings} >Настройки и действия</Text>
-                    </View>
-                    <MenuItem 
-                        title='Password' 
-                        subTitle='Изминение пароля пользователя' 
-                        img={require('@/source/img/icon-menu/password-1.png')} 
+                <Title text='Настройки и действия' marginTop={10} fontSize={17} />
+                <IosWrapperMenu>
+                    <IosMenuItem
+                        title='Password'
+                        img={require('@/source/img/ios-icon/5.jpg')}
                         pushFunction={() => appRouter.navigate('/admin/changePassword')}
+                        isShowLine={true}
                     />
-                    <MenuItem 
-                        title='Выход' 
-                        subTitle='Выход из аккауна' 
-                        img={require('@/source/img/icon-menu/exit.png')} 
+                    <IosMenuItem
+                        title='Выход'
+                        img={require('@/source/img/ios-icon/6.jpg')}
                         pushFunction={() => exitOut()}
-                        isShowArrow={false}
                     />
-                </View>
+                </IosWrapperMenu>
             </View>
         </WrapperScroll>
     );
 };
 
 const styles = StyleSheet.create({
-    main: { flex: 1 },
-    box: { },
-    exitButton: {
-        marginTop: 20,
-        height: 50,
-        backgroundColor: COLOR_ROOT.PINK,
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    textButton: { color: 'white', fontSize: 17 },
-    boxSettings: {
-        width: '100%',
-        marginTop: 10,
-        marginBottom: 10
-    },
-    textSettings: {
-        textAlign: 'center',
-        fontSize: 19,
-        fontWeight: '600',
-        color: COLOR_ROOT.BLACK
-    }
+    main: { flex: 1 }
 });
 
 export default AdminSettings;

@@ -6,7 +6,7 @@ import { FlatList } from 'react-native-gesture-handler';
 
 
 const Test: FC = () => {
-    console.log('TEST--------------------------------------');
+
     const press = () => {
         //refClock.current?.openClock();
     }
@@ -41,7 +41,7 @@ const Test: FC = () => {
                     "2025-07-01", 
                     "2025-08-01"]}
                 renderItem={ ({index, item}: {index: number, item: string}) => {
-                    console.log('render = ', item, 'i = ', index);
+                    
                     return(
                         <Text>{item}</Text>
                     )

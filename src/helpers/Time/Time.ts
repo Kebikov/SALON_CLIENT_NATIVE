@@ -99,7 +99,6 @@ class Time {
         const splitDate = this.splitDate(date);
         const totalDays = this.totalDaysInMohth({year: splitDate.year, month: splitDate.month});
         const firstDay = this.firstDayInMonth({year: splitDate.year, month: splitDate.month});
-        //console.log('Day = ', date, 'firstDay = ', firstDay, 'totalDays = ', totalDays);
         const allDays = [];
 
         for(let i = 1; i < firstDay; i++) {

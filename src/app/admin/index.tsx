@@ -11,6 +11,7 @@ import { Portal } from '@gorhom/portal';
 import Calendar from '@/components/widgets/CalendarDataTime/Calendar';
 import { ICalendarRef } from '@/components/widgets/CalendarDataTime/Calendar';
 import Time from '@/helpers/Time/Time';
+import FloatingButtons from '@/components/widgets/FloatingButtons/FloatingButtons';
 
 import Clock, { ITimeClock, IClockRef } from '@/components/widgets/Clock/Clock';
 
@@ -33,7 +34,7 @@ const HomeAdmin: FC = () => {
     const refClock = useRef<IClockRef>(null);
 
     const [selectedDays, setSelectedDays] = useState<string[]>([]);
-    console.log('index = ', selectedDays);
+    
     const refCalendar = useRef<ICalendarRef>(null);
 
     /**
@@ -52,6 +53,13 @@ const HomeAdmin: FC = () => {
         <>
             <WrapperScroll>
                 <HomeUserHeader/>
+                <FloatingButtons
+                    buttonsArray={[
+                        {title: 'Изменить день', handlePress: () => {console.log('Hello')}},
+                        {title: 'По шаблону', handlePress: () => {console.log('Hello')}},
+                        {title: 'Все даты', handlePress: () => {console.log('Hello')}}
+                    ]}
+                />
                 <Clock 
                     setSelectedTime={setSelectedTime} 
                     selectedTime={selectedTime} 

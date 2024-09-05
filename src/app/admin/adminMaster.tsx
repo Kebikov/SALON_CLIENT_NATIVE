@@ -1,4 +1,4 @@
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, ActivityIndicator } from 'react-native';
 import React, { FC } from 'react';
 import { useHookGetDataMasters } from '@/hooks/GET/useHookGetDataMasters';
 import WrapperScroll from '@/components/wrappers/WrapperScroll/WrapperScroll';
@@ -19,6 +19,7 @@ export type TFormMaster = Partial<Pick<IMasterFind, 'id' | 'picture' | 'access_b
  */
 const AdminMaster: FC = () => {
     console.info('PAGE_admin/adminMaster');
+
     const {appRouter} = useHookRouter();
     const {masters, setMasters} = useHookGetDataMasters();
 
@@ -27,18 +28,24 @@ const AdminMaster: FC = () => {
     return (
         <WrapperScroll titlePage='Команда' isScrollEnabled={false} >
             <View style={styles.main} >
-                <FlatList
-                    contentContainerStyle={{paddingVertical: 10, gap: 10}}
-                    data={masters}
-                    extraData={masters}
-                    renderItem={({item}) => (
-                        <MasterCartForAdmin master={item} setMasters={setMasters} />
-                    )}
-                    keyExtractor={item => String(item.id)}
-                    horizontal={false}
-                    showsHorizontalScrollIndicator={false}
-                    scrollEventThrottle={16}
-                />
+                {
+                    masters.length === 0
+                    ?
+                    <ActivityIndicator size={'large'} />
+                    :
+                    <FlatList
+                        contentContainerStyle={{paddingVertical: 10, gap: 10}}
+                        data={masters}
+                        extraData={masters}
+                        renderItem={({item}) => (
+                            <MasterCartForAdmin master={item} setMasters={setMasters} />
+                        )}
+                        keyExtractor={item => String(item.id)}
+                        horizontal={false}
+                        showsHorizontalScrollIndicator={false}
+                        scrollEventThrottle={16}
+                    />
+                }
             </View>
             <View style={styles.boxButton}>
                 <ButtonWithIcon 

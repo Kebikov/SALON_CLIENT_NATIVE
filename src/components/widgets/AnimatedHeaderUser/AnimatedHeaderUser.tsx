@@ -102,7 +102,7 @@ const AnimatedHeaderUser = forwardRef<IAnimatedHeaderUserRef, IAnimatedHeaderUse
             <Animated.View style={animationImg}>
                 <Image 
                     style={styles.img} 
-                    source={{uri: `${baseLink}/api/img/get-img/${picture}?type=img_imgMaster`}} 
+                    source={picture ? {uri: `${baseLink}/api/img/get-img/${picture}?type=img_imgMaster`} : undefined} 
                 />
             </Animated.View>
             <Animated.Text style={[styles.masterName, animationMasterName]} >{title}</Animated.Text>
