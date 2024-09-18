@@ -147,7 +147,7 @@ const Month: FC<IMonthDays> = ({
     const onLayout = (event: LayoutChangeEvent) => {
         if(widthElement) return;
         const { width } = event.nativeEvent.layout;
-        console.log('leng = ', Time.getArrayForMonth(currentDay).length);
+
         svHeightMonth.value = Time.getArrayForMonth(currentDay).length > 35 ? width * 6 / 7 : width * 5 / 7
         setWidthElement(width);
     }

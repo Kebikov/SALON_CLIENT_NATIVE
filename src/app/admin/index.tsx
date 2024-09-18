@@ -43,7 +43,7 @@ const HomeAdmin: FC = () => {
     const [selectedTime, setSelectedTime] = useState<ITimeClock>({hour: '14', minute: '15'});
 
     const press = () => {
-        console.log('PRESS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
+        
         //appRouter.navigate('/test');
         //refClock.current?.openClock();
         refCalendar.current?.openCalendar();

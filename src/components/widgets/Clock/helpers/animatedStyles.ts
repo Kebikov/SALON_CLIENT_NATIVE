@@ -1,6 +1,4 @@
-import { useAnimatedStyle, interpolate, SharedValue, runOnJS } from "react-native-reanimated";
-import VibrationApp from '@/helpers/helpersForComponents/vibration/VibrationApp';
-import { Vibration } from "react-native";
+import { useAnimatedStyle, interpolate, SharedValue } from "react-native-reanimated";
 
 
 interface IanimatedStyles {
@@ -43,8 +41,6 @@ export const animatedStyles = ({
 
             const inboundData = [0, itemHeight * 3, itemHeight * 6];
             
-
-
             return{
                 top: elementPositionAfter,
                 transform: [

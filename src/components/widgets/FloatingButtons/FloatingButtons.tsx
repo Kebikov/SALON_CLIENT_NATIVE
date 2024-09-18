@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, LayoutChangeEvent, Pressable } from 'react-native';
+import { View, Text, StyleSheet, LayoutChangeEvent, Pressable, DimensionValue } from 'react-native';
 import React, { FC, useState, useEffect } from 'react';
 import { COLOR_ROOT } from '@/data/colors';
 import Animated, { useSharedValue, useAnimatedStyle, withTiming, runOnJS } from 'react-native-reanimated';
@@ -13,7 +13,8 @@ interface IOneButton {
 interface IFloatingButtons {
     buttonsArray: IOneButton[];
     backgroundColorButtons?: string;
-    heightContainer?: number; 
+    heightContainer?: number;
+    widthContainer?: number;
 }
 
 const PADDING = 8;
@@ -24,17 +25,19 @@ const PADDING = 8;
  * @optional below
  * @param backgroundColorButtons ? Фон для тела кнопок.
  * @param heightContainer ? Высота контейнера.
+ * @param widthContainer ? Ширина контейнера.
  */
 const FloatingButtons: FC<IFloatingButtons> = ({
     buttonsArray,
     backgroundColorButtons = COLOR_ROOT.LIGHT_BLUE,
-    heightContainer = 20
+    heightContainer = 20,
+    widthContainer = 80
 }) => {
     if(buttonsArray.length < 2) throw new Error('В компаненте FloatingButtons, массив totalButtons, должен состоять из двух или трех объектов.');
     /**
      * `Сдвиг(относительный left) активной кнопки.`
      */
-    const svLeft = useSharedValue<number>(0);
+    const svLeft = useSharedValue<number>(3);
     /**
      * @param widthButtons Ширина контейнера для кнопок.
      */
@@ -71,16 +74,17 @@ const FloatingButtons: FC<IFloatingButtons> = ({
     const moveButton = (num: number, title: string) => {
         'worklet';
         const length = buttonsArray.length;
+        const minus = length === 3 ? 2 : 7;
         let move: number;
         switch(num) {
             case 0:
                 move = 3;
                 break;
             case 1:
-                move = widthButtons / length - 2;
+                move = widthButtons / length - minus;
                 break;
             case 2:
-                move = widthButtons * num / length - 6;
+                move = widthButtons * num / length - 7;
                 break;
             default:
                 move = 0;
@@ -104,12 +108,16 @@ const FloatingButtons: FC<IFloatingButtons> = ({
 
     
     return (
-        <View style={[styles.main, {backgroundColor: backgroundColorButtons}]} >
+        <View style={[styles.main]} >
+            <View style={[styles.body, {backgroundColor: backgroundColorButtons,
+                width: `${widthContainer}%`
+            }]}>
                 <Animated.View style={[styles.floating, {width: widthButtons / buttonsArray.length + 4, height: heightContainer + PADDING * 2 - 6,}, animationStyle]} >
                     <Text style={styles.buttonText} >{textButton}</Text>
                 </Animated.View>
-            <View style={[styles.container, {height: heightContainer}]} onLayout={onLayout}>
-                { buttons }
+                <View style={[styles.container, {height: heightContainer}]} onLayout={onLayout} >
+                    { buttons }
+                </View>
             </View>
         </View>
     );
@@ -118,11 +126,15 @@ const FloatingButtons: FC<IFloatingButtons> = ({
 
 const styles = StyleSheet.create({
     main: {
+        width: '100%',
+        alignItems: 'center'
+    },
+    body: {
         position: 'relative',
-        marginTop: 10,
-        marginHorizontal: 10,
         paddingVertical: PADDING,
         borderRadius: 10,
+        marginTop: 10,
+        marginHorizontal: 10,
 
         shadowColor: 'rgba(0, 0, 0, .7)',
         shadowOffset: { width: 0, height: 2 },

@@ -39,7 +39,14 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
         paddingVertical: 3,
         borderRadius: 12,
-        backgroundColor: 'rgba(0, 0, 0, .1)'
+        //backgroundColor: 'rgba(0, 0, 0, .1)',
+        backgroundColor: 'white',
+
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.3,
+        shadowRadius: 4,
+        elevation: 5, 
     }
 });
 

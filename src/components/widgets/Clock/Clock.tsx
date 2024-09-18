@@ -11,6 +11,8 @@ import { gapsForClock } from './helpers/gapsForClock';
 import { arraysForClock } from './helpers/arraysForClock';
 import { gestureHoursForClock } from './helpers/gestureHoursForClock';
 import { gestureMinutesForClock } from './helpers/gestureMinutesForClock';
+import { startHours, startMinutes } from './helpers/arraysForClock';
+import { getPosition } from './helpers/getPosition';
 
 
 export interface IClockRef {
@@ -52,7 +54,19 @@ const Clock = forwardRef<IClockRef, IClock>(({
      * `Количество элементов в окне.`
      */
     const totalElements = 7;
-
+    /**
+     * `Высота одного элемента.`
+     */
+    const itemHeight = height / totalElements; 
+    const {hoursArray, minutesArray} = arraysForClock();
+    /**
+     * `Диаметр полного оборота часов.`
+     */
+    const fullRotation = hoursArray.length * height / totalElements; 
+    /**
+     * `Диаметр полного оборота минут.`
+     */
+    const fullRotationMinutes = minutesArray.length * height / totalElements;
     /**
      * @param isShow Показать/скрыть часы.
      */
@@ -60,19 +74,23 @@ const Clock = forwardRef<IClockRef, IClock>(({
     /**
      * `Позиция часа.`
      */
-    const hoursPosition = useSharedValue<number>(0);
+    const hoursPosition = useSharedValue<number>(0); 
+    if(hoursPosition.value === 0) hoursPosition.value = getPosition(selectedTime.hour, itemHeight, hoursArray);
     /**
      * `Последняя позиция часа.`
      */
     const lastHoursPosition = useSharedValue<number>(0);
+    if(lastHoursPosition.value === 0) lastHoursPosition.value = getPosition(selectedTime.hour, itemHeight, hoursArray);
     /**
      * `Позиция минут.`
      */
     const minutesPosition = useSharedValue<number>(0);
+    if(minutesPosition.value === 0) minutesPosition.value = getPosition(selectedTime.minute, itemHeight, minutesArray);
     /**
      * `Последняя позиция минут.`
      */
     const lastMinutesPosition = useSharedValue<number>(0);
+    if(lastMinutesPosition.value === 0) lastMinutesPosition.value = getPosition(selectedTime.minute, itemHeight, minutesArray);
     /**
      * `Выбраный пользователем час.`
      */
@@ -89,21 +107,6 @@ const Clock = forwardRef<IClockRef, IClock>(({
      * `Последняя позиция вибрации для минут.`
      */
     const lastVibrationPositionMinutes = useSharedValue<number>(0);
-
-    const {hoursArray, minutesArray} = arraysForClock();
-
-    /**
-     * `Высота одного элемента.`
-     */
-    const itemHeight = height / totalElements; 
-    /**
-     * `Диаметр полного оборота часов.`
-     */
-    const fullRotation = hoursArray.length * height / totalElements; 
-    /**
-     * `Диаметр полного оборота минут.`
-     */
-    const fullRotationMinutes = minutesArray.length * height / totalElements;
 
     const {animatedHours, animatedMinutes} = animatedStyles({hoursPosition, itemHeight, fullRotation, height, fullRotationMinutes, minutesPosition});
     const {gaps, gapsMinutes} = gapsForClock({fullRotation, itemHeight, fullRotationMinutes});

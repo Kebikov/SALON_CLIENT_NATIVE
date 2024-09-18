@@ -1,10 +1,12 @@
 import { View, Text, StyleSheet } from 'react-native';
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import { useLocalSearchParams } from 'expo-router';
 import { IMasterFind } from '@/api/routes/master/types/master.dto';
 import type { TTypeToString } from '@/helpers/router/app.router.types';
 import AnimatedHeaderUser from '@/components/widgets/AnimatedHeaderUser/AnimatedHeaderUser';
 import WrapperScroll from '@/components/wrappers/WrapperScroll/WrapperScroll';
+import FloatingButtons from '@/components/widgets/FloatingButtons/FloatingButtons';
+import AddIntervalTimes from '@/components/shared/AddIntervalTimes/AddIntervalTimes';
 
 
 interface Master {
@@ -25,6 +27,7 @@ interface Master {
  * @page `Страница с графиком мастера.`
  */
 const MasterTimetable: FC = () => {
+    console.info('MasterTimetable/[id]');
 
     const {id, name, surname, department_name, picture} = useLocalSearchParams<TTypeToString<IMasterFind>>();
 
@@ -39,6 +42,14 @@ const MasterTimetable: FC = () => {
                 picture={picture ? picture : ''}
                 subtitle={department_name ? department_name : ''}
             />
+            <FloatingButtons
+                buttonsArray={[
+                    {title: 'По шаблону', handlePress: () => {}},
+                    {title: 'Изменить день', handlePress: () => {}},
+                ]}
+                widthContainer={90}
+            />
+            <AddIntervalTimes/>
         </WrapperScroll>
     );
 };

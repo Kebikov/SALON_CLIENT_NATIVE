@@ -29,7 +29,6 @@ export const gestureHoursForClock = ({
     hoursArray,
     lastVibrationPositionHour
 }: IgestureHoursForClock) => {
-
     const gesturePanHours = Gesture.Pan()
     .onUpdate((e) => {
         
