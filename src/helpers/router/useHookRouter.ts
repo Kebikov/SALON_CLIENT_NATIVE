@@ -1,4 +1,4 @@
-import { useRouter } from "expo-router";
+import { useRouter, type Href } from "expo-router";
 import type { AppRouterTypes } from "@/helpers/router/app.router.types";
 
 type TKeyApp = keyof AppRouterTypes;
@@ -36,7 +36,7 @@ export const useHookRouter = () => {
         push(path: TKeyApp): void;
         push<T extends TKeyApp>(path: TKeyApp | IObjectParams<T>): void {
             if(typeof path === 'object' && 'pathname' in path && 'params' in path) {
-                router.push({pathname: path.pathname, params: path.params});
+                router.push({pathname: path.pathname, params: path.params} as Href);
             } else {
                 router.push(path);
             }
@@ -46,7 +46,7 @@ export const useHookRouter = () => {
         navigate(path: TKeyApp): void;
         navigate<T extends TKeyApp>(path: TKeyApp | IObjectParams<T>): void {
             if(typeof path === 'object' && 'pathname' in path) {
-                router.navigate({pathname: path.pathname, params: path.params});
+                router.navigate({pathname: path.pathname, params: path.params} as Href);
             } else {
                 router.navigate(path);
             }
@@ -57,7 +57,7 @@ export const useHookRouter = () => {
         replace(path: TKeyApp): void;
         replace<T extends TKeyApp>(path: TKeyApp | IObjectParams<T>): void {
             if(typeof path === 'object' && 'pathname' in path) {
-                router.replace({pathname: path.pathname, params: path.params});
+                router.replace({pathname: path.pathname, params: path.params} as Href);
             } else {
                 router.replace(path);
             }
